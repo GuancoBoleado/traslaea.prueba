@@ -144,22 +144,104 @@
         </div>
     </footer>
 <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Inicializar el mapa centrado en Mina Clavero
-            var map = L.map('mapa-socios').setView([-31.9450, -65.1885], 12);
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. Centramos el mapa para cubrir toda la zona de influencia
+        var map = L.map('mapa-socios').setView([-32.05, -65.10], 10);
 
-            // Cargar los dibujos de OpenStreetMap
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap'
-            }).addTo(map);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
 
-            // Marcador de ejemplo: Tu ubicación
-            L.marker([-31.7215, -65.0080]).addTo(map)
-                .bindPopup('<b style="color:#002855">Esteban Colombo</b><br>Electricista Matriculado<br><a href="#" style="color:blue">Ver Perfil</a>');
-
-            // Este comando ajusta el mapa al tamaño del cuadro blanco
-            setTimeout(function(){ map.invalidateSize(); }, 500);
+        // --- ICONO ESPECIAL PARA LA SEDE DE TRASLAEA ---
+        var iconoTraslaea = L.icon({
+            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
         });
-    </script>
+
+        // --- FUNCIÓN PARA CREAR FICHAS ---
+        function crearPin(lat, lng, nombre, cargo, especialidad, localidad, linkWa, telDirecto, icono = null) {
+            let markerOptions = icono ? { icon: icono } : {};
+            return L.marker([lat, lng], markerOptions).addTo(map)
+                .bindPopup(`
+                    <div style="min-width: 190px; font-family: sans-serif;">
+                        <div style="background-color: #002855; color: white; padding: 8px; border-radius: 6px 6px 0 0; text-align: center;">
+                            <strong style="font-size: 14px; display: block;">${nombre}</strong>
+                            <span style="font-size: 10px; color: #f58220; font-weight: bold; text-transform: uppercase;">${cargo}</span>
+                        </div>
+                        <div style="padding: 12px; border: 1px solid #002855; border-top: none; border-radius: 0 0 6px 6px; background: white;">
+                            <p style="margin: 0 0 8px 0; font-size: 11px; color: #444; line-height: 1.3;">
+                                🛠️ <b>Especialidad:</b><br>${especialidad}
+                            </p>
+                            <p style="margin: 0; font-size: 10px; color: #666; font-style: italic;">📍 ${localidad}</p>
+                            
+                            <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 6px;">
+                                <a href="${linkWa}" target="_blank" 
+                                   style="background: #25D366; color: white; text-align: center; padding: 7px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 10px;">
+                                   💬 ENVIAR WHATSAPP
+                                </a>
+                                <a href="tel:${telDirecto}" 
+                                   style="background: #007bff; color: white; text-align: center; padding: 7px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 10px;">
+                                   📞 LLAMAR AHORA
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `);
+        }
+
+        // --- CARGA DE PUNTOS EN TRASLASIERRA ---
+
+        // 1. SEDE CENTRAL TRASLAEA (Villa Dolores)
+        crearPin(
+            -31.9493132, -65.1712348, 
+            "TRASLAEA", 
+            "Sede Central", 
+            "Asociación Civil de Electricistas", 
+            "Villa Dolores", 
+            "https://api.whatsapp.com/send?phone=5493544314637", 
+            "+5493544314637",
+            iconoTraslaea // Usamos el icono naranja para la sede
+        );
+
+        // 2. ESTEBAN COLOMBO (Luyaba)
+        crearPin(
+            -32.1047856, -65.109015, 
+            "Esteban Colombo", 
+            "Secretario - Cat III", 
+            "CCTV, Alarmas y Paneles Solares", 
+            "Luyaba", 
+            "https://api.whatsapp.com/send?phone=5493544314637", 
+            "+5493544314637"
+        );
+
+        // 3. RICARDO BALMACEDA (Villa Dolores)
+        crearPin(
+            -31.9492864, -65.1713415, 
+            "Ricardo Balmaceda", 
+            "Presidente de Asociación", 
+            "Electricista Matriculado", 
+            "Villa Dolores", 
+            "https://wa.me/5493544XXXXXX", 
+            "+5493544XXXXXX"
+        );
+
+        // 4. MARCELO FLORES (Corralito)
+        crearPin(
+            -32.1865089, -65.0544137, 
+            "Marcelo Flores", 
+            "Tesorero - Infraestructura", 
+            "Redes e Instalaciones", 
+            "Corralito", 
+            "https://wa.me/5493544XXXXXX", 
+            "+5493544XXXXXX"
+        );
+
+        setTimeout(function(){ map.invalidateSize(); }, 600);
+    });
+</script>
 </body>
 </html>
