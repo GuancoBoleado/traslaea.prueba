@@ -1,2 +1,66 @@
-<h1>Sitio de Pruebas - TRASLAEA</h1>
-<p>Infraestructura en desarrollo por Administración de Redes.</p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRASLAEA - Panel de Pruebas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <header class="bg-[#002855] text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white p-1 rounded-full w-12 h-12 flex items-center justify-center text-[#002855] font-bold">T</div>
+                <h1 class="text-xl font-bold tracking-tight">TRASLAEA <span class="block text-xs font-normal">ELECTRICISTAS ASOCIADOS</span></h1>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-sm font-semibold uppercase">
+                <a href="#" class="hover:text-blue-300">Institucional</a>
+                <a href="#" class="hover:text-blue-300">Servicios</a>
+                <a href="#" class="hover:text-blue-300 font-bold border-b-2 border-white">Recursos (Drive)</a>
+                <a href="#" class="hover:text-blue-300">Socios</a>
+            </nav>
+            <button class="bg-white text-[#002855] px-4 py-1 rounded-full font-bold text-sm">SUSCRIBIRSE</button>
+        </div>
+    </header>
+
+    <main class="container mx-auto mt-8 px-4">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl font-extrabold text-[#002855]">TRASLAEA: Potenciando la Red</h2>
+            <p class="text-gray-600">Entorno de prueba para seguridad, innovación y crecimiento rural</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            
+            <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-500">
+                <h3 class="font-bold text-lg mb-4 text-gray-700">Mapa de Socios y Cobertura</h3>
+                <div class="bg-blue-50 h-64 rounded-lg flex items-center justify-center border-2 border-dashed border-blue-200">
+                    <p class="text-blue-400 text-center px-4">[Aquí se integra el Mapa de Mapbox/Google Maps con la lista de instaladores]</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-500">
+                <h3 class="font-bold text-lg mb-4 text-gray-700">Recursos y Manuales Técnicos</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center p-3 bg-gray-50 rounded border hover:bg-gray-100 cursor-pointer">
+                        <span class="text-red-500 mr-3">PDF</span>
+                        <span class="text-sm text-gray-600 flex-1">Manual de Instalaciones Solares.pdf</span>
+                        <button class="text-blue-500 text-xs font-bold underline">Descargar</button>
+                    </div>
+                    <div class="flex items-center p-3 bg-gray-50 rounded border hover:bg-gray-100 cursor-pointer">
+                        <span class="text-red-500 mr-3">PDF</span>
+                        <span class="text-sm text-gray-600 flex-1">Normativas Eléctricas Vigentes.pdf</span>
+                        <button class="text-blue-500 text-xs font-bold underline">Descargar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="mt-12 bg-gray-800 text-white p-6 text-center text-xs">
+        <p>© 2026 TRASLAEA - Infraestructura gestionada por Administración de Redes</p>
+    </footer>
+
+</body>
+</html>
