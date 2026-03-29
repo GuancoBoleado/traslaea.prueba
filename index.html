@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TRASLAEA - Panel de Pruebas</title>
@@ -38,11 +40,11 @@
         <div class="grid md:grid-cols-2 gap-8 mb-12">
             
             <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-500">
-                <h3 class="font-bold text-lg mb-4 text-gray-700">Mapa de Socios y Cobertura</h3>
-                <div class="bg-blue-50 h-64 rounded-lg flex items-center justify-center border-2 border-dashed border-blue-200">
-                    <p class="text-blue-400 text-center px-4 italic text-sm">[Aquí se integra el Mapa de Mapbox/Google Maps con la lista de instaladores]</p>
-                </div>
-            </div>
+    <h3 class="font-bold text-lg mb-4 text-gray-700 uppercase italic">Mapa de Socios y Cobertura</h3>
+    
+    <div id="mapa-socios" class="h-80 rounded-lg shadow-inner border border-blue-200 z-0">
+        </div>
+</div>
 
             <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-blue-500">
                 <h3 class="font-bold text-lg mb-4 text-gray-700">Recursos y Manuales Técnicos</h3>
