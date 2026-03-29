@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRASLAEA - Panel de Pruebas</title>
+    <title>TRASLAEA - Asociación de Electricistas de Traslasierra</title>
+    
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans">
@@ -14,15 +16,15 @@
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-3">
                 <div class="bg-white p-1 rounded-full w-12 h-12 flex items-center justify-center text-[#002855] font-bold shadow-md">T</div>
-                <h1 class="text-xl font-bold tracking-tight">TRASLAEA <span class="block text-[10px] font-normal opacity-80 uppercase">Electricistas Asociados</span></h1>
+                <h1 class="text-xl font-bold tracking-tight">TRASLAEA <span class="block text-[10px] font-normal opacity-80 uppercase tracking-widest">Electricistas Asociados</span></h1>
             </div>
             
             <nav class="hidden lg:flex space-x-6 text-sm font-semibold uppercase">
-                <a href="#" class="hover:text-blue-300 transition">Institucional</a>
-                <a href="#" class="hover:text-blue-300 transition">Servicios</a>
-                <a href="#" class="hover:text-blue-300 transition">Recursos (Drive)</a>
-                <a href="evento-30-marzo.html" target="_blank" class="text-orange-400 font-bold border-b-2 border-orange-400">Eventos</a>
-                <a href="#" class="hover:text-blue-300 transition">Socios</a>
+                <a href="#" class="hover:text-orange-400 transition">Institucional</a>
+                <a href="#" class="hover:text-orange-400 transition">Servicios</a>
+                <a href="https://drive.google.com/drive/folders/10qjaUn4lYQHpO-p-_y-QXCxz2ZOwrvmd" target="_blank" class="hover:text-orange-400 transition">Recursos</a>
+                <a href="#eventos" class="text-orange-400 font-bold border-b-2 border-orange-400">Eventos</a>
+                <a href="#contacto" class="hover:text-orange-400 transition">Contacto</a>
             </nav>
 
             <div class="flex items-center space-x-3">
@@ -39,9 +41,9 @@
         <div id="menu-movil" class="hidden lg:hidden bg-[#001b3a] mt-4 p-4 rounded-xl border border-blue-900 shadow-2xl space-y-4">
             <a href="#" class="block py-2 border-b border-blue-900 hover:text-orange-400">Institucional</a>
             <a href="#" class="block py-2 border-b border-blue-900 hover:text-orange-400">Servicios</a>
-            <a href="#" class="block py-2 border-b border-blue-900 hover:text-orange-400">Recursos (Drive)</a>
-            <a href="evento-30-marzo.html" class="block py-2 border-b border-blue-900 text-orange-400 font-bold">Eventos</a>
-            <a href="#" class="block py-2">Socios</a>
+            <a href="https://drive.google.com/drive/folders/10qjaUn4lYQHpO-p-_y-QXCxz2ZOwrvmd" target="_blank" class="block py-2 border-b border-blue-900 hover:text-orange-400">Recursos (Drive)</a>
+            <a href="#eventos" class="block py-2 border-b border-blue-900 text-orange-400 font-bold">Eventos</a>
+            <a href="#contacto" class="block py-2 hover:text-orange-400">Contacto</a>
         </div>
     </header>
 
@@ -49,6 +51,7 @@
         <div class="text-center mb-10">
             <h2 class="text-3xl font-extrabold text-[#002855]">TRASLAEA: Potenciando la Red</h2>
             <p class="text-gray-600">Entorno de prueba para seguridad, innovación y crecimiento rural</p>
+            <p class="text-orange-600 font-bold text-sm mt-2">Dominio Oficial: traslaea.ar</p>
         </div>
 
         <div class="grid lg:grid-cols-2 gap-8 mb-12">
@@ -109,32 +112,62 @@
                 </div>
             </div>
         </section>
+
+        <section id="contacto" class="mt-12 p-6 bg-[#002855] rounded-2xl shadow-xl text-white border-l-8 border-orange-500">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl font-black mb-2 uppercase italic">Contacto Institucional</h2>
+                <p class="text-blue-200 mb-8 text-sm">Tu consulta será enviada a traslaea@gmail.com y electrostih00@gmail.com</p>
+
+                <form action="https://formspree.io/f/TU_ID_AQUI" method="POST" class="space-y-4 text-gray-800">
+                    <input type="hidden" name="_subject" value="Nuevo Mensaje TRASLAEA">
+                    <input type="hidden" name="_cc" value="electrostih00@gmail.com">
+                    
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="flex flex-col">
+                            <label class="text-white text-[10px] font-bold uppercase mb-1">Nombre</label>
+                            <input type="text" name="nombre" required class="p-3 rounded-lg outline-none focus:ring-2 focus:ring-orange-500" placeholder="Nombre completo">
+                        </div>
+                        <div class="flex flex-col">
+                            <label class="text-white text-[10px] font-bold uppercase mb-1">Tu Correo</label>
+                            <input type="email" name="email" required class="p-3 rounded-lg outline-none focus:ring-2 focus:ring-orange-500" placeholder="mail@ejemplo.com">
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label class="text-white text-[10px] font-bold uppercase mb-1">Mensaje</label>
+                        <textarea name="mensaje" required rows="4" class="p-3 rounded-lg outline-none focus:ring-2 focus:ring-orange-500" placeholder="Escribinos tu consulta..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-4 rounded-xl transition-all shadow-lg uppercase text-lg">
+                        Enviar Consulta a TRASLAEA
+                    </button>
+                </form>
+            </div>
+        </section>
     </main>
 
     <footer class="bg-gray-900 text-white p-10">
         <div class="container mx-auto text-center">
             <h4 class="font-bold text-lg mb-6 uppercase tracking-widest opacity-80 italic text-blue-300 underline">Conectate con TRASLAEA</h4>
             <div class="flex justify-center flex-wrap gap-6 mb-10">
-                <a href="https://wa.me/5493544314637" target="_blank" class="hover:scale-110 transition bg-green-600 p-3 rounded-full shadow-lg"><span class="font-bold text-sm px-1">WA</span></a>
-                <a href="#" target="_blank" class="hover:scale-110 transition bg-blue-700 p-3 rounded-full shadow-lg"><span class="font-bold text-sm px-1">FB</span></a>
-                <a href="#" target="_blank" class="hover:scale-110 transition bg-pink-600 p-3 rounded-full shadow-lg"><span class="font-bold text-sm px-1">IG</span></a>
-                <a href="#" target="_blank" class="hover:scale-110 transition bg-black border border-gray-600 p-3 rounded-full shadow-lg"><span class="font-bold text-sm px-1">TK</span></a>
-                <a href="mailto:tu-mail@gmail.com" class="hover:scale-110 transition bg-red-600 p-3 rounded-full shadow-lg"><span class="font-bold text-sm px-1">@</span></a>
+                <a href="https://wa.me/5493544314637" target="_blank" class="hover:scale-110 transition bg-green-600 p-3 rounded-full shadow-lg" title="WhatsApp"><span class="font-bold text-sm px-1">WA</span></a>
+                <a href="#" class="hover:scale-110 transition bg-blue-700 p-3 rounded-full shadow-lg" title="Facebook"><span class="font-bold text-sm px-1">FB</span></a>
+                <a href="#" class="hover:scale-110 transition bg-pink-600 p-3 rounded-full shadow-lg" title="Instagram"><span class="font-bold text-sm px-1">IG</span></a>
+                <a href="#" class="hover:scale-110 transition bg-black border border-gray-600 p-3 rounded-full shadow-lg" title="TikTok"><span class="font-bold text-sm px-1">TK</span></a>
+                <a href="mailto:traslaea@gmail.com" class="hover:scale-110 transition bg-red-600 p-3 rounded-full shadow-lg" title="Mail"><span class="font-bold text-sm px-1">@</span></a>
             </div>
             <hr class="border-gray-800 mb-8 max-w-xs mx-auto">
             <p class="mb-2 font-bold opacity-75">TRASLAEA - Electricistas Asociados de Traslasierra</p>
-            <p class="opacity-50 text-[10px]">© 2026 Infraestructura gestionada por Electrosith</p>
+            <p class="opacity-50 text-[10px]">© 2026 Infraestructura gestionada por Administración de Redes | Electrosith</p>
         </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // LÓGICA MENÚ HAMBURGUESA
+            // Lógica del Menú
             const btnMenu = document.getElementById('btn-menu');
             const menuMovil = document.getElementById('menu-movil');
             btnMenu.addEventListener('click', () => { menuMovil.classList.toggle('hidden'); });
 
-            // LÓGICA MAPA
+            // Lógica del Mapa
             var map = L.map('mapa-socios').setView([-32.05, -65.10], 10);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OSM' }).addTo(map);
 
@@ -144,28 +177,30 @@
                 iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
             });
 
-            function crearPin(lat, lng, nombre, cargo, esp, loc, tel, ico = null) {
+            function crearPin(lat, lng, nombre, cargo, esp, loc, tel, linkWa, ico = null) {
                 let m = ico ? { icon: ico } : {};
                 return L.marker([lat, lng], m).addTo(map).bindPopup(`
                     <div style="min-width: 180px;">
                         <div style="background:#002855; color:white; padding:8px; border-radius:6px 6px 0 0; text-align:center;">
-                            <strong>${nombre}</strong><br><small style="color:#f58220;">${cargo}</small>
+                            <strong style="font-size:13px;">${nombre}</strong><br><small style="color:#f58220; font-weight:bold;">${cargo}</small>
                         </div>
                         <div style="padding:10px; border:1px solid #002855; border-top:none; background:white;">
                             <p style="font-size:11px; margin-bottom:8px;">🛠️ <b>Especialidad:</b><br>${esp}</p>
+                            <p style="font-size:10px; color:#666; margin-bottom:8px;">📍 ${loc}</p>
                             <div style="display:flex; flex-direction:column; gap:5px;">
-                                <a href="https://wa.me/${tel.replace('+', '')}" target="_blank" style="background:#25D366; color:white; text-align:center; padding:6px; border-radius:4px; text-decoration:none; font-size:10px; font-weight:bold;">WHATSAPP</a>
-                                <a href="tel:${tel}" style="background:#007bff; color:white; text-align:center; padding:6px; border-radius:4px; text-decoration:none; font-size:10px; font-weight:bold;">LLAMAR</a>
+                                <a href="${linkWa}" target="_blank" style="background:#25D366; color:white; text-align:center; padding:6px; border-radius:4px; text-decoration:none; font-size:10px; font-weight:bold;">WHATSAPP</a>
+                                <a href="tel:${tel}" style="background:#007bff; color:white; text-align:center; padding:6px; border-radius:4px; text-decoration:none; font-size:10px; font-weight:bold;">LLAMAR AHORA</a>
                             </div>
                         </div>
                     </div>
                 `);
             }
 
-            crearPin(-31.9493132, -65.1712348, "TRASLAEA", "Sede Central", "Asociación Civil", "Villa Dolores", "+5493544314637", iconoT);
-            crearPin(-32.1047856, -65.109015, "Esteban Colombo", "Secretario", "CCTV y Solar", "Luyaba", "+5493544314637");
-            crearPin(-31.9492864, -65.1713415, "Ricardo Balmaceda", "Presidente", "Matriculado", "Villa Dolores", "+5493544000000");
-            crearPin(-32.1865089, -65.0544137, "Marcelo Flores", "Tesorero", "Redes", "Corralito", "+5493544000000");
+            // CARGA DE PUNTOS OFICIALES
+            crearPin(-31.9493132, -65.1712348, "TRASLAEA", "Sede Central", "Asociación Civil", "Villa Dolores", "+5493544314637", "https://api.whatsapp.com/send?phone=5493544314637", iconoT);
+            crearPin(-32.1047856, -65.109015, "Esteban Colombo", "Secretario", "CCTV, Alarmas y Solar", "Luyaba", "+5493544314637", "https://api.whatsapp.com/send?phone=5493544314637");
+            crearPin(-31.9492864, -65.1713415, "Ricardo Balmaceda", "Presidente", "Electricista Matriculado", "Villa Dolores", "+5493544000000", "https://wa.me/5493544000000");
+            crearPin(-32.1865089, -65.0544137, "Marcelo Flores", "Tesorero", "Redes e Infraestructura", "Corralito", "+5493544000000", "https://wa.me/5493544000000");
 
             setTimeout(() => { map.invalidateSize(); }, 600);
         });
