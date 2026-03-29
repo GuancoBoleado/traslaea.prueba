@@ -143,6 +143,23 @@
             <p class="opacity-50 text-[10px]">© 2026 Infraestructura gestionada por Administración de Redes | Electrosith</p>
         </div>
     </footer>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar el mapa centrado en Mina Clavero
+            var map = L.map('mapa-socios').setView([-31.7215, -65.0080], 11);
 
+            // Cargar los dibujos de OpenStreetMap
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
+
+            // Marcador de ejemplo: Tu ubicación
+            L.marker([-31.7215, -65.0080]).addTo(map)
+                .bindPopup('<b style="color:#002855">Esteban Colombo</b><br>Electricista Matriculado<br><a href="#" style="color:blue">Ver Perfil</a>');
+
+            // Este comando ajusta el mapa al tamaño del cuadro blanco
+            setTimeout(function(){ map.invalidateSize(); }, 500);
+        });
+    </script>
 </body>
 </html>
