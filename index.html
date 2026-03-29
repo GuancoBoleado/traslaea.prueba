@@ -93,13 +93,24 @@
         <section id="eventos" class="mt-12 p-6 bg-white rounded-2xl border border-gray-200 shadow-lg">
             <h2 class="text-3xl font-black text-[#002855] mb-8 border-b-4 border-orange-500 inline-block uppercase italic">Cartelera de Actividades</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all border border-orange-200">
-                    <div class="h-48 bg-gray-200"><img src="quemado1.jpg" alt="Tablero" class="w-full h-full object-cover"></div>
+               <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all border border-orange-200 group">
+                    <div class="h-56 bg-gray-200 overflow-hidden relative">
+                        <img src="quemado1.jpg" alt="Tablero Incendiado" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                            <span class="text-white text-xs font-bold uppercase tracking-wider">Registro Fotográfico TRASLAEA</span>
+                        </div>
+                    </div>
                     <div class="p-5">
-                        <span class="bg-orange-100 text-orange-600 text-[10px] font-bold px-2 py-1 rounded uppercase">Próximo: 30/03</span>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="bg-orange-100 text-orange-600 text-[10px] font-bold px-2 py-1 rounded uppercase">Próximo: 30/03</span>
+                            <span class="text-gray-400 text-[10px] font-bold">Ref: #001-SOL</span>
+                        </div>
                         <h3 class="text-xl font-bold text-[#002855] mt-2 leading-tight">Reparación Solidaria Tablero</h3>
-                        <p class="text-sm text-gray-600 mt-2 line-clamp-2">Asistencia a vecina por incendio de tablero principal.</p>
-                        <a href="evento-30-marzo.html" target="_blank" class="mt-4 inline-block text-blue-600 font-bold text-sm italic">VER DETALLES →</a>
+                        <p class="text-sm text-gray-600 mt-2">Intervención de urgencia por incendio de tablero principal. Se realizará el recambio de térmicas y cables dañados.</p>
+                        <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+                            <a href="evento-30-marzo.html" target="_blank" class="text-blue-600 font-bold text-sm italic hover:text-orange-500 transition-colors">VER DETALLES →</a>
+                            <span class="text-[10px] text-gray-400 font-mono">Villa Dolores</span>
+                        </div>
                     </div>
                 </div>
                 <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 opacity-80">
