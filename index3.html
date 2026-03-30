@@ -10,58 +10,61 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        /* Contenedor del GIF de fondo fijo */
-        .bg-gif-container {
+        /* Contenedor de las 3 imágenes de fondo */
+        .bg-images-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
-            background-color: #002855; /* Respaldo visual */
+            z-index: -2; /* Un nivel más abajo que el título principal */
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Divide la pantalla en 3 columnas */
+            gap: 0;
+            background-color: #e0f2fe;
         }
-
-        .bg-gif-container img {
+        
+        .bg-images-container img {
             width: 100%;
-            height: 100%;
+            height: 100vh;
             object-fit: cover;
-            opacity: 0.35; /* Ajuste de visibilidad del GIF */
+            opacity: 0.60; /* Opacidad baja para que no moleste al texto */
+            filter: grayscale(40%); /* Un toque profesional en gris opcional */
         }
 
-        /* Capa de contraste para legibilidad */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(2px);
-            z-index: -1;
+        /* En móviles, las ponemos una debajo de otra en lugar de columnas */
+        @media (max-width: 768px) {
+            .bg-images-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(3, 1fr);
+            }
         }
 
         #mapa-socios { z-index: 1; }
     </style>
 </head>
-<body class="font-sans text-gray-900">
+<body class="font-sans text-gray-900 relative">
 
-    <div class="bg-gif-container">
-        <img src="tu-archivo.gif" alt="Fondo TRASLAEA">
+    <div class="bg-images-container">
+        <img src="imagen1.jpg" alt="Fondo 1">
+        <img src="imagen2.jpg" alt="Fondo 2">
+        <img src="imagen3.jpg" alt="Fondo 3">
     </div>
-    <div class="overlay"></div>
 
-    <header class="bg-[#002855] text-white p-4 sticky top-0 z-[1000] shadow-2xl">
+    <div class="container mx-auto mt-10 mb-20 px-4 text-center relative z-10">
+        <h2 class="text-4xl font-extrabold text-[#002855] tracking-tight">TRASLAEA: Potenciando la Red</h2>
+        <p class="text-xl text-gray-800 font-semibold italic mt-2">Seguridad e innovación rural en Traslasierra</p>
+    </div>
+
+    <header class="bg-[#002855] text-white p-4 shadow-lg sticky top-0 z-[1000]">
         <div class="container mx-auto flex justify-between items-center">
-            
             <div class="flex items-center space-x-3">
                 <div class="h-16 w-16 rounded-full bg-white overflow-hidden border-2 border-orange-500 shadow-lg flex items-center justify-center transition-transform hover:scale-110">
-                    <img src="logo.png?v=99" alt="Logo TRASLAEA" class="h-full w-full object-contain transform scale-110">
+                    <img src="logo.png?v=99" alt="Logo" class="h-full w-full object-contain transform scale-110">
                 </div>
                 <div>
                     <h1 class="text-xl font-bold tracking-tight leading-none">TRASLAEA</h1>
-                    <span class="block text-[10px] font-normal opacity-90 uppercase tracking-widest text-orange-400">
-                        Electricistas Asociados
-                    </span>
+                    <span class="block text-[10px] font-normal opacity-90 uppercase tracking-widest text-orange-400">Electricistas Asociados</span>
                 </div>
             </div>
 
@@ -73,14 +76,9 @@
             </nav>
 
             <div class="flex items-center space-x-3">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/viewform" 
-                   target="_blank" class="bg-white text-[#002855] px-4 py-2 rounded-full font-bold text-xs hover:bg-orange-400 hover:text-white transition shadow-md uppercase">
-                    Suscripción
-                </a>
-                <button id="btn-menu" class="lg:hidden text-white focus:outline-none">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/viewform" target="_blank" class="bg-white text-[#002855] px-4 py-2 rounded-full font-bold text-xs hover:bg-gray-200 shadow-md transition">SUSCRIPCIÓN</a>
+                <button id="btn-menu" class="lg:hidden text-white">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
             </div>
         </div>
@@ -93,135 +91,185 @@
         </div>
     </header>
 
-    <main class="container mx-auto mt-8 px-4 pb-12">
-        <div class="text-center mb-10">
-            <h2 class="text-4xl font-extrabold text-[#002855] drop-shadow-sm uppercase italic">TRASLAEA: Potenciando la Red</h2>
-            <p class="text-gray-700 font-medium text-lg">Seguridad, innovación y crecimiento rural en Traslasierra</p>
-            <p class="text-orange-600 font-bold text-sm mt-2 tracking-widest uppercase">Dominio Oficial: traslaea.ar</p>
-        </div>
-
-        <div class="grid lg:grid-cols-2 gap-8 mb-12">
-            <div class="bg-white/80 backdrop-blur-md p-6 rounded-xl shadow-lg border-t-4 border-blue-500">
-                <h3 class="font-bold text-lg mb-4 text-gray-700 uppercase italic">Mapa de Socios y Cobertura</h3>
-                <div id="mapa-socios" class="h-80 rounded-lg shadow-inner border border-blue-200"></div>
+    <main class="container mx-auto mt-20 px-4 pb-12 relative z-10"> <div class="grid lg:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white/90 p-6 rounded-xl shadow-md border-t-4 border-blue-500 backdrop-blur-sm">
+                <h3 class="font-bold text-lg mb-4 text-gray-700 uppercase italic">Mapa de Socios</h3>
+                <div id="mapa-socios" class="h-80 rounded-lg border border-blue-200"></div>
             </div>
-
-            <div class="bg-white/80 backdrop-blur-md p-6 rounded-xl shadow-lg border-t-4 border-blue-500">
-                <h3 class="font-bold text-lg mb-4 text-gray-700 uppercase">Recursos y Manuales Técnicos</h3>
+            <div class="bg-white/90 p-6 rounded-xl shadow-md border-t-4 border-blue-500 backdrop-blur-sm">
+                <h3 class="font-bold text-lg mb-4 text-gray-700 uppercase">Recursos Técnicos</h3>
                 <div class="space-y-3">
-                    <div class="flex items-center p-3 bg-white/50 rounded border hover:bg-white transition shadow-sm">
+                    <div class="flex items-center p-3 bg-gray-50/80 rounded border hover:bg-gray-100 transition shadow-sm">
                         <span class="text-red-500 mr-3 font-bold">PDF</span>
                         <span class="text-sm text-gray-600 flex-1">Manual de Instalaciones Solares</span>
-                        <button class="text-blue-500 text-xs font-bold underline px-2">Descargar</button>
+                        <button class="text-blue-500 text-xs font-bold underline">Descargar</button>
                     </div>
-                    <div class="flex items-center p-3 bg-white/50 rounded border hover:bg-white transition shadow-sm">
+                    <div class="flex items-center p-3 bg-gray-50/80 rounded border hover:bg-gray-100 transition shadow-sm">
                         <span class="text-red-500 mr-3 font-bold">PDF</span>
                         <span class="text-sm text-gray-600 flex-1">Normativas Eléctricas Vigentes</span>
-                        <a href="https://drive.google.com/drive/folders/10qjaUn4lYQHpO-p-_y-QXCxz2ZOwrvmd" target="_blank" class="text-blue-500 text-xs font-bold underline px-2">Descargar</a>
+                        <a href="https://drive.google.com/drive/folders/10qjaUn4lYQHpO-p-_y-QXCxz2ZOwrvmd" target="_blank" class="text-blue-500 text-xs font-bold underline">Descargar</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <section id="eventos" class="mt-12 p-6 bg-white/90 backdrop-blur-md rounded-2xl border border-gray-200 shadow-xl">
+        <section id="eventos" class="mt-20 p-6 bg-white/95 rounded-2xl border border-gray-200 shadow-lg backdrop-blur-sm">
             <h2 class="text-3xl font-black text-[#002855] mb-8 border-b-4 border-orange-500 inline-block uppercase italic">Cartelera de Actividades</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <div class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all border border-orange-200 group">
-                    <div class="h-48 overflow-hidden">
-                        <img src="quemado1.jpg" alt="Obra Solidaria" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                    </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-orange-200 group">
+                    <div class="h-48 overflow-hidden"><img src="quemado1.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"></div>
                     <div class="p-5">
-                        <span class="bg-orange-100 text-orange-600 text-[10px] font-bold px-2 py-1 rounded uppercase">Próximo: 30/03</span>
-                        <h3 class="text-xl font-bold text-[#002855] mt-2 leading-tight">Reparación Solidaria Tablero</h3>
-                        <p class="text-sm text-gray-600 mt-2">Asistencia técnica por siniestro en vivienda vecinal.</p>
-                        <a href="evento-30-marzo.html" class="mt-4 inline-block text-blue-600 font-bold text-sm italic">VER DETALLES →</a>
+                        <span class="bg-orange-100 text-orange-600 text-[10px] font-bold px-2 py-1 rounded">PRÓXIMO: 30/03</span>
+                        <h3 class="text-xl font-bold text-[#002855] mt-2">Reparación Solidaria</h3>
+                        <p class="text-sm text-gray-600 mt-2">Intervención en tablero principal post-incendio.</p>
+                        <a href="evento-30-marzo.html" class="block mt-4 text-blue-600 font-bold text-sm italic">DETALLES →</a>
                     </div>
                 </div>
-
-                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 opacity-75">
-                    <div class="w-full h-48 bg-gray-200 flex items-center justify-center italic text-gray-400 text-xs p-4 text-center">[Foto Charla Normativas]</div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 opacity-80">
+                    <div class="h-48 bg-gray-200 flex items-center justify-center italic text-gray-400 text-xs p-4 text-center">[Foto Capacitación]</div>
                     <div class="p-5">
-                        <span class="bg-gray-100 text-gray-500 text-[10px] font-bold px-2 py-1 rounded uppercase">Realizado: 15/03</span>
-                        <h3 class="text-xl font-bold text-gray-700 mt-2">Capacitación ERSeP</h3>
-                        <p class="text-sm text-gray-500 mt-2">Actualización técnica sobre normativas vigentes.</p>
-                        <span class="mt-4 block text-gray-400 font-bold text-sm uppercase italic">Archivado</span>
+                        <span class="bg-gray-100 text-gray-500 text-[10px] font-bold px-2 py-1 rounded">REALIZADO: 15/03</span>
+                        <h3 class="text-xl font-bold text-gray-700 mt-2">Charla sobre Normativas</h3>
+                        <p class="text-sm text-gray-500 mt-2">Actualización técnica ERSeP.</p>
+                        <span class="mt-4 block text-gray-400 font-bold text-sm uppercase">Archivado</span>
                     </div>
                 </div>
-
                 <div class="bg-white rounded-xl overflow-hidden shadow-md border border-blue-100">
-                    <div class="w-full h-48 bg-[#002855] flex flex-col items-center justify-center text-white p-4 text-center">
+                    <div class="h-48 bg-[#002855] flex flex-col items-center justify-center text-white p-4 text-center">
                         <span class="text-4xl mb-2">⚖️</span>
                         <h4 class="font-bold uppercase text-[10px] tracking-widest">Institucional</h4>
                     </div>
                     <div class="p-5">
-                        <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-1 rounded uppercase font-mono">01/01/2027</span>
-                        <h3 class="text-xl font-bold text-[#002855] mt-2">Asamblea Ordinaria</h3>
-                        <p class="text-sm text-gray-600 mt-2">Balance anual, auditoría y renovación de autoridades.</p>
-                        <span class="mt-4 block text-blue-400 font-bold text-sm italic uppercase">Próximamente →</span>
+                        <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-1 rounded">01/01/2027</span>
+                        <h3 class="text-xl font-bold text-[#002855] mt-2">Asamblea Anual</h3>
+                        <p class="text-sm text-gray-600 mt-2">Balance y renovación de autoridades.</p>
+                        <span class="mt-4 block text-blue-400 font-bold text-sm italic">PRÓXIMAMENTE →</span>
                     </div>
                 </div>
-
             </div>
         </section>
 
-        <section id="contacto" class="mt-12 p-8 bg-[#002855]/95 rounded-2xl shadow-2xl text-white border-l-8 border-orange-500 backdrop-blur-sm">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-3xl font-black mb-6 uppercase italic">Contacto Institucional</h2>
-                <form action="https://formspree.io/f/xykbekdd" method="POST" class="space-y-4 text-gray-800 text-left">
+        <section id="contacto" class="mt-12 p-6 bg-[#002855]/95 rounded-2xl shadow-xl text-white border-l-8 border-orange-500 backdrop-blur-sm">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl font-black mb-6 uppercase italic">Contacto</h2>
+                <form action="https://formspree.io/f/xykbekdd" method="POST" class="space-y-4 text-gray-800">
                     <div class="grid md:grid-cols-2 gap-4">
-                        <input type="text" name="nombre" required class="p-3 rounded-lg outline-none focus:ring-2 focus:ring-orange-500" placeholder="Nombre">
-                        <input type="email" name="email" required class="p-3 rounded-lg outline-none focus:ring-2 focus:ring-orange-500" placeholder="Correo electrónico">
+                        <input type="text" name="nombre" required class="p-3 rounded-lg outline-none" placeholder="Nombre">
+                        <input type="email" name="email" required class="p-3 rounded-lg outline-none" placeholder="Email">
                     </div>
-                    <textarea name="mensaje" required rows="4" class="w-full p-3 rounded-lg outline-none focus:ring-2 focus:ring-orange-500" placeholder="Escribe tu consulta..."></textarea>
-                    <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-4 rounded-xl transition-all shadow-lg uppercase text-lg">
-                        Enviar Consulta
-                    </button>
+                    <textarea name="mensaje" required rows="4" class="w-full p-3 rounded-lg outline-none" placeholder="Consulta..."></textarea>
+                    <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-4 rounded-xl shadow-lg uppercase">Enviar</button>
                 </form>
             </div>
         </section>
     </main>
 
-    <footer class="bg-gray-900 text-white p-10 mt-12 relative z-10">
-        <div class="container mx-auto text-center">
-            <h4 class="font-bold text-lg mb-8 uppercase tracking-widest text-blue-300 underline decoration-orange-500 decoration-2">Conectate con TRASLAEA</h4>
+    <footer class="bg-gray-950 text-white p-10 mt-12 relative z-10 border-t-4 border-orange-500">
+        <div class="container mx-auto grid md:grid-cols-3 gap-10 text-center md:text-left">
             
-            <div class="flex justify-center flex-wrap gap-5 mb-12">
-                <a href="https://wa.me/5493544314637" target="_blank" class="bg-green-600 hover:bg-green-700 p-4 rounded-full transition-transform hover:scale-125 shadow-xl" title="WhatsApp">
-                    <span class="font-black text-sm">WA</span>
+            <div class="space-y-4">
+                <h4 class="font-bold text-lg mb-4 uppercase tracking-widest text-orange-400 border-b border-orange-400 inline-block pb-1">Nuestra Sede</h4>
+                <p class="text-sm opacity-90 flex items-start justify-center md:justify-start">
+                    <span class="mr-3 text-orange-300">🏠</span>
+                    <span>Dorrego 1435, Barrio San Martin,<br>Ciudad de Villa Dolores (C.P. 5870),<br>Provincia de Córdoba, República Argentina</span>
+                </p>
+                <p class="text-sm opacity-90 flex items-center justify-center md:justify-start">
+                    <span class="mr-3 text-orange-300">📞</span>
+                    <span>Teléfono: +54 9 3544 30-7583</span>
+                </p>
+                <a href="https://wa.me/5493544307583" target="_blank" class="text-sm opacity-90 flex items-center justify-center md:justify-start hover:text-green-400 transition">
+                    <span class="mr-3 text-green-400">💬</span>
+                    <span>WhatsApp: +54 9 3544 30-7583</span>
                 </a>
-                <a href="#" class="bg-blue-700 hover:bg-blue-800 p-4 rounded-full transition-transform hover:scale-125 shadow-xl" title="Facebook">
-                    <span class="font-black text-sm">FB</span>
-                </a>
-                <a href="#" class="bg-gradient-to-tr from-yellow-500 via-red-500 to-purple-500 p-4 rounded-full transition-transform hover:scale-125 shadow-xl" title="Instagram">
-                    <span class="font-black text-sm">IG</span>
-                </a>
-                <a href="#" class="bg-black border border-gray-700 p-4 rounded-full transition-transform hover:scale-125 shadow-xl" title="TikTok">
-                    <span class="font-black text-sm">TK</span>
-                </a>
-                <a href="mailto:traslaea@gmail.com" class="bg-red-600 hover:bg-red-700 p-4 rounded-full transition-transform hover:scale-125 shadow-xl" title="Email">
-                    <span class="font-black text-sm">@</span>
+                <a href="mailto:traslaea@gmail.com" class="text-sm opacity-90 flex items-center justify-center md:justify-start hover:text-red-400 transition">
+                    <span class="mr-3 text-red-400">✉️</span>
+                    <span>traslaea@gmail.com</span>
                 </a>
             </div>
 
-            <p class="font-bold opacity-75 italic text-sm">TRASLAEA - Asociación de Electricistas de Traslasierra</p>
-            <p class="opacity-50 text-[10px] mt-4 uppercase">© 2026 Infraestructura gestionada por Electrosith</p>
+            <div class="text-center">
+                <h4 class="font-bold text-lg mb-6 uppercase tracking-widest text-blue-300 border-b border-blue-300 inline-block pb-1">Conectate con TRASLAEA</h4>
+                <div class="grid grid-cols-3 gap-4 justify-items-center">
+                    <a href="#" target="_blank" class="group block text-center">
+                        <div class="bg-white/10 p-4 rounded-full group-hover:bg-gradient-to-br group-hover:from-purple-600 group-hover:via-pink-600 group-hover:to-orange-500 transition-all duration-300">
+                            <img src="instagram.png" alt="Instagram" class="w-8 h-8 object-contain">
+                        </div>
+                        <span class="text-[10px] mt-1 block opacity-70 group-hover:opacity-100">Instagram</span>
+                    </a>
+                    <a href="#" target="_blank" class="group block text-center">
+                        <div class="bg-white/10 p-4 rounded-full group-hover:bg-black transition-all duration-300">
+                            <img src="tiktok.png" alt="TikTok" class="w-8 h-8 object-contain">
+                        </div>
+                        <span class="text-[10px] mt-1 block opacity-70 group-hover:opacity-100">TikTok</span>
+                    </a>
+                    <a href="#" target="_blank" class="group block text-center">
+                        <div class="bg-white/10 p-4 rounded-full group-hover:bg-[#1877F2] transition-all duration-300">
+                            <img src="facebook.png" alt="Facebook" class="w-8 h-8 object-contain">
+                        </div>
+                        <span class="text-[10px] mt-1 block opacity-70 group-hover:opacity-100">Facebook</span>
+                    </a>
+                    <a href="mailto:traslaea@gmail.com" class="group block text-center">
+                        <div class="bg-white/10 p-4 rounded-full group-hover:bg-red-600 transition-all duration-300">
+                            <img src="correo.png" alt="Correo" class="w-8 h-8 object-contain">
+                        </div>
+                        <span class="text-[10px] mt-1 block opacity-70 group-hover:opacity-100">Correo</span>
+                    </a>
+                    <a href="#" target="_blank" class="group block text-center">
+                        <div class="bg-white/10 p-4 rounded-full group-hover:bg-[#39E09B] transition-all duration-300">
+                            <img src="linktree.png" alt="Link Tree" class="w-8 h-8 object-contain">
+                        </div>
+                        <span class="text-[10px] mt-1 block opacity-70 group-hover:opacity-100">Link Tree</span>
+                    </a>
+                    <a href="#" target="_blank" class="group block text-center">
+                        <div class="bg-white/10 p-4 rounded-full group-hover:bg-black transition-all duration-300">
+                            <img src="twitter.png" alt="Twitter" class="w-8 h-8 object-contain">
+                        </div>
+                        <span class="text-[10px] mt-1 block opacity-70 group-hover:opacity-100">Twitter</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <h4 class="font-bold text-lg mb-4 uppercase tracking-widest text-green-300 border-b border-green-300 inline-block pb-1">Enlaces de Interés</h4>
+                
+                <a href="https://relevandopeligros.org/" target="_blank" class="flex items-center justify-center md:justify-start bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 hover:border-green-400 transition-all duration-300 group">
+                    <img src="relevando-peligro.png" alt="Relevando Peligro" class="w-12 h-12 object-contain mr-4 group-hover:scale-110 transition-transform">
+                    <div>
+                        <span class="block font-bold text-green-400 group-hover:text-green-300">Relevando Peligros</span>
+                        <span class="text-xs opacity-70">Reportar situaciones de riesgo eléctrico</span>
+                    </div>
+                </a>
+
+                <a href="https://api.whatsapp.com/send/?phone=5493518629999&text&type=phone_number&app_absent=0" target="_blank" class="flex items-center justify-center md:justify-start bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 hover:border-green-400 transition-all duration-300 group">
+                    <div class="bg-green-600 p-3 rounded-full mr-4 group-hover:scale-110 transition-transform">
+                        <span class="font-bold text-xs">💬</span>
+                    </div>
+                    <div>
+                        <span class="block font-bold text-green-400 group-hover:text-green-300">Urgencias ERSeP</span>
+                        <span class="text-xs opacity-70">+54 9 351 862-9999 (WhatsApp)</span>
+                    </div>
+                </a>
+            </div>
+
         </div>
-    </footer>
+
+        <div class="container mx-auto text-center mt-12 pt-8 border-t border-white/10">
+            <p class="font-bold opacity-75 uppercase text-xs tracking-wider">TRASLAEA - Electricistas de Traslasierra</p>
+            <p class="opacity-50 text-[9px] mt-1 italic">© 2026 Soporte Técnico por Electrosith</p>
+        </div>
+    </footer
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Menú Móvil
             const btnMenu = document.getElementById('btn-menu');
             const menuMovil = document.getElementById('menu-movil');
             btnMenu.addEventListener('click', () => { menuMovil.classList.toggle('hidden'); });
 
-            // Mapa Leaflet
             var map = L.map('mapa-socios').setView([-32.05, -65.10], 10);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
             function crearPin(lat, lng, nombre, cargo, loc) {
-                L.marker([lat, lng]).addTo(map).bindPopup(`<b>${nombre}</b><br><small>${cargo}</small><br>📍 ${loc}`);
+                L.marker([lat, lng]).addTo(map).bindPopup(`<b>${nombre}</b><br>${cargo}<br>${loc}`);
             }
 
             crearPin(-31.9493132, -65.1712348, "TRASLAEA", "Sede Central", "Villa Dolores");
@@ -229,7 +277,6 @@
             crearPin(-31.9492864, -65.1713415, "Ricardo Balmaceda", "Presidente", "Villa Dolores");
             crearPin(-32.1865089, -65.0544137, "Marcelo Flores", "Tesorero", "Corralito");
             
-            // Fix para visualización correcta del mapa
             setTimeout(() => { map.invalidateSize(); }, 600);
         });
     </script>
