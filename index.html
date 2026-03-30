@@ -94,3 +94,64 @@
 ---
 
 **Copiá esto en un archivo nuevo llamado `index.html`.** ¿Querés que en el próximo bloque (el Header) mantengamos el botón de **SUSCRIPCIÓN** en blanco con letras azules o preferís que resalte más con un color naranja como el logo?
+<header class="bg-[#002855] text-white p-4 shadow-2xl sticky top-0 z-[1000]">
+        <div class="container mx-auto flex justify-between items-center">
+            
+            <div class="flex items-center space-x-3">
+                <div class="logo-container h-16 w-16 rounded-full bg-white overflow-hidden border-2 border-orange-500 shadow-lg flex items-center justify-center transition-all duration-500">
+                    <img src="logo.png?v=99" alt="Logo TRASLAEA" class="h-full w-full object-contain transition-transform duration-500">
+                </div>
+                <div>
+                    <h1 class="text-xl font-black tracking-tighter leading-none uppercase italic">TRASLAEA</h1>
+                    <span class="block text-[10px] font-bold text-orange-400 uppercase tracking-[0.2em]">Electricistas Asociados</span>
+                </div>
+            </div>
+
+            <nav class="hidden lg:flex space-x-8 text-xs font-black uppercase tracking-widest">
+                <a href="#" class="hover:text-orange-400 transition-colors">Institucional</a>
+                <a href="https://drive.google.com/drive/folders/10qjaUn4lYQHpO-p-_y-QXCxz2ZOwrvmd" target="_blank" class="hover:text-orange-400 transition-colors">Recursos</a>
+                <a href="#eventos" class="hover:text-orange-400 transition-colors">Eventos</a>
+                <a href="#contacto" class="text-orange-400 border-b-2 border-orange-400 pb-1">Contacto</a>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <a href="https://docs.google.com/forms/..." target="_blank" class="bg-white text-[#002855] px-5 py-2 rounded-full font-black text-[10px] hover:bg-orange-500 hover:text-white shadow-xl transition-all uppercase tracking-tighter">SUSCRIPCIÓN</a>
+                <button id="btn-menu" class="lg:hidden text-white p-2">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="menu-movil" class="hidden lg:hidden flex flex-col space-y-4 p-6 bg-[#001b3a] mt-2 rounded-2xl border border-blue-900 shadow-2xl italic font-bold">
+            <a href="#" class="border-b border-blue-900 pb-2">Institucional</a>
+            <a href="https://drive.google.com/drive/folders/..." target="_blank" class="border-b border-blue-900 pb-2">Recursos</a>
+            <a href="#eventos" class="border-b border-blue-900 pb-2">Eventos</a>
+            <a href="#contacto" class="text-orange-400">Contacto</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 relative z-10">
+        <div class="text-center mt-20 mb-16">
+            <h2 class="text-5xl md:text-7xl font-black text-[#002855] tracking-tighter uppercase italic leading-none drop-shadow-md">
+                Potenciando la Red
+            </h2>
+            <div class="w-24 h-1.5 bg-orange-500 mx-auto my-6 rounded-full"></div>
+            <p class="text-xl text-gray-800 font-bold italic tracking-widest uppercase">
+                Traslasierra Electricistas Asociados
+            </p>
+        </div>
+
+        <section class="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-20">
+            <div class="glass p-8 rounded-3xl text-center border-b-8 border-orange-500 shadow-2xl transform hover:-translate-y-2 transition-transform">
+                <span class="block text-4xl font-black text-[#002855] mb-1" id="count-socios">0</span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-gray-500">Socios Activos</span>
+            </div>
+            <div class="glass p-8 rounded-3xl text-center border-b-8 border-blue-600 shadow-2xl transform hover:-translate-y-2 transition-transform">
+                <span class="block text-4xl font-black text-[#002855] mb-1" id="count-obras">0</span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-gray-500">Obras Seguras</span>
+            </div>
+            <div class="hidden md:block glass p-8 rounded-3xl text-center border-b-8 border-orange-500 shadow-2xl transform hover:-translate-y-2 transition-transform">
+                <span class="block text-4xl font-black text-[#002855] mb-1" id="count-loc">0</span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-gray-500">Localidades</span>
+            </div>
+        </section>
