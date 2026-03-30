@@ -19,18 +19,20 @@
         z-index: -1;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        background-color: #002855; /* Fondo base azul para dar profundidad */
+        /* CAMBIO: Color de fondo cálido (hueso/crema) en lugar de azul */
+        background-color: #fdf5e6; 
     }
     
     .bg-images-container img {
         width: 100%;
         height: 100vh;
         object-fit: cover;
-        opacity: 0.40; /* Bajamos un poco más la opacidad */
-        filter: blur(4px) sepia(20%); /* DESENFOQUE + TONO CÁLIDO */
+        opacity: 0.45; /* Un poco más de presencia para que no se pierdan */
+        /* CAMBIO: Blur para suavizar y SEPIA para dar el tono cálido/madera */
+        filter: blur(3px) sepia(50%) brightness(110%);
     }
 
-    /* Superposición cálida para amalgamar todo */
+    /* CAPA EXTRA: Un degradado sutil para que el fondo sea más claro arriba */
     .bg-images-container::after {
         content: "";
         position: absolute;
@@ -38,9 +40,12 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(0, 40, 85, 0.4));
+        background: linear-gradient(to bottom, rgba(253, 245, 230, 0.3), rgba(253, 245, 230, 0.7));
         pointer-events: none;
     }
+
+    /* Mantenemos el z-index del mapa */
+    #mapa-socios { z-index: 1; }
 </style>
 </head>
 <body class="font-sans text-gray-900 relative">
