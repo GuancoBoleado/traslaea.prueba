@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRASLAEA - Asociación de Electricistas de Traslasierra</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        /* 1. ANIMACIÓN DE FONDOS (Las 3 imágenes en cuadrícula) */
+        .bg-images-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background-color: #1a1a1a;
+            overflow: hidden;
+        }
+        
+        .bg-images-container img {
+            width: 100%;
+            height: 100vh;
+            object-fit: cover;
+            opacity: 0; /* Empieza invisible para la animación */
+            filter: blur(2px) sepia(60%) brightness(0.8) contrast(110%);
+            animation: aparecerFondo 4s ease-in-out forwards;
+        }
+
+        @keyframes aparecerFondo {
+            0% {
+                opacity: 0;
+                filter: blur(0px) sepia(0%) brightness(100%);
+                transform: scale(1.1);
+            }
+            30% {
+                opacity: 1;
+                filter: blur(0px) sepia(0%);
+            }
+            100% {
+                opacity: 0.75; 
+                filter: blur(2px) sepia(60%) brightness(100%) contrast(110%);
+                transform: scale(1);
+            }
+        }
+
+        /* Responsivo para celulares: fotos una debajo de otra */
+        @media (max-width: 768px) {
+            .bg-images-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(3, 1fr);
+            }
+            .bg-images-container img {
+                height: 33.33vh;
+            }
+        }
+
+        /* 2. EFECTOS ESPECIALES DE DISEÑO */
+        .glass {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Estilo para el mapa y que no tape el menú */
+        #mapa-socios { 
+            z-index: 10; 
+            border-radius: 1rem;
+            height: 350px;
+        }
+
+        /* Animación suave para el hover del logo */
+        .logo-container:hover img {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-900 relative">
+
+    <div class="bg-images-container">
+        <img src="imagen1.jpg" alt="Obra 1" style="animation-delay: 0s;">
+        <img src="imagen2.jpg" alt="Obra 2" style="animation-delay: 0.3s;">
+        <img src="imagen3.jpg" alt="Obra 3" style="animation-delay: 0.6s;">
+    </div>
+
+    ```
+
+---
+
+**Copiá esto en un archivo nuevo llamado `index.html`.** ¿Querés que en el próximo bloque (el Header) mantengamos el botón de **SUSCRIPCIÓN** en blanco con letras azules o preferís que resalte más con un color naranja como el logo?
+<header class="bg-[#002855] text-white p-4 shadow-2xl sticky top-0 z-[1000]">
+        <div class="container mx-auto flex justify-between items-center">
+            
+            <div class="flex items-center space-x-3">
+                <div class="logo-container h-16 w-16 rounded-full bg-white overflow-hidden border-2 border-orange-500 shadow-lg flex items-center justify-center transition-all duration-500">
+                    <img src="logo.png?v=99" alt="Logo TRASLAEA" class="h-full w-full object-contain transition-transform duration-500">
+                </div>
+                <div>
+                    <h1 class="text-xl font-black tracking-tighter leading-none uppercase italic">TRASLAEA</h1>
+                    <span class="block text-[10px] font-bold text-orange-400 uppercase tracking-[0.2em]">Electricistas Asociados</span>
+                </div>
+            </div>
+
+            <nav class="hidden lg:flex space-x-8 text-xs font-black uppercase tracking-widest">
+                <a href="#" class="hover:text-orange-400 transition-colors">Institucional</a>
+                <a href="https://drive.google.com/drive/folders/10qjaUn4lYQHpO-p-_y-QXCxz2ZOwrvmd" target="_blank" class="hover:text-orange-400 transition-colors">Recursos</a>
+                <a href="#eventos" class="hover:text-orange-400 transition-colors">Eventos</a>
+                <a href="#contacto" class="text-orange-400 border-b-2 border-orange-400 pb-1">Contacto</a>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <a href="https://docs.google.com/forms/..." target="_blank" class="bg-white text-[#002855] px-5 py-2 rounded-full font-black text-[10px] hover:bg-orange-500 hover:text-white shadow-xl transition-all uppercase tracking-tighter">SUSCRIPCIÓN</a>
+                <button id="btn-menu" class="lg:hidden text-white p-2">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="menu-movil" class="hidden lg:hidden flex flex-col space-y-4 p-6 bg-[#001b3a] mt-2 rounded-2xl border border-blue-900 shadow-2xl italic font-bold">
+            <a href="#" class="border-b border-blue-900 pb-2">Institucional</a>
+            <a href="https://drive.google.com/drive/folders/..." target="_blank" class="border-b border-blue-900 pb-2">Recursos</a>
+            <a href="#eventos" class="border-b border-blue-900 pb-2">Eventos</a>
+            <a href="#contacto" class="text-orange-400">Contacto</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 relative z-10">
+        <div class="text-center mt-20 mb-16">
+            <h2 class="text-5xl md:text-7xl font-black text-[#002855] tracking-tighter uppercase italic leading-none drop-shadow-md">
+                Potenciando la Red
+            </h2>
+            <div class="w-24 h-1.5 bg-orange-500 mx-auto my-6 rounded-full"></div>
+            <p class="text-xl text-gray-800 font-bold italic tracking-widest uppercase">
+                Traslasierra Electricistas Asociados
+            </p>
+        </div>
+
+        <section class="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-20">
+            <div class="glass p-8 rounded-3xl text-center border-b-8 border-orange-500 shadow-2xl transform hover:-translate-y-2 transition-transform">
+                <span class="block text-4xl font-black text-[#002855] mb-1" id="count-socios">0</span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-gray-500">Socios Activos</span>
+            </div>
+            <div class="glass p-8 rounded-3xl text-center border-b-8 border-blue-600 shadow-2xl transform hover:-translate-y-2 transition-transform">
+                <span class="block text-4xl font-black text-[#002855] mb-1" id="count-obras">0</span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-gray-500">Obras Seguras</span>
+            </div>
+            <div class="hidden md:block glass p-8 rounded-3xl text-center border-b-8 border-orange-500 shadow-2xl transform hover:-translate-y-2 transition-transform">
+                <span class="block text-4xl font-black text-[#002855] mb-1" id="count-loc">0</span>
+                <span class="text-[10px] font-black uppercase tracking-widest text-gray-500">Localidades</span>
+            </div>
+        </section>
+
+        <div class="grid lg:grid-cols-2 gap-8 mb-20 relative z-10">
+            
+            <div class="glass p-6 rounded-[2rem] shadow-2xl border-t-4 border-[#002855] relative group">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-black text-xl text-gray-800 uppercase italic flex items-center">
+                        <span class="mr-2 text-orange-500">📍</span> Mapa de Cobertura
+                    </h3>
+                    <span class="text-[9px] font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-full uppercase tracking-tighter shadow-sm group-hover:bg-orange-500 group-hover:text-white transition-colors duration-500">
+                        Traslasierra en Red
+                    </span>
+                </div>
+
+                <div id="mapa-socios" class="border border-blue-100 shadow-inner overflow-hidden relative">
+                    </div>
+                
+                <p class="mt-4 text-[10px] text-gray-500 italic font-bold text-center uppercase tracking-widest">
+                    Haz clic en los puntos para ver información de los socios
+                </p>
+            </div>
+
+            <div class="glass p-6 rounded-[2rem] shadow-2xl border-t-4 border-orange-500">
+                <h3 class="font-black text-xl text-gray-800 mb-6 uppercase italic">
+                    📚 Recursos Técnicos
+                </h3>
+                
+                <div class="space-y-4">
+                    <div class="flex items-center p-4 bg-white/60 rounded-2xl border border-gray-100 hover:border-orange-400 transition-all duration-300 group shadow-sm">
+                        <div class="bg-red-500 text-white w-12 h-12 flex items-center justify-center rounded-xl font-black text-xs shadow-lg mr-4 transform group-hover:rotate-12 transition-transform">
+                            PDF
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-xs font-black text-gray-700 uppercase leading-none">Manual Solar</h4>
+                            <p class="text-[9px] text-gray-500 mt-1 uppercase font-bold tracking-tighter">Instalaciones Fotovoltaicas</p>
+                        </div>
+                        <button class="bg-blue-50 text-blue-600 px-4 py-2 rounded-lg font-black text-[10px] uppercase hover:bg-blue-600 hover:text-white transition shadow-sm">
+                            Bajar ↓
+                        </button>
+                    </div>
+
+                    <a href="https://drive.google.com/drive/folders/10qjaUn4lYQHpO-p-_y-QXCxz2ZOwrvmd" target="_blank" 
+                       class="flex items-center p-4 bg-white/60 rounded-2xl border border-gray-100 hover:border-blue-500 transition-all duration-300 group shadow-sm">
+                        <div class="bg-blue-600 text-white w-12 h-12 flex items-center justify-center rounded-xl font-black text-xs shadow-lg mr-4 transform group-hover:-rotate-12 transition-transform">
+                            DRIVE
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-xs font-black text-gray-700 uppercase leading-none">Normativas 2026</h4>
+                            <p class="text-[9px] text-gray-500 mt-1 uppercase font-bold tracking-tighter">Reglamentación AEA / ERSeP</p>
+                        </div>
+                        <span class="text-blue-600 font-black text-[10px] uppercase">Ver Carpeta →</span>
+                    </a>
+
+                    <div class="mt-6 p-4 bg-[#002855] rounded-2xl text-white shadow-xl">
+                        <p class="text-[10px] font-black uppercase tracking-widest text-orange-400 mb-1">Aviso Técnico</p>
+                        <p class="text-[11px] font-bold italic opacity-90 leading-tight">
+                            Recordá que para certificar instalaciones en Córdoba debes estar registrado en la Categoría 3 (Idóneos) o superior.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="mb-24 p-1 bg-gradient-to-br from-orange-500 via-red-600 to-[#002855] rounded-[2.5rem] shadow-2xl relative z-10 overflow-hidden">
+            <div class="bg-white/95 rounded-[2.4rem] p-8 md:p-14 flex flex-col lg:flex-row items-center gap-12 backdrop-blur-md">
+                
+                <div class="flex-shrink-0 w-44 h-44 bg-gray-50 rounded-full flex items-center justify-center border-4 border-dashed border-orange-200 p-6 shadow-inner transform hover:rotate-12 transition-transform duration-700">
+                    <img src="relevando.peligro.jpg" alt="Relevando Peligros" class="max-w-full max-h-full object-contain grayscale hover:grayscale-0 transition-all">
+                </div>
+
+                <div class="flex-1 text-center lg:text-left">
+                    <h2 class="text-3xl md:text-4xl font-black text-[#002855] uppercase italic leading-none mb-4 tracking-tighter">
+                        ¿Viste un peligro eléctrico en la calle?
+                    </h2>
+                    <p class="text-orange-600 font-black text-lg mb-6 uppercase tracking-widest italic">Convenio TRASLAEA & Seguridad Pública</p>
+                    
+                    <p class="text-gray-600 leading-relaxed text-sm md:text-base font-medium mb-6">
+                        No seas un espectador. Si detectás postes caídos, cajas abiertas o cables al alcance de la mano, podés reportarlo de forma gratuita. <strong>La seguridad la hacemos entre todos.</strong>
+                    </p>
+                    
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-4">
+                        <a href="https://relevandopeligros.org/" target="_blank" 
+                           class="flex items-center gap-3 bg-[#002855] text-white px-8 py-4 rounded-2xl font-black text-xs uppercase hover:bg-blue-900 transition-all shadow-xl hover:-translate-y-1">
+                            🌐 Web Oficial
+                        </a>
+                        <a href="https://wa.me/5493518629999" target="_blank" 
+                           class="flex items-center gap-3 bg-green-500 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase hover:bg-green-600 transition-all shadow-xl hover:-translate-y-1">
+                            📞 WhatsApp Urgente
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="eventos" class="mb-24 glass p-8 md:p-12 rounded-[3rem] border border-gray-100 shadow-2xl relative z-10">
+            <h2 class="text-4xl font-black text-[#002855] mb-12 uppercase italic border-l-8 border-orange-500 pl-6 tracking-tighter">
+                Cartelera de Actividades
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                
+                <div class="bg-white rounded-[2rem] overflow-hidden shadow-xl border border-orange-100 group flex flex-col">
+                    <div class="h-60 overflow-hidden relative">
+                        <img src="quemado1.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#002855]/80 to-transparent"></div>
+                        <div class="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg animate-pulse uppercase">Urgente</div>
+                        <div class="absolute bottom-4 left-6">
+                            <span class="bg-orange-500 text-white text-[9px] font-black px-2 py-0.5 rounded uppercase tracking-widest">30/03 - Luyaba</span>
+                            <h3 class="text-xl font-black text-white mt-1 italic uppercase leading-none">Reparación Solidaria</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6 flex-1 flex flex-col">
+                        <p class="text-sm text-gray-600 font-bold leading-snug mb-6 uppercase tracking-tighter italic">
+                            Intervención técnica integral en vivienda siniestrada (Patricia Garay).
+                        </p>
+                        
+                        <button onclick="toggleGaleria('panel-solidario')" class="mt-auto w-full bg-blue-50 text-blue-700 py-3 rounded-xl font-black text-[11px] uppercase tracking-widest hover:bg-[#002855] hover:text-white transition-all duration-300 shadow-sm border border-blue-100">
+                            Ver Progreso de Obra ↓
+                        </button>
+                    </div>
+
+                    <div id="panel-solidario" class="hidden bg-gray-50 p-6 border-t border-orange-100 italic">
+                        
+                        <div class="mb-4">
+                            <p class="text-[9px] font-black text-red-500 uppercase mb-2 tracking-widest flex items-center">🔴 Fase 1: Relevamiento</p>
+                            <div class="grid grid-cols-3 gap-2">
+                                <img src="quemado1.jpg" class="rounded-xl h-16 w-full object-cover border shadow-sm hover:scale-105 transition">
+                                <img src="quemado2.jpg" class="rounded-xl h-16 w-full object-cover border shadow-sm hover:scale-105 transition">
+                                <img src="quemado3.jpg" class="rounded-xl h-16 w-full object-cover border shadow-sm hover:scale-105 transition">
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <p class="text-[9px] font-black text-orange-500 uppercase mb-2 tracking-widest flex items-center">🟠 Fase 2: Avance</p>
+                            <div class="grid grid-cols-3 gap-2">
+                                <img src="avance1.jpg" class="rounded-xl h-16 w-full object-cover border shadow-sm hover:scale-105 transition">
+                                <img src="avance2.jpg" class="rounded-xl h-16 w-full object-cover border shadow-sm hover:scale-105 transition">
+                                <img src="avance3.jpg" class="rounded-xl h-16 w-full object-cover border shadow-sm hover:scale-105 transition">
+                            </div>
+                        </div>
+
+                        <div class="bg-[#002855] text-white p-5 rounded-2xl shadow-2xl">
+                            <h4 class="text-xs font-black uppercase text-orange-400 mb-2 italic">📢 Convocatoria Colegas</h4>
+                            <p class="text-[10px] leading-tight mb-4 opacity-80 font-bold">Buscamos 2 voluntarios para armado de tablero y circuitos de iluminación.</p>
+                            <a href="https://wa.me/5493544314637?text=Hola+Esteban+quiero+sumarme+a+la+obra+solidaria" target="_blank" 
+                               class="block w-full bg-orange-500 text-center py-3 rounded-xl font-black text-[10px] uppercase shadow-lg hover:bg-orange-600 transition transform hover:scale-105">
+                                Inscribirme Ahora
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-[2rem] overflow-hidden shadow-lg border border-gray-100 opacity-80 flex flex-col">
+                    <div class="h-60 bg-gray-200 flex flex-col items-center justify-center p-8 text-center grayscale">
+                        <span class="text-5xl mb-4">🎓</span>
+                        <p class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">Finalizado</p>
+                        <h4 class="text-xl font-black text-gray-500 italic uppercase">Capacitación ERSeP</h4>
+                    </div>
+                    <div class="p-6 text-center">
+                        <span class="text-xs font-bold text-gray-400 italic uppercase tracking-tighter">Realizado: 15 de Marzo, 2026</span>
+                    </div>
+                </div>
+
+                <div class="bg-[#002855] rounded-[2rem] overflow-hidden shadow-2xl border border-blue-900 flex flex-col transform hover:scale-105 transition-transform duration-500">
+                    <div class="h-60 flex flex-col items-center justify-center p-10 text-center bg-gradient-to-br from-blue-900 to-[#002855]">
+                        <span class="text-6xl mb-4 drop-shadow-lg">⚖️</span>
+                        <h4 class="text-2xl font-black text-orange-400 italic uppercase leading-none">Asamblea Anual Ordinaria</h4>
+                    </div>
+                    <div class="p-8 text-center text-white">
+                        <p class="text-[10px] font-black opacity-50 uppercase tracking-[0.4em] mb-3">Próximo Encuentro</p>
+                        <p class="text-2xl font-black italic text-white border-y border-white/10 py-2 uppercase">Enero 2027</p>
+                        <p class="mt-4 text-[10px] font-bold opacity-75 italic">Sede Traslasierra - Orden del día: Renovación de Autoridades.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="contacto" class="max-w-4xl mx-auto glass p-10 md:p-14 rounded-[3rem] shadow-2xl border-l-[15px] border-orange-500 relative z-20 mb-20 transform hover:-translate-y-1 transition-all duration-500">
+            <div class="relative">
+                <h2 class="text-4xl font-black text-[#002855] mb-2 uppercase italic tracking-tighter">Hablemos</h2>
+                <p class="text-orange-600 font-bold text-xs uppercase tracking-[0.3em] mb-10 italic">Consultas Institucionales & Técnicas</p>
+                
+                <form action="https://formspree.io/f/xykbekdd" method="POST" class="grid md:grid-cols-2 gap-6">
+                    <div class="relative">
+                        <input type="text" name="nombre" placeholder="Nombre completo" required 
+                               class="w-full p-5 rounded-2xl bg-white border-2 border-gray-100 outline-none focus:border-orange-400 focus:ring-4 focus:ring-orange-100 font-bold text-gray-700 transition-all placeholder:text-gray-300">
+                    </div>
+                    
+                    <div class="relative">
+                        <input type="email" name="email" placeholder="Correo electrónico" required 
+                               class="w-full p-5 rounded-2xl bg-white border-2 border-gray-100 outline-none focus:border-orange-400 focus:ring-4 focus:ring-orange-100 font-bold text-gray-700 transition-all placeholder:text-gray-300">
+                    </div>
+                    
+                    <div class="md:col-span-2 relative">
+                        <textarea name="mensaje" placeholder="Escribe aquí tu consulta o propuesta..." rows="5" required 
+                                  class="w-full p-5 rounded-2xl bg-white border-2 border-gray-100 outline-none focus:border-orange-400 focus:ring-4 focus:ring-orange-100 font-bold text-gray-700 transition-all placeholder:text-gray-300 resize-none"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="md:col-span-2 bg-[#002855] hover:bg-orange-500 text-white font-black py-6 rounded-[1.5rem] shadow-xl uppercase tracking-[0.2em] transition-all duration-500 transform active:scale-95 flex items-center justify-center gap-3">
+                        <span>Enviar Mensaje</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main> <footer class="bg-[#001b3a] text-white py-20 mt-20 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 via-white to-blue-500 opacity-30"></div>
+        
+        <div class="container mx-auto px-6 flex flex-col items-center text-center relative z-10">
+            
+            <div class="flex space-x-8 mb-12">
+                <a href="https://wa.me/5493544314637" target="_blank" 
+                   class="bg-green-600 w-14 h-14 flex items-center justify-center rounded-2xl hover:scale-110 hover:-rotate-12 transition-all shadow-2xl font-black text-white group">
+                    <span class="text-xl group-hover:scale-125 transition-transform">WA</span>
+                </a>
+                <a href="mailto:traslaea@gmail.com" 
+                   class="bg-red-600 w-14 h-14 flex items-center justify-center rounded-2xl hover:scale-110 hover:rotate-12 transition-all shadow-2xl font-black text-white group">
+                    <span class="text-xl group-hover:scale-125 transition-transform">@</span>
+                </a>
+            </div>
+
+            <div class="mb-8">
+                <h4 class="text-2xl font-black italic uppercase tracking-tighter text-white">TRASLAEA 2026</h4>
+                <p class="text-[10px] font-bold text-orange-400 uppercase tracking-[0.5em] mt-1 opacity-80">Asociación de Electricistas de Traslasierra</p>
+            </div>
+
+            <div class="pt-8 border-t border-white/5 w-full max-w-xs">
+                <p class="text-[9px] font-black opacity-30 tracking-[0.3em] uppercase mb-1">Desarrollo & Soporte</p>
+                <p class="text-[10px] font-bold italic text-blue-300 tracking-widest uppercase">
+                    Electrosith • Traslasierra, Córdoba
+                </p>
+            </div>
+        </div>
+    </footer>
+
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // --- 1. LÓGICA DEL MENÚ MÓVIL ---
+        const btnMenu = document.getElementById('btn-menu');
+        const menuMovil = document.getElementById('menu-movil');
+        if(btnMenu && menuMovil) {
+            btnMenu.onclick = () => menuMovil.classList.toggle('hidden');
+        }
+
+        // --- 2. CONFIGURACIÓN DEL MAPA INTERACTIVO ---
+        const mapContainer = document.getElementById('mapa-socios');
+        if(mapContainer) {
+            // Centrado en Traslasierra (aprox Luyaba/V. Dolores)
+            const map = L.map(mapContainer, { scrollWheelZoom: false }).setView([-32.05, -65.10], 10);
+            
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: 'TRASLAEA 2026'
+            }).addTo(map);
+
+            // Datos de los socios con sus links directos
+            const socios = [
+                { p: [-31.9493, -65.1712], t: "TRASLAEA", s: "Sede Central", l: "Villa Dolores", tel: "3544314637" },
+                { p: [-32.1047, -65.1090], t: "Esteban Colombo", s: "Secretario - Cat 3", l: "Luyaba", tel: "3544314637" },
+                { p: [-31.9492, -65.1713], t: "Ricardo Balmaceda", s: "Presidente", l: "Villa Dolores", tel: "3544561234" },
+                { p: [-32.1865, -65.0544], t: "Marcelo Flores", s: "Tesorero", l: "Corralito", tel: "3544654321" }
+            ];
+
+            socios.forEach(s => {
+                const popupContent = `
+                    <div style="font-family: 'Arial', sans-serif; padding: 10px; min-width: 150px; text-align: center;">
+                        <b style="color: #002855; text-transform: uppercase; font-size: 14px; display: block; margin-bottom: 2px;">${s.t}</b>
+                        <small style="font-weight: bold; color: #666; display: block; margin-bottom: 5px;">${s.s}</small>
+                        <span style="color: #f97316; font-weight: 800; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">${s.l}</span>
+                        
+                        <div style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px;">
+                            <p style="font-size: 9px; font-weight: 900; color: #999; text-transform: uppercase; margin-bottom: 4px;">Contactar:</p>
+                            <a href="https://wa.me/549${s.tel}" target="_blank" 
+                               style="display: inline-block; color: #25d366; font-weight: 900; font-size: 14px; text-decoration: none; border: 1px solid #25d366; padding: 4px 8px; border-radius: 6px;">
+                               📱 +54 9 ${s.tel}
+                            </a>
+                        </div>
+                    </div>
+                `;
+                L.marker(s.p).addTo(map).bindPopup(popupContent);
+            });
+
+            // Botón Expandir Mapa
+            const btnFull = document.createElement('button');
+            btnFull.innerHTML = "🗖 Expandir Mapa";
+            btnFull.className = "absolute top-2 right-2 z-[500] bg-white border-2 border-[#002855] text-[#002855] px-3 py-1 rounded-lg font-black text-[10px] uppercase shadow-lg hover:bg-[#002855] hover:text-white transition-all";
+            mapContainer.appendChild(btnFull);
+            
+            btnFull.onclick = () => {
+                mapContainer.classList.toggle('fixed');
+                if(mapContainer.classList.contains('fixed')){
+                    mapContainer.style.top = "0"; mapContainer.style.left = "0";
+                    mapContainer.style.width = "100vw"; mapContainer.style.height = "100vh";
+                    mapContainer.style.zIndex = "2000";
+                    btnFull.innerHTML = "✕ Cerrar Mapa";
+                } else {
+                    mapContainer.style.width = ""; mapContainer.style.height = "350px";
+                    mapContainer.style.position = "relative"; mapContainer.style.zIndex = "10";
+                    btnFull.innerHTML = "🗖 Expandir Mapa";
+                }
+                setTimeout(() => map.invalidateSize(), 300);
+            };
+            
+            setTimeout(() => map.invalidateSize(), 500);
+        }
+
+        // --- 3. ANIMACIÓN DE CONTADORES ---
+        function animateCount(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            if(!obj) return;
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start) + (id === 'count-socios' ? '+' : '');
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Activamos los contadores
+        animateCount("count-socios", 0, 42, 2000);
+        animateCount("count-obras", 0, 158, 2500);
+        animateCount("count-loc", 0, 12, 1500);
+    });
+
+    // --- 4. FUNCIÓN GLOBAL PARA LA GALERÍA ---
+    function toggleGaleria(id) {
+        const panel = document.getElementById(id);
+        if(panel) {
+            panel.classList.toggle('hidden');
+            if(!panel.classList.contains('hidden')) {
+                panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    }
+</script>
+        });
