@@ -390,3 +390,55 @@
             </div>
         </div>
     </footer>
+
+    // Datos de los marcadores con Teléfonos Reales
+        const socios = [
+            {
+                p: [-31.9493, -65.1712], 
+                t: "TRASLAEA", 
+                s: "Sede Central", 
+                l: "Villa Dolores",
+                tel: "3544314637" // Número sin el +549 para mostrarlo limpio
+            },
+            {
+                p: [-32.1047, -65.1090], 
+                t: "Esteban Colombo", 
+                s: "Secretario - Cat 3", 
+                l: "Luyaba",
+                tel: "3544314637" 
+            },
+            {
+                p: [-31.9492, -65.1713], 
+                t: "Ricardo Balmaceda", 
+                s: "Presidente", 
+                l: "Villa Dolores",
+                tel: "3544123456" 
+            },
+            {
+                p: [-32.1865, -65.0544], 
+                t: "Marcelo Flores", 
+                s: "Tesorero", 
+                l: "Corralito",
+                tel: "3544654321" 
+            }
+        ];
+
+        // Añadir marcadores al mapa con el número como link de WhatsApp
+        socios.forEach(s => {
+            const popupContent = `
+                <div style="font-family: 'Arial', sans-serif; padding: 10px; min-width: 150px; text-align: center;">
+                    <b style="color: #002855; text-transform: uppercase; font-size: 14px; display: block; margin-bottom: 2px;">${s.t}</b>
+                    <small style="font-weight: bold; color: #666; display: block; margin-bottom: 5px;">${s.s}</small>
+                    <span style="color: #f97316; font-weight: 800; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">${s.l}</span>
+                    
+                    <div style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px;">
+                        <p style="font-size: 9px; font-weight: 900; color: #999; text-transform: uppercase; margin-bottom: 4px;">Contactar vía WhatsApp:</p>
+                        <a href="https://wa.me/549${s.tel}" target="_blank" 
+                           style="display: inline-block; color: #25d366; font-weight: 900; font-size: 15px; text-decoration: none; transition: transform 0.2s;">
+                           <span style="font-size: 18px;">✆</span> +54 9 ${s.tel}
+                        </a>
+                    </div>
+                </div>
+            `;
+            L.marker(s.p).addTo(map).bindPopup(popupContent);
+        });
