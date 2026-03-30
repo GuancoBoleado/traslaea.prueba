@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,23 +10,34 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        /* Contenedor del GIF de fondo fijo */
-        .bg-gif-container {
+        /* Contenedor de las 3 imágenes de fondo */
+        .bg-images-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             z-index: -1;
-            background-color: #f3f4f6;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Divide la pantalla en 3 columnas */
+            gap: 0;
+            background-color: #002855;
         }
         
-        /* Aseguramos que el GIF cubra toda la pantalla sin deformarse */
-        .bg-gif-container img {
+        .bg-images-container img {
             width: 100%;
-            height: 100%;
+            height: 100vh;
             object-fit: cover;
-            opacity: 0.30; /* Ajusta este valor si quieres que el fondo sea más o menos visible */
+            opacity: 0.25; /* Opacidad baja para que no moleste al texto */
+            filter: grayscale(40%); /* Un toque profesional en gris opcional */
+        }
+
+        /* En móviles, las ponemos una debajo de otra en lugar de columnas */
+        @media (max-width: 768px) {
+            .bg-images-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(3, 1fr);
+            }
         }
 
         #mapa-socios { z-index: 1; }
@@ -35,9 +45,10 @@
 </head>
 <body class="font-sans text-gray-900 relative">
 
-    <div class="bg-gif-container">
-        <img src="tu-archivo.gif" alt="Fondo TRASLAEA">
-        <div class="absolute inset-0 bg-transparent"></div>
+    <div class="bg-images-container">
+        <img src="imagen1.jpg" alt="Fondo 1">
+        <img src="imagen2.jpg" alt="Fondo 2">
+        <img src="imagen3.jpg" alt="Fondo 3">
     </div>
 
     <header class="bg-[#002855] text-white p-4 shadow-lg sticky top-0 z-[1000]">
@@ -54,7 +65,6 @@
 
             <nav class="hidden lg:flex space-x-6 text-sm font-semibold uppercase">
                 <a href="#" class="hover:text-orange-400 transition">Institucional</a>
-                <a href="#" class="hover:text-orange-400 transition">Servicios</a>
                 <a href="https://drive.google.com/drive/folders/10qjaUn4lYQHpO-p-_y-QXCxz2ZOwrvmd" target="_blank" class="hover:text-orange-400 transition">Recursos</a>
                 <a href="#eventos" class="hover:text-orange-400 transition">Eventos</a>
                 <a href="#contacto" class="text-orange-400 font-bold border-b-2 border-orange-400">Contacto</a>
@@ -62,13 +72,14 @@
 
             <div class="flex items-center space-x-3">
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/viewform" target="_blank" class="bg-white text-[#002855] px-4 py-2 rounded-full font-bold text-xs hover:bg-gray-200 shadow-md transition">SUSCRIPCIÓN</a>
-                <button id="btn-menu" class="lg:hidden text-white"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
+                <button id="btn-menu" class="lg:hidden text-white">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
             </div>
         </div>
 
         <div id="menu-movil" class="hidden lg:hidden bg-[#001b3a] mt-4 p-4 rounded-xl border border-blue-900 shadow-2xl space-y-4">
             <a href="#" class="block py-2 border-b border-blue-900">Institucional</a>
-            <a href="#" class="block py-2 border-b border-blue-900">Servicios</a>
             <a href="https://drive.google.com/drive/folders/10qjaUn4lYQHpO-p-_y-QXCxz2ZOwrvmd" target="_blank" class="block py-2 border-b border-blue-900">Recursos</a>
             <a href="#eventos" class="block py-2 border-b border-blue-900">Eventos</a>
             <a href="#contacto" class="block py-2 text-orange-400 font-bold">Contacto</a>
@@ -78,7 +89,7 @@
     <main class="container mx-auto mt-8 px-4 pb-12">
         <div class="text-center mb-10">
             <h2 class="text-3xl font-extrabold text-[#002855]">TRASLAEA: Potenciando la Red</h2>
-            <p class="text-gray-600 font-medium">Seguridad e innovación rural en Traslasierra</p>
+            <p class="text-gray-700 font-medium italic">Seguridad e innovación rural en Traslasierra</p>
         </div>
 
         <div class="grid lg:grid-cols-2 gap-8 mb-12">
@@ -111,28 +122,28 @@
                     <div class="p-5">
                         <span class="bg-orange-100 text-orange-600 text-[10px] font-bold px-2 py-1 rounded">PRÓXIMO: 30/03</span>
                         <h3 class="text-xl font-bold text-[#002855] mt-2">Reparación Solidaria</h3>
-                        <p class="text-sm text-gray-600 mt-2">Intervención en tablero principal. Recambio de térmicas y cableado.</p>
+                        <p class="text-sm text-gray-600 mt-2">Intervención en tablero principal post-incendio.</p>
                         <a href="evento-30-marzo.html" class="block mt-4 text-blue-600 font-bold text-sm italic">DETALLES →</a>
                     </div>
                 </div>
                 <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 opacity-80">
-                    <div class="h-48 bg-gray-200 flex items-center justify-center italic text-gray-400 text-xs p-4 text-center">[Foto Charla Normativas]</div>
+                    <div class="h-48 bg-gray-200 flex items-center justify-center italic text-gray-400 text-xs p-4 text-center">[Foto Capacitación]</div>
                     <div class="p-5">
                         <span class="bg-gray-100 text-gray-500 text-[10px] font-bold px-2 py-1 rounded">REALIZADO: 15/03</span>
                         <h3 class="text-xl font-bold text-gray-700 mt-2">Charla sobre Normativas</h3>
-                        <p class="text-sm text-gray-500 mt-2">Capacitación técnica sobre nuevas regulaciones ERSeP.</p>
+                        <p class="text-sm text-gray-500 mt-2">Actualización técnica ERSeP.</p>
                         <span class="mt-4 block text-gray-400 font-bold text-sm uppercase">Archivado</span>
                     </div>
                 </div>
                 <div class="bg-white rounded-xl overflow-hidden shadow-md border border-blue-100">
                     <div class="h-48 bg-[#002855] flex flex-col items-center justify-center text-white p-4 text-center">
                         <span class="text-4xl mb-2">⚖️</span>
-                        <h4 class="font-bold uppercase text-[10px] tracking-widest">Convocatoria Oficial</h4>
+                        <h4 class="font-bold uppercase text-[10px] tracking-widest">Institucional</h4>
                     </div>
                     <div class="p-5">
                         <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-1 rounded">01/01/2027</span>
-                        <h3 class="text-xl font-bold text-[#002855] mt-2">Asamblea Ordinaria Anual</h3>
-                        <p class="text-sm text-gray-600 mt-2">Balance anual y renovación de autoridades TRASLAEA.</p>
+                        <h3 class="text-xl font-bold text-[#002855] mt-2">Asamblea Anual</h3>
+                        <p class="text-sm text-gray-600 mt-2">Balance y renovación de autoridades.</p>
                         <span class="mt-4 block text-blue-400 font-bold text-sm italic">PRÓXIMAMENTE →</span>
                     </div>
                 </div>
@@ -144,11 +155,11 @@
                 <h2 class="text-3xl font-black mb-6 uppercase italic">Contacto</h2>
                 <form action="https://formspree.io/f/xykbekdd" method="POST" class="space-y-4 text-gray-800">
                     <div class="grid md:grid-cols-2 gap-4">
-                        <input type="text" name="nombre" required class="p-3 rounded-lg outline-none" placeholder="Tu Nombre">
-                        <input type="email" name="email" required class="p-3 rounded-lg outline-none" placeholder="Tu Correo">
+                        <input type="text" name="nombre" required class="p-3 rounded-lg outline-none" placeholder="Nombre">
+                        <input type="email" name="email" required class="p-3 rounded-lg outline-none" placeholder="Email">
                     </div>
-                    <textarea name="mensaje" required rows="4" class="w-full p-3 rounded-lg outline-none" placeholder="Mensaje..."></textarea>
-                    <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-4 rounded-xl shadow-lg uppercase">Enviar Consulta</button>
+                    <textarea name="mensaje" required rows="4" class="w-full p-3 rounded-lg outline-none" placeholder="Consulta..."></textarea>
+                    <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-4 rounded-xl shadow-lg uppercase">Enviar</button>
                 </form>
             </div>
         </section>
@@ -156,16 +167,13 @@
 
     <footer class="bg-gray-900 text-white p-10 mt-12 relative z-10">
         <div class="container mx-auto text-center">
-            <h4 class="font-bold text-lg mb-6 uppercase tracking-widest text-blue-300 underline">Conectate con TRASLAEA</h4>
+            <h4 class="font-bold text-lg mb-6 uppercase tracking-widest text-blue-300">Conectate con TRASLAEA</h4>
             <div class="flex justify-center flex-wrap gap-6 mb-10">
                 <a href="https://wa.me/5493544314637" target="_blank" class="bg-green-600 p-3 rounded-full hover:scale-110 transition shadow-lg"><span class="font-bold text-xs">WA</span></a>
-                <a href="#" class="bg-blue-700 p-3 rounded-full hover:scale-110 transition shadow-lg"><span class="font-bold text-xs">FB</span></a>
-                <a href="#" class="bg-pink-600 p-3 rounded-full hover:scale-110 transition shadow-lg"><span class="font-bold text-xs">IG</span></a>
-                <a href="#" class="bg-black border border-gray-600 p-3 rounded-full hover:scale-110 transition shadow-lg"><span class="font-bold text-xs">TK</span></a>
                 <a href="mailto:traslaea@gmail.com" class="bg-red-600 p-3 rounded-full hover:scale-110 transition shadow-lg"><span class="font-bold text-xs">@</span></a>
             </div>
-            <p class="font-bold opacity-75">TRASLAEA - Electricistas Asociados de Traslasierra</p>
-            <p class="opacity-50 text-[10px] mt-2">© 2026 Infraestructura gestionada por Electrosith</p>
+            <p class="font-bold opacity-75 uppercase">TRASLAEA - Electricistas de Traslasierra</p>
+            <p class="opacity-50 text-[10px] mt-2 italic">© 2026 Soporte Técnico por Electrosith</p>
         </div>
     </footer>
 
