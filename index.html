@@ -197,37 +197,77 @@
         </section>
 
         
-        <section id="eventos" class="mt-60 p-6 bg-white/95 rounded-2xl border border-gray-200 shadow-lg backdrop-blur-sm">
+  <section id="eventos" class="mt-60 p-6 bg-white/95 rounded-2xl border border-gray-200 shadow-lg backdrop-blur-sm relative z-10">
             <h2 class="text-3xl font-black text-[#002855] mb-8 border-b-4 border-orange-500 inline-block uppercase italic">Cartelera de Actividades</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-orange-200 group">
-                    <div class="h-48 overflow-hidden"><img src="quemado1.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"></div>
-                    <div class="p-5">
-                        <span class="bg-orange-100 text-orange-600 text-[10px] font-bold px-2 py-1 rounded">PRÓXIMO: 30/03</span>
-                        <h3 class="text-xl font-bold text-[#002855] mt-2">Reparación Solidaria</h3>
-                        <p class="text-sm text-gray-600 mt-2">Intervención en tablero principal post-incendio.</p>
-                        <a href="evento-30-marzo.html" class="block mt-4 text-blue-600 font-bold text-sm italic">DETALLES →</a>
+                
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-orange-200 group flex flex-col">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="quemado1.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-2 right-2 bg-orange-600 text-white text-[10px] font-black px-2 py-1 rounded shadow">URGENTE</div>
+                    </div>
+                    <div class="p-5 flex-1">
+                        <span class="bg-orange-100 text-orange-600 text-[10px] font-bold px-2 py-1 rounded">30/03 - LUYABA</span>
+                        <h3 class="text-xl font-bold text-[#002855] mt-2 italic uppercase">Reparación Solidaria</h3>
+                        <p class="text-sm text-gray-600 mt-2">Intervención técnica en vivienda siniestrada (Patricia Garay).</p>
+                        
+                        <button onclick="toggleGaleria('panel-solidario')" class="block mt-4 text-blue-600 font-bold text-sm italic hover:text-orange-500 transition-colors">
+                            VER PROGRESO Y CONVOCATORIA ↓
+                        </button>
+                    </div>
+
+                    <div id="panel-solidario" class="hidden bg-gray-50 p-5 border-t border-orange-100">
+                        
+                        <p class="text-[9px] font-black text-red-500 uppercase italic mb-2 tracking-widest">🔴 Fase 1: Relevamiento inicial</p>
+                        <div class="grid grid-cols-3 gap-2 mb-4">
+                            <img src="quemado1.jpg" class="rounded h-14 w-full object-cover border">
+                            <img src="quemado2.jpg" class="rounded h-14 w-full object-cover border">
+                            <img src="quemado3.jpg" class="rounded h-14 w-full object-cover border">
+                        </div>
+
+                        <p class="text-[9px] font-black text-orange-500 uppercase italic mb-2 tracking-widest">🟠 Fase 2: Avance de Obra</p>
+                        <div class="grid grid-cols-3 gap-2 mb-4">
+                            <img src="avance1.jpg" class="rounded h-14 w-full object-cover border">
+                            <img src="avance2.jpg" class="rounded h-14 w-full object-cover border">
+                            <img src="avance3.jpg" class="rounded h-14 w-full object-cover border">
+                        </div>
+
+                        <p class="text-[9px] font-black text-green-600 uppercase italic mb-2 tracking-widest">🟢 Fase 3: Trabajo Terminado</p>
+                        <div class="grid grid-cols-3 gap-2 mb-5">
+                            <img src="final1.jpg" class="rounded h-14 w-full object-cover border">
+                            <img src="final2.jpg" class="rounded h-14 w-full object-cover border">
+                            <img src="final3.jpg" class="rounded h-14 w-full object-cover border">
+                        </div>
+
+                        <div class="bg-[#002855] text-white p-4 rounded-xl shadow-lg">
+                            <h4 class="text-xs font-black uppercase text-orange-400 mb-2 italic">📢 Sumate como Voluntario</h4>
+                            <p class="text-[10px] leading-tight mb-3 opacity-90">Necesitamos 2 colegas para el armado del tablero seccional.</p>
+                            <a href="https://wa.me/5493544314637?text=Hola%20Esteban,%20quiero%20sumarme%20a%20la%20reparación%20solidaria" target="_blank" 
+                               class="block w-full bg-orange-500 text-center py-2 rounded font-black text-[10px] uppercase shadow hover:bg-orange-600 transition">
+                               Inscribirme vía WhatsApp
+                            </a>
+                        </div>
                     </div>
                 </div>
+
                 <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 opacity-80">
                     <div class="h-48 bg-gray-200 flex items-center justify-center italic text-gray-400 text-xs p-4 text-center">[Foto Capacitación]</div>
                     <div class="p-5">
                         <span class="bg-gray-100 text-gray-500 text-[10px] font-bold px-2 py-1 rounded">REALIZADO: 15/03</span>
                         <h3 class="text-xl font-bold text-gray-700 mt-2">Charla sobre Normativas</h3>
                         <p class="text-sm text-gray-500 mt-2">Actualización técnica ERSeP.</p>
-                        <span class="mt-4 block text-gray-400 font-bold text-sm uppercase">Archivado</span>
                     </div>
                 </div>
+
                 <div class="bg-white rounded-xl overflow-hidden shadow-md border border-blue-100">
                     <div class="h-48 bg-[#002855] flex flex-col items-center justify-center text-white p-4 text-center">
                         <span class="text-4xl mb-2">⚖️</span>
-                        <h4 class="font-bold uppercase text-[10px] tracking-widest">Institucional</h4>
+                        <h4 class="font-bold uppercase text-[10px] tracking-widest italic">Institucional</h4>
                     </div>
                     <div class="p-5">
                         <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-1 rounded">01/01/2027</span>
                         <h3 class="text-xl font-bold text-[#002855] mt-2">Asamblea Anual</h3>
                         <p class="text-sm text-gray-600 mt-2">Balance y renovación de autoridades.</p>
-                        <span class="mt-4 block text-blue-400 font-bold text-sm italic">PRÓXIMAMENTE →</span>
                     </div>
                 </div>
             </div>
