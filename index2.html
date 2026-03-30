@@ -113,42 +113,116 @@
             </div>
         </div>
 
-        <section id="eventos" class="mt-20 p-6 bg-white/95 rounded-2xl border border-gray-200 shadow-lg backdrop-blur-sm">
-            <h2 class="text-3xl font-black text-[#002855] mb-8 border-b-4 border-orange-500 inline-block uppercase italic">Cartelera de Actividades</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-orange-200 group">
-                    <div class="h-48 overflow-hidden"><img src="quemado1.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"></div>
-                    <div class="p-5">
-                        <span class="bg-orange-100 text-orange-600 text-[10px] font-bold px-2 py-1 rounded">PRÓXIMO: 30/03</span>
-                        <h3 class="text-xl font-bold text-[#002855] mt-2">Reparación Solidaria</h3>
-                        <p class="text-sm text-gray-600 mt-2">Intervención en tablero principal post-incendio.</p>
-                        <a href="evento-30-marzo.html" class="block mt-4 text-blue-600 font-bold text-sm italic">DETALLES →</a>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 opacity-80">
-                    <div class="h-48 bg-gray-200 flex items-center justify-center italic text-gray-400 text-xs p-4 text-center">[Foto Capacitación]</div>
-                    <div class="p-5">
-                        <span class="bg-gray-100 text-gray-500 text-[10px] font-bold px-2 py-1 rounded">REALIZADO: 15/03</span>
-                        <h3 class="text-xl font-bold text-gray-700 mt-2">Charla sobre Normativas</h3>
-                        <p class="text-sm text-gray-500 mt-2">Actualización técnica ERSeP.</p>
-                        <span class="mt-4 block text-gray-400 font-bold text-sm uppercase">Archivado</span>
-                    </div>
-                </div>
-                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-blue-100">
-                    <div class="h-48 bg-[#002855] flex flex-col items-center justify-center text-white p-4 text-center">
-                        <span class="text-4xl mb-2">⚖️</span>
-                        <h4 class="font-bold uppercase text-[10px] tracking-widest">Institucional</h4>
-                    </div>
-                    <div class="p-5">
-                        <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-1 rounded">01/01/2027</span>
-                        <h3 class="text-xl font-bold text-[#002855] mt-2">Asamblea Anual</h3>
-                        <p class="text-sm text-gray-600 mt-2">Balance y renovación de autoridades.</p>
-                        <span class="mt-4 block text-blue-400 font-bold text-sm italic">PRÓXIMAMENTE →</span>
-                    </div>
+        <section id="eventos" class="mt-40 p-6 bg-white/95 rounded-2xl border border-gray-200 shadow-lg backdrop-blur-sm relative z-10">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b-4 border-orange-500 pb-4">
+        <h2 class="text-3xl font-black text-[#002855] uppercase italic">Cartelera de Actividades</h2>
+        <span class="text-[10px] font-bold text-orange-600 bg-orange-100 px-3 py-1 rounded-full mt-2 md:mt-0 italic tracking-widest">ACTUALIZADO: MARZO 2026</span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <div class="bg-white rounded-xl overflow-hidden shadow-md border border-orange-200 group flex flex-col">
+            <div class="h-48 overflow-hidden relative">
+                <img src="quemado1.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute top-2 right-2 bg-orange-600 text-white text-[9px] font-bold px-2 py-1 rounded shadow-lg uppercase">Prioridad</div>
+            </div>
+            <div class="p-5 flex-1 flex flex-col">
+                <span class="text-orange-600 text-[10px] font-black uppercase tracking-widest">📅 30 de Marzo, 2026</span>
+                <h3 class="text-xl font-bold text-[#002855] mt-1 leading-tight uppercase italic">Reparación Solidaria</h3>
+                <p class="text-sm text-gray-600 mt-2 italic flex-1">Asistencia técnica en el tablero principal de la vivienda de Patricia Garay tras el siniestro.</p>
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <a href="evento-solidario.html" class="inline-block text-blue-600 font-black text-xs hover:text-orange-500 transition-colors italic uppercase">Ver Hoja de Ruta →</a>
                 </div>
             </div>
-        </section>
+        </div>
 
+        <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 opacity-90 flex flex-col">
+            <div class="h-48 bg-gray-100 flex items-center justify-center relative">
+                <span class="text-4xl grayscale opacity-30">🎓</span>
+                <div class="absolute inset-0 bg-gray-900/5 group-hover:bg-transparent transition-colors"></div>
+            </div>
+            <div class="p-5 flex-1 flex flex-col">
+                <span class="text-gray-500 text-[10px] font-black uppercase tracking-widest">✅ Finalizado: 15 de Marzo</span>
+                <h3 class="text-xl font-bold text-gray-700 mt-1 uppercase italic leading-tight">Normativas ERSeP</h3>
+                <p class="text-sm text-gray-500 mt-2 italic flex-1">Charla de actualización sobre Ley de Seguridad Eléctrica y nuevas categorías profesionales.</p>
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <span class="text-gray-400 font-bold text-[10px] uppercase italic">Capacitación Finalizada</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl overflow-hidden shadow-md border border-blue-50 flex flex-col">
+            <div class="h-48 bg-[#002855] flex flex-col items-center justify-center text-white p-4 text-center">
+                <span class="text-4xl mb-2">📋</span>
+                <h4 class="font-bold uppercase text-[10px] tracking-widest opacity-70 italic">Gestión TRASLAEA</h4>
+            </div>
+            <div class="p-5 flex-1 flex flex-col">
+                <span class="text-blue-600 text-[10px] font-black uppercase tracking-widest">🗓️ Planificado: Abril 2026</span>
+                <h3 class="text-xl font-bold text-[#002855] mt-1 uppercase italic leading-tight">Registro de Marca INPI</h3>
+                <p class="text-sm text-gray-600 mt-2 italic flex-1">Inicio de trámites legales para la protección de la identidad visual de nuestra asociación.</p>
+                <div class="mt-4 pt-4 border-t border-gray-100">
+                    <span class="text-blue-400 font-bold text-[10px] uppercase italic">En Trámite Administrativo</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-16 pt-8 border-t-2 border-dashed border-gray-200">
+        <button id="toggle-historial" class="group flex items-center gap-3 text-[#002855] font-black hover:text-orange-500 transition-all uppercase text-xs tracking-widest italic bg-white px-4 py-2 rounded-lg border border-gray-200 shadow-sm">
+            <span class="bg-[#002855] text-white w-6 h-6 rounded flex items-center justify-center group-hover:bg-orange-500 transition-colors">📂</span>
+            <span>Historial de Actas y Hitos (2025 - 2026)</span>
+            <svg id="icono-flecha" class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </button>
+
+        <div id="lista-historial" class="hidden mt-8 overflow-x-auto custom-scrollbar">
+            <table class="w-full text-left border-collapse bg-gray-50/50 rounded-xl overflow-hidden shadow-inner">
+                <thead>
+                    <tr class="bg-[#002855] text-white text-[10px] uppercase tracking-widest">
+                        <th class="p-4 border-r border-blue-900">Fecha</th>
+                        <th class="p-4 border-r border-blue-900">Actividad Relevante</th>
+                        <th class="p-4 border-r border-blue-900">Tipo</th>
+                        <th class="p-4 text-center">Documentación (Acceso Socios)</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm text-gray-600 italic">
+                    <tr class="border-b border-gray-200 hover:bg-white transition">
+                        <td class="p-4 font-mono text-[11px] bg-gray-100/50">19/05/2025</td>
+                        <td class="p-4 font-bold text-gray-800 uppercase italic">Obtención de Personería Jurídica</td>
+                        <td class="p-4"><span class="text-[9px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-black">LEGAL</span></td>
+                        <td class="p-4 text-center">
+                            <a href="LINK_A_TU_CARPETA_RESTRINGIDA" target="_blank" class="inline-flex items-center gap-2 bg-white hover:bg-orange-50 text-[#002855] px-3 py-1.5 rounded-full border border-blue-100 transition-all shadow-sm group">
+                                <span class="group-hover:scale-125 transition-transform">🔒</span>
+                                <span class="text-[10px] font-black uppercase tracking-tighter">Solicitar Acta</span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr class="border-b border-gray-200 hover:bg-white transition">
+                        <td class="p-4 font-mono text-[11px] bg-gray-100/50">06/08/2025</td>
+                        <td class="p-4 font-bold text-gray-800 uppercase italic">Capacitación Instalador CCTV</td>
+                        <td class="p-4"><span class="text-[9px] bg-orange-100 text-orange-700 px-2 py-0.5 rounded-md font-black">TÉCNICA</span></td>
+                        <td class="p-4 text-center">
+                            <a href="LINK_A_TU_CARPETA_RESTRINGIDA" target="_blank" class="inline-flex items-center gap-2 bg-white hover:bg-orange-50 text-[#002855] px-3 py-1.5 rounded-full border border-blue-100 transition-all shadow-sm group">
+                                <span class="group-hover:scale-125 transition-transform">🔒</span>
+                                <span class="text-[10px] font-black uppercase tracking-tighter">Minuta Curso</span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr class="border-b border-gray-200 hover:bg-white transition">
+                        <td class="p-4 font-mono text-[11px] bg-gray-100/50">10/12/2025</td>
+                        <td class="p-4 font-bold text-gray-800 uppercase italic">Cena de Camaradería y Cierre 2025</td>
+                        <td class="p-4"><span class="text-[9px] bg-green-100 text-green-700 px-2 py-0.5 rounded-md font-black">SOCIAL</span></td>
+                        <td class="p-4 text-center">
+                            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest italic">— Sin documentos —</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="text-[10px] text-gray-400 mt-4 italic text-center">** El acceso a los documentos requiere validación manual por parte de la Secretaría Técnica vía Google Drive.</p>
+        </div>
+    </div>
+</section>
         <section id="contacto" class="mt-12 p-6 bg-[#002855]/95 rounded-2xl shadow-xl text-white border-l-8 border-orange-500 backdrop-blur-sm">
             <div class="max-w-3xl mx-auto">
                 <h2 class="text-3xl font-black mb-6 uppercase italic">Contacto</h2>
