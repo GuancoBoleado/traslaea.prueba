@@ -9,39 +9,47 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <style>
-        /* Contenedor de las 3 imágenes de fondo */
-        .bg-images-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2; /* Un nivel más abajo que el título principal */
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* Divide la pantalla en 3 columnas */
-            gap: 0;
-            background-color: #e0f2fe;
-        }
-        
-        .bg-images-container img {
-            width: 100%;
-            height: 100vh;
-            object-fit: cover;
-            opacity: 0.60; /* Opacidad baja para que no moleste al texto */
-            filter: grayscale(40%); /* Un toque profesional en gris opcional */
-        }
+<style>
+    /* Fondo con 3 imágenes y efecto sepia suave */
+    .bg-images-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        background-color: #1a1a1a;
+        overflow: hidden;
+    }
+    
+    .bg-images-container img {
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+        opacity: 0.75; 
+        filter: blur(2px) sepia(60%) brightness(100%) contrast(110%);
+        animation: aparecerFondo 4s ease-in-out forwards;
+    }
 
-        /* En móviles, las ponemos una debajo de otra en lugar de columnas */
-        @media (max-width: 768px) {
-            .bg-images-container {
-                grid-template-columns: 1fr;
-                grid-template-rows: repeat(3, 1fr);
-            }
-        }
+    @keyframes aparecerFondo {
+        0% { opacity: 0; filter: blur(0px) sepia(0%); transform: scale(1.05); }
+        30% { opacity: 1; filter: blur(0px) sepia(0%); }
+        100% { opacity: 0.75; filter: blur(2px) sepia(60%) transform: scale(1); }
+    }
 
-        #mapa-socios { z-index: 1; }
-    </style>
+    /* Scroll personalizado para la tabla de historial */
+    .custom-scrollbar::-webkit-scrollbar { height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #002855; border-radius: 10px; }
+
+    #mapa-socios { z-index: 1; }
+
+    @media (max-width: 768px) {
+        .bg-images-container { grid-template-columns: 1fr; grid-template-rows: repeat(3, 1fr); }
+        .bg-images-container img { height: 33.33vh; }
+    }
+</style>
 </head>
 <body class="font-sans text-gray-900 relative">
 
@@ -51,11 +59,6 @@
         <img src="imagen3.jpg" alt="Fondo 3">
     </div>
 
-    <div class="container mx-auto mt-10 mb-20 px-4 text-center relative z-10">
-        <h2 class="text-4xl font-extrabold text-[#002855] tracking-tight">TRASLAEA: Potenciando la Red</h2>
-        <p class="text-xl text-gray-800 font-semibold italic mt-2">Seguridad e innovación rural en Traslasierra</p>
-    </div>
-
     <header class="bg-[#002855] text-white p-4 shadow-lg sticky top-0 z-[1000]">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-3">
@@ -63,12 +66,12 @@
                     <img src="logo.png?v=99" alt="Logo" class="h-full w-full object-contain transform scale-110">
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold tracking-tight leading-none">TRASLAEA</h1>
+                    <h1 class="text-xl font-bold tracking-tight leading-none uppercase italic">TRASLAEA</h1>
                     <span class="block text-[10px] font-normal opacity-90 uppercase tracking-widest text-orange-400">Electricistas Asociados</span>
                 </div>
             </div>
 
-            <nav class="hidden lg:flex space-x-6 text-sm font-semibold uppercase">
+            <nav class="hidden lg:flex space-x-6 text-sm font-semibold uppercase italic">
                 <a href="#" class="hover:text-orange-400 transition">Institucional</a>
                 <a href="https://drive.google.com/drive/folders/10qjaUn4lYQHpO-p-_y-QXCxz2ZOwrvmd" target="_blank" class="hover:text-orange-400 transition">Recursos</a>
                 <a href="#eventos" class="hover:text-orange-400 transition">Eventos</a>
@@ -85,260 +88,198 @@
 
         <div id="menu-movil" class="hidden lg:hidden bg-[#001b3a] mt-4 p-4 rounded-xl border border-blue-900 shadow-2xl space-y-4">
             <a href="#" class="block py-2 border-b border-blue-900">Institucional</a>
-            <a href="https://drive.google.com/drive/folders/10qjaUn4lYQHpO-p-_y-QXCxz2ZOwrvmd" target="_blank" class="block py-2 border-b border-blue-900">Recursos</a>
             <a href="#eventos" class="block py-2 border-b border-blue-900">Eventos</a>
             <a href="#contacto" class="block py-2 text-orange-400 font-bold">Contacto</a>
         </div>
     </header>
 
-    <main class="container mx-auto mt-20 px-4 pb-12 relative z-10"> <div class="grid lg:grid-cols-2 gap-8 mb-12">
+    <main class="container mx-auto mt-20 px-4 pb-12 relative z-10">
+        
+        <div class="text-center mb-40"> 
+            <h2 class="text-5xl md:text-6xl font-black text-[#002855] tracking-tighter uppercase italic drop-shadow-sm">
+                TRASLAEA: Potenciando la Red
+            </h2>
+            <div class="w-24 h-1 bg-orange-500 mx-auto my-4"></div> 
+            <p class="text-xl text-gray-800 font-bold italic tracking-wide">Traslasierra Electricistas Asociados</p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-8 mb-12">
             <div class="bg-white/90 p-6 rounded-xl shadow-md border-t-4 border-blue-500 backdrop-blur-sm">
                 <h3 class="font-bold text-lg mb-4 text-gray-700 uppercase italic">Mapa de Socios</h3>
                 <div id="mapa-socios" class="h-80 rounded-lg border border-blue-200"></div>
             </div>
             <div class="bg-white/90 p-6 rounded-xl shadow-md border-t-4 border-blue-500 backdrop-blur-sm">
-                <h3 class="font-bold text-lg mb-4 text-gray-700 uppercase">Recursos Técnicos</h3>
+                <h3 class="font-bold text-lg mb-4 text-gray-700 uppercase italic">Recursos Técnicos</h3>
                 <div class="space-y-3">
                     <div class="flex items-center p-3 bg-gray-50/80 rounded border hover:bg-gray-100 transition shadow-sm">
                         <span class="text-red-500 mr-3 font-bold">PDF</span>
-                        <span class="text-sm text-gray-600 flex-1">Manual de Instalaciones Solares</span>
+                        <span class="text-sm text-gray-600 flex-1 italic">Manual de Instalaciones Solares</span>
                         <button class="text-blue-500 text-xs font-bold underline">Descargar</button>
                     </div>
                     <div class="flex items-center p-3 bg-gray-50/80 rounded border hover:bg-gray-100 transition shadow-sm">
                         <span class="text-red-500 mr-3 font-bold">PDF</span>
-                        <span class="text-sm text-gray-600 flex-1">Normativas Eléctricas Vigentes</span>
-                        <a href="https://drive.google.com/drive/folders/10qjaUn4lYQHpO-p-_y-QXCxz2ZOwrvmd" target="_blank" class="text-blue-500 text-xs font-bold underline">Descargar</a>
+                        <span class="text-sm text-gray-600 flex-1 italic">Normativas Eléctricas Vigentes</span>
+                        <a href="https://drive.google.com/drive/folders/10qjaUn4lYQHpO-p-_y-QXCxz2ZOwrvmd" target="_blank" class="text-blue-500 text-xs font-bold underline italic">Ver en Drive</a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <section id="eventos" class="mt-40 p-6 bg-white/95 rounded-2xl border border-gray-200 shadow-lg backdrop-blur-sm relative z-10">
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b-4 border-orange-500 pb-4">
-        <h2 class="text-3xl font-black text-[#002855] uppercase italic">Cartelera de Actividades</h2>
-        <span class="text-[10px] font-bold text-orange-600 bg-orange-100 px-3 py-1 rounded-full mt-2 md:mt-0 italic tracking-widest">ACTUALIZADO: MARZO 2026</span>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        
-        <div class="bg-white rounded-xl overflow-hidden shadow-md border border-orange-200 group flex flex-col">
-            <div class="h-48 overflow-hidden relative">
-                <img src="quemado1.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                <div class="absolute top-2 right-2 bg-orange-600 text-white text-[9px] font-bold px-2 py-1 rounded shadow-lg uppercase">Prioridad</div>
-            </div>
-            <div class="p-5 flex-1 flex flex-col">
-                <span class="text-orange-600 text-[10px] font-black uppercase tracking-widest">📅 30 de Marzo, 2026</span>
-                <h3 class="text-xl font-bold text-[#002855] mt-1 leading-tight uppercase italic">Reparación Solidaria</h3>
-                <p class="text-sm text-gray-600 mt-2 italic flex-1">Asistencia técnica en el tablero principal de la vivienda de Patricia Garay tras el siniestro.</p>
-                <div class="mt-4 pt-4 border-t border-gray-100">
-                    <a href="evento-solidario.html" class="inline-block text-blue-600 font-black text-xs hover:text-orange-500 transition-colors italic uppercase">Ver Hoja de Ruta →</a>
+        <section class="mt-12 mb-12 p-1 bg-gradient-to-r from-orange-400 to-red-500 rounded-3xl shadow-2xl">
+            <div class="bg-white/95 rounded-[1.4rem] p-6 md:p-10 flex flex-col lg:flex-row items-center gap-8 backdrop-blur-sm">
+                <div class="flex-shrink-0 w-32 h-32 md:w-44 md:h-44 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-dashed border-orange-200 p-4">
+                    <img src="relevando.peligro.jpg" alt="Relevando Peligros" class="max-w-full max-h-full object-contain">
+                </div>
+                <div class="flex-1 text-center lg:text-left">
+                    <h2 class="text-2xl md:text-3xl font-black text-[#002855] uppercase italic leading-tight">Denunciar irregularidades eléctricas</h2>
+                    <p class="text-orange-600 font-bold text-lg mb-4 italic">En colaboración con Relevando Peligros</p>
+                    <p class="text-gray-600 leading-relaxed text-sm md:text-base italic">Contribuyendo a la seguridad eléctrica en la vía pública para salvar vidas y prevenir accidentes.</p>
+                </div>
+                <div class="flex flex-col gap-3 w-full lg:w-auto">
+                    <a href="https://relevandopeligros.org/" target="_blank" class="flex items-center justify-center gap-3 bg-[#002855] text-white px-6 py-4 rounded-xl font-bold hover:bg-blue-900 transition shadow-lg">
+                        <span class="text-xl">🌐</span>
+                        <div class="text-left leading-none"><span class="block text-[10px] uppercase opacity-70 mb-1">Web</span><span>Denunciar</span></div>
+                    </a>
+                    <a href="https://api.whatsapp.com/send/?phone=5493518629999" target="_blank" class="flex items-center justify-center gap-3 bg-green-500 text-white px-6 py-4 rounded-xl font-bold hover:bg-green-600 transition shadow-lg">
+                        <span class="text-xl">📞</span>
+                        <div class="text-left leading-none"><span class="block text-[10px] uppercase opacity-70 mb-1">Urgencias</span><span>WhatsApp</span></div>
+                    </a>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 opacity-90 flex flex-col">
-            <div class="h-48 bg-gray-100 flex items-center justify-center relative">
-                <span class="text-4xl grayscale opacity-30">🎓</span>
-                <div class="absolute inset-0 bg-gray-900/5 group-hover:bg-transparent transition-colors"></div>
+        <section id="eventos" class="mt-40 p-6 bg-white/95 rounded-2xl border border-gray-200 shadow-lg backdrop-blur-sm relative">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 border-b-4 border-orange-500 pb-4">
+                <h2 class="text-3xl font-black text-[#002855] uppercase italic">Cartelera de Actividades</h2>
+                <span class="text-[10px] font-bold text-orange-600 bg-orange-100 px-3 py-1 rounded-full mt-2 md:mt-0 italic tracking-widest uppercase">Actualizado: Marzo 2026</span>
             </div>
-            <div class="p-5 flex-1 flex flex-col">
-                <span class="text-gray-500 text-[10px] font-black uppercase tracking-widest">✅ Finalizado: 15 de Marzo</span>
-                <h3 class="text-xl font-bold text-gray-700 mt-1 uppercase italic leading-tight">Normativas ERSeP</h3>
-                <p class="text-sm text-gray-500 mt-2 italic flex-1">Charla de actualización sobre Ley de Seguridad Eléctrica y nuevas categorías profesionales.</p>
-                <div class="mt-4 pt-4 border-t border-gray-100">
-                    <span class="text-gray-400 font-bold text-[10px] uppercase italic">Capacitación Finalizada</span>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-orange-200 group flex flex-col">
+                    <div class="h-48 overflow-hidden"><img src="quemado1.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-500"></div>
+                    <div class="p-5 flex-1 flex flex-col">
+                        <span class="text-orange-600 text-[10px] font-black uppercase italic">📅 30/03/2026 - Solidario</span>
+                        <h3 class="text-xl font-bold text-[#002855] mt-1 leading-tight uppercase italic">Reparación Solidaria</h3>
+                        <p class="text-sm text-gray-600 mt-2 italic flex-1">Intervención en tablero principal tras siniestro en Luyaba.</p>
+                        <a href="#" class="mt-4 text-blue-600 font-black text-xs uppercase italic">Ver Detalles →</a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-gray-100 opacity-90 flex flex-col">
+                    <div class="h-48 bg-gray-100 flex items-center justify-center italic text-gray-400 text-xs">Capacitación Finalizada</div>
+                    <div class="p-5 flex-1 flex flex-col">
+                        <span class="text-gray-500 text-[10px] font-black uppercase italic">✅ Realizado: 15/03/2026</span>
+                        <h3 class="text-xl font-bold text-gray-700 mt-1 uppercase italic leading-tight">Normativas ERSeP</h3>
+                        <p class="text-sm text-gray-500 mt-2 italic flex-1">Actualización sobre categorías y seguridad eléctrica.</p>
+                        <span class="mt-4 block text-gray-400 font-bold text-[10px] uppercase italic italic tracking-widest">Finalizado</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-md border border-blue-50 flex flex-col">
+                    <div class="h-48 bg-[#002855] flex flex-col items-center justify-center text-white p-4 text-center">
+                        <span class="text-4xl mb-2">📋</span>
+                        <h4 class="font-bold uppercase text-[10px] tracking-widest opacity-70 italic">Gestión TRASLAEA</h4>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col">
+                        <span class="text-blue-600 text-[10px] font-black uppercase italic">🗓️ Abril 2026</span>
+                        <h3 class="text-xl font-bold text-[#002855] mt-1 uppercase italic leading-tight">Marca INPI</h3>
+                        <p class="text-sm text-gray-600 mt-2 italic flex-1">Registro oficial de marca institucional ante el INPI.</p>
+                        <span class="mt-4 block text-blue-400 font-bold text-[10px] uppercase italic italic tracking-widest text-center">En Proceso</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="bg-white rounded-xl overflow-hidden shadow-md border border-blue-50 flex flex-col">
-            <div class="h-48 bg-[#002855] flex flex-col items-center justify-center text-white p-4 text-center">
-                <span class="text-4xl mb-2">📋</span>
-                <h4 class="font-bold uppercase text-[10px] tracking-widest opacity-70 italic">Gestión TRASLAEA</h4>
-            </div>
-            <div class="p-5 flex-1 flex flex-col">
-                <span class="text-blue-600 text-[10px] font-black uppercase tracking-widest">🗓️ Planificado: Abril 2026</span>
-                <h3 class="text-xl font-bold text-[#002855] mt-1 uppercase italic leading-tight">Registro de Marca INPI</h3>
-                <p class="text-sm text-gray-600 mt-2 italic flex-1">Inicio de trámites legales para la protección de la identidad visual de nuestra asociación.</p>
-                <div class="mt-4 pt-4 border-t border-gray-100">
-                    <span class="text-blue-400 font-bold text-[10px] uppercase italic">En Trámite Administrativo</span>
+            <div class="mt-16 pt-8 border-t-2 border-dashed border-gray-200">
+                <button id="toggle-historial" class="group flex items-center gap-3 text-[#002855] font-black hover:text-orange-500 transition-all uppercase text-xs tracking-widest italic bg-white px-4 py-2 rounded-lg border border-gray-200 shadow-sm">
+                    <span class="bg-[#002855] text-white w-6 h-6 rounded flex items-center justify-center group-hover:bg-orange-500 transition-colors">📂</span>
+                    <span>Historial de Actas y Hitos (2025 - 2026)</span>
+                    <svg id="icono-flecha" class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+
+                <div id="lista-historial" class="hidden mt-8 overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-left border-collapse bg-gray-50/50 rounded-xl overflow-hidden shadow-inner">
+                        <thead>
+                            <tr class="bg-[#002855] text-white text-[10px] uppercase tracking-widest">
+                                <th class="p-4 border-r border-blue-900">Fecha</th>
+                                <th class="p-4 border-r border-blue-900">Actividad Relevante</th>
+                                <th class="p-4 border-r border-blue-900">Tipo</th>
+                                <th class="p-4 text-center">Documentación (Acceso Socios)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm text-gray-600 italic">
+                            <tr class="border-b border-gray-200 hover:bg-white transition">
+                                <td class="p-4 font-mono text-[11px]">19/05/2025</td>
+                                <td class="p-4 font-bold text-gray-800 uppercase italic">Obtención de Personería Jurídica</td>
+                                <td class="p-4"><span class="text-[9px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-black">LEGAL</span></td>
+                                <td class="p-4 text-center">
+                                    <a href="TU_LINK_DE_DRIVE_AQUÍ" target="_blank" class="inline-flex items-center gap-2 bg-white hover:bg-orange-50 text-[#002855] px-3 py-1.5 rounded-full border border-blue-100 transition shadow-sm group">
+                                        <span class="group-hover:scale-125 transition-transform">🔒</span>
+                                        <span class="text-[10px] font-black uppercase tracking-tighter italic italic">Solicitar Acta</span>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr class="border-b border-gray-200 hover:bg-white transition">
+                                <td class="p-4 font-mono text-[11px]">06/08/2025</td>
+                                <td class="p-4 font-bold text-gray-800 uppercase italic">Capacitación CCTV Start</td>
+                                <td class="p-4"><span class="text-[9px] bg-orange-100 text-orange-700 px-2 py-0.5 rounded-md font-black">TÉCNICA</span></td>
+                                <td class="p-4 text-center">
+                                    <a href="TU_LINK_DE_DRIVE_AQUÍ" target="_blank" class="inline-flex items-center gap-2 bg-white hover:bg-orange-50 text-[#002855] px-3 py-1.5 rounded-full border border-blue-100 transition shadow-sm group">
+                                        <span>🔒</span><span class="text-[10px] font-black uppercase tracking-tighter italic italic">Minuta</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="text-[10px] text-gray-400 mt-4 italic text-center italic">** El acceso a documentos requiere validación manual vía Google Drive.</p>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <div class="mt-16 pt-8 border-t-2 border-dashed border-gray-200">
-        <button id="toggle-historial" class="group flex items-center gap-3 text-[#002855] font-black hover:text-orange-500 transition-all uppercase text-xs tracking-widest italic bg-white px-4 py-2 rounded-lg border border-gray-200 shadow-sm">
-            <span class="bg-[#002855] text-white w-6 h-6 rounded flex items-center justify-center group-hover:bg-orange-500 transition-colors">📂</span>
-            <span>Historial de Actas y Hitos (2025 - 2026)</span>
-            <svg id="icono-flecha" class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path>
-            </svg>
-        </button>
-
-        <div id="lista-historial" class="hidden mt-8 overflow-x-auto custom-scrollbar">
-            <table class="w-full text-left border-collapse bg-gray-50/50 rounded-xl overflow-hidden shadow-inner">
-                <thead>
-                    <tr class="bg-[#002855] text-white text-[10px] uppercase tracking-widest">
-                        <th class="p-4 border-r border-blue-900">Fecha</th>
-                        <th class="p-4 border-r border-blue-900">Actividad Relevante</th>
-                        <th class="p-4 border-r border-blue-900">Tipo</th>
-                        <th class="p-4 text-center">Documentación (Acceso Socios)</th>
-                    </tr>
-                </thead>
-                <tbody class="text-sm text-gray-600 italic">
-                    <tr class="border-b border-gray-200 hover:bg-white transition">
-                        <td class="p-4 font-mono text-[11px] bg-gray-100/50">19/05/2025</td>
-                        <td class="p-4 font-bold text-gray-800 uppercase italic">Obtención de Personería Jurídica</td>
-                        <td class="p-4"><span class="text-[9px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md font-black">LEGAL</span></td>
-                        <td class="p-4 text-center">
-                            <a href="LINK_A_TU_CARPETA_RESTRINGIDA" target="_blank" class="inline-flex items-center gap-2 bg-white hover:bg-orange-50 text-[#002855] px-3 py-1.5 rounded-full border border-blue-100 transition-all shadow-sm group">
-                                <span class="group-hover:scale-125 transition-transform">🔒</span>
-                                <span class="text-[10px] font-black uppercase tracking-tighter">Solicitar Acta</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="border-b border-gray-200 hover:bg-white transition">
-                        <td class="p-4 font-mono text-[11px] bg-gray-100/50">06/08/2025</td>
-                        <td class="p-4 font-bold text-gray-800 uppercase italic">Capacitación Instalador CCTV</td>
-                        <td class="p-4"><span class="text-[9px] bg-orange-100 text-orange-700 px-2 py-0.5 rounded-md font-black">TÉCNICA</span></td>
-                        <td class="p-4 text-center">
-                            <a href="LINK_A_TU_CARPETA_RESTRINGIDA" target="_blank" class="inline-flex items-center gap-2 bg-white hover:bg-orange-50 text-[#002855] px-3 py-1.5 rounded-full border border-blue-100 transition-all shadow-sm group">
-                                <span class="group-hover:scale-125 transition-transform">🔒</span>
-                                <span class="text-[10px] font-black uppercase tracking-tighter">Minuta Curso</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="border-b border-gray-200 hover:bg-white transition">
-                        <td class="p-4 font-mono text-[11px] bg-gray-100/50">10/12/2025</td>
-                        <td class="p-4 font-bold text-gray-800 uppercase italic">Cena de Camaradería y Cierre 2025</td>
-                        <td class="p-4"><span class="text-[9px] bg-green-100 text-green-700 px-2 py-0.5 rounded-md font-black">SOCIAL</span></td>
-                        <td class="p-4 text-center">
-                            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest italic">— Sin documentos —</span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <p class="text-[10px] text-gray-400 mt-4 italic text-center">** El acceso a los documentos requiere validación manual por parte de la Secretaría Técnica vía Google Drive.</p>
-        </div>
-    </div>
-</section>
         <section id="contacto" class="mt-12 p-6 bg-[#002855]/95 rounded-2xl shadow-xl text-white border-l-8 border-orange-500 backdrop-blur-sm">
             <div class="max-w-3xl mx-auto">
-                <h2 class="text-3xl font-black mb-6 uppercase italic">Contacto</h2>
+                <h2 class="text-3xl font-black mb-6 uppercase italic">Contacto Institucional</h2>
                 <form action="https://formspree.io/f/xykbekdd" method="POST" class="space-y-4 text-gray-800">
                     <div class="grid md:grid-cols-2 gap-4">
-                        <input type="text" name="nombre" required class="p-3 rounded-lg outline-none" placeholder="Nombre">
-                        <input type="email" name="email" required class="p-3 rounded-lg outline-none" placeholder="Email">
+                        <input type="text" name="nombre" required class="p-3 rounded-lg outline-none" placeholder="Nombre completo">
+                        <input type="email" name="email" required class="p-3 rounded-lg outline-none" placeholder="Email de contacto">
                     </div>
-                    <textarea name="mensaje" required rows="4" class="w-full p-3 rounded-lg outline-none" placeholder="Consulta..."></textarea>
-                    <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-4 rounded-xl shadow-lg uppercase">Enviar</button>
+                    <textarea name="mensaje" required rows="4" class="w-full p-3 rounded-lg outline-none" placeholder="Motivo de la consulta..."></textarea>
+                    <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-black py-4 rounded-xl shadow-lg uppercase tracking-widest italic transition-all active:scale-95">Enviar Mensaje</button>
                 </form>
             </div>
         </section>
     </main>
 
-    <footer class="bg-gray-950 text-white p-10 mt-12 relative z-10 border-t-4 border-orange-500">
-        <div class="container mx-auto grid md:grid-cols-3 gap-10 text-center md:text-left">
-            
-            <div class="space-y-4">
-                <h4 class="font-bold text-lg mb-4 uppercase tracking-widest text-orange-400 border-b border-orange-400 inline-block pb-1">Nuestra Sede</h4>
-                <p class="text-sm opacity-90 flex items-start justify-center md:justify-start">
-                    <span class="mr-3 text-orange-300">🏠</span>
-                    <span>Dorrego 1435, Barrio San Martin,<br>Ciudad de Villa Dolores (C.P. 5870),<br>Provincia de Córdoba, República Argentina</span>
-                </p>
-                <p class="text-sm opacity-90 flex items-center justify-center md:justify-start">
-                    <span class="mr-3 text-orange-300">📞</span>
-                    <span>Teléfono: +54 9 3544 30-7583</span>
-                </p>
-                <a href="https://wa.me/5493544307583" target="_blank" class="text-sm opacity-90 flex items-center justify-center md:justify-start hover:text-green-400 transition">
-                    <span class="mr-3 text-green-400">💬</span>
-                    <span>WhatsApp: +54 9 3544 30-7583</span>
-                </a>
-                <a href="mailto:traslaea@gmail.com" class="text-sm opacity-90 flex items-center justify-center md:justify-start hover:text-red-400 transition">
-                    <span class="mr-3 text-red-400">✉️</span>
-                    <span>traslaea@gmail.com</span>
-                </a>
+    <footer class="bg-gray-900 text-white p-10 mt-12 relative z-10 border-t border-gray-800">
+        <div class="container mx-auto text-center">
+            <h4 class="font-bold text-lg mb-6 uppercase tracking-widest text-blue-300 italic">Conectate con TRASLAEA</h4>
+            <div class="flex justify-center flex-wrap gap-6 mb-10">
+                <a href="https://wa.me/5493544314637" target="_blank" class="bg-green-600 p-3 rounded-full hover:scale-110 transition shadow-lg px-5 font-black text-sm italic">WhatsApp</a>
+                <a href="mailto:traslaea@gmail.com" class="bg-red-600 p-3 rounded-full hover:scale-110 transition shadow-lg px-5 font-black text-sm italic">Email</a>
             </div>
-
-            <div class="text-center">
-                <h4 class="font-bold text-lg mb-6 uppercase tracking-widest text-blue-300 border-b border-blue-300 inline-block pb-1">Conectate con TRASLAEA</h4>
-                <div class="grid grid-cols-3 gap-4 justify-items-center">
-                    <a href="#" target="_blank" class="group block text-center">
-                        <div class="bg-white/10 p-4 rounded-full group-hover:bg-gradient-to-br group-hover:from-purple-600 group-hover:via-pink-600 group-hover:to-orange-500 transition-all duration-300">
-                            <img src="instagram.png" alt="Instagram" class="w-8 h-8 object-contain">
-                        </div>
-                        <span class="text-[10px] mt-1 block opacity-70 group-hover:opacity-100">Instagram</span>
-                    </a>
-                    <a href="#" target="_blank" class="group block text-center">
-                        <div class="bg-white/10 p-4 rounded-full group-hover:bg-black transition-all duration-300">
-                            <img src="tiktok.png" alt="TikTok" class="w-8 h-8 object-contain">
-                        </div>
-                        <span class="text-[10px] mt-1 block opacity-70 group-hover:opacity-100">TikTok</span>
-                    </a>
-                    <a href="#" target="_blank" class="group block text-center">
-                        <div class="bg-white/10 p-4 rounded-full group-hover:bg-[#1877F2] transition-all duration-300">
-                            <img src="facebook.png" alt="Facebook" class="w-8 h-8 object-contain">
-                        </div>
-                        <span class="text-[10px] mt-1 block opacity-70 group-hover:opacity-100">Facebook</span>
-                    </a>
-                    <a href="mailto:traslaea@gmail.com" class="group block text-center">
-                        <div class="bg-white/10 p-4 rounded-full group-hover:bg-red-600 transition-all duration-300">
-                            <img src="correo.png" alt="Correo" class="w-8 h-8 object-contain">
-                        </div>
-                        <span class="text-[10px] mt-1 block opacity-70 group-hover:opacity-100">Correo</span>
-                    </a>
-                    <a href="#" target="_blank" class="group block text-center">
-                        <div class="bg-white/10 p-4 rounded-full group-hover:bg-[#39E09B] transition-all duration-300">
-                            <img src="linktree.png" alt="Link Tree" class="w-8 h-8 object-contain">
-                        </div>
-                        <span class="text-[10px] mt-1 block opacity-70 group-hover:opacity-100">Link Tree</span>
-                    </a>
-                    <a href="#" target="_blank" class="group block text-center">
-                        <div class="bg-white/10 p-4 rounded-full group-hover:bg-black transition-all duration-300">
-                            <img src="twitter.png" alt="Twitter" class="w-8 h-8 object-contain">
-                        </div>
-                        <span class="text-[10px] mt-1 block opacity-70 group-hover:opacity-100">Twitter</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="space-y-6">
-                <h4 class="font-bold text-lg mb-4 uppercase tracking-widest text-green-300 border-b border-green-300 inline-block pb-1">Enlaces de Interés</h4>
-                
-                <a href="https://relevandopeligros.org/" target="_blank" class="flex items-center justify-center md:justify-start bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 hover:border-green-400 transition-all duration-300 group">
-                    <img src="relevando-peligro.png" alt="Relevando Peligro" class="w-12 h-12 object-contain mr-4 group-hover:scale-110 transition-transform">
-                    <div>
-                        <span class="block font-bold text-green-400 group-hover:text-green-300">Relevando Peligros</span>
-                        <span class="text-xs opacity-70">Reportar situaciones de riesgo eléctrico</span>
-                    </div>
-                </a>
-
-                <a href="https://api.whatsapp.com/send/?phone=5493518629999&text&type=phone_number&app_absent=0" target="_blank" class="flex items-center justify-center md:justify-start bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 hover:border-green-400 transition-all duration-300 group">
-                    <div class="bg-green-600 p-3 rounded-full mr-4 group-hover:scale-110 transition-transform">
-                        <span class="font-bold text-xs">💬</span>
-                    </div>
-                    <div>
-                        <span class="block font-bold text-green-400 group-hover:text-green-300">Urgencias ERSeP</span>
-                        <span class="text-xs opacity-70">+54 9 351 862-9999 (WhatsApp)</span>
-                    </div>
-                </a>
-            </div>
-
+            <p class="font-bold opacity-75 uppercase tracking-tighter">Traslasierra Electricistas Asociados</p>
+            <p class="opacity-40 text-[10px] mt-2 italic tracking-widest">© 2026 Soporte Técnico por Electrosith</p>
         </div>
-
-        <div class="container mx-auto text-center mt-12 pt-8 border-t border-white/10">
-            <p class="font-bold opacity-75 uppercase text-xs tracking-wider">TRASLAEA - Electricistas de Traslasierra</p>
-            <p class="opacity-50 text-[9px] mt-1 italic">© 2026 Soporte Técnico por Electrosith</p>
-        </div>
-    </footer
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Menú móvil
             const btnMenu = document.getElementById('btn-menu');
             const menuMovil = document.getElementById('menu-movil');
             btnMenu.addEventListener('click', () => { menuMovil.classList.toggle('hidden'); });
 
+            // Historial desplegable
+            const btnHistorial = document.getElementById('toggle-historial');
+            const listaHistorial = document.getElementById('lista-historial');
+            const iconoFlecha = document.getElementById('icono-flecha');
+
+            btnHistorial.addEventListener('click', () => {
+                const isHidden = listaHistorial.classList.toggle('hidden');
+                iconoFlecha.style.transform = isHidden ? 'rotate(0deg)' : 'rotate(180deg)';
+            });
+
+            // Mapa Leaflet
             var map = L.map('mapa-socios').setView([-32.05, -65.10], 10);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
