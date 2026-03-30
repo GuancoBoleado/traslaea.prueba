@@ -301,25 +301,36 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const btnMenu = document.getElementById('btn-menu');
-            const menuMovil = document.getElementById('menu-movil');
-            btnMenu.addEventListener('click', () => { menuMovil.classList.toggle('hidden'); });
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- FUNCIÓN DEL MENÚ MÓVIL ---
+        const btnMenu = document.getElementById('btn-menu');
+        const menuMovil = document.getElementById('menu-movil');
+        btnMenu.addEventListener('click', () => { menuMovil.classList.toggle('hidden'); });
 
-            var map = L.map('mapa-socios').setView([-32.05, -65.10], 10);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        // --- CONFIGURACIÓN DEL MAPA ---
+        var map = L.map('mapa-socios').setView([-32.05, -65.10], 10);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-            function crearPin(lat, lng, nombre, cargo, loc) {
-                L.marker([lat, lng]).addTo(map).bindPopup(`<b>${nombre}</b><br>${cargo}<br>${loc}`);
-            }
+        function crearPin(lat, lng, nombre, cargo, loc) {
+            L.marker([lat, lng]).addTo(map).bindPopup(`<b>${nombre}</b><br>${cargo}<br>${loc}`);
+        }
 
-            crearPin(-31.9493132, -65.1712348, "TRASLAEA", "Sede Central", "Villa Dolores");
-            crearPin(-32.1047856, -65.109015, "Esteban Colombo", "Secretario", "Luyaba");
-            crearPin(-31.9492864, -65.1713415, "Ricardo Balmaceda", "Presidente", "Villa Dolores");
-            crearPin(-32.1865089, -65.0544137, "Marcelo Flores", "Tesorero", "Corralito");
-            
-            setTimeout(() => { map.invalidateSize(); }, 600);
-        });
-    </script>
+        // Tus pines actuales
+        crearPin(-31.9493132, -65.1712348, "TRASLAEA", "Sede Central", "Villa Dolores");
+        crearPin(-32.1047856, -65.109015, "Esteban Colombo", "Secretario", "Luyaba");
+        crearPin(-31.9492864, -65.1713415, "Ricardo Balmaceda", "Presidente", "Villa Dolores");
+        crearPin(-32.1865089, -65.0544137, "Marcelo Flores", "Tesorero", "Corralito");
+        
+        setTimeout(() => { map.invalidateSize(); }, 600);
+    });
+
+    // --- NUEVA FUNCIÓN PARA LA GALERÍA (Fuera del DOMContentLoaded para que sea global) ---
+    function toggleGaleria(id) {
+        const panel = document.getElementById(id);
+        if (panel) {
+            panel.classList.toggle('hidden');
+        }
+    }
+</script>
 </body>
 </html>
