@@ -391,54 +391,108 @@
         </div>
     </footer>
 
-    // Datos de los marcadores con Teléfonos Reales
-        const socios = [
-            {
-                p: [-31.9493, -65.1712], 
-                t: "TRASLAEA", 
-                s: "Sede Central", 
-                l: "Villa Dolores",
-                tel: "3544314637" // Número sin el +549 para mostrarlo limpio
-            },
-            {
-                p: [-32.1047, -65.1090], 
-                t: "Esteban Colombo", 
-                s: "Secretario - Cat 3", 
-                l: "Luyaba",
-                tel: "3544314637" 
-            },
-            {
-                p: [-31.9492, -65.1713], 
-                t: "Ricardo Balmaceda", 
-                s: "Presidente", 
-                l: "Villa Dolores",
-                tel: "3544123456" 
-            },
-            {
-                p: [-32.1865, -65.0544], 
-                t: "Marcelo Flores", 
-                s: "Tesorero", 
-                l: "Corralito",
-                tel: "3544654321" 
-            }
-        ];
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // --- 1. LÓGICA DEL MENÚ MÓVIL ---
+        const btnMenu = document.getElementById('btn-menu');
+        const menuMovil = document.getElementById('menu-movil');
+        if(btnMenu && menuMovil) {
+            btnMenu.onclick = () => menuMovil.classList.toggle('hidden');
+        }
 
-        // Añadir marcadores al mapa con el número como link de WhatsApp
-        socios.forEach(s => {
-            const popupContent = `
-                <div style="font-family: 'Arial', sans-serif; padding: 10px; min-width: 150px; text-align: center;">
-                    <b style="color: #002855; text-transform: uppercase; font-size: 14px; display: block; margin-bottom: 2px;">${s.t}</b>
-                    <small style="font-weight: bold; color: #666; display: block; margin-bottom: 5px;">${s.s}</small>
-                    <span style="color: #f97316; font-weight: 800; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">${s.l}</span>
-                    
-                    <div style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px;">
-                        <p style="font-size: 9px; font-weight: 900; color: #999; text-transform: uppercase; margin-bottom: 4px;">Contactar vía WhatsApp:</p>
-                        <a href="https://wa.me/549${s.tel}" target="_blank" 
-                           style="display: inline-block; color: #25d366; font-weight: 900; font-size: 15px; text-decoration: none; transition: transform 0.2s;">
-                           <span style="font-size: 18px;">✆</span> +54 9 ${s.tel}
-                        </a>
+        // --- 2. CONFIGURACIÓN DEL MAPA INTERACTIVO ---
+        const mapContainer = document.getElementById('mapa-socios');
+        if(mapContainer) {
+            // Centrado en Traslasierra (aprox Luyaba/V. Dolores)
+            const map = L.map(mapContainer, { scrollWheelZoom: false }).setView([-32.05, -65.10], 10);
+            
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: 'TRASLAEA 2026'
+            }).addTo(map);
+
+            // Datos de los socios con sus links directos
+            const socios = [
+                { p: [-31.9493, -65.1712], t: "TRASLAEA", s: "Sede Central", l: "Villa Dolores", tel: "3544314637" },
+                { p: [-32.1047, -65.1090], t: "Esteban Colombo", s: "Secretario - Cat 3", l: "Luyaba", tel: "3544314637" },
+                { p: [-31.9492, -65.1713], t: "Ricardo Balmaceda", s: "Presidente", l: "Villa Dolores", tel: "3544561234" },
+                { p: [-32.1865, -65.0544], t: "Marcelo Flores", s: "Tesorero", l: "Corralito", tel: "3544654321" }
+            ];
+
+            socios.forEach(s => {
+                const popupContent = `
+                    <div style="font-family: 'Arial', sans-serif; padding: 10px; min-width: 150px; text-align: center;">
+                        <b style="color: #002855; text-transform: uppercase; font-size: 14px; display: block; margin-bottom: 2px;">${s.t}</b>
+                        <small style="font-weight: bold; color: #666; display: block; margin-bottom: 5px;">${s.s}</small>
+                        <span style="color: #f97316; font-weight: 800; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">${s.l}</span>
+                        
+                        <div style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px;">
+                            <p style="font-size: 9px; font-weight: 900; color: #999; text-transform: uppercase; margin-bottom: 4px;">Contactar:</p>
+                            <a href="https://wa.me/549${s.tel}" target="_blank" 
+                               style="display: inline-block; color: #25d366; font-weight: 900; font-size: 14px; text-decoration: none; border: 1px solid #25d366; padding: 4px 8px; border-radius: 6px;">
+                               📱 +54 9 ${s.tel}
+                            </a>
+                        </div>
                     </div>
-                </div>
-            `;
-            L.marker(s.p).addTo(map).bindPopup(popupContent);
+                `;
+                L.marker(s.p).addTo(map).bindPopup(popupContent);
+            });
+
+            // Botón Expandir Mapa
+            const btnFull = document.createElement('button');
+            btnFull.innerHTML = "🗖 Expandir Mapa";
+            btnFull.className = "absolute top-2 right-2 z-[500] bg-white border-2 border-[#002855] text-[#002855] px-3 py-1 rounded-lg font-black text-[10px] uppercase shadow-lg hover:bg-[#002855] hover:text-white transition-all";
+            mapContainer.appendChild(btnFull);
+            
+            btnFull.onclick = () => {
+                mapContainer.classList.toggle('fixed');
+                if(mapContainer.classList.contains('fixed')){
+                    mapContainer.style.top = "0"; mapContainer.style.left = "0";
+                    mapContainer.style.width = "100vw"; mapContainer.style.height = "100vh";
+                    mapContainer.style.zIndex = "2000";
+                    btnFull.innerHTML = "✕ Cerrar Mapa";
+                } else {
+                    mapContainer.style.width = ""; mapContainer.style.height = "350px";
+                    mapContainer.style.position = "relative"; mapContainer.style.zIndex = "10";
+                    btnFull.innerHTML = "🗖 Expandir Mapa";
+                }
+                setTimeout(() => map.invalidateSize(), 300);
+            };
+            
+            setTimeout(() => map.invalidateSize(), 500);
+        }
+
+        // --- 3. ANIMACIÓN DE CONTADORES ---
+        function animateCount(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            if(!obj) return;
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start) + (id === 'count-socios' ? '+' : '');
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Activamos los contadores
+        animateCount("count-socios", 0, 42, 2000);
+        animateCount("count-obras", 0, 158, 2500);
+        animateCount("count-loc", 0, 12, 1500);
+    });
+
+    // --- 4. FUNCIÓN GLOBAL PARA LA GALERÍA ---
+    function toggleGaleria(id) {
+        const panel = document.getElementById(id);
+        if(panel) {
+            panel.classList.toggle('hidden');
+            if(!panel.classList.contains('hidden')) {
+                panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+    }
+</script>
         });
