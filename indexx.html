@@ -86,45 +86,47 @@
         <img src="imagen3.jpg" alt="Fondo 3">
     </div>
 
-    <header class="bg-[#002855] text-white p-4 shadow-lg sticky top-0 z-[1000]">
+   <header class="bg-[#002855] text-white p-4 shadow-lg sticky top-0 z-[1000]">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="h-16 w-16 rounded-full bg-white overflow-hidden border-2 border-orange-500 shadow-lg flex items-center justify-center transition-transform hover:scale-110">
+            
+            <a href="https://traslaea.org" class="flex items-center space-x-3 group transition-transform hover:scale-105 relative z-[1010]">
+                <div class="h-16 w-16 rounded-full bg-white overflow-hidden border-2 border-orange-500 shadow-lg flex items-center justify-center">
                     <img src="logo.png?v=99" alt="Logo" class="h-full w-full object-contain transform scale-110">
                 </div>
                 <div>
-                    <h1 class="text-xl font-bold tracking-tight leading-none">TRASLAEA</h1>
+                    <h1 class="text-xl font-bold tracking-tight leading-none group-hover:text-orange-400 transition-colors">TRASLAEA</h1>
                     <span class="block text-[10px] font-normal opacity-90 uppercase tracking-widest text-orange-400">Electricistas Asociados</span>
                 </div>
-            </div>
+            </a>
 
             <nav class="hidden lg:flex space-x-6 text-sm font-semibold uppercase">
-                <a href="#" class="hover:text-orange-400 transition">Institucional</a>
-                <a href="https://drive.google.com/drive/folders/10qjaUn4lYQHpO-p-_y-QXCxz2ZOwrvmd" target="_blank" class="hover:text-orange-400 transition">Recursos</a>
-                <a href="#eventos" class="hover:text-orange-400 transition">Eventos</a>
+                <a href="institucional.html" class="hover:text-orange-400 transition text-white">Institucional</a>
+                <a href="https://drive.google.com/drive/folders/10qjaUn4lYQHpO-p-_y-QXCxz2ZOwrvmd" target="_blank" class="hover:text-orange-400 transition text-white">Recursos</a>
+                <a href="#eventos" class="hover:text-orange-400 transition text-white">Eventos</a>
                 <a href="#contacto" class="text-orange-400 font-bold border-b-2 border-orange-400">Contacto</a>
             </nav>
 
-           <div class="flex items-center space-x-3">
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/viewform?usp=header" 
-       target="_blank" 
-       rel="noopener"
-       class="bg-white text-[#002855] px-4 py-2 rounded-full font-bold text-xs hover:bg-gray-200 shadow-md transition uppercase">
-       Suscripción
-    </a>
+            <div class="flex items-center space-x-3 relative z-[1020]">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/viewform?usp=header" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="bg-white text-[#002855] px-4 py-2 rounded-full font-bold text-xs hover:bg-gray-200 shadow-md transition uppercase cursor-pointer">
+                   Suscripción
+                </a>
 
-    <button id="btn-menu" class="lg:hidden text-white focus:outline-none">
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-        </svg>
-    </button>
-</div>
+                <button id="btn-menu" class="lg:hidden text-white focus:outline-none">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
 
         <div id="menu-movil" class="hidden lg:hidden bg-[#001b3a] mt-4 p-4 rounded-xl border border-blue-900 shadow-2xl space-y-4">
-            <a href="#" class="block py-2 border-b border-blue-900">Institucional</a>
-            <a href="https://drive.google.com/drive/folders/10qjaUn4lYQHpO-p-_y-QXCxz2ZOwrvmd" target="_blank" class="block py-2 border-b border-blue-900">Recursos</a>
-            <a href="#eventos" class="block py-2 border-b border-blue-900">Eventos</a>
+            <a href="https://traslaea.org" class="block py-2 border-b border-blue-900 text-white">Inicio</a>
+            <a href="institucional.html" class="block py-2 border-b border-blue-900 text-white">Institucional</a>
+            <a href="https://drive.google.com/drive/folders/10qjaUn4lYQHpO-p-_y-QXCxz2ZOwrvmd" target="_blank" class="block py-2 border-b border-blue-900 text-white">Recursos</a>
+            <a href="#eventos" class="block py-2 border-b border-blue-900 text-white">Eventos</a>
             <a href="#contacto" class="block py-2 text-orange-400 font-bold">Contacto</a>
         </div>
     </header>
@@ -134,7 +136,8 @@
             <h2 class="text-5xl font-black text-[#002855] tracking-tighter uppercase italic">
                 TRASLAEA: Potenciando la Red
             </h2>
-            <div class="w-24 h-1 bg-orange-500 mx-auto my-4"></div> <p class="text-xl text-gray-800 font-bold italic tracking-wide">
+            <div class="w-24 h-1 bg-orange-500 mx-auto my-4"></div> 
+            <p class="text-xl text-gray-800 font-bold italic tracking-wide">
                 Traslasierra Electricistas Asociados
             </p>
         </div>
@@ -161,9 +164,8 @@
             </div>
         </div>
 
-<section class="mt-12 mb-12 p-1 bg-gradient-to-r from-orange-400 to-red-500 rounded-3xl shadow-2xl relative z-10">
+        <section class="mt-12 mb-12 p-1 bg-gradient-to-r from-orange-400 to-red-500 rounded-3xl shadow-2xl relative z-10">
             <div class="bg-white/95 rounded-[1.4rem] p-6 md:p-10 flex flex-col lg:flex-row items-center gap-8 backdrop-blur-sm">
-                
                 <div class="flex-shrink-0 w-32 h-32 md:w-44 md:h-44 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-dashed border-orange-200 p-4">
                     <img src="relevando.peligro.jpg" alt="Relevando Peligros" class="max-w-full max-h-full object-contain">
                 </div>
