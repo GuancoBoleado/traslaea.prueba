@@ -11,7 +11,7 @@
         .bg-navy { background-color: #002855; }
         .text-navy { color: #002855; }
         .glass {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(0, 40, 85, 0.1);
         }
@@ -21,12 +21,10 @@
 
     <header class="bg-navy text-white p-4 shadow-md sticky top-0 z-[1000]">
         <div class="container mx-auto flex justify-between items-center">
-            
             <a href="https://traslaea-prueba.vercel.app" class="flex items-center space-x-3 group transition-transform active:scale-95">
                 <img src="logo.png" alt="Logo TRASLAEA" class="h-10 w-10 bg-white rounded-full p-1 border-2 border-transparent group-hover:border-orange-500 transition-all">
                 <span class="font-black tracking-tighter text-lg uppercase italic group-hover:text-orange-400 transition-colors">TRASLAEA</span>
             </a>
-
             <nav class="hidden md:flex items-center space-x-6 text-[11px] font-black uppercase tracking-wider">
                 <a href="https://traslaea-prueba.vercel.app" class="hover:text-orange-400 transition-colors">Inicio</a>
                 <a href="#" class="text-orange-400 border-b-2 border-orange-500 pb-1 italic">Institucional</a>
@@ -36,73 +34,43 @@
         </div>
     </header>
 
-    <main class="container mx-auto px-6 py-16 max-w-5xl">
+    <main class="container mx-auto px-6 py-16 max-w-4xl">
         
         <section class="mb-20">
-            <h2 class="text-3xl font-black text-navy uppercase mb-8 border-b-4 border-orange-500 inline-block italic">
+            <h2 class="text-3xl font-black text-navy uppercase mb-10 border-b-4 border-orange-500 inline-block italic">
                 Comisión DIRECTIVA
             </h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
-                <div>
-                    <h3 class="text-navy font-black text-xs uppercase tracking-widest mb-1 opacity-70">Presidencia</h3>
-                    <p class="text-gray-800 text-xl font-bold uppercase">Ricardo Andrés BALMACEDA</p>
+            <div class="space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center border-b border-gray-100 pb-4">
+                    <span class="text-navy font-black text-xs uppercase tracking-[0.2em] w-48 mb-1 md:mb-0">Presidencia</span>
+                    <span class="text-gray-800 text-xl font-bold uppercase">Ricardo Andrés BALMACEDA</span>
                 </div>
-
-                <div>
-                    <h3 class="text-navy font-black text-xs uppercase tracking-widest mb-1 opacity-70">Secretaría</h3>
-                    <p class="text-orange-600 text-xl font-black uppercase italic">Esteban Adrián COLOMBO</p>
+                <div class="flex flex-col md:flex-row md:items-center border-b border-gray-100 pb-4">
+                    <span class="text-orange-600 font-black text-xs uppercase tracking-[0.2em] w-48 mb-1 md:mb-0">Secretaría</span>
+                    <span class="text-orange-600 text-xl font-black uppercase italic">Esteban Adrián COLOMBO</span>
                 </div>
-
-                <div>
-                    <h3 class="text-navy font-black text-xs uppercase tracking-widest mb-1 opacity-70">Tesorería</h3>
-                    <p class="text-gray-800 text-xl font-bold uppercase">Juan Marcelo FLORES</p>
+                <div class="flex flex-col md:flex-row md:items-center border-b border-gray-100 pb-4">
+                    <span class="text-navy font-black text-xs uppercase tracking-[0.2em] w-48 mb-1 md:mb-0">Tesorería</span>
+                    <span class="text-gray-800 text-xl font-bold uppercase">Juan Marcelo FLORES</span>
                 </div>
-
-                <div>
-                    <h3 class="text-navy font-black text-xs uppercase tracking-widest mb-1 opacity-70">Vocal Titular</h3>
-                    <p class="text-gray-700 text-lg uppercase">Johnatan Jesus SOSA</p>
+                <div class="flex flex-col md:flex-row md:items-center border-b border-gray-100 pb-4">
+                    <span class="text-navy font-black text-xs uppercase tracking-[0.2em] w-48 mb-1 md:mb-0">Vocal Titular</span>
+                    <span class="text-gray-700 text-lg uppercase">Johnatan Jesus SOSA</span>
                 </div>
-
-                <div>
-                    <h3 class="text-navy font-black text-xs uppercase tracking-widest mb-1 opacity-70">Vocal Suplente</h3>
-                    <p class="text-gray-700 text-lg uppercase">Sergio David LUNGU</p>
+                <div class="flex flex-col md:flex-row md:items-center border-b border-gray-100 pb-4">
+                    <span class="text-navy font-black text-xs uppercase tracking-[0.2em] w-48 mb-1 md:mb-0">Vocal Suplente</span>
+                    <span class="text-gray-700 text-lg uppercase">Sergio David LUNGU</span>
                 </div>
             </div>
         </section>
 
         <section class="mb-24">
-            <h2 class="text-3xl font-black text-navy uppercase mb-8 border-b-4 border-orange-500 inline-block italic">
+            <h2 class="text-3xl font-black text-navy uppercase mb-10 border-b-4 border-orange-500 inline-block italic">
                 Comisión REVISORA DE CUENTAS
             </h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
-                <div class="bg-gray-50 p-6 rounded-2xl border-l-4 border-navy">
-                    <h3 class="text-navy font-black text-xs uppercase mb-1">Titular</h3>
-                    <p class="text-gray-700 text-lg font-bold uppercase italic">M. Ezequiel ORIBE</p>
+            <div class="space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center border-b border-gray-100 pb-4">
+                    <span class="text-navy font-black text-xs uppercase tracking-[0.2em] w-48 mb-1 md:mb-0">Titular</span>
+                    <span class="text-gray-700 text-lg font-bold uppercase italic">M. Ezequiel ORIBE</span>
                 </div>
-                <div class="bg-gray-50 p-6 rounded-2xl border-l-4 border-navy">
-                    <h3 class="text-navy font-black text-xs uppercase mb-1">Suplente</h3>
-                    <p class="text-gray-700 text-lg font-bold uppercase italic">N. Ezequiel BALMACEDA</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="mb-24 relative">
-            <div class="glass p-10 md:p-14 rounded-[3rem] border-t-8 border-navy shadow-2xl overflow-hidden relative">
-                
-                <div class="absolute top-8 right-10 flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-inner border border-gray-100">
-                    <span class="relative flex h-3 w-3">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                    </span>
-                    <span class="text-[9px] font-black text-navy uppercase tracking-tighter">Server: Online</span>
-                </div>
-
-                <h2 class="text-4xl font-black text-navy mb-2 uppercase italic tracking-tighter">Redes & Infraestructura</h2>
-                <p class="text-orange-600 font-bold text-xs uppercase tracking-[0.3em] mb-12 italic">Desarrollo Digital TRASLAEA</p>
-
-                <div class="grid md:grid-cols-2 gap-10">
-                    
-                    <div class="bg-white p-8 rounded-3xl border-l-8 border-orange-500 shadow-lg flex flex-col items-center md:items-start text-center md:text-left">
-                        <div class="w-14 h-14 bg-navy text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg transform rotate-3">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M
