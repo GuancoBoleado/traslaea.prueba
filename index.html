@@ -447,26 +447,6 @@
                 L.marker(s.p).addTo(map).bindPopup(popupContent);
             });
 
-            // Botón Expandir Mapa
-            const btnFull = document.createElement('button');
-            btnFull.innerHTML = "🗖 Expandir Mapa";
-            btnFull.className = "absolute top-2 right-2 z-[500] bg-white border-2 border-[#002855] text-[#002855] px-3 py-1 rounded-lg font-black text-[10px] uppercase shadow-lg hover:bg-[#002855] hover:text-white transition-all";
-            mapContainer.appendChild(btnFull);
-            
-            btnFull.onclick = () => {
-                mapContainer.classList.toggle('fixed');
-                if(mapContainer.classList.contains('fixed')){
-                    mapContainer.style.top = "0"; mapContainer.style.left = "0";
-                    mapContainer.style.width = "100vw"; mapContainer.style.height = "100vh";
-                    mapContainer.style.zIndex = "2000";
-                    btnFull.innerHTML = "✕ Cerrar Mapa";
-                } else {
-                    mapContainer.style.width = ""; mapContainer.style.height = "350px";
-                    mapContainer.style.position = "relative"; mapContainer.style.zIndex = "10";
-                    btnFull.innerHTML = "🗖 Expandir Mapa";
-                }
-                setTimeout(() => map.invalidateSize(), 300);
-            };
             
             setTimeout(() => map.invalidateSize(), 500);
         }
