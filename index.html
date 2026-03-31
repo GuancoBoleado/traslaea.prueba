@@ -398,92 +398,49 @@
     </footer>
 
    <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    // Variables globales para la galería
+    let fotosGaleria = [];
+    let indiceActual = 0;
+
+    // --- 1. FUNCIONES DE NAVEGACIÓN (Deben ser globales) ---
+    function actualizarImagenModal() {
+        const imgElement = document.getElementById('foto-grande');
+        const contador = document.getElementById('modal-contador');
+        if(imgElement && fotosGaleria[indiceActual]) {
+            imgElement.src = fotosGaleria[indiceActual];
+            if(contador) contador.innerHTML = `${indiceActual + 1} / ${fotosGaleria.length}`;
+        }
+    }
+
+    function fotoSiguiente(e) {
+        if(e) e.stopPropagation();
+        if(fotosGaleria.length === 0) return;
+        indiceActual = (indiceActual + 1) % fotosGaleria.length;
+        actualizarImagenModal();
+    }
+
+    function fotoAnterior(e) {
+        if(e) e.stopPropagation();
+        if(fotosGaleria.length === 0) return;
+        indiceActual = (indiceActual - 1 + fotosGaleria.length) % fotosGaleria.length;
+        actualizarImagenModal();
+    }
+
+    function cerrarModal() {
+        const modal = document.getElementById('modal-fotos');
+        if(modal) modal.classList.add('hidden');
+    }
+
+    function verFoto(url) {
+        const imagenes = document.querySelectorAll('#panel-solidario img');
+        fotosGaleria = Array.from(imagenes).map(img => img.src);
+        indiceActual = fotosGaleria.indexOf(url);
         
-        // --- 1. LÓGICA DEL MENÚ MÓVIL ---
-        const btnMenu = document.getElementById('btn-menu');
-        const menuMovil = document.getElementById('menu-movil');
-        if(btnMenu && menuMovil) {
-            btnMenu.onclick = () => menuMovil.classList.toggle('hidden');
-        }
+        actualizarImagenModal();
+        const modal = document.getElementById('modal-fotos');
+        if(modal) modal.classList.remove('hidden');
+    }
 
-        // --- 2. CONFIGURACIÓN DEL MAPA INTERACTIVO ---
-        const mapContainer = document.getElementById('mapa-socios');
-        if(mapContainer) {
-            // Centrado en Traslasierra (aprox Luyaba/V. Dolores)
-            const map = L.map(mapContainer, { scrollWheelZoom: false }).setView([-32.05, -65.10], 10);
-            
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-                attribution: 'TRASLAEA 2026'
-            }).addTo(map);
-
-// AQUÍ PEGASTE LA LUPA:
-            L.Control.geocoder({
-                defaultMarkGeocode: true,
-                placeholder: "Buscar ciudad o zona...",
-                errorMessage: "No se encontró."
-            }).addTo(map);
-            
-            // Datos de los socios con sus links directos
-            const socios = [
-                { p: [-31.9493, -65.1712], t: "TRASLAEA", s: "Sede Central", l: "Villa Dolores", tel: "3544314637" },
-                { p: [-32.1047, -65.1090], t: "Esteban Colombo", s: "Secretario - Cat 3", l: "Luyaba", tel: "3544314637" },
-                { p: [-31.9492, -65.1713], t: "Ricardo Balmaceda", s: "Presidente", l: "Villa Dolores", tel: "3544561234" },
-                { p: [-32.1865, -65.0544], t: "Marcelo Flores", s: "Tesorero", l: "Corralito", tel: "3544654321" }
-            ];
-
-            socios.forEach(s => {
-                const popupContent = `
-                    <div style="font-family: 'Arial', sans-serif; padding: 10px; min-width: 150px; text-align: center;">
-                        <b style="color: #002855; text-transform: uppercase; font-size: 14px; display: block; margin-bottom: 2px;">${s.t}</b>
-                        <small style="font-weight: bold; color: #666; display: block; margin-bottom: 5px;">${s.s}</small>
-                        <span style="color: #f97316; font-weight: 800; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">${s.l}</span>
-                        
-                        <div style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px;">
-                            <p style="font-size: 9px; font-weight: 900; color: #999; text-transform: uppercase; margin-bottom: 4px;">Contactar:</p>
-                            <a href="https://wa.me/549${s.tel}" target="_blank" 
-                               style="display: inline-block; color: #25d366; font-weight: 900; font-size: 14px; text-decoration: none; border: 1px solid #25d366; padding: 4px 8px; border-radius: 6px;">
-                               📱 +54 9 ${s.tel}
-                            </a>
-                        </div>
-                    </div>
-                `;
-                L.marker(s.p).addTo(map).bindPopup(popupContent);
-            });
-
-            
-            setTimeout(() => map.invalidateSize(), 500);
-        }
-
-        // --- 3. ANIMACIÓN DE CONTADORES ---
-        function animateCount(id, start, end, duration) {
-            const obj = document.getElementById(id);
-            if(!obj) return;
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                
-                // Aquí calculamos el número y lo mostramos SIN el "+" al final
-                obj.innerHTML = Math.floor(progress * (end - start) + start);
-                
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                } else {
-                    // Nos aseguramos de que al terminar muestre el número final exacto
-                    obj.innerHTML = end; 
-                }
-            };
-            window.requestAnimationFrame(step);
-        }
-
-        // Activamos los contadores
-        animateCount("count-socios", 0, 18, 2000);
-        animateCount("count-obras", 0, 1, 2500);
-        animateCount("count-loc", 0, 25, 1500);
-    });
-
-    // --- 4. FUNCIÓN GLOBAL PARA LA GALERÍA ---
     function toggleGaleria(id) {
         const panel = document.getElementById(id);
         if(panel) {
@@ -494,19 +451,98 @@
         }
     }
 
-    // --- 5. FUNCIÓN PARA VER FOTOS EN GRANDE ---
-    function verFoto(url) {
-        const modal = document.getElementById('modal-fotos');
-        const imagen = document.getElementById('foto-grande');
-        if(modal && imagen) {
-            imagen.src = url;
-            modal.classList.remove('hidden');
+    // --- 2. LÓGICA AL CARGAR EL DOCUMENTO ---
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // Menú Móvil
+        const btnMenu = document.getElementById('btn-menu');
+        const menuMovil = document.getElementById('menu-movil');
+        if(btnMenu && menuMovil) {
+            btnMenu.onclick = () => menuMovil.classList.toggle('hidden');
         }
-    }
+
+        // Mapa
+        const mapContainer = document.getElementById('mapa-socios');
+        if(mapContainer) {
+            const map = L.map(mapContainer, { scrollWheelZoom: false }).setView([-32.05, -65.10], 10);
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: 'TRASLAEA 2026'
+            }).addTo(map);
+
+            L.Control.geocoder({
+                defaultMarkGeocode: true,
+                placeholder: "Buscar ciudad...",
+                errorMessage: "No se encontró."
+            }).addTo(map);
+            
+            const socios = [
+                { p: [-31.9493, -65.1712], t: "TRASLAEA", s: "Sede Central", l: "V. Dolores", tel: "3544314637" },
+                { p: [-32.1047, -65.1090], t: "Esteban Colombo", s: "Secretario - Cat 3", l: "Luyaba", tel: "3544314637" },
+                { p: [-31.9492, -65.1713], t: "Ricardo Balmaceda", s: "Presidente", l: "V. Dolores", tel: "3544561234" },
+                { p: [-32.1865, -65.0544], t: "Marcelo Flores", s: "Tesorero", l: "Corralito", tel: "3544654321" }
+            ];
+
+            socios.forEach(s => {
+                L.marker(s.p).addTo(map).bindPopup(`
+                    <div style="text-align: center; font-family: sans-serif;">
+                        <b style="color: #002855;">${s.t}</b><br>
+                        <small>${s.s}</small><br>
+                        <a href="https://wa.me/549${s.tel}" target="_blank" style="color: #25d366; font-weight: bold; text-decoration: none;">📱 WhatsApp</a>
+                    </div>
+                `);
+            });
+            setTimeout(() => map.invalidateSize(), 500);
+        }
+
+        // Contadores
+        function animateCount(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            if(!obj) return;
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start);
+                if (progress < 1) window.requestAnimationFrame(step);
+                else obj.innerHTML = end;
+            };
+            window.requestAnimationFrame(step);
+        }
+        animateCount("count-socios", 0, 18, 2000);
+        animateCount("count-obras", 0, 1, 2500);
+        animateCount("count-loc", 0, 25, 1500);
+
+        // --- GESTOS SWIPE (DEDO) ---
+        let touchstartX = 0;
+        let touchendX = 0;
+        const modalEl = document.getElementById('modal-fotos');
+        if(modalEl) {
+            modalEl.addEventListener('touchstart', e => touchstartX = e.changedTouches[0].screenX, {passive: true});
+            modalEl.addEventListener('touchend', e => {
+                touchendX = e.changedTouches[0].screenX;
+                if (touchstartX - touchendX > 50) fotoSiguiente();
+                if (touchendX - touchstartX > 50) fotoAnterior();
+            }, {passive: true});
+        }
+
+        // Tecla Escape
+        document.addEventListener('keydown', (e) => { if (e.key === "Escape") cerrarModal(); });
+    });
 </script>
 
-<div id="modal-fotos" class="fixed inset-0 z-[3000] hidden bg-black/90 flex items-center justify-center p-4 cursor-zoom-out" onclick="this.classList.add('hidden')">
-    <img id="foto-grande" src="" class="max-w-full max-h-full rounded-xl shadow-2xl transition-all duration-300">
+<div id="modal-fotos" 
+     class="fixed inset-0 z-[3000] hidden bg-black/95 flex items-center justify-center p-2 select-none" 
+     onclick="if(event.target === this) cerrarModal()">
+    
+    <button onclick="cerrarModal()" class="absolute top-6 right-6 text-white/60 hover:text-white text-4xl font-light z-[3100]">✕</button>
+    
+    <button onclick="fotoAnterior(event)" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white text-6xl p-4 z-[3100] hidden md:block">‹</button>
+    
+    <img id="foto-grande" src="" onclick="event.stopPropagation()" class="max-w-full max-h-[85vh] rounded-lg shadow-2xl transition-all duration-300 object-contain">
+    
+    <button onclick="fotoSiguiente(event)" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white text-6xl p-4 z-[3100] hidden md:block">›</button>
+
+    <div id="modal-contador" class="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/40 font-black text-[10px] uppercase tracking-[0.3em]"></div>
 </div>
 
 </body>
