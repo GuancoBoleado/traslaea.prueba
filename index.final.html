@@ -7,6 +7,8 @@
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
@@ -411,6 +413,13 @@
                 attribution: 'TRASLAEA 2026'
             }).addTo(map);
 
+// AQUÍ PEGASTE LA LUPA:
+            L.Control.geocoder({
+                defaultMarkGeocode: true,
+                placeholder: "Buscar ciudad o zona...",
+                errorMessage: "No se encontró."
+            }).addTo(map);
+            
             // Datos de los socios con sus links directos
             const socios = [
                 { p: [-31.9493, -65.1712], t: "TRASLAEA", s: "Sede Central", l: "Villa Dolores", tel: "3544314637" },
@@ -438,26 +447,6 @@
                 L.marker(s.p).addTo(map).bindPopup(popupContent);
             });
 
-            // Botón Expandir Mapa
-            const btnFull = document.createElement('button');
-            btnFull.innerHTML = "🗖 Expandir Mapa";
-            btnFull.className = "absolute top-2 right-2 z-[500] bg-white border-2 border-[#002855] text-[#002855] px-3 py-1 rounded-lg font-black text-[10px] uppercase shadow-lg hover:bg-[#002855] hover:text-white transition-all";
-            mapContainer.appendChild(btnFull);
-            
-            btnFull.onclick = () => {
-                mapContainer.classList.toggle('fixed');
-                if(mapContainer.classList.contains('fixed')){
-                    mapContainer.style.top = "0"; mapContainer.style.left = "0";
-                    mapContainer.style.width = "100vw"; mapContainer.style.height = "100vh";
-                    mapContainer.style.zIndex = "2000";
-                    btnFull.innerHTML = "✕ Cerrar Mapa";
-                } else {
-                    mapContainer.style.width = ""; mapContainer.style.height = "350px";
-                    mapContainer.style.position = "relative"; mapContainer.style.zIndex = "10";
-                    btnFull.innerHTML = "🗖 Expandir Mapa";
-                }
-                setTimeout(() => map.invalidateSize(), 300);
-            };
             
             setTimeout(() => map.invalidateSize(), 500);
         }
