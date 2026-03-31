@@ -13,10 +13,10 @@
             background: rgba(255, 255, 255, 0.9);
         }
         body {
-            background-color: #f3f4f6;
-            background-image: url('imagen1.jpg'); /* Usamos una de tus fotos de fondo */
-            background-attachment: fixed;
-            background-size: cover;
+            background: #f0f2f5;
+            /* Usamos la misma lógica de fondo que el index si querés */
+            background-image: linear-gradient(rgba(0,40,85,0.05) 1px, transparent 1px), linear-gradient(90(rgba(0,40,85,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
         }
     </style>
 </head>
@@ -25,8 +25,8 @@
     <header class="bg-[#002855] text-white p-4 shadow-2xl sticky top-0 z-[1000] border-b border-white/5">
         <div class="container mx-auto flex justify-between items-center">
             <a href="index.html" class="flex items-center space-x-3 group">
-                <div class="h-12 w-12 rounded-full bg-white overflow-hidden border-2 border-orange-500 flex items-center justify-center">
-                    <img src="logo.png" alt="Logo" class="h-full w-full object-contain">
+                <div class="h-12 w-12 rounded-full bg-white overflow-hidden border-2 border-orange-500 flex items-center justify-center transition-transform group-hover:scale-110">
+                    <img src="logo.png" alt="Logo TRASLAEA" class="h-full w-full object-contain">
                 </div>
                 <div>
                     <h1 class="text-lg font-black tracking-tighter leading-none uppercase italic">TRASLAEA</h1>
@@ -36,82 +36,110 @@
             <nav class="hidden lg:flex items-center space-x-8 text-[11px] font-black uppercase tracking-[0.2em]">
                 <a href="index.html" class="hover:text-orange-400 transition-colors italic">Inicio</a>
                 <a href="nosotros.html" class="text-orange-400 italic">Nosotros</a>
-                <a href="#servicios" class="hover:text-orange-400 transition-colors italic">Servicios</a>
+                <a href="index.html#contacto" class="hover:text-orange-400 transition-colors italic">Contacto</a>
             </nav>
-            <a href="index.html#contacto" class="bg-orange-500 text-white px-5 py-2 rounded-full font-black text-[10px] uppercase tracking-tighter">CONTACTO</a>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 py-16 relative z-10">
+    <main class="container mx-auto px-4 py-16">
         
-        <section class="max-w-4xl mx-auto mb-16">
-            <div class="glass p-10 md:p-16 rounded-[3rem] shadow-2xl border-t-8 border-orange-500">
-                <h2 class="text-4xl md:text-5xl font-black text-[#002855] mb-8 uppercase italic tracking-tighter leading-none">
-                    Traslasierra <br> <span class="text-orange-500">Electricistas Asociados</span>
+        <section class="max-w-5xl mx-auto mb-20">
+            <div class="glass p-10 md:p-16 rounded-[3rem] shadow-2xl border-l-[12px] border-orange-500 relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 opacity-5 text-8xl font-black italic">TRASLAEA</div>
+                
+                <h2 class="text-4xl md:text-6xl font-black text-[#002855] mb-10 uppercase italic tracking-tighter leading-none">
+                    ¿Quiénes <span class="text-orange-500">Somos?</span>
                 </h2>
                 
-                <div class="space-y-6 text-gray-700 font-medium leading-relaxed text-lg">
-                    <p>
-                        <strong class="text-[#002855]">TRASLAEA</strong> es una asociación sin fines de lucro que reúne a profesionales de la electricidad habilitados en la región de Traslasierra, Córdoba.
-                    </p>
-                    <p>
-                        Nuestra misión es fortalecer la identidad institucional, promover la capacitación continua y garantizar la seguridad eléctrica bajo normativa vigente. Nos constituimos como un espacio de referencia para trabajadores, empresas y la comunidad.
-                    </p>
-                    <p class="border-l-4 border-blue-600 pl-6 italic bg-blue-50 py-4 rounded-r-2xl">
-                        "Contribuimos al bienestar y la seguridad de toda la comunidad, impulsando la responsabilidad social en el ejercicio de la profesión."
-                    </p>
+                <div class="grid lg:grid-cols-2 gap-12 text-gray-700 font-medium leading-relaxed text-lg">
+                    <div class="space-y-6">
+                        <p>
+                            <strong class="text-[#002855]">Traslasierra Electricistas Asociados (TRASLAEA)</strong> es una asociación sin fines de lucro que reúne a profesionales de la electricidad habilitados en la región de Traslasierra, Córdoba.
+                        </p>
+                        <p>
+                            Nuestra misión principal es fortalecer la identidad institucional de los electricistas habilitados, promover la capacitación continua y garantizar que las instalaciones cumplan con los estándares de seguridad exigidos por la normativa vigente.
+                        </p>
+                    </div>
+                    <div class="space-y-6">
+                        <p>
+                            Nos constituimos como un espacio de referencia para trabajadores, empresas y la comunidad, ofreciendo respaldo técnico y legal en un rubro clave para el desarrollo regional.
+                        </p>
+                        <p>
+                            Con una visión moderna y comprometida, TRASLAEA contribuye al bienestar y la seguridad de toda la comunidad de Traslasierra.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="servicios" class="max-w-6xl mx-auto">
-            <h3 class="text-3xl font-black text-[#002855] text-center mb-12 uppercase italic tracking-widest">
-                Nuestros Servicios Profesionales
-            </h3>
+            <div class="text-center mb-16">
+                <h3 class="text-3xl font-black text-[#002855] uppercase italic tracking-widest inline-block border-b-4 border-orange-500 pb-2">
+                    Nuestros Servicios
+                </h3>
+            </div>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass p-8 rounded-[2rem] border-b-4 border-blue-600 hover:-translate-y-2 transition-transform">
-                    <span class="text-4xl mb-4 block">🎓</span>
-                    <h4 class="font-black text-[#002855] uppercase mb-3">Capacitación Técnica</h4>
-                    <p class="text-sm text-gray-600 font-bold leading-snug">Cursos y talleres en electricidad, domótica, robótica y telecomunicaciones.</p>
+                <div class="glass p-8 rounded-[2.5rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-blue-600">
+                    <div class="text-4xl mb-6">🎓</div>
+                    <h4 class="font-black text-[#002855] uppercase italic mb-4">Capacitación Técnica</h4>
+                    <p class="text-sm text-gray-600 font-bold leading-snug uppercase tracking-tighter italic">
+                        Cursos, talleres y jornadas para actualizar conocimientos en electricidad, electrónica, robótica y domótica.
+                    </p>
                 </div>
 
-                <div class="glass p-8 rounded-[2rem] border-b-4 border-orange-500 hover:-translate-y-2 transition-transform">
-                    <span class="text-4xl mb-4 block">📋</span>
-                    <h4 class="font-black text-[#002855] uppercase mb-3">Gestión de Habilitaciones</h4>
-                    <p class="text-sm text-gray-600 font-bold leading-snug">Asesoramiento en registración y trámites ante organismos oficiales y privados.</p>
+                <div class="glass p-8 rounded-[2.5rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-orange-500">
+                    <div class="text-4xl mb-6">📋</div>
+                    <h4 class="font-black text-[#002855] uppercase italic mb-4">Gestión de Habilitaciones</h4>
+                    <p class="text-sm text-gray-600 font-bold leading-snug uppercase tracking-tighter italic">
+                        Asesoramos y acompañamos a los socios en la registración y trámites ante organismos oficiales y privados.
+                    </p>
                 </div>
 
-                <div class="glass p-8 rounded-[2rem] border-b-4 border-blue-600 hover:-translate-y-2 transition-transform">
-                    <span class="text-4xl mb-4 block">⚖️</span>
-                    <h4 class="font-black text-[#002855] uppercase mb-3">Asesoramiento Integral</h4>
-                    <p class="text-sm text-gray-600 font-bold leading-snug">Asistencia técnica, administrativa, contable, jurídica y seguridad laboral.</p>
+                <div class="glass p-8 rounded-[2.5rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-blue-600">
+                    <div class="text-4xl mb-6">⚖️</div>
+                    <h4 class="font-black text-[#002855] uppercase italic mb-4">Asesoramiento Integral</h4>
+                    <p class="text-sm text-gray-600 font-bold leading-snug uppercase tracking-tighter italic">
+                        Asistencia técnica, administrativa, contable, jurídica y en seguridad laboral para el profesional.
+                    </p>
                 </div>
 
-                <div class="glass p-8 rounded-[2rem] border-b-4 border-orange-500 hover:-translate-y-2 transition-transform">
-                    <span class="text-4xl mb-4 block">🤝</span>
-                    <h4 class="font-black text-[#002855] uppercase mb-3">Networking</h4>
-                    <p class="text-sm text-gray-600 font-bold leading-snug">Encuentros y exposiciones para fomentar el intercambio profesional regional.</p>
+                <div class="glass p-8 rounded-[2.5rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-orange-500">
+                    <div class="text-4xl mb-6">🤝</div>
+                    <h4 class="font-black text-[#002855] uppercase italic mb-4">Eventos y Networking</h4>
+                    <p class="text-sm text-gray-600 font-bold leading-snug uppercase tracking-tighter italic">
+                        Organización de conferencias y encuentros para fomentar el intercambio profesional y comercial.
+                    </p>
                 </div>
 
-                <div class="glass p-8 rounded-[2rem] border-b-4 border-blue-600 hover:-translate-y-2 transition-transform">
-                    <span class="text-4xl mb-4 block">🛡️</span>
-                    <h4 class="font-black text-[#002855] uppercase mb-3">Defensa y Representación</h4>
-                    <p class="text-sm text-gray-600 font-bold leading-snug">Velamos por el prestigio y respeto del trabajo profesional ante entidades públicas.</p>
+                <div class="glass p-8 rounded-[2.5rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-blue-600">
+                    <div class="text-4xl mb-6">🛡️</div>
+                    <h4 class="font-black text-[#002855] uppercase italic mb-4">Defensa Profesional</h4>
+                    <p class="text-sm text-gray-600 font-bold leading-snug uppercase tracking-tighter italic">
+                        Velamos por el prestigio, independencia y respeto del trabajo profesional ante entidades públicas y privadas.
+                    </p>
                 </div>
 
-                <div class="glass p-8 rounded-[2rem] border-b-4 border-orange-500 hover:-translate-y-2 transition-transform">
-                    <span class="text-4xl mb-4 block">📚</span>
-                    <h4 class="font-black text-[#002855] uppercase mb-3">Documentación</h4>
-                    <p class="text-sm text-gray-600 font-bold leading-snug">Acceso a reglamentaciones, normativas AEA y biblioteca especializada.</p>
+                <div class="glass p-8 rounded-[2.5rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-orange-500">
+                    <div class="text-4xl mb-6">📚</div>
+                    <h4 class="font-black text-[#002855] uppercase italic mb-4">Documentación</h4>
+                    <p class="text-sm text-gray-600 font-bold leading-snug uppercase tracking-tighter italic">
+                        Acceso a reglamentos, normativas AEA, boletines oficiales y nuestra biblioteca especializada.
+                    </p>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-[#001b3a] text-white py-10 mt-20 text-center">
-        <p class="text-[10px] font-black uppercase tracking-[0.4em]">TRASLAEA 2025 - 2026</p>
-        <p class="text-[9px] opacity-50 mt-2">Desarrollo por Electrosith</p>
+    <footer class="bg-[#001b3a] text-white py-12 mt-20 text-center border-t border-orange-500/30">
+        <div class="container mx-auto px-6">
+            <h4 class="text-xl font-black italic uppercase tracking-tighter mb-2">TRASLAEA 2025 - 2026</h4>
+            <p class="text-[9px] font-bold text-orange-400 uppercase tracking-[0.4em] opacity-80 mb-6">Asociación de Electricistas de Traslasierra</p>
+            <div class="pt-6 border-t border-white/5 inline-block">
+                <p class="text-[9px] font-black opacity-30 tracking-[0.3em] uppercase mb-1">Desarrollo & Soporte</p>
+                <p class="text-[10px] font-bold italic text-blue-300 tracking-widest uppercase">Electrosith • Traslasierra</p>
+            </div>
+        </div>
     </footer>
 
 </body>
