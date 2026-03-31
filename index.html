@@ -413,6 +413,13 @@
                 attribution: 'TRASLAEA 2026'
             }).addTo(map);
 
+// AQUÍ PEGASTE LA LUPA:
+            L.Control.geocoder({
+                defaultMarkGeocode: true,
+                placeholder: "Buscar ciudad o zona...",
+                errorMessage: "No se encontró."
+            }).addTo(map);
+            
             // Datos de los socios con sus links directos
             const socios = [
                 { p: [-31.9493, -65.1712], t: "TRASLAEA", s: "Sede Central", l: "Villa Dolores", tel: "3544314637" },
