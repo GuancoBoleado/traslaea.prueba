@@ -5,13 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TRASLAEA - Asociación de Electricistas de Traslasierra</title>
     
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
-
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-BMXWXB2GWZ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -19,9 +12,16 @@
       gtag('js', new Date());
       gtag('config', 'G-BMXWXB2GWZ');
     </script>
-    
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+
     <style>
-        /* 1. ANIMACIÓN DE FONDOS */
+        /* 1. ANIMACIÓN DE FONDOS (Arreglado para que no se vea transparente de más) */
         .bg-images-container {
             position: fixed;
             top: 0;
@@ -47,18 +47,25 @@
         @keyframes aparecerFondo {
             0% { opacity: 0; transform: scale(1.1); }
             30% { opacity: 1; filter: blur(0px) sepia(0%); }
-            100% { opacity: 0.75; filter: blur(2px) sepia(60%); transform: scale(1); }
+            100% { opacity: 0.75; filter: blur(2px) sepia(60%) brightness(0.8); transform: scale(1); }
         }
 
-        /* 2. EFECTOS DE DISEÑO (Aseguramos la opacidad del glass) */
+        @media (max-width: 768px) {
+            .bg-images-container { grid-template-columns: 1fr; grid-template-rows: repeat(3, 1fr); }
+            .bg-images-container img { height: 33.33vh; }
+        }
+
+        /* 2. EFECTOS DE DISEÑO (Glass corregido) */
         .glass {
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            background: rgba(255, 255, 255, 0.95) !important; /* Más sólido para que no sea tan transparente */
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.92) !important; /* Opacidad justa */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
         }
 
         #mapa-socios { z-index: 10; border-radius: 1rem; height: 350px; }
+
+        .logo-container:hover img { transform: scale(1.2); }
     </style>
 </head>
     
