@@ -564,9 +564,19 @@
     }
 
     function cerrarModal() {
-        const modal = document.getElementById('modal-fotos');
-        if(modal) modal.classList.add('hidden');
+    const modal = document.getElementById('modal-fotos');
+    const historico = document.getElementById('seccion-historico');
+    
+    if(modal) modal.classList.add('hidden');
+    
+    // Si el histórico está abierto, mantenemos el overflow hidden para que no se mueva el fondo
+    // Si no está el histórico, volvemos al scroll normal
+    if (historico && historico.classList.contains('hidden')) {
         document.body.style.overflow = 'auto';
+    } else {
+        document.body.style.overflow = 'hidden';
+    }
+
     }
 
     function verFoto(url) {
