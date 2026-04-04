@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TRASLAEA - Ping Pong Técnico</title>
+    <style>
+        body { background: #1a202c; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; color: white; font-family: sans-serif; flex-direction: column; }
+        canvas { border: 4px solid #002855; background: #000; box-shadow: 0 0 20px rgba(0,0,0,0.5); border-radius: 10px; cursor: none; }
+        h1 { margin-bottom: 10px; color: #f97316; italic; font-weight: 900; }
+    </style>
+</head>
+<body>
+    <h1>PING PONG TRASLAEA</h1>
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+    <p>Mové el mouse para controlar tu paleta</p>
+
+<script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    // Variables de la Pelota (Como un sensor de movimiento)
+    let ballX = canvas.width / 2;
+    let ballY = canvas.height / 2;
+    let ballSpeedX = 5;
+    let ballSpeedY = 5;
+
+    // Paletas
+    let player1Y = 250;
+    let player2Y = 250;
+    const PADDLE_HEIGHT = 80;
+    const PADDLE_THICKNESS = 10;
+
+    // Mouse
+    canvas.addEventListener('mousemove', function(evt) {
+        let mousePos = calculateMousePos(evt);
+        player1Y = mousePos.y - (PADDLE_HEIGHT/2);
+    });
+
+    function calculateMousePos(evt) {
+        let rect = canvas.getBoundingClientRect();
+        let root = document.documentElement;
+        let mouseX = evt.clientX - rect.left - root.scrollLeft;
+        let mouseY = evt.clientY - rect.top - root.scrollTop;
+        return { x:mouseX, y:mouseY };
+    }
+
+    function moveEverything() {
+        // Movimiento de la IA (Player 2)
+        let player2YCenter = player2Y + (PADDLE_HEIGHT/2);
+        if(player2YCenter < ballY - 35) { player2Y += 6; }
+        else if(player2YCenter > ballY + 35) { player2Y -= 6; }
+
+        ballX += ballSpeedX;
+        ballY += ballSpeedY;
+
+        // Rebote en paredes laterales (Goles)
+        if(ballX < 0) {
+            if(ballY > player1Y && ballY < player1Y + PADDLE_HEIGHT) {
+                ballSpeedX = -ballSpeedX;
+                let deltaY = ballY - (player1Y + PADDLE_HEIGHT/2);
+                ballSpeedY = deltaY * 0.35;
+            } else { resetBall(); }
+        }
+        if(ballX > canvas.width) {
+            if(ballY > player2Y && ballY < player2Y + PADDLE_HEIGHT) {
+                ballSpeedX = -ballSpeedX;
+                let deltaY = ballY - (player2Y + PADDLE_HEIGHT/2);
+                ballSpeedY = deltaY * 0.35;
+            } else { resetBall(); }
+        }
+
+        // Rebote techo y piso
+        if(ballY < 0 || ballY > canvas.height) ballSpeedY = -ballSpeedY;
+    }
+
+    function resetBall() {
+        ballSpeedX = -ballSpeedX;
+        ballX = canvas.width / 2;
+        ballY = canvas.height / 2;
+    }
+
+    function drawEverything() {
+        // Fondo
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Pelota (Naranja Traslaea)
+        ctx.fillStyle = "#f97316";
+        ctx.beginPath();
+        ctx.arc(ballX, ballY, 10, 0, Math.PI*2, true);
+        ctx.fill();
+
+        // Paleta Jugador (Azul Traslaea)
+        ctx.fillStyle = "#002855";
+        ctx.fillRect(0, player1Y, PADDLE_THICKNESS, PADDLE_HEIGHT);
+
+        // Paleta IA
+        ctx.fillStyle = "white";
+        ctx.fillRect(canvas.width - PADDLE_THICKNESS, player2Y, PADDLE_THICKNESS, PADDLE_HEIGHT);
+        
+        // Línea central
+        for(let i=0; i<canvas.height; i+=40) {
+            ctx.fillStyle = "gray";
+            ctx.fillRect(canvas.width/2-1, i, 2, 20);
+        }
+    }
+
+    // El "Loop" del juego (60 FPS)
+    setInterval(function() {
+        moveEverything();
+        drawEverything();
+    }, 1000/60);
+
+</script>
+</body>
+</html>
