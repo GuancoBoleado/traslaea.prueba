@@ -717,7 +717,7 @@ if (inputBuscador) {
 
         socios.forEach(s => {
             // Unimos todo el texto del socio (nombre, cargo, localidad)
-            let textoBusqueda = (s.t + " " + s.s + " " + s.l).toLowerCase();
+            let textoBusqueda = (s.t + " " + s.s + " " + s.l + " " + (s.tags || "")).toLowerCase();
             
             // TRUCO TÉCNICO: Si el socio dice "V. Dolores", hacemos que también coincida con "Villa Dolores"
             if (s.l.includes("V. Dolores")) {
