@@ -570,13 +570,19 @@
     }
 
     function verFoto(url) {
-        const imagenes = document.querySelectorAll('#panel-solidario img');
-        fotosGaleria = Array.from(imagenes).map(img => img.src);
-        indiceActual = fotosGaleria.indexOf(url);
-        actualizarImagenModal();
-        const modal = document.getElementById('modal-fotos');
-        if(modal) modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
+    // Buscamos todas las imágenes que están dentro de los paneles de fotos
+    const imagenes = document.querySelectorAll('#panel-solidario img, .grid img[onclick^="verFoto"]');
+    // Creamos la lista de URLs
+    fotosGaleria = Array.from(imagenes).map(img => img.src);
+    // Buscamos el índice de la foto clickeada
+    indiceActual = fotosGaleria.indexOf(url);
+    
+    actualizarImagenModal();
+    
+    const modal = document.getElementById('modal-fotos');
+    if(modal) modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+
     }
 
     function toggleGaleria(id) {
