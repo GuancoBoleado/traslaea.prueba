@@ -662,36 +662,36 @@
                 attribution: 'TRASLAEA 2026'
             }).addTo(map);
             
-            const socios = [
-    { 
-        p: [-31.9493, -65.1712], 
-        t: "SEDE CENTRAL TRASLAEA", 
-        s: "Asociación Civil", 
-        l: "Villa Dolores", 
-        tel: "3544649941" 
-    },
-    { 
-        p: [-31.9492249, -65.1719497], 
-        t: "RICARDO BALMACEDA", 
-        s: "Presidente - Electricista Cat II", 
-        l: "Villa Dolores", 
-        tel: "3544307583" // <--- TELÉFONO ACTUALIZADO DE RICARDO
-    },
-    { 
-        p: [-32.1047, -65.1090], 
-        t: "ESTEBAN COLOMBO", 
-        s: "Secretario - Electricista Cat II",
-        l: "Luyaba", 
-        tel: "3544314637" 
-    },
-    { 
-        p: [-32.1865, -65.0544], 
-        t: "MARCELO FLORES", 
-        s: "Tesorero - Electricista Cat III, 
-        l: "Corralito", 
-        tel: "3544654321" 
-    }
-];
+const socios = [
+                { 
+                    p: [-31.9493, -65.1712], 
+                    t: "SEDE CENTRAL TRASLAEA", 
+                    s: "Asociación Civil", 
+                    l: "Villa Dolores", 
+                    tel: "3544649941" 
+                },
+                { 
+                    p: [-31.9492249, -65.1719497], 
+                    t: "RICARDO BALMACEDA", 
+                    s: "Presidente - Electricista Cat II", 
+                    l: "Villa Dolores", 
+                    tel: "3544307583" 
+                },
+                { 
+                    p: [-32.1047, -65.1090], 
+                    t: "ESTEBAN COLOMBO", 
+                    s: "Secretario - Electricista Cat II<br>(Adm. de Redes & Infraestructura)", // <-- ACTUALIZADO
+                    l: "Luyaba", 
+                    tel: "3544314637" 
+                },
+                { 
+                    p: [-32.1865, -65.0544], 
+                    t: "MARCELO FLORES", 
+                    s: "Tesorero - Electricista Cat III", 
+                    l: "Corralito", 
+                    tel: "3544654321" 
+                }
+            ];
 
             socios.forEach(s => {
                 L.marker(s.p).addTo(map).bindPopup(`
