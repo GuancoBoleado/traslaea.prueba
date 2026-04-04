@@ -662,9 +662,12 @@
             }, {passive: true});
         }
 
-        // Escape
+       // Escape
         document.addEventListener('keydown', (e) => {
-            if (e.key === "Escape") cerrarModal();
+            if (e.key === "Escape") {
+                cerrarModal();
+                cerrarHistorico();
+            }
         });
 
         // --- LÓGICA DE ARCHIVO HISTÓRICO (BACK UP) ---
@@ -714,18 +717,25 @@
         };
 
         window.cerrarHistorico = function() {
-            document.getElementById('seccion-historico').classList.add('hidden');
+            const modal = document.getElementById('seccion-historico');
+            if(modal) modal.classList.add('hidden');
             document.body.style.overflow = 'auto';
         };
 
         window.verFotoHistorial = function(url, obraId) {
             const obra = obrasGuardadas.find(o => o.id === obraId);
             if(obra) {
+                esModoHistorial = true;
                 fotosGaleria = obra.fotos;
-                indiceActual = fotosGaleria.indexOf(url);
+                // Usamos findIndex para asegurar que encuentre el nombre exacto del archivo
+                indiceActual = fotosGaleria.findIndex(f => f === url);
+                
+                if(indiceActual === -1) indiceActual = 0;
+
                 actualizarImagenModal();
                 const modal = document.getElementById('modal-fotos');
                 if(modal) modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
             }
         };
     });
