@@ -654,7 +654,7 @@
         const mapContainer = document.getElementById('mapa-socios');
         if(mapContainer) {
             const map = L.map(mapContainer, { 
-                scrollWheelZoom: false,
+                scrollWheelZoom: true,
                 dragging: !L.Browser.mobile 
             }).setView([-32.05, -65.10], 10);
 
