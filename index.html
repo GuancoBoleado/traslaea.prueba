@@ -501,8 +501,8 @@
 </div>
     </footer>
 
-  <script>
-    // 1. VARIABLES GLOBALES (Fuera del DOMContentLoaded para que los botones HTML las vean)
+ <script>
+    // 1. VARIABLES GLOBALES
     let fotosGaleria = [];
     let indiceActual = 0;
 
@@ -532,19 +532,17 @@
     function cerrarModal() {
         const modal = document.getElementById('modal-fotos');
         if(modal) modal.classList.add('hidden');
-        document.body.style.overflow = 'auto'; // Habilita el scroll de nuevo
+        document.body.style.overflow = 'auto';
     }
 
     function verFoto(url) {
-        // Busca todas las fotos dentro del panel de la obra solidaria
         const imagenes = document.querySelectorAll('#panel-solidario img');
         fotosGaleria = Array.from(imagenes).map(img => img.src);
         indiceActual = fotosGaleria.indexOf(url);
-        
         actualizarImagenModal();
         const modal = document.getElementById('modal-fotos');
         if(modal) modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden'; // Bloquea el scroll de fondo
+        document.body.style.overflow = 'hidden';
     }
 
     function toggleGaleria(id) {
@@ -572,7 +570,7 @@
         if(mapContainer) {
             const map = L.map(mapContainer, { 
                 scrollWheelZoom: false,
-                dragging: !L.Browser.mobile // Desactiva arrastre con un dedo en celus para no trabar el scroll
+                dragging: !L.Browser.mobile 
             }).setView([-32.05, -65.10], 10);
 
             L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -595,11 +593,10 @@
                     </div>
                 `);
             });
-            // Corrige errores visuales del mapa al cargar
             setTimeout(() => map.invalidateSize(), 800);
         }
 
-        // Función de Contadores Animados
+        // Contadores
         function animateCount(id, start, end, duration) {
             const obj = document.getElementById(id);
             if(!obj) return;
@@ -608,68 +605,96 @@
                 if (!startTimestamp) startTimestamp = timestamp;
                 const progress = Math.min((timestamp - startTimestamp) / duration, 1);
                 obj.innerHTML = Math.floor(progress * (end - start) + start);
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                } else {
-                    obj.innerHTML = end; // Asegura el número final exacto
-                }
+                if (progress < 1) window.requestAnimationFrame(step);
+                else obj.innerHTML = end;
             };
             window.requestAnimationFrame(step);
         }
 
-        // Ejecutar contadores (ajustá los números según los socios reales)
         animateCount("count-socios", 0, 18, 2500);
         animateCount("count-obras", 0, 1, 2000);
         animateCount("count-loc", 0, 25, 2000);
 
-        // Soporte para gestos táctiles en el modal (Swipe)
+        // Swipe Modal
         let touchstartX = 0;
         let touchendX = 0;
         const modalEl = document.getElementById('modal-fotos');
         if(modalEl) {
-            modalEl.addEventListener('touchstart', e => {
-                touchstartX = e.changedTouches[0].screenX;
-            }, {passive: true});
-
+            modalEl.addEventListener('touchstart', e => { touchstartX = e.changedTouches[0].screenX; }, {passive: true});
             modalEl.addEventListener('touchend', e => {
                 touchendX = e.changedTouches[0].screenX;
-                if (touchstartX - touchendX > 60) fotoSiguiente(); // Deslizar a la izquierda
-                if (touchendX - touchstartX > 60) fotoAnterior();  // Deslizar a la derecha
+                if (touchstartX - touchendX > 60) fotoSiguiente();
+                if (touchendX - touchstartX > 60) fotoAnterior();
             }, {passive: true});
         }
 
-        // Cerrar con Escape
+        // Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === "Escape") cerrarModal();
         });
-    });
-      // --- LÓGICA DE ARCHIVO HISTÓRICO (BACK UP) ---
+
+        // --- LÓGICA DE ARCHIVO HISTÓRICO (BACK UP) ---
         const obrasGuardadas = [
             {
                 id: "reparacion-patricia-2026",
                 fecha: "30/03/2026",
                 titulo: "Reparación Solidaria - Patricia Garay",
                 ubicacion: "Luyaba, Córdoba",
-                descripcion: "Intervención técnica integral en vivienda siniestrada...",
+                descripcion: "Intervención técnica integral en vivienda siniestrada. Se realizó el relevamiento de daños por incendio, reemplazo de acometida y circuitos principales.",
                 fotos: ["quemado1.jpg", "quemado2.jpg", "avance1.jpg", "final1.jpg"],
                 categoria: "OBRA SOLIDARIA"
             }
         ];
 
         window.abrirHistorico = function() {
-            // ... (resto de la función abrirHistorico)
+            const modal = document.getElementById('seccion-historico');
+            const contenedor = document.getElementById('lista-historico');
+            if(!modal || !contenedor) return;
+
+            contenedor.innerHTML = obrasGuardadas.map(obra => `
+                <div class="bg-white rounded-[2.5rem] shadow-2xl border border-gray-200 overflow-hidden mb-12">
+                    <div class="p-8 md:p-12">
+                        <div class="flex justify-between items-start mb-6">
+                            <span class="bg-orange-100 text-orange-600 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">${obra.categoria}</span>
+                            <span class="text-gray-400 font-black text-xs italic">${obra.fecha}</span>
+                        </div>
+                        <h3 class="text-3xl font-black text-[#002855] uppercase italic mb-2 leading-none">${obra.titulo}</h3>
+                        <p class="text-orange-600 font-black text-xs uppercase mb-6 tracking-widest italic">${obra.ubicacion}</p>
+                        <p class="text-gray-600 font-bold text-sm mb-8 italic uppercase leading-relaxed opacity-80">${obra.descripcion}</p>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-gray-50 p-4 rounded-3xl border border-dashed border-gray-300">
+                            ${obra.fotos.map(foto => `
+                                <div class="group relative overflow-hidden rounded-2xl h-32 cursor-pointer shadow-lg" onclick="verFotoHistorial('${foto}', '${obra.id}')">
+                                    <img src="${foto}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                    <div class="absolute inset-0 bg-[#002855]/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                                        <span class="text-white font-black text-[8px] uppercase tracking-tighter">Ver Registro</span>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
         };
 
         window.cerrarHistorico = function() {
-            // ... (resto de la función cerrarHistorico)
+            document.getElementById('seccion-historico').classList.add('hidden');
+            document.body.style.overflow = 'auto';
         };
 
         window.verFotoHistorial = function(url, obraId) {
-            // ... (resto de la función verFotoHistorial)
+            const obra = obrasGuardadas.find(o => o.id === obraId);
+            if(obra) {
+                fotosGaleria = obra.fotos;
+                indiceActual = fotosGaleria.indexOf(url);
+                actualizarImagenModal();
+                const modal = document.getElementById('modal-fotos');
+                if(modal) modal.classList.remove('hidden');
+            }
         };
-        // ================================================================
-
     });
 </script>
-    </body>
+</body>
 </html>
