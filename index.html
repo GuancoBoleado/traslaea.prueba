@@ -454,7 +454,25 @@
                 </form>
             </div>
         </section>
-    </main> <footer class="bg-[#001b3a] text-white py-20 mt-20 relative overflow-hidden">
+    </main> 
+    <div id="seccion-historico" class="hidden fixed inset-0 z-[4000] bg-gray-100 overflow-y-auto">
+    <div class="sticky top-0 bg-[#002855] p-6 flex justify-between items-center shadow-xl z-[4001]">
+        <div class="flex items-center gap-3">
+            <span class="text-2xl">📁</span>
+            <h2 class="text-white font-black italic uppercase tracking-tighter text-xl">Archivo Histórico TRASLAEA</h2>
+        </div>
+        <button onclick="cerrarHistorico()" class="bg-orange-500 text-white px-6 py-2 rounded-xl font-black text-xs uppercase shadow-lg hover:bg-orange-600 transition-colors">Volver al Sitio</button>
+    </div>
+    
+    <div class="container mx-auto p-6 md:p-12">
+        <div class="max-w-4xl mx-auto">
+            <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mb-10 text-center">Registro de intervenciones solidarias finalizadas</p>
+            <div id="lista-historico">
+                </div>
+        </div>
+    </div>
+</div>
+    <footer class="bg-[#001b3a] text-white py-20 mt-20 relative overflow-hidden">
         <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 via-white to-blue-500 opacity-30"></div>
         
         <div class="container mx-auto px-6 flex flex-col items-center text-center relative z-10">
