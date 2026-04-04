@@ -523,16 +523,29 @@
     </footer>
 
  <script>
-    // 1. VARIABLES GLOBALES
+    
+    // 1. VARIABLES GLOBALES (Corregidas para compatibilidad)
     let fotosGaleria = [];
     let indiceActual = 0;
+    // NUEVO: Variable para saber si estamos viendo el histórico o la cartelera
+    let esModoHistorial = false; 
 
+    // Función de actualización CORREGIDA
     function actualizarImagenModal() {
         const imgElement = document.getElementById('foto-grande');
         const contador = document.getElementById('modal-contador');
+        
         if(imgElement && fotosGaleria[indiceActual]) {
-            imgElement.src = fotosGaleria[indiceActual];
-            if(contador) contador.innerHTML = `${indiceActual + 1} / ${fotosGaleria.length}`;
+            // Obtenemos la URL de la imagen (manejando si es objeto o string)
+            const urlImagen = typeof fotosGaleria[indiceActual] === 'object' 
+                              ? fotosGaleria[indiceActual].src 
+                              : fotosGaleria[indiceActual];
+
+            imgElement.src = urlImagen;
+            
+            if(contador) {
+                contador.innerHTML = `${indiceActual + 1} / ${fotosGaleria.length}`;
+            }
         }
     }
 
