@@ -490,26 +490,17 @@
         </div>
 
         <div id="modal-fotos" class="hidden fixed inset-0 z-[3000] bg-black/95 flex items-center justify-center p-4" onclick="cerrarModal()">
-    <button class="absolute top-6 right-6 text-white text-5xl hover:text-orange-500 transition-colors">&times;</button>
-    
-    <div class="relative max-w-4xl w-full flex flex-col items-center" onclick="event.stopPropagation()">
-        <img id="foto-grande" src="" class="max-h-[80vh] rounded-2xl shadow-2xl border-4 border-white/10 object-contain">
-        
-        <div class="flex items-center space-x-12 mt-8">
-            <button onclick="fotoAnterior()" class="group flex flex-col items-center">
-                <span class="bg-white/10 hover:bg-orange-500 text-white p-4 rounded-full transition-all shadow-xl font-black italic tracking-tighter">ANTERIOR</span>
-            </button>
-            
-            <div id="modal-contador" class="text-orange-400 font-black italic text-sm tracking-[0.3em] bg-white/5 px-6 py-2 rounded-full border border-white/10"></div>
-            
-            <button onclick="fotoSiguiente()" class="group flex flex-col items-center">
-                <span class="bg-white/10 hover:bg-orange-500 text-white p-4 rounded-full transition-all shadow-xl font-black italic tracking-tighter">SIGUIENTE</span>
-            </button>
+            <button class="absolute top-6 right-6 text-white text-5xl hover:text-orange-500 transition-colors">&times;</button>
+            <div class="relative max-w-4xl w-full flex flex-col items-center" onclick="event.stopPropagation()">
+                <img id="foto-grande" src="" class="max-h-[80vh] rounded-2xl shadow-2xl border-4 border-white/10 object-contain">
+                <div class="flex items-center space-x-12 mt-8">
+                    <button onclick="fotoAnterior()" class="bg-white/10 hover:bg-orange-500 text-white p-4 rounded-full transition-all font-black italic">ANTERIOR</button>
+                    <div id="modal-contador" class="text-orange-400 font-black italic text-sm tracking-[0.3em] bg-white/5 px-6 py-2 rounded-full border border-white/10"></div>
+                    <button onclick="fotoSiguiente()" class="bg-white/10 hover:bg-orange-500 text-white p-4 rounded-full transition-all font-black italic">SIGUIENTE</button>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-    </footer>
- <div id="seccion-historico" class="fixed inset-0 z-[5000] hidden bg-[#002855]/95 backdrop-blur-md flex items-center justify-center p-4">
+    </footer> <div id="seccion-historico" class="fixed inset-0 z-[5000] hidden bg-[#002855]/95 backdrop-blur-md flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-2xl rounded-[2.5rem] shadow-2xl overflow-hidden">
             <div class="bg-[#002855] p-8 flex justify-between items-center text-white border-b-4 border-orange-500">
                 <div>
@@ -518,10 +509,7 @@
                 </div>
                 <button onclick="toggleHistorico()" class="text-4xl font-light hover:text-orange-500 transition-colors">✕</button>
             </div>
-            
-            <div id="lista-historico" class="p-8 max-h-[60vh] overflow-y-auto space-y-6">
-                </div>
-            
+            <div id="lista-historico" class="p-8 max-h-[60vh] overflow-y-auto space-y-6"></div>
             <div class="p-6 bg-gray-50 text-center border-t border-gray-100">
                 <p class="text-[10px] font-bold text-gray-400 uppercase italic">Registro Oficial de la Secretaría</p>
             </div>
@@ -529,153 +517,139 @@
     </div>
 
     <script>
-        // ... toda tu lógica de JS ...
-    </script>
+        // 1. VARIABLES GLOBALES
+        let fotosGaleria = [];
+        let indiceActual = 0;
 
-</body>
-</html>
-  <script>
-    // 1. VARIABLES GLOBALES (Fuera del DOMContentLoaded para que los botones HTML las vean)
-    let fotosGaleria = [];
-    let indiceActual = 0;
+        // DATOS DEL HISTÓRICO
+        const historicoActividades = [
+            { fecha: "2026-03-15", titulo: "CAPACITACIÓN ERSEP", loc: "Villa Dolores", desc: "Formación técnica para nuevos habilitados." },
+            { fecha: "2026-01-20", titulo: "PRESENTACIÓN PERSONERÍA", loc: "Sede Central", desc: "Entrega de documentación oficial ante IPJ." }
+        ];
 
-    function actualizarImagenModal() {
-        const imgElement = document.getElementById('foto-grande');
-        const contador = document.getElementById('modal-contador');
-        if(imgElement && fotosGaleria[indiceActual]) {
-            imgElement.src = fotosGaleria[indiceActual];
-            if(contador) contador.innerHTML = `${indiceActual + 1} / ${fotosGaleria.length}`;
-        }
-    }
-
-    function fotoSiguiente(e) {
-        if(e) e.stopPropagation();
-        if(fotosGaleria.length === 0) return;
-        indiceActual = (indiceActual + 1) % fotosGaleria.length;
-        actualizarImagenModal();
-    }
-
-    function fotoAnterior(e) {
-        if(e) e.stopPropagation();
-        if(fotosGaleria.length === 0) return;
-        indiceActual = (indiceActual - 1 + fotosGaleria.length) % fotosGaleria.length;
-        actualizarImagenModal();
-    }
-
-    function cerrarModal() {
-        const modal = document.getElementById('modal-fotos');
-        if(modal) modal.classList.add('hidden');
-        document.body.style.overflow = 'auto'; // Habilita el scroll de nuevo
-    }
-
-    function verFoto(url) {
-        // Busca todas las fotos dentro del panel de la obra solidaria
-        const imagenes = document.querySelectorAll('#panel-solidario img');
-        fotosGaleria = Array.from(imagenes).map(img => img.src);
-        indiceActual = fotosGaleria.indexOf(url);
-        
-        actualizarImagenModal();
-        const modal = document.getElementById('modal-fotos');
-        if(modal) modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden'; // Bloquea el scroll de fondo
-    }
-
-    function toggleGaleria(id) {
-        const panel = document.getElementById(id);
-        if(panel) {
-            panel.classList.toggle('hidden');
-            if(!panel.classList.contains('hidden')) {
-                panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // FUNCIÓN PARA EL HISTÓRICO
+        function toggleHistorico() {
+            const modal = document.getElementById('seccion-historico');
+            if(!modal) return;
+            modal.classList.toggle('hidden');
+            if(!modal.classList.contains('hidden')) {
+                document.body.style.overflow = 'hidden';
+                const contenedor = document.getElementById('lista-historico');
+                contenedor.innerHTML = historicoActividades.map(act => `
+                    <div class="flex items-center gap-6 border-b border-gray-100 pb-6 last:border-0 p-2">
+                        <div class="text-center bg-gray-100 p-3 rounded-2xl min-w-[90px] border-b-4 border-orange-500">
+                            <span class="block text-xl font-black text-[#002855] leading-none">${act.fecha.split('-')[2]}</span>
+                            <span class="block text-[8px] font-bold text-gray-500 uppercase">${act.fecha.split('-')[1]} / ${act.fecha.split('-')[0]}</span>
+                        </div>
+                        <div>
+                            <h4 class="font-black text-[#002855] uppercase italic text-lg leading-tight">${act.titulo}</h4>
+                            <p class="text-[10px] font-bold text-orange-600 uppercase tracking-widest">${act.loc}</p>
+                            <p class="text-xs text-gray-500 font-bold mt-1 uppercase italic opacity-70">${act.desc}</p>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                document.body.style.overflow = 'auto';
             }
         }
-    }
 
-    // 2. LÓGICA AL CARGAR EL DOCUMENTO
-    document.addEventListener('DOMContentLoaded', function() {
-        
-        // Menú Móvil
-        const btnMenu = document.getElementById('btn-menu');
-        const menuMovil = document.getElementById('menu-movil');
-        if(btnMenu && menuMovil) {
-            btnMenu.onclick = () => menuMovil.classList.toggle('hidden');
+        // FUNCIONES DE GALERÍA
+        function actualizarImagenModal() {
+            const imgElement = document.getElementById('foto-grande');
+            const contador = document.getElementById('modal-contador');
+            if(imgElement && fotosGaleria[indiceActual]) {
+                imgElement.src = fotosGaleria[indiceActual];
+                if(contador) contador.innerHTML = `${indiceActual + 1} / ${fotosGaleria.length}`;
+            }
         }
 
-        // Mapa de Socios
-        const mapContainer = document.getElementById('mapa-socios');
-        if(mapContainer) {
-            const map = L.map(mapContainer, { 
-                scrollWheelZoom: false,
-                dragging: !L.Browser.mobile // Desactiva arrastre con un dedo en celus para no trabar el scroll
-            }).setView([-32.05, -65.10], 10);
-
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-                attribution: 'TRASLAEA 2026'
-            }).addTo(map);
-            
-            const socios = [
-                { p: [-31.9493, -65.1712], t: "TRASLAEA", s: "Sede Central", l: "V. Dolores", tel: "3544314637" },
-                { p: [-32.1047, -65.1090], t: "Esteban Colombo", s: "Secretario - Cat 3", l: "Luyaba", tel: "3544314637" },
-                { p: [-31.9492, -65.1713], t: "Ricardo Balmaceda", s: "Presidente", l: "V. Dolores", tel: "3544561234" },
-                { p: [-32.1865, -65.0544], t: "Marcelo Flores", s: "Tesorero", l: "Corralito", tel: "3544654321" }
-            ];
-
-            socios.forEach(s => {
-                L.marker(s.p).addTo(map).bindPopup(`
-                    <div style="text-align: center; font-family: sans-serif;">
-                        <b style="color: #002855;">${s.t}</b><br>
-                        <small>${s.s}</small><br>
-                        <a href="https://wa.me/549${s.tel}" target="_blank" style="color: #25d366; font-weight: bold; text-decoration: none;">📱 WhatsApp</a>
-                    </div>
-                `);
-            });
-            // Corrige errores visuales del mapa al cargar
-            setTimeout(() => map.invalidateSize(), 800);
+        function fotoSiguiente(e) {
+            if(e) e.stopPropagation();
+            if(fotosGaleria.length === 0) return;
+            indiceActual = (indiceActual + 1) % fotosGaleria.length;
+            actualizarImagenModal();
         }
 
-        // Función de Contadores Animados
-        function animateCount(id, start, end, duration) {
-            const obj = document.getElementById(id);
-            if(!obj) return;
-            let startTimestamp = null;
-            const step = (timestamp) => {
-                if (!startTimestamp) startTimestamp = timestamp;
-                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                obj.innerHTML = Math.floor(progress * (end - start) + start);
-                if (progress < 1) {
-                    window.requestAnimationFrame(step);
-                } else {
-                    obj.innerHTML = end; // Asegura el número final exacto
+        function fotoAnterior(e) {
+            if(e) e.stopPropagation();
+            if(fotosGaleria.length === 0) return;
+            indiceActual = (indiceActual - 1 + fotosGaleria.length) % fotosGaleria.length;
+            actualizarImagenModal();
+        }
+
+        function cerrarModal() {
+            const modal = document.getElementById('modal-fotos');
+            if(modal) modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function verFoto(url) {
+            const imagenes = document.querySelectorAll('#panel-solidario img');
+            fotosGaleria = Array.from(imagenes).map(img => img.src);
+            indiceActual = fotosGaleria.indexOf(url);
+            actualizarImagenModal();
+            const modal = document.getElementById('modal-fotos');
+            if(modal) modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function toggleGaleria(id) {
+            const panel = document.getElementById(id);
+            if(panel) {
+                panel.classList.toggle('hidden');
+                if(!panel.classList.contains('hidden')) {
+                    panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
-            };
-            window.requestAnimationFrame(step);
+            }
         }
 
-        // Ejecutar contadores (ajustá los números según los socios reales)
-        animateCount("count-socios", 0, 18, 2500);
-        animateCount("count-obras", 0, 1, 2000);
-        animateCount("count-loc", 0, 25, 2000);
+        // LÓGICA AL CARGAR EL DOCUMENTO
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnMenu = document.getElementById('btn-menu');
+            const menuMovil = document.getElementById('menu-movil');
+            if(btnMenu && menuMovil) {
+                btnMenu.onclick = () => menuMovil.classList.toggle('hidden');
+            }
 
-        // Soporte para gestos táctiles en el modal (Swipe)
-        let touchstartX = 0;
-        let touchendX = 0;
-        const modalEl = document.getElementById('modal-fotos');
-        if(modalEl) {
-            modalEl.addEventListener('touchstart', e => {
-                touchstartX = e.changedTouches[0].screenX;
-            }, {passive: true});
+            const mapContainer = document.getElementById('mapa-socios');
+            if(mapContainer) {
+                const map = L.map(mapContainer, { scrollWheelZoom: false, dragging: !L.Browser.mobile }).setView([-32.05, -65.10], 10);
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: 'TRASLAEA 2026' }).addTo(map);
+                const socios = [
+                    { p: [-31.9493, -65.1712], t: "TRASLAEA", s: "Sede Central", l: "V. Dolores", tel: "3544314637" },
+                    { p: [-32.1047, -65.1090], t: "Esteban Colombo", s: "Secretario - Cat 3", l: "Luyaba", tel: "3544314637" }
+                ];
+                socios.forEach(s => {
+                    L.marker(s.p).addTo(map).bindPopup(`<div style="text-align:center;"><b style="color:#002855;">${s.t}</b><br><small>${s.s}</small></div>`);
+                });
+                setTimeout(() => map.invalidateSize(), 800);
+            }
 
-            modalEl.addEventListener('touchend', e => {
-                touchendX = e.changedTouches[0].screenX;
-                if (touchstartX - touchendX > 60) fotoSiguiente(); // Deslizar a la izquierda
-                if (touchendX - touchstartX > 60) fotoAnterior();  // Deslizar a la derecha
-            }, {passive: true});
-        }
+            function animateCount(id, start, end, duration) {
+                const obj = document.getElementById(id);
+                if(!obj) return;
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    obj.innerHTML = Math.floor(progress * (end - start) + start);
+                    if (progress < 1) window.requestAnimationFrame(step);
+                    else obj.innerHTML = end;
+                };
+                window.requestAnimationFrame(step);
+            }
 
-        // Cerrar con Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === "Escape") cerrarModal();
+            animateCount("count-socios", 0, 18, 2500);
+            animateCount("count-obras", 0, 1, 2000);
+            animateCount("count-loc", 0, 25, 2000);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === "Escape") {
+                    cerrarModal();
+                    if(!document.getElementById('seccion-historico').classList.contains('hidden')) toggleHistorico();
+                }
+            });
         });
-    });
-</script>
-    </body>
+    </script>
+</body>
 </html>
