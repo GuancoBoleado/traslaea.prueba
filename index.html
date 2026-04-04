@@ -643,6 +643,33 @@
             if (e.key === "Escape") cerrarModal();
         });
     });
+      // --- LÓGICA DE ARCHIVO HISTÓRICO (BACK UP) ---
+        const obrasGuardadas = [
+            {
+                id: "reparacion-patricia-2026",
+                fecha: "30/03/2026",
+                titulo: "Reparación Solidaria - Patricia Garay",
+                ubicacion: "Luyaba, Córdoba",
+                descripcion: "Intervención técnica integral en vivienda siniestrada...",
+                fotos: ["quemado1.jpg", "quemado2.jpg", "avance1.jpg", "final1.jpg"],
+                categoria: "OBRA SOLIDARIA"
+            }
+        ];
+
+        window.abrirHistorico = function() {
+            // ... (resto de la función abrirHistorico)
+        };
+
+        window.cerrarHistorico = function() {
+            // ... (resto de la función cerrarHistorico)
+        };
+
+        window.verFotoHistorial = function(url, obraId) {
+            // ... (resto de la función verFotoHistorial)
+        };
+        // ================================================================
+
+    });
 </script>
     </body>
 </html>
