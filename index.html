@@ -728,22 +728,22 @@
             document.body.style.overflow = 'auto';
         };
 
-        window.verFotoHistorial = function(url, obraId) {
-            const obra = obrasGuardadas.find(o => o.id === obraId);
-            if(obra) {
-                esModoHistorial = true;
-                fotosGaleria = obra.fotos;
-                // Usamos findIndex para asegurar que encuentre el nombre exacto del archivo
-                indiceActual = fotosGaleria.findIndex(f => f === url);
-                
-                if(indiceActual === -1) indiceActual = 0;
+       window.verFotoHistorial = function(url, obraId) {
+    const obra = obrasGuardadas.find(o => o.id === obraId);
+    if(obra) {
+        fotosGaleria = obra.fotos;
+        // Importante: si las fotos en el array son solo nombres (ej: "quemado1.jpg"), 
+        // y el "url" es la ruta completa, hay que normalizarlo.
+        indiceActual = fotosGaleria.findIndex(f => url.includes(f));
+        
+        if(indiceActual === -1) indiceActual = 0;
 
-                actualizarImagenModal();
-                const modal = document.getElementById('modal-fotos');
-                if(modal) modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            }
-        };
+        actualizarImagenModal();
+        const modal = document.getElementById('modal-fotos');
+        if(modal) modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+};
     });
 </script>
 </body>
