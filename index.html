@@ -679,6 +679,36 @@
                 `);
             });
             setTimeout(() => map.invalidateSize(), 800);
+            // --- LÓGICA DEL BUSCADOR (AGREGAR ESTO) ---
+const inputBuscador = document.getElementById('buscador-socios');
+if (inputBuscador) {
+    inputBuscador.addEventListener('input', function(e) {
+        const valor = e.target.value.toLowerCase();
+        
+        // Creamos un grupo para los marcadores si no existe
+        if (!window.layerSocios) {
+            window.layerSocios = L.layerGroup().addTo(map);
+        }
+
+        // Limpiamos el mapa y volvemos a filtrar
+        map.eachLayer((layer) => {
+            if (layer instanceof L.Marker) map.removeLayer(layer);
+        });
+
+        socios.forEach(s => {
+            const textoSocio = (s.t + s.s + s.l).toLowerCase();
+            if (textoSocio.includes(valor)) {
+                L.marker(s.p).addTo(map).bindPopup(`
+                    <div style="text-align: center; font-family: sans-serif;">
+                        <b style="color: #002855;">${s.t}</b><br>
+                        <small>${s.s}</small><br>
+                        <a href="https://wa.me/549${s.tel}" target="_blank" style="color: #25d366; font-weight: bold; text-decoration: none;">📱 WhatsApp</a>
+                    </div>
+                `);
+            }
+        });
+    });
+}
         }
 
         // Contadores
