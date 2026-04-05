@@ -14,101 +14,160 @@
     <p>Mové el mouse para controlar tu paleta</p>
 
 <script>
-    const canvas = document.getElementById("gameCanvas");
-    const ctx = canvas.getContext("2d");
+    // --- 1. CONFIGURACIÓN TÉCNICA (Gabinete) ---
+    const canvas = document.getElementById("pong");
+    const ctx = canvas.getContext('2d');
 
-    // Variables de la Pelota (Como un sensor de movimiento)
-    let ballX = canvas.width / 2;
-    let ballY = canvas.height / 2;
-    let ballSpeedX = 5;
-    let ballSpeedY = 5;
+    let width = window.innerWidth > 600 ? 600 : window.innerWidth - 20;
+    let height = window.innerHeight > 400 ? 400 : window.innerHeight - 50;
+    canvas.width = width;
+    canvas.height = height;
 
-    // Paletas
-    let player1Y = 250;
-    let player2Y = 250;
-    const PADDLE_HEIGHT = 80;
-    const PADDLE_THICKNESS = 10;
+    // --- 2. OBJETOS DEL SISTEMA (Componentes) ---
+    let score = 0;
+    let level = 1;
+    let ballHits = 0; 
 
-    // Mouse
-    canvas.addEventListener('mousemove', function(evt) {
-        let mousePos = calculateMousePos(evt);
-        player1Y = mousePos.y - (PADDLE_HEIGHT/2);
+    const user = {
+        x : 10, y : (canvas.height/2) - 50,
+        width : 10, height : 100,
+        score : 0, color : "#fff" 
+    }
+
+    const com = {
+        x : canvas.width - 20, y : (canvas.height/2) - 50,
+        width : 10, height : 100,
+        score : 0, color : "#f97316" 
+    }
+
+    const ball = {
+        x : canvas.width/2, y : canvas.height/2,
+        radius : 8,
+        speed : 3, 
+        velocityX : 3, velocityY : 3,
+        color : "#fff"
+    }
+
+    // --- 3. SENSORES DE MOVIMIENTO (Controles) ---
+
+    // A. Sensor Mouse (Compu)
+    canvas.addEventListener("mousemove", function(e){
+        let rect = canvas.getBoundingClientRect();
+        user.y = e.clientY - rect.top - user.height/2;
     });
 
-    function calculateMousePos(evt) {
+    // B. Sensor TOUCH (Celular)
+    canvas.addEventListener("touchmove", function(e){
+        e.preventDefault(); 
+        let touch = e.touches[0];
         let rect = canvas.getBoundingClientRect();
-        let root = document.documentElement;
-        let mouseX = evt.clientX - rect.left - root.scrollLeft;
-        let mouseY = evt.clientY - rect.top - root.scrollTop;
-        return { x:mouseX, y:mouseY };
-    }
+        user.y = touch.clientY - rect.top - user.height/2;
+    }, { passive: false });
 
-    function moveEverything() {
-        // Movimiento de la IA (Player 2)
-        let player2YCenter = player2Y + (PADDLE_HEIGHT/2);
-        if(player2YCenter < ballY - 35) { player2Y += 6; }
-        else if(player2YCenter > ballY + 35) { player2Y -= 6; }
-
-        ballX += ballSpeedX;
-        ballY += ballSpeedY;
-
-        // Rebote en paredes laterales (Goles)
-        if(ballX < 0) {
-            if(ballY > player1Y && ballY < player1Y + PADDLE_HEIGHT) {
-                ballSpeedX = -ballSpeedX;
-                let deltaY = ballY - (player1Y + PADDLE_HEIGHT/2);
-                ballSpeedY = deltaY * 0.35;
-            } else { resetBall(); }
+    // C. Sensor TECLADO (Flechas arriba/abajo) - ¡NUEVO!
+    window.addEventListener("keydown", function(e){
+        const step = 30; // Cuántos píxeles se mueve por cada toque de flecha
+        if(e.key === "ArrowUp") {
+            user.y -= step;
+        } else if(e.key === "ArrowDown") {
+            user.y += step;
         }
-        if(ballX > canvas.width) {
-            if(ballY > player2Y && ballY < player2Y + PADDLE_HEIGHT) {
-                ballSpeedX = -ballSpeedX;
-                let deltaY = ballY - (player2Y + PADDLE_HEIGHT/2);
-                ballSpeedY = deltaY * 0.35;
-            } else { resetBall(); }
+    });
+
+
+    // --- 4. LÓGICA DEL MOTOR (Update) ---
+
+    function resetBall(){
+        ball.x = canvas.width/2;
+        ball.y = canvas.height/2;
+        ball.speed = 3 + (level * 0.5); 
+        ball.velocityX = -ball.velocityX; 
+    }
+
+    function collision(b,p){
+        p.top = p.y; p.bottom = p.y + p.height;
+        p.left = p.x; p.right = p.x + p.width;
+        b.top = b.y - b.radius; b.bottom = b.y + b.radius;
+        b.left = b.x - b.radius; b.right = b.x + b.radius;
+        return b.right > p.left && b.bottom > p.top && b.left < p.right && b.top < p.bottom;
+    }
+
+    function update(){
+        ball.x += ball.velocityX;
+        ball.y += ball.velocityY;
+
+        // IA de la computadora
+        com.y += ((ball.y - (com.y + com.height/2))) * 0.05;
+
+        if(ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height){
+            ball.velocityY = -ball.velocityY;
         }
 
-        // Rebote techo y piso
-        if(ballY < 0 || ballY > canvas.height) ballSpeedY = -ballSpeedY;
+        let player = (ball.x + ball.radius < canvas.width/2) ? user : com;
+
+        if(collision(ball,player)){
+            ballHits++; 
+            if(ballHits % 5 === 0){ 
+                level++;
+                ball.speed += 0.5;
+                score += 10; 
+            }
+
+            let collidePoint = (ball.y - (player.y + player.height/2));
+            collidePoint = collidePoint / (player.height/2);
+            let angleRad = (Math.PI/4) * collidePoint;
+            let direction = (ball.x + ball.radius < canvas.width/2) ? 1 : -1;
+            
+            ball.velocityX = direction * ball.speed * Math.cos(angleRad);
+            ball.velocityY = ball.speed * Math.sin(angleRad);
+        }
+
+        // Límites para que la paleta del usuario no se salga del tablero (útil para teclado)
+        if(user.y < 0) user.y = 0;
+        if(user.y > canvas.height - user.height) user.y = canvas.height - user.height;
+
+        if( ball.x - ball.radius < 0 ){ com.score++; resetBall(); ballHits = 0; level = 1; score = 0; }
+        else if( ball.x + ball.radius > canvas.width ){ user.score++; resetBall(); ballHits = 0; level = 1; score += 5; }
     }
 
-    function resetBall() {
-        ballSpeedX = -ballSpeedX;
-        ballX = canvas.width / 2;
-        ballY = canvas.height / 2;
+    // --- 5. RENDERIZADO (Dibujo) ---
+
+    function drawRect(x, y, w, h, color){
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, w, h);
     }
 
-    function drawEverything() {
-        // Fondo
-        ctx.fillStyle = "black";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Pelota (Naranja Traslaea)
-        ctx.fillStyle = "#f97316";
+    function drawCircle(x, y, r, color){
+        ctx.fillStyle = color;
         ctx.beginPath();
-        ctx.arc(ballX, ballY, 10, 0, Math.PI*2, true);
+        ctx.arc(x,y,r,0,Math.PI*2,true);
+        ctx.closePath();
         ctx.fill();
-
-        // Paleta Jugador (Azul Traslaea)
-        ctx.fillStyle = "#002855";
-        ctx.fillRect(0, player1Y, PADDLE_THICKNESS, PADDLE_HEIGHT);
-
-        // Paleta IA
-        ctx.fillStyle = "white";
-        ctx.fillRect(canvas.width - PADDLE_THICKNESS, player2Y, PADDLE_THICKNESS, PADDLE_HEIGHT);
-        
-        // Línea central
-        for(let i=0; i<canvas.height; i+=40) {
-            ctx.fillStyle = "gray";
-            ctx.fillRect(canvas.width/2-1, i, 2, 20);
-        }
     }
 
-    // El "Loop" del juego (60 FPS)
-    setInterval(function() {
-        moveEverything();
-        drawEverything();
-    }, 1000/60);
+    function drawText(text, x, y, color, size="35px"){
+        ctx.fillStyle = color;
+        ctx.font = size + " 'Roboto', sans-serif";
+        ctx.fillText(text, x, y);
+    }
+
+    function render(){
+        drawRect(0, 0, canvas.width, canvas.height, "#002855");
+        drawText(user.score, canvas.width/4, canvas.height/5, "#fff");
+        drawText(com.score, 3*canvas.width/4, canvas.height/5, "#f97316");
+        drawText("Nivel: " + level, canvas.width/2 - 60, canvas.height - 20, "rgba(255,255,255,0.4)", "15px");
+        drawText("Puntos: " + score, canvas.width/2 - 60, canvas.height - 40, "rgba(255,255,255,0.4)", "15px");
+
+        drawRect(user.x, user.y, user.width, user.height, user.color);
+        drawRect(com.x, com.y, com.width, com.height, com.color);
+        drawCircle(ball.x, ball.y, ball.radius, ball.color);
+    }
+
+    function game(){
+        update();
+        render();
+    }
+    let loop = setInterval(game, 1000/50);
 
 </script>
 </body>
