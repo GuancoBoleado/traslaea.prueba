@@ -130,15 +130,67 @@
     }
 
     function render() {
-        drawRect(0, 0, canvas.width, canvas.height, "#002855"); // Fondo azul asociación
-        drawCircle(ball.x, ball.y, ball.radius, ball.color);
-        drawRect(user.x, user.y, user.width, user.height, user.color);
-        drawRect(com.x, com.y, com.width, com.height, com.color);
+        // 1. Fondo Azul TRASLAEA
+        ctx.fillStyle = "#002855";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // --- INICIO CÍRCULO CENTRAL CON LOGO ---
+        let centerX = canvas.width / 2;
+        let centerY = canvas.height / 2;
+        let radioCirculo = 100; // Ajustá este tamaño si lo querés más grande o chico
+
+        ctx.save();
         
+        // Dibujamos el círculo naranja de fondo
+        ctx.fillStyle = "#f97316"; 
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radioCirculo, 0, Math.PI * 2);
+        ctx.fill();
+        
+        // Borde blanco fino para que resalte
+        ctx.strokeStyle = "white";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Recorte circular para que el logo no se salga del naranja
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radioCirculo - 5, 0, Math.PI * 2);
+        ctx.clip();
+
+        // Dibujamos el logo (ajustado al círculo)
+        // Le damos un poco de transparencia para que no tape la pelota al pasar
+        ctx.globalAlpha = 0.9; 
+        ctx.drawImage(logoAsoc, centerX - (radioCirculo - 10), centerY - (radioCirculo - 10), (radioCirculo - 10) * 2, (radioCirculo - 10) * 2);
+        
+        ctx.restore();
+        // --- FIN CÍRCULO CENTRAL ---
+
+        // 2. Línea central punteada
+        ctx.strokeStyle = "rgba(255,255,255,0.2)";
+        ctx.setLineDash([15, 15]);
+        ctx.beginPath();
+        ctx.moveTo(canvas.width/2, 0);
+        ctx.lineTo(canvas.width/2, canvas.height);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // 3. Pelota y Paletas
         ctx.fillStyle = "white";
-        ctx.font = "20px Arial";
-        ctx.fillText(user.score, canvas.width/4, 30);
-        ctx.fillText(com.score, 3*canvas.width/4, 30);
+        ctx.beginPath();
+        ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
+        ctx.fill();
+
+        ctx.fillStyle = user.color;
+        ctx.fillRect(user.x, user.y, user.width, user.height);
+
+        ctx.fillStyle = com.color;
+        ctx.fillRect(com.x, com.y, com.width, com.height);
+        
+        // 4. Marcador
+        ctx.fillStyle = "rgba(255,255,255,0.3)";
+        ctx.font = "bold 80px Arial";
+        ctx.fillText(user.score, canvas.width/4 - 20, 100);
+        ctx.fillText(com.score, 3*canvas.width/4 - 20, 100);
     }
 
     function game() {
