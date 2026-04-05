@@ -3,57 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TRASLAEA - Ping Pong Técnico</title>
+    <title>TRASLAEA - Recreo Técnico</title>
     <style>
         body { 
-            background: #1a202c; 
+            background: #001b3a; 
             display: flex; 
+            flex-direction: column;
             justify-content: center; 
             align-items: center; 
             height: 100vh; 
             margin: 0; 
             color: white; 
-            font-family: sans-serif; 
-            flex-direction: column; 
+            font-family: 'Arial', sans-serif;
             overflow: hidden;
         }
         canvas { 
-            border: 4px solid #f97316; /* Naranja TRASLAEA */
+            border: 4px solid #f97316; 
             background: #000; 
-            box-shadow: 0 0 30px rgba(0,0,0,0.7); 
-            border-radius: 10px; 
+            box-shadow: 0 0 50px rgba(0,0,0,0.8); 
+            border-radius: 15px;
+            cursor: none;
         }
-        h1 { margin-bottom: 10px; color: #f97316; font-style: italic; font-weight: 900; text-transform: uppercase; }
-        p { margin-top: 10px; opacity: 0.5; font-size: 12px; }
+        h1 { 
+            margin-bottom: 15px; 
+            color: #f97316; 
+            font-style: italic; 
+            font-weight: 900; 
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+        .instrucciones {
+            margin-top: 15px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.6;
+            font-weight: bold;
+        }
+        .btn-volver {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #f97316;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
+
+    <a href="index.html" class="btn-volver">← VOLVER AL SITIO</a>
+
     <h1>PING PONG TRASLAEA</h1>
     
     <canvas id="pong"></canvas>
     
-    <p>Usa el mouse, las flechas o el dedo</p>
+    <div class="instrucciones">Deslizá para mover la paleta blanca ⚡</div>
 
 <script>
     const canvas = document.getElementById("pong");
     const ctx = canvas.getContext('2d');
 
-    // Ajuste dinámico de pantalla
+    // 1. CARGAR LOGO TRASLAEA
+    const logoAsoc = new Image();
+    logoAsoc.src = "logo.png?v=99"; 
+
+    // Ajuste de pantalla
     function resize() {
-        canvas.width = window.innerWidth > 600 ? 600 : window.innerWidth - 20;
-        canvas.height = window.innerHeight > 400 ? 400 : window.innerHeight - 150;
+        canvas.width = window.innerWidth > 700 ? 700 : window.innerWidth - 30;
+        canvas.height = window.innerHeight > 450 ? 450 : window.innerHeight - 200;
     }
     resize();
 
-    let score = 0;
-    let level = 1;
-    let ballHits = 0;
+    const user = { x: 15, y: canvas.height/2 - 50, width: 12, height: 85, score: 0, color: "#FFFFFF" };
+    const com = { x: canvas.width - 27, y: canvas.height/2 - 50, width: 12, height: 85, score: 0, color: "#f97316" };
+    const ball = { x: canvas.width/2, y: canvas.height/2, radius: 9, speed: 6, velocityX: 6, velocityY: 6, color: "#f97316" };
 
-    const user = { x: 10, y: canvas.height/2 - 50, width: 10, height: 80, score: 0, color: "#fff" };
-    const com = { x: canvas.width - 20, y: canvas.height/2 - 50, width: 10, height: 80, score: 0, color: "#f97316" };
-    const ball = { x: canvas.width/2, y: canvas.height/2, radius: 8, speed: 5, velocityX: 5, velocityY: 5, color: "#fff" };
-
-    // Controles
+    // CONTROLES
     canvas.addEventListener("mousemove", (e) => {
         let rect = canvas.getBoundingClientRect();
         user.y = e.clientY - rect.top - user.height/2;
@@ -66,15 +97,10 @@
         user.y = touch.clientY - rect.top - user.height/2;
     }, { passive: false });
 
-    window.addEventListener("keydown", (e) => {
-        if(e.key === "ArrowUp") user.y -= 40;
-        if(e.key === "ArrowDown") user.y += 40;
-    });
-
     function resetBall() {
         ball.x = canvas.width/2;
         ball.y = canvas.height/2;
-        ball.speed = 5 + (level * 0.5);
+        ball.speed = 6;
         ball.velocityX = -ball.velocityX;
     }
 
@@ -87,10 +113,9 @@
         ball.x += ball.velocityX;
         ball.y += ball.velocityY;
 
-        // IA Computadora
-        com.y += (ball.y - (com.y + com.height/2)) * 0.08;
+        // IA de la Computadora (Naranja)
+        com.y += (ball.y - (com.y + com.height/2)) * 0.09;
 
-        // Rebote techo/suelo
         if(ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
             ball.velocityY = -ball.velocityY;
         }
@@ -98,23 +123,17 @@
         let player = (ball.x < canvas.width/2) ? user : com;
 
         if(collision(ball, player)) {
-            ballHits++;
-            if(ballHits % 5 === 0) { level++; score += 10; ball.speed += 0.5; }
-            
             let collidePoint = (ball.y - (player.y + player.height/2)) / (player.height/2);
             let angleRad = (Math.PI/4) * collidePoint;
             let direction = (ball.x < canvas.width/2) ? 1 : -1;
             ball.velocityX = direction * ball.speed * Math.cos(angleRad);
             ball.velocityY = ball.speed * Math.sin(angleRad);
+            ball.speed += 0.2; // Aumenta dificultad
         }
 
-        // Límites paleta usuario
-        if(user.y < 0) user.y = 0;
-        if(user.y > canvas.height - user.height) user.y = canvas.height - user.height;
-
-        // Puntos
-        if(ball.x - ball.radius < 0) { com.score++; resetBall(); level = 1; ballHits = 0; }
-        else if(ball.x + ball.radius > canvas.width) { user.score++; score += 5; resetBall(); }
+        // Puntajes
+        if(ball.x - ball.radius < 0) { com.score++; resetBall(); }
+        else if(ball.x + ball.radius > canvas.width) { user.score++; resetBall(); }
     }
 
     function drawRect(x, y, w, h, color) {
@@ -130,23 +149,39 @@
     }
 
     function render() {
-        drawRect(0, 0, canvas.width, canvas.height, "#002855"); // Fondo azul asociación
-        drawCircle(ball.x, ball.y, ball.radius, ball.color);
+        // Fondo
+        drawRect(0, 0, canvas.width, canvas.height, "#002855");
+
+        // 2. DIBUJAR LOGO EN EL CENTRO (Marca de agua)
+        ctx.save();
+        ctx.globalAlpha = 0.15;
+        let logoDim = canvas.height * 0.6;
+        ctx.drawImage(logoAsoc, canvas.width/2 - logoDim/2, canvas.height/2 - logoDim/2, logoDim, logoDim);
+        ctx.restore();
+
+        // Línea central
+        ctx.strokeStyle = "rgba(255,255,255,0.1)";
+        ctx.setLineDash([10, 10]);
+        ctx.strokeRect(canvas.width/2, 0, 0, canvas.height);
+
+        // Pelota y paletas
+        drawCircle(ball.x, ball.y, ball.radius, "#FFFFFF");
         drawRect(user.x, user.y, user.width, user.height, user.color);
         drawRect(com.x, com.y, com.width, com.height, com.color);
         
-        ctx.fillStyle = "white";
-        ctx.font = "20px Arial";
-        ctx.fillText(user.score, canvas.width/4, 30);
-        ctx.fillText(com.score, 3*canvas.width/4, 30);
+        // Marcador
+        ctx.fillStyle = "rgba(255,255,255,0.4)";
+        ctx.font = "bold 45px Arial";
+        ctx.fillText(user.score, canvas.width/4, 60);
+        ctx.fillText(com.score, 3*canvas.width/4, 60);
     }
 
-    function game() {
+    function loop() {
         update();
         render();
     }
 
-    setInterval(game, 1000/50);
+    setInterval(loop, 1000/60);
 </script>
 </body>
 </html>
