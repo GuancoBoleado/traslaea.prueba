@@ -22,7 +22,6 @@
             background: #000; 
             box-shadow: 0 0 50px rgba(0,0,0,0.8); 
             border-radius: 15px;
-            cursor: none;
         }
         h1 { 
             margin-bottom: 15px; 
@@ -30,15 +29,7 @@
             font-style: italic; 
             font-weight: 900; 
             text-transform: uppercase;
-            letter-spacing: -1px;
-        }
-        .instrucciones {
-            margin-top: 15px;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0.6;
-            font-weight: bold;
+            text-shadow: 2px 2px 0px #000;
         }
         .btn-volver {
             position: absolute;
@@ -46,61 +37,73 @@
             left: 20px;
             background: #f97316;
             color: white;
-            padding: 8px 15px;
-            border-radius: 8px;
+            padding: 10px 20px;
+            border-radius: 12px;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 900;
             font-size: 12px;
             text-transform: uppercase;
+            box-shadow: 0 4px 0px #c2410c;
+            transition: all 0.2s;
         }
+        .btn-volver:active { transform: translateY(4px); box-shadow: none; }
     </style>
 </head>
 <body>
 
-    <a href="index.html" class="btn-volver">← VOLVER AL SITIO</a>
+    <a href="index.html" class="btn-volver">← VOLVER</a>
 
     <h1>PING PONG TRASLAEA</h1>
     
     <canvas id="pong"></canvas>
-    
-    <div class="instrucciones">Deslizá para mover la paleta blanca ⚡</div>
 
 <script>
     const canvas = document.getElementById("pong");
     const ctx = canvas.getContext('2d');
 
-    // 1. CARGAR LOGO TRASLAEA
     const logoAsoc = new Image();
     logoAsoc.src = "logo.png?v=99"; 
 
-    // Ajuste de pantalla
-    function resize() {
-        canvas.width = window.innerWidth > 700 ? 700 : window.innerWidth - 30;
-        canvas.height = window.innerHeight > 450 ? 450 : window.innerHeight - 200;
+    // Tamaños oficiales
+    canvas.width = 800;
+    canvas.height = 500;
+
+    // Si la pantalla es chica (celular), ajustamos visualmente
+    if(window.innerWidth < 800) {
+        canvas.style.width = (window.innerWidth - 20) + "px";
+        canvas.style.height = "auto";
     }
-    resize();
 
-    const user = { x: 15, y: canvas.height/2 - 50, width: 12, height: 85, score: 0, color: "#FFFFFF" };
-    const com = { x: canvas.width - 27, y: canvas.height/2 - 50, width: 12, height: 85, score: 0, color: "#f97316" };
-    const ball = { x: canvas.width/2, y: canvas.height/2, radius: 9, speed: 6, velocityX: 6, velocityY: 6, color: "#f97316" };
+    const user = { x: 20, y: canvas.height/2 - 50, width: 15, height: 100, score: 0, color: "#FFFFFF" };
+    const com = { x: canvas.width - 35, y: canvas.height/2 - 50, width: 15, height: 100, score: 0, color: "#f97316" };
+    const ball = { x: canvas.width/2, y: canvas.height/2, radius: 10, speed: 7, velocityX: 7, velocityY: 7, color: "#FFFFFF" };
 
-    // CONTROLES
+    // CONTROL MOUSE
     canvas.addEventListener("mousemove", (e) => {
         let rect = canvas.getBoundingClientRect();
-        user.y = e.clientY - rect.top - user.height/2;
+        let scaleY = canvas.height / rect.height; 
+        user.y = (e.clientY - rect.top) * scaleY - user.height/2;
     });
 
+    // CONTROL TECLADO (Flechas)
+    window.addEventListener("keydown", (e) => {
+        if(e.key === "ArrowUp") user.y -= 40;
+        if(e.key === "ArrowDown") user.y += 40;
+    });
+
+    // CONTROL TÁCTIL
     canvas.addEventListener("touchmove", (e) => {
         e.preventDefault();
         let touch = e.touches[0];
         let rect = canvas.getBoundingClientRect();
-        user.y = touch.clientY - rect.top - user.height/2;
+        let scaleY = canvas.height / rect.height;
+        user.y = (touch.clientY - rect.top) * scaleY - user.height/2;
     }, { passive: false });
 
     function resetBall() {
         ball.x = canvas.width/2;
         ball.y = canvas.height/2;
-        ball.speed = 6;
+        ball.speed = 7;
         ball.velocityX = -ball.velocityX;
     }
 
@@ -113,8 +116,8 @@
         ball.x += ball.velocityX;
         ball.y += ball.velocityY;
 
-        // IA de la Computadora (Naranja)
-        com.y += (ball.y - (com.y + com.height/2)) * 0.09;
+        // IA Inteligente
+        com.y += (ball.y - (com.y + com.height/2)) * 0.1;
 
         if(ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
             ball.velocityY = -ball.velocityY;
@@ -123,65 +126,4 @@
         let player = (ball.x < canvas.width/2) ? user : com;
 
         if(collision(ball, player)) {
-            let collidePoint = (ball.y - (player.y + player.height/2)) / (player.height/2);
-            let angleRad = (Math.PI/4) * collidePoint;
-            let direction = (ball.x < canvas.width/2) ? 1 : -1;
-            ball.velocityX = direction * ball.speed * Math.cos(angleRad);
-            ball.velocityY = ball.speed * Math.sin(angleRad);
-            ball.speed += 0.2; // Aumenta dificultad
-        }
-
-        // Puntajes
-        if(ball.x - ball.radius < 0) { com.score++; resetBall(); }
-        else if(ball.x + ball.radius > canvas.width) { user.score++; resetBall(); }
-    }
-
-    function drawRect(x, y, w, h, color) {
-        ctx.fillStyle = color;
-        ctx.fillRect(x, y, w, h);
-    }
-
-    function drawCircle(x, y, r, color) {
-        ctx.fillStyle = color;
-        ctx.beginPath();
-        ctx.arc(x, y, r, 0, Math.PI*2, false);
-        ctx.fill();
-    }
-
-    function render() {
-        // Fondo
-        drawRect(0, 0, canvas.width, canvas.height, "#002855");
-
-        // 2. DIBUJAR LOGO EN EL CENTRO (Marca de agua)
-        ctx.save();
-        ctx.globalAlpha = 0.15;
-        let logoDim = canvas.height * 0.6;
-        ctx.drawImage(logoAsoc, canvas.width/2 - logoDim/2, canvas.height/2 - logoDim/2, logoDim, logoDim);
-        ctx.restore();
-
-        // Línea central
-        ctx.strokeStyle = "rgba(255,255,255,0.1)";
-        ctx.setLineDash([10, 10]);
-        ctx.strokeRect(canvas.width/2, 0, 0, canvas.height);
-
-        // Pelota y paletas
-        drawCircle(ball.x, ball.y, ball.radius, "#FFFFFF");
-        drawRect(user.x, user.y, user.width, user.height, user.color);
-        drawRect(com.x, com.y, com.width, com.height, com.color);
-        
-        // Marcador
-        ctx.fillStyle = "rgba(255,255,255,0.4)";
-        ctx.font = "bold 45px Arial";
-        ctx.fillText(user.score, canvas.width/4, 60);
-        ctx.fillText(com.score, 3*canvas.width/4, 60);
-    }
-
-    function loop() {
-        update();
-        render();
-    }
-
-    setInterval(loop, 1000/60);
-</script>
-</body>
-</html>
+            let collidePoint = (ball.y - (player.y + player.height/
