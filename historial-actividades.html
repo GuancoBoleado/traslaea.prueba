@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Actividades • TRASLAEA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #f8fafc; color: #1e293b; font-family: 'Inter', sans-serif; }
+        .timeline-card { transition: all 0.3s ease; border-left: 4px solid #e2e8f0; }
+        .timeline-card:hover { border-left-color: #f97316; transform: translateX(5px); }
+    </style>
+</head>
+<body class="p-6 md:p-12">
+
+    <header class="max-w-5xl mx-auto mb-16 flex justify-between items-end">
+        <div>
+            <h1 class="text-4xl font-black text-[#002855] uppercase italic tracking-tighter">Archivo Histórico</h1>
+            <p class="text-orange-500 font-bold text-xs uppercase tracking-[0.3em] mt-2">Memoria de Gestión TRASLAEA</p>
+        </div>
+        <a href="index.html" class="text-[#002855]/50 hover:text-[#002855] text-[10px] font-black uppercase tracking-widest border-b border-gray-300 pb-1">← Volver</a>
+    </header>
+
+    <main class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16">
+        
+        <section>
+            <h2 class="text-xl font-black text-[#002855] mb-8 uppercase italic flex items-center gap-3">
+                <span class="bg-[#002855] text-white p-2 rounded-lg text-sm">🏛️</span>
+                Hitos Institucionales
+            </h2>
+
+            <div class="space-y-8">
+                <div class="timeline-card bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <span class="text-[10px] font-black text-orange-500 uppercase tracking-widest">Evento Oficial</span>
+                    <h3 class="text-lg font-black text-[#002855] mt-2 leading-tight uppercase italic">Lanzamiento Oficial TRASLAEA</h3>
+                    <p class="text-xs text-gray-400 font-bold mb-4 uppercase">Fundación Relevando Peligros & Municipalidad</p>
+                    
+                    <p class="text-sm text-gray-600 leading-relaxed italic border-l-2 border-gray-100 pl-4">
+                        En este acto, el Secretario <strong>Esteban Colombo</strong> presentó los lineamientos estratégicos de la asociación ante autoridades municipales y provinciales, marcando el inicio formal de nuestras actividades.
+                    </p>
+                </div>
+
+                </div>
+        </section>
+
+        <section>
+            <h2 class="text-xl font-black text-[#002855] mb-8 uppercase italic flex items-center gap-3">
+                <span class="bg-orange-500 text-white p-2 rounded-lg text-sm">🛠️</span>
+                Registro de Intervenciones
+            </h2>
+
+            <div class="space-y-8">
+                <div class="timeline-card bg-white p-6 rounded-2xl shadow-sm border border-gray-100 opacity-60">
+                    <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">En curso</span>
+                    <h3 class="text-lg font-black text-gray-400 mt-2 leading-tight uppercase italic">Reparación Vivienda Patricia Garay</h3>
+                    <p class="text-xs text-gray-300 font-bold mb-4 uppercase italic">Luyaba - Córdoba</p>
+                    
+                    <a href="patricia-garay.html" class="text-[10px] font-black text-orange-500 uppercase tracking-widest hover:underline">Ver estado actual de la obra →</a>
+                </div>
+
+                <div class="timeline-card bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <span class="text-[10px] font-black text-green-600 uppercase tracking-widest">Finalizada</span>
+                    <h3 class="text-lg font-black text-[#002855] mt-2 leading-tight uppercase italic">Campaña Relevamiento Rural</h3>
+                    <p class="text-xs text-gray-400 font-bold mb-4 uppercase italic">Valle de Traslasierra - 2025</p>
+                    <p class="text-sm text-gray-600 leading-relaxed italic">Primera etapa de diagnóstico de seguridad eléctrica en asentamientos rurales.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="max-w-5xl mx-auto mt-24 text-center border-t border-gray-200 pt-10">
+        <p class="text-[10px] font-black tracking-[0.4em] text-gray-300 uppercase italic">Traslasierra Electricistas Profesionales Habilitados</p>
+    </footer>
+
+</body>
+</html>
