@@ -663,32 +663,37 @@ window.accesoSecreto = function() {
     clicksSecretos++;
     const logo = document.getElementById('logo-secreto');
     
-    // Feedback visual inmediato: se aclara con cada toque
+    // Feedback visual inmediato
     if(logo) {
         logo.style.opacity = (0.05 + (clicksSecretos * 0.25));
         logo.style.transform = 'scale(1.1)';
     }
 
     if (clicksSecretos === 4) {
-            logo.style.filter = 'brightness(2) saturate(2)'; // Brillo máximo
-            logo.style.boxShadow = '0 0 30px #f97316'; // Resplandor naranja
-            
-            setTimeout(() => {
-                window.location.href = './juegos.html';
-            }, 300); // Espera 300ms para que veas el efecto y luego viaja
+        if(logo) {
+            logo.style.filter = 'brightness(2) saturate(2)'; 
+            logo.style.boxShadow = '0 0 30px #f97316'; 
         }
+        
+        setTimeout(() => {
+            window.location.href = './juegos.html';
+        }, 300);
     }
 
-    // Si pasan 2 segundos sin clics, se apaga el secreto
+    // EL TIMER DEBE IR ADENTRO DE LA FUNCIÓN
     clearTimeout(timerSecreto);
     timerSecreto = setTimeout(() => { 
         clicksSecretos = 0; 
         if(logo) {
             logo.style.opacity = ''; 
             logo.style.transform = '';
+            logo.style.filter = '';
+            logo.style.boxShadow = '';
         }
     }, 2000);
-};  // <--- Fin del acceso Secreto
+}; 
+
+// --- FIN DEL ACCESO SECRETO ---
 
     }); // <--- Esta es la llave que cierra el DOMContentLoaded
 </script>
