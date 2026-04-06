@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Circuito Crítico • TRASLAEA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #001220; touch-action: manipulation; }
+        .cable { transition: transform 0.3s ease; cursor: pointer; }
+        .conectado { filter: drop-shadow(0 0 8px #f97316); stroke: #f97316 !important; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 text-white font-sans">
+
+    <a href="juegos.html" class="absolute top-6 left-6 bg-orange-500 text-white px-4 py-2 rounded-lg font-bold text-xs shadow-lg">← VOLVER</a>
+
+    <div class="text-center mb-8">
+        <h1 class="text-3xl font-black italic text-orange-500 uppercase tracking-tighter">Circuito Crítico</h1>
+        <p class="text-blue-300 text-xs font-bold tracking-[0.3em] uppercase opacity-60">Conectá la Fase al Neutro</p>
+    </div>
+
+    <div id="tablero" class="grid grid-cols-4 gap-2 bg-white/5 p-4 rounded-2xl border-2 border-white/10 shadow-2xl">
+        </div>
+
+    <div class="mt-8 text-center">
+        <p id="mensaje" class="text-sm font-bold text-white/40 italic">Tocá los cables para rotarlos y cerrar el circuito</p>
+        <button onclick="checkConexion()" class="mt-4 bg-white/10 border border-white/20 hover:bg-orange-500 hover:border-orange-500 px-8 py-3 rounded-full font-black uppercase text-xs tracking-widest transition-all">
+            Probar Tensión ⚡
+        </button>
+    </div>
+
+    <script>
+        const tablero = document.getElementById('tablero');
+        const piezas = ['┘', '┐', '─', '│', '┌', '└'];
+        let celdas = [];
+
+        // Crear grilla de 4x4 (16 piezas)
+        function crearTablero() {
+            for (let i = 0; i < 16; i++) {
+                const p = document.createElement('div');
+                const randomPieza = piezas[Math.floor(Math.random() * piezas.length)];
+                const randomRot = Math.floor(Math.random() * 4) * 90;
+                
+                p.className = "w-16 h-16 bg-white/5 rounded-lg flex items-center justify-center text-4xl font-light cable select-none active:scale-90";
+                p.innerHTML = randomPieza;
+                p.style.transform = `rotate(${randomRot}deg)`;
+                
+                let currentRot = randomRot;
+                p.onclick = () => {
+                    currentRot += 90;
+                    p.style.transform = `rotate(${currentRot}deg)`;
+                };
+                
+                tablero.appendChild(p);
+                celdas.push(p);
+            }
+        }
+
+        function checkConexion() {
+            // Animación de "tensión"
+            celdas.forEach((c, i) => {
+                setTimeout(() => {
+                    c.classList.add('conectado');
+                    if(i === celdas.length - 1) {
+                        alert("¡CIRCUITO CERRADO! Tensión estable en 220V.");
+                        location.reload();
+                    }
+                }, i * 100);
+            });
+        }
+
+        crearTablero();
+    </script>
+</body>
+</html>
