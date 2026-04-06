@@ -3,175 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Tensión Crítica • TRASLAEA</title>
+    <title>Zapatilla al Límite • TRASLAEA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: #000814; margin: 0; overflow: hidden; touch-action: none; font-family: 'Inter', sans-serif; }
-        canvas { display: block; filter: contrast(1.2); }
-        #ui { position: absolute; top: 20px; width: 100%; pointer-events: none; display: flex; justify-content: space-around; z-index: 50; }
-        .label { color: #f97316; font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px rgba(249, 115, 22, 0.5); }
-        .val { color: #fff; font-size: 24px; }
+        body { background: #010c1a; touch-action: none; user-select: none; font-family: sans-serif; overflow: hidden; }
+        .aparato { cursor: grab; transition: transform 0.2s; }
+        .aparato:active { cursor: grabbing; scale: 1.1; }
+        .zapatilla { background: #e2e8f0; border-radius: 20px; box-shadow: 0 10px 0 #cbd5e1; }
+        .toma { background: #94a3b8; border-radius: 50%; width: 40px; height: 40px; margin: 10px; border: 3px inset rgba(0,0,0,0.2); }
+        .sobrecarga { animation: shake 0.2s infinite, glow 0.5s infinite alternate; }
+        @keyframes shake { 0% { transform: translate(1px, 1px); } 50% { transform: translate(-1px, -1px); } 100% { transform: translate(1px, -1px); } }
+        @keyframes glow { from { background: #e2e8f0; } to { background: #ef4444; } }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col items-center p-4 text-white">
 
-    <a href="juegos.html" style="position: absolute; top: 20px; left: 20px; z-index: 100; background: #f97316; color: white; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 10px; font-weight: 900; border: 2px solid rgba(255,255,255,0.2);">← SALIR</a>
+    <a href="juegos.html" class="self-start mb-4 bg-orange-500 text-white px-4 py-2 rounded-lg font-bold text-xs shadow-lg">← VOLVER</a>
 
-    <div id="ui">
-        <div class="text-center"><div class="label">Amperaje</div><div class="val" id="score">0</div></div>
-        <div class="text-center"><div class="label">Aislación</div><div class="val" id="lives" style="color: #ef4444;">100%</div></div>
+    <div class="text-center mb-6">
+        <h1 class="text-3xl font-black italic text-orange-500 uppercase leading-none">Zapatilla al Límite</h1>
+        <p class="text-blue-300 text-[10px] font-bold tracking-widest mt-1">NO PASES LOS 10 AMPERES</p>
     </div>
 
-    <canvas id="gameCanvas"></canvas>
+    <div class="w-full max-w-xs bg-white/10 p-4 rounded-2xl mb-6 border border-white/10 text-center">
+        <div class="text-xs uppercase opacity-50 font-bold mb-1">Consumo Actual</div>
+        <div id="amp-display" class="text-5xl font-black text-green-400">0.0<span class="text-xl">A</span></div>
+        <div class="w-full bg-gray-700 h-2 mt-3 rounded-full overflow-hidden">
+            <div id="amp-bar" class="bg-green-500 h-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <div id="zapatilla-ui" class="zapatilla w-full max-w-sm p-4 flex justify-around items-center mb-10 border-4 border-white/20">
+        <div class="toma flex items-center justify-center text-[8px] text-black/20 font-bold">I I</div>
+        <div class="toma flex items-center justify-center text-[8px] text-black/20 font-bold">I I</div>
+        <div class="toma flex items-center justify-center text-[8px] text-black/20 font-bold">I I</div>
+        <div class="toma flex items-center justify-center text-[8px] text-black/20 font-bold">I I</div>
+        <div class="toma flex items-center justify-center text-[8px] text-black/20 font-bold">I I</div>
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 w-full max-w-xs" id="items-container">
+        </div>
 
     <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const scoreEl = document.getElementById('score');
-        const livesEl = document.getElementById('lives');
+        const ampDisplay = document.getElementById('amp-display');
+        const ampBar = document.getElementById('amp-bar');
+        const zapatilla = document.getElementById('zapatilla-ui');
+        const container = document.getElementById('items-container');
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        let totalAmp = 0;
+        const maxAmp = 10;
 
-        let score = 0;
-        let lives = 100;
-        let objects = [];
-        let particles = [];
-        let isDrawing = false;
-        let trail = [];
-
-        const techItems = [
-            { txt: '🔌', isDanger: false, pts: 10, msg: 'Cable Pelado' },
-            { txt: '🪫', isDanger: false, pts: 20, msg: 'Batería' },
-            { txt: '💡', isDanger: false, pts: 15, msg: 'Luz' },
-            { txt: '📟', isDanger: true, pts: -30, msg: '¡TESTER!' },
-            { txt: '⚠️', isDanger: true, pts: -20, msg: '¡ALTA TENSIÓN!' }
+        const productos = [
+            { id: 1, nombre: 'Pava', amp: 7.0, icon: '☕' },
+            { id: 2, nombre: 'Tele', amp: 1.0, icon: '📺' },
+            { id: 3, nombre: 'Router', amp: 0.5, icon: '📡' },
+            { id: 4, nombre: 'Estufa', amp: 9.0, icon: '🔥' },
+            { id: 5, nombre: 'Celu', amp: 0.2, icon: '📱' },
+            { id: 6, nombre: 'Venti', amp: 4.0, icon: '🌬️' }
         ];
 
-        class Particle {
-            constructor(x, y, color) {
-                this.x = x; this.y = y;
-                this.size = Math.random() * 4 + 1;
-                this.speedX = (Math.random() - 0.5) * 8;
-                this.speedY = (Math.random() - 0.5) * 8;
-                this.color = color;
-                this.alpha = 1;
-            }
-            update() {
-                this.x += this.speedX; this.y += this.speedY;
-                this.alpha -= 0.02;
-            }
-            draw() {
-                ctx.globalAlpha = this.alpha;
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.globalAlpha = 1;
-            }
-        }
-
-        class Item {
-            constructor() {
-                this.x = Math.random() * (canvas.width - 100) + 50;
-                this.y = canvas.height + 50;
-                this.speedY = -(Math.random() * 6 + 14);
-                this.speedX = (Math.random() - 0.5) * 5;
-                this.data = techItems[Math.floor(Math.random() * techItems.length)];
-                this.angle = 0;
-                this.spin = (Math.random() - 0.5) * 0.1;
-            }
-            update() {
-                this.y += this.speedY; this.x += this.speedX;
-                this.speedY += 0.25; this.angle += this.spin;
-            }
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.angle);
-                ctx.font = "50px Arial";
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                // Brillo si es peligroso
-                if(this.data.isDanger) {
-                    ctx.shadowBlur = 20;
-                    ctx.shadowColor = "red";
-                }
-                ctx.fillText(this.data.txt, 0, 0);
-                ctx.restore();
-            }
-        }
-
-        function animate() {
-            // Fondo con rastro
-            ctx.fillStyle = 'rgba(0, 8, 20, 0.4)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Dibujar rastro del dedo/mouse (El "Corte")
-            if (trail.length > 1) {
-                ctx.beginPath();
-                ctx.strokeStyle = '#f97316';
-                ctx.lineWidth = 5;
-                ctx.lineCap = 'round';
-                ctx.moveTo(trail[0].x, trail[0].y);
-                for(let i=1; i<trail.length; i++) ctx.lineTo(trail[i].x, trail[i].y);
-                ctx.stroke();
-                if(trail.length > 10) trail.shift();
-            }
-
-            if (Math.random() < 0.04) objects.push(new Item());
-
-            objects.forEach((obj, i) => {
-                obj.update();
-                obj.draw();
-
-                // Verificar colisión con el rastro
-                if (isDrawing && trail.length > 0) {
-                    let d = Math.hypot(obj.x - trail[trail.length-1].x, obj.y - trail[trail.length-1].y);
-                    if (d < 40) {
-                        // Chispas
-                        for(let p=0; p<15; p++) particles.push(new Particle(obj.x, obj.y, obj.data.isDanger ? '#ff0000' : '#f97316'));
-                        
-                        if (obj.data.isDanger) {
-                            lives -= 20;
-                            livesEl.innerText = lives + "%";
-                        } else {
-                            score += obj.data.pts;
-                            scoreEl.innerText = score;
-                        }
-                        objects.splice(i, 1);
-                        if(lives <= 0) {
-                            alert("¡FALLA DE AISLACIÓN! Cortocircuito total.");
-                            location.reload();
-                        }
-                    }
-                }
-                if (obj.y > canvas.height + 100) objects.splice(i, 1);
+        function init() {
+            productos.forEach(p => {
+                const btn = document.createElement('button');
+                btn.className = "aparato bg-white/5 border border-white/10 p-3 rounded-xl flex flex-col items-center active:bg-orange-500/20";
+                btn.innerHTML = `
+                    <span class="text-3xl mb-1">${p.icon}</span>
+                    <span class="text-[10px] font-bold">${p.nombre}</span>
+                    <span class="text-[12px] text-orange-400 font-black">${p.amp}A</span>
+                `;
+                btn.onclick = () => enchufar(p, btn);
+                container.appendChild(btn);
             });
-
-            particles.forEach((p, i) => {
-                p.update(); p.draw();
-                if(p.alpha <= 0) particles.splice(i, 1);
-            });
-
-            requestAnimationFrame(animate);
         }
 
-        const handleMove = (e) => {
-            let x = (e.touches ? e.touches[0].clientX : e.clientX);
-            let y = (e.touches ? e.touches[0].clientY : e.clientY);
-            if(isDrawing) trail.push({x, y});
-            else trail = [];
-        };
+        function enchufar(p, elemento) {
+            if (elemento.classList.contains('opacity-20')) return; // Ya está enchufado
 
-        window.addEventListener('mousedown', () => isDrawing = true);
-        window.addEventListener('mouseup', () => { isDrawing = false; trail = []; });
-        window.addEventListener('mousemove', handleMove);
-        window.addEventListener('touchstart', (e) => { isDrawing = true; handleMove(e); });
-        window.addEventListener('touchend', () => { isDrawing = false; trail = []; });
-        window.addEventListener('touchmove', handleMove);
+            totalAmp += p.amp;
+            elemento.classList.add('opacity-20'); // Marcar como usado
+            actualizarUI();
 
-        animate();
+            if (totalAmp > maxAmp) {
+                explotar();
+            }
+        }
+
+        function actualizarUI() {
+            ampDisplay.innerText = totalAmp.toFixed(1) + "A";
+            const porc = (totalAmp / maxAmp) * 100;
+            ampBar.style.width = Math.min(porc, 100) + "%";
+
+            if (totalAmp > 8) {
+                ampDisplay.className = "text-5xl font-black text-red-500";
+                ampBar.className = "bg-red-500 h-full transition-all";
+                zapatilla.classList.add('sobrecarga');
+            } else {
+                ampDisplay.className = "text-5xl font-black text-green-400";
+                ampBar.className = "bg-green-500 h-full transition-all";
+                zapatilla.classList.remove('sobrecarga');
+            }
+        }
+
+        function explotar() {
+            zapatilla.style.background = "#000";
+            document.body.style.background = "#f00";
+            setTimeout(() => {
+                alert("💥 ¡BOOM! SOBRECARGA ELÉCTRICA.\nConectaste " + totalAmp.toFixed(1) + "A y la zapatilla aguantaba 10A.\n\nEvitá conectar estufas o pavas en prolongadores.");
+                location.reload();
+            }, 100);
+        }
+
+        init();
     </script>
 </body>
 </html>
