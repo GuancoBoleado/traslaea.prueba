@@ -3,43 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Obra Solidaria: Patricia Garay • TRASLAEA</title>
+    <title>Obra: Patricia Garay • TRASLAEA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background: #000c1a; color: white; font-family: 'Inter', sans-serif; }
-        .fase-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); }
+        .fase-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s ease; }
+        .fase-card:hover { border-color: rgba(249, 115, 22, 0.3); }
     </style>
 </head>
-<body class="p-6">
-    <header class="max-w-4xl mx-auto mb-10 flex justify-between items-center">
-        <h1 class="text-2xl font-black text-orange-500 uppercase italic">Registro de Obra</h1>
-        <a href="index.html" class="text-xs font-bold text-blue-400 uppercase border-b border-blue-400/30">← Volver</a>
+<body class="min-h-screen p-6 pb-20">
+
+    <header class="max-w-4xl mx-auto mb-12 flex justify-between items-center">
+        <div>
+            <h1 class="text-xl font-black text-orange-500 uppercase italic tracking-tighter">Registro de Obra</h1>
+            <p class="text-[10px] text-blue-400 font-bold uppercase tracking-[0.3em]">Asociación Civil TRASLAEA</p>
+        </div>
+        <a href="index.html" class="text-white/40 hover:text-white text-[10px] font-black uppercase tracking-widest border-b border-white/10 pb-1">← Volver al inicio</a>
     </header>
 
     <main class="max-w-4xl mx-auto">
-        <section class="mb-12">
-            <span class="bg-red-600 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase italic">Vivienda Siniestrada</span>
-            <h2 class="text-4xl font-black mt-4 mb-2 uppercase">Patricia Garay</h2>
-            <p class="text-gray-400 italic text-sm">Luyaba, Valle de Traslasierra.</p>
+        
+        <section class="mb-12 border-l-4 border-red-600 pl-6">
+            <span class="bg-red-600/20 text-red-500 text-[10px] font-black px-3 py-1 rounded-full uppercase italic border border-red-600/30">Vivienda Siniestrada</span>
+            <h2 class="text-4xl font-black mt-4 mb-2 uppercase italic tracking-tighter">Patricia Garay</h2>
+            <p class="text-gray-400 font-bold text-sm uppercase tracking-widest">📍 Luyaba, Córdoba</p>
         </section>
 
-        <div class="space-y-8">
-            <div class="fase-card p-6 rounded-[2rem]">
-                <h3 class="text-orange-500 font-black text-xs uppercase mb-4 italic">Fase 1: Relevamiento Inicial</h3>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <img src="quemado1.jpg" class="rounded-2xl h-40 w-full object-cover border border-white/10">
-                    <img src="quemado2.jpg" class="rounded-2xl h-40 w-full object-cover border border-white/10">
-                    <img src="quemado3.jpg" class="rounded-2xl h-40 w-full object-cover border border-white/10">
+        <div class="space-y-6">
+            
+            <div class="fase-card p-6 rounded-[2.5rem]">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="bg-red-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black">1</span>
+                    <h3 class="text-xs font-black uppercase tracking-widest text-white/90">Fase: Relevamiento Inicial</h3>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <img src="quemado1.jpg" class="rounded-2xl h-40 w-full object-cover border border-white/5 hover:scale-[1.02] transition">
+                    <img src="quemado2.jpg" class="rounded-2xl h-40 w-full object-cover border border-white/5 hover:scale-[1.02] transition">
+                    <img src="quemado3.jpg" class="rounded-2xl h-40 w-full object-cover border border-white/5 hover:scale-[1.02] transition">
                 </div>
             </div>
 
+            <div class="fase-card p-6 rounded-[2.5rem] border-l-4 border-l-orange-500">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="bg-orange-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black">2</span>
+                    <h3 class="text-xs font-black uppercase tracking-widest text-white/90">Fase: Avance de Tareas</h3>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    <img src="avance1.jpg" class="rounded-2xl h-40 w-full object-cover border border-white/5 hover:scale-[1.02] transition">
+                    <img src="avance2.jpg" class="rounded-2xl h-40 w-full object-cover border border-white/5 hover:scale-[1.02] transition">
+                    <img src="avance3.gif" class="rounded-2xl h-40 w-full object-cover border border-white/5 hover:scale-[1.02] transition shadow-lg shadow-orange-500/10">
+                </div>
             </div>
 
-        <div class="mt-12 p-8 bg-orange-600 rounded-[2.5rem] text-center">
-            <h4 class="text-xl font-black uppercase mb-2 italic text-white">¿Querés colaborar?</h4>
-            <p class="text-xs font-bold mb-6 text-white/80">Necesitamos materiales y mano de obra para el tablero principal.</p>
-            <a href="https://wa.me/5493544314637" class="bg-white text-orange-600 px-8 py-3 rounded-xl font-black text-xs uppercase shadow-xl inline-block">Contactar a Esteban</a>
+            <div class="fase-card p-6 rounded-[2.5rem] opacity-50 border-dashed">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="bg-gray-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black">3</span>
+                    <h3 class="text-xs font-black uppercase tracking-widest text-white/40">Fase: Finalización y Entrega</h3>
+                </div>
+                <div class="py-10 text-center">
+                    <p class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500 italic">Pendiente de ejecución / Próximamente fotos</p>
+                </div>
+            </div>
+
         </div>
+
+        <section class="mt-12 bg-gradient-to-br from-orange-600 to-orange-700 p-8 rounded-[3rem] shadow-2xl relative overflow-hidden group">
+            <div class="relative z-10 text-center">
+                <h4 class="text-2xl font-black uppercase italic text-white mb-4 tracking-tighter">¿Querés comunicarte con TRASLAEA?</h4>
+                <p class="text-white/80 font-bold text-xs uppercase mb-8 tracking-widest">Para donaciones o colaboración técnica:</p>
+                
+                <a href="https://wa.me/5493544314637" class="inline-flex items-center gap-4 bg-[#002855] text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-transform shadow-xl">
+                    <span>Llamar / WhatsApp</span>
+                    <span class="bg-orange-500 text-white px-3 py-1 rounded-lg text-[11px] font-black tracking-normal">3544 314637</span>
+                </a>
+            </div>
+            <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-3xl group-hover:bg-white/20 transition-all"></div>
+        </section>
+
     </main>
+
+    <footer class="max-w-4xl mx-auto mt-20 text-center">
+        <p class="text-[9px] font-black tracking-[0.4em] text-white/20 uppercase italic">Registro Digital • Electrosith 2026</p>
+    </footer>
+
 </body>
 </html>
