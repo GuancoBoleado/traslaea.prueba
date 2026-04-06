@@ -3,60 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Zapatilla al Límite PRO • TRASLAEA</title>
+    <title>Zapatilla al Límite ELITE • TRASLAEA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background: #000c1a; touch-action: none; user-select: none; font-family: sans-serif; overflow: hidden; }
-        
-        /* Zapatilla Realista */
         .zapatilla-body {
             background: #ffffff; border-radius: 60px; height: 100px; width: 100%; max-width: 450px;
             display: flex; align-items: center; justify-content: space-around; padding: 0 30px;
             box-shadow: 0 10px 0 #cbd5e1, 0 20px 40px rgba(0,0,0,0.5); border: 1px solid #e2e8f0;
             position: relative; z-index: 20;
         }
-
         .toma-real {
             width: 55px; height: 55px; background: #f8fafc; border-radius: 50%;
             border: 2px solid #e2e8f0; position: relative; display: flex; align-items: center; justify-content: center;
         }
-
         .patitas { width: 25px; height: 25px; position: relative; transform: rotate(180deg); opacity: 0.3; }
         .patitas::before, .patitas::after { content: ''; position: absolute; width: 3px; height: 10px; background: #334155; border-radius: 2px; }
         .patitas::before { left: 3px; top: 2px; transform: rotate(30deg); }
         .patitas::after { right: 3px; top: 2px; transform: rotate(-30deg); }
         .tierra { position: absolute; width: 3px; height: 10px; background: #334155; bottom: 1px; left: 11px; border-radius: 2px; }
 
-        /* Capa de Cables y Chispas */
-        #cableCanvas { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 10; }
+        #gameCanvas { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 15; }
 
-        .sobrecarga { animation: vibrar 0.1s infinite; background: #fee2e2 !important; }
-        @keyframes vibrar { 0% { transform: translate(1px, 1px); } 50% { transform: translate(-1px, -1px); } 100% { transform: translate(1px, -1px); } }
+        .sobrecarga-critica { animation: vibrar 0.05s infinite; background: #fca5a5 !important; }
+        @keyframes vibrar { 0% { transform: translate(2px, 2px); } 50% { transform: translate(-2px, -2px); } 100% { transform: translate(2px, -2px); } }
 
-        .aparato-card { transition: all 0.3s; cursor: pointer; z-index: 30; background: rgba(255,255,255,0.05); }
-        .activo { border-color: #f97316 !important; box-shadow: 0 0 15px rgba(249,115,22,0.4); }
+        .aparato-card { transition: all 0.3s; cursor: pointer; z-index: 30; background: rgba(255,255,255,0.05); border-radius: 1rem; }
+        .activo { border-color: #f97316 !important; background: rgba(249, 115, 22, 0.1); }
+        
+        /* Animación de parpadeo para el porcentaje alto */
+        .blink { animation: blinker 0.5s linear infinite; color: #ff0000; }
+        @keyframes blinker { 50% { opacity: 0; } }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center p-6 text-white">
 
-    <canvas id="cableCanvas"></canvas>
+    <canvas id="gameCanvas"></canvas>
 
     <a href="juegos.html" class="self-start mb-4 bg-orange-600 text-white px-5 py-2 rounded-full font-black text-xs shadow-lg uppercase z-50">← VOLVER</a>
 
     <div class="text-center mb-4 z-20">
         <h1 class="text-2xl font-black italic text-orange-500 uppercase leading-none">Zapatilla al Límite</h1>
-        <p class="text-blue-300 text-[9px] font-bold tracking-[0.4em] mt-1 opacity-70">SISTEMA DE PROTECCIÓN TÉCNICA</p>
+        <p class="text-blue-300 text-[9px] font-bold tracking-[0.4em] mt-1 opacity-70">SISTEMA DE RIESGO TÉRMICO</p>
     </div>
 
-    <div class="w-full max-w-xs bg-black/60 p-4 rounded-3xl mb-6 border border-white/10 text-center z-20">
+    <div class="w-full max-w-xs bg-black/60 p-4 rounded-3xl mb-6 border border-white/10 text-center z-20 relative overflow-hidden">
         <div class="flex justify-between items-center px-2">
-            <span id="amp-display" class="text-4xl font-black text-green-400">0.0<small class="text-lg">A</small></span>
+            <span id="porcentaje-display" class="text-5xl font-black text-green-400">0<small class="text-xl">%</small></span>
             <div class="text-right">
-                <div class="text-[8px] font-black uppercase text-blue-400">Carga Actual</div>
-                <div class="w-24 bg-gray-800 h-2 rounded-full mt-1 overflow-hidden">
-                    <div id="amp-bar" class="bg-green-500 h-full transition-all duration-500" style="width: 0%"></div>
-                </div>
+                <div id="label-estado" class="text-[8px] font-black uppercase text-blue-400">Carga Segura</div>
+                <div class="text-[10px] font-bold text-white/40" id="amperaje-real">0.0A</div>
             </div>
+        </div>
+        <div class="w-full bg-gray-800 h-4 rounded-full mt-2 overflow-hidden border border-white/5 relative">
+            <div id="amp-bar" class="bg-green-500 h-full transition-all duration-500" style="width: 0%"></div>
         </div>
     </div>
 
@@ -70,18 +70,22 @@
     <div class="grid grid-cols-3 gap-3 w-full max-w-sm mt-24" id="items-container"></div>
 
     <script>
-        const canvas = document.getElementById('cableCanvas');
+        const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
-        const ampDisplay = document.getElementById('amp-display');
+        const percDisplay = document.getElementById('porcentaje-display');
+        const labelEstado = document.getElementById('label-estado');
         const ampBar = document.getElementById('amp-bar');
         const zapatilla = document.getElementById('zapatilla-ui');
+        const ampReal = document.getElementById('amperaje-real');
         
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
         let totalAmp = 0;
-        let conexiones = []; // Guarda { equipoId, tomaIdx, startX, startY, endX, endY }
-        let chispas = [];
+        let conexiones = [];
+        let particulas = [];
+        let sobrecargaTimer = null;
+        let porcentajeExtra = 0;
 
         const equipos = [
             { id: 0, nom: 'Pava', amp: 7.0, icon: '☕' },
@@ -97,115 +101,112 @@
             equipos.forEach(eq => {
                 const card = document.createElement('div');
                 card.id = `eq-${eq.id}`;
-                card.className = "aparato-card p-3 rounded-2xl flex flex-col items-center border border-white/5";
-                card.innerHTML = `
-                    <span class="text-3xl">${eq.icon}</span>
-                    <span class="text-[10px] font-black text-orange-500">${eq.amp}A</span>
-                `;
+                card.className = "aparato-card p-3 flex flex-col items-center border border-white/5";
+                card.innerHTML = `<span class="text-3xl">${eq.icon}</span><span class="text-[10px] font-black text-orange-500">${eq.amp}A</span>`;
                 card.onclick = () => toggleConexion(eq, card);
                 container.appendChild(card);
             });
         }
 
         function toggleConexion(eq, card) {
-            const index = conexiones.findIndex(c => c.equipoId === eq.id);
-            
-            if (index !== -1) {
-                // DESCONECTAR
+            const idx = conexiones.findIndex(c => c.equipoId === eq.id);
+            if (idx !== -1) {
                 totalAmp -= eq.amp;
-                conexiones.splice(index, 1);
+                conexiones.splice(idx, 1);
                 card.classList.remove('activo');
             } else {
-                // CONECTAR
                 if (conexiones.length >= 4) return;
-                
-                // Buscar toma libre
                 const tomaIdx = [0,1,2,3].find(i => !conexiones.some(c => c.tomaIdx === i));
                 const tomaRect = document.getElementById(`toma-${tomaIdx}`).getBoundingClientRect();
                 const cardRect = card.getBoundingClientRect();
-
                 conexiones.push({
-                    equipoId: eq.id,
-                    tomaIdx: tomaIdx,
-                    startX: cardRect.left + cardRect.width / 2,
-                    startY: cardRect.top,
-                    endX: tomaRect.left + tomaRect.width / 2,
-                    endY: tomaRect.top + tomaRect.height / 2
+                    equipoId: eq.id, tomaIdx,
+                    startX: cardRect.left + cardRect.width/2, startY: cardRect.top,
+                    endX: tomaRect.left + tomaRect.width/2, endY: tomaRect.top + tomaRect.height/2
                 });
-
                 totalAmp += eq.amp;
                 card.classList.add('activo');
-                crearChisporroteo(tomaRect.left + tomaRect.width / 2, tomaRect.top + tomaRect.height / 2);
+                crearEfecto(conexiones[conexiones.length-1].endX, conexiones[conexiones.length-1].endY, '#60a5fa', 15);
             }
+            porcentajeExtra = 0; // Resetear calentamiento si cambia la carga
             actualizarUI();
-            if (totalAmp > 10) setTimeout(explotar, 300);
         }
 
-        function crearChisporroteo(x, y) {
-            for(let i=0; i<20; i++) {
-                chispas.push({
-                    x, y,
-                    vx: (Math.random() - 0.5) * 10,
-                    vy: (Math.random() - 0.5) * 10,
-                    life: 1.0,
-                    color: Math.random() > 0.5 ? '#f97316' : '#60a5fa'
-                });
+        function actualizarUI() {
+            clearInterval(sobrecargaTimer);
+            let pBase = (totalAmp / 10) * 100;
+            let pFinal = pBase + porcentajeExtra;
+            
+            percDisplay.innerHTML = Math.floor(pFinal) + "<small class='text-xl'>%</small>";
+            ampReal.innerText = totalAmp.toFixed(1) + "A";
+            ampBar.style.width = Math.min(pFinal, 100) + "%";
+
+            if (pFinal >= 120) {
+                explotar();
+            } else if (pFinal >= 100) {
+                labelEstado.innerText = "¡PELIGRO TÉRMICO!";
+                percDisplay.className = "text-5xl font-black blink";
+                ampBar.className = "bg-red-600 h-full transition-all";
+                zapatilla.classList.add('sobrecarga-critica');
+                // Iniciar calentamiento progresivo
+                sobrecargaTimer = setInterval(() => {
+                    porcentajeExtra += 2;
+                    actualizarUI();
+                }, 1500);
+            } else if (pFinal >= 80) {
+                labelEstado.innerText = "CARGA CRÍTICA";
+                percDisplay.className = "text-5xl font-black text-red-500";
+                ampBar.className = "bg-red-500 h-full transition-all";
+                zapatilla.classList.remove('sobrecarga-critica');
+            } else {
+                labelEstado.innerText = "CARGA SEGURA";
+                percDisplay.className = "text-5xl font-black text-green-400";
+                ampBar.className = "bg-green-500 h-full transition-all";
+                zapatilla.classList.remove('sobrecarga-critica');
+            }
+        }
+
+        function crearEfecto(x, y, color, cant) {
+            for(let i=0; i<cant; i++) {
+                particulas.push({ x, y, vx: (Math.random()-0.5)*8, vy: (Math.random()-0.5)*8, life: 1, color });
             }
         }
 
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let pActual = (totalAmp / 10) * 100 + porcentajeExtra;
 
-            // Dibujar Cables (Curvas de Bezier)
+            // Dibujar Cables
             conexiones.forEach(c => {
-                ctx.beginPath();
-                ctx.moveTo(c.startX, c.startY);
-                // Punto de control para la curva del cable "colgando"
-                const cpY = (c.startY + c.endY) / 2 + 50; 
-                ctx.quadraticCurveTo((c.startX + c.endX) / 2, cpY, c.endX, c.endY);
-                ctx.strokeStyle = '#ffffff';
-                ctx.lineWidth = 6;
-                ctx.lineCap = 'round';
-                ctx.stroke();
-                
-                // Alma del cable (detalle gris)
-                ctx.strokeStyle = '#94a3b8';
-                ctx.lineWidth = 2;
-                ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(c.startX, c.startY);
+                const cpY = (c.startY + c.endY) / 2 + 60;
+                ctx.quadraticCurveTo((c.startX + c.endX)/2, cpY, c.endX, c.endY);
+                ctx.strokeStyle = pActual >= 100 ? '#ff4444' : '#ffffff';
+                ctx.lineWidth = 6; ctx.lineCap = 'round'; ctx.stroke();
             });
 
-            // Dibujar Chispas
-            chispas.forEach((p, i) => {
-                ctx.globalAlpha = p.life;
-                ctx.fillStyle = p.color;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, 2, 0, Math.PI*2);
-                ctx.fill();
-                p.x += p.vx; p.y += p.vy;
-                p.life -= 0.05;
-                if(p.life <= 0) chispas.splice(i, 1);
+            // Humo y Fuego si supera 105%
+            if (pActual > 105) {
+                const rect = zapatilla.getBoundingClientRect();
+                crearEfecto(rect.left + Math.random()*rect.width, rect.top, pActual > 115 ? '#ff4400' : '#555555', 2);
+            }
+
+            particulas.forEach((p, i) => {
+                ctx.globalAlpha = p.life; ctx.fillStyle = p.color;
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.color === '#555555' ? 4 : 2, 0, Math.PI*2); ctx.fill();
+                p.x += p.vx; p.y += p.vy; p.life -= 0.02;
+                if(p.life <= 0) particulas.splice(i, 1);
             });
-            ctx.globalAlpha = 1;
             requestAnimationFrame(draw);
         }
 
-        function actualizarUI() {
-            ampDisplay.innerText = totalAmp.toFixed(1) + "A";
-            const p = (totalAmp / 10) * 100;
-            ampBar.style.width = Math.min(p, 100) + "%";
-            
-            if(totalAmp > 10) {
-                ampDisplay.className = "text-4xl font-black text-red-500";
-                zapatilla.classList.add('sobrecarga');
-            } else {
-                ampDisplay.className = "text-4xl font-black text-green-400";
-                zapatilla.classList.remove('sobrecarga');
-            }
-        }
-
         function explotar() {
-            alert("💥 ¡BOOM! SOBRECARGA ELÉCTRICA.\nConectaste " + totalAmp.toFixed(1) + "A.");
-            location.reload();
+            clearInterval(sobrecargaTimer);
+            document.body.style.background = "#ff0000";
+            setTimeout(() => {
+                alert("🔥 ¡INCENDIO ELÉCTRICO! 🔥\n\nEl conductor alcanzó el 120% de su capacidad térmica y se produjo un cortocircuito.\n\nAmperaje final: " + (totalAmp + (porcentajeExtra/10)).toFixed(1) + "A.");
+                location.reload();
+            }, 200);
         }
 
         crearMenu();
