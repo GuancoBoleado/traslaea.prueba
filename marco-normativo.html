@@ -1,1 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Normativo • TRASLAEA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background: #000c1a; color: white; font-family: sans-serif; }
+        .doc-card { 
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        .doc-card:hover { 
+            border-color: #f97316; 
+            background: rgba(249, 115, 22, 0.05);
+            transform: translateY(-2px);
+        }
+        .btn-download {
+            background: linear-gradient(45deg, #f97316, #ea580c);
+            transition: opacity 0.2s;
+        }
+        .btn-download:hover { opacity: 0.9; }
+    </style>
+</head>
+<body class="min-h-screen p-6">
 
+    <header class="max-w-4xl mx-auto mb-10 flex justify-between items-center">
+        <div>
+            <h1 class="text-2xl font-black italic text-orange-500 uppercase tracking-tighter">Marco Normativo</h1>
+            <p class="text-blue-400 text-[10px] font-bold tracking-[0.3em] uppercase">Recursos Legales y Técnicos</p>
+        </div>
+        <a href="index.html" class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest">Volver</a>
+    </header>
+
+    <main class="max-w-4xl mx-auto grid gap-4">
+        
+        <div class="doc-card p-5 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <div class="text-3xl">⚖️</div>
+                <div>
+                    <h2 class="font-black uppercase text-sm text-white/90">Reglamento General ERSeP</h2>
+                    <p class="text-xs text-white/50">Resolución General 10/2022 - Anexo Único</p>
+                </div>
+            </div>
+            <a href="https://drive.google.com/open?id=1JRW4j8kaBwaoXxTtXJGc3Itso8d-oMQS" target="_blank" class="btn-download px-6 py-2 rounded-xl text-xs font-black uppercase text-center">Abrir PDF</a>
+        </div>
+
+        <div class="doc-card p-5 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <div class="text-3xl">📜</div>
+                <div>
+                    <h2 class="font-black uppercase text-sm text-white/90">Normativas y Reglamentos (Módulo V)</h2>
+                    <p class="text-xs text-white/50">Material de capacitación para Instaladores Categoría III</p>
+                </div>
+            </div>
+            <a href="https://drive.google.com/open?id=14NBUdco6srwZ93Rxqhu4nCEa3CKQLyw_" target="_blank" class="btn-download px-6 py-2 rounded-xl text-xs font-black uppercase text-center">Abrir PDF</a>
+        </div>
+
+        <div class="doc-card p-5 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <div class="text-3xl">🤝</div>
+                <div>
+                    <h2 class="font-black uppercase text-sm text-white/90">Reglamento de Convivencia</h2>
+                    <p class="text-xs text-white/50">Normas institucionales de la Asociación TRASLAEA</p>
+                </div>
+            </div>
+            <a href="https://drive.google.com/open?id=1-QjJIncxolKPui8OtGSls4NlnoeRT8ym" target="_blank" class="btn-download px-6 py-2 rounded-xl text-xs font-black uppercase text-center">Abrir PDF</a>
+        </div>
+
+    </main>
+
+    <footer class="max-w-4xl mx-auto mt-20 pt-6 border-t border-white/10 text-center">
+        <p class="text-[10px] font-black tracking-widest text-orange-500 uppercase">TRASLAEA • Traslasierra Electricistas Asociados</p>
+        <p class="text-[9px] text-white/30 mt-1 font-bold">
+            &copy; 2025 - <span id="año-actual"></span> | Desarrollo por Electrosith
+        </p>
+    </footer>
+
+    <script>
+        // Año automático para que siempre esté vigente
+        document.getElementById("año-actual").innerText = new Date().getFullYear();
+    </script>
+
+</body>
+</html>
