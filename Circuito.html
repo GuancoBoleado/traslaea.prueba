@@ -6,71 +6,118 @@
     <title>Circuito Crítico • TRASLAEA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: #001220; touch-action: manipulation; }
-        .cable { transition: transform 0.3s ease; cursor: pointer; }
-        .conectado { filter: drop-shadow(0 0 8px #f97316); stroke: #f97316 !important; }
+        body { background: #001220; touch-action: none; user-select: none; }
+        .cable { transition: transform 0.2s; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .cable:active { scale: 0.9; }
+        .luz-neon { filter: drop-shadow(0 0 10px #f97316); color: #f97316 !important; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4 text-white font-sans">
 
     <a href="juegos.html" class="absolute top-6 left-6 bg-orange-500 text-white px-4 py-2 rounded-lg font-bold text-xs shadow-lg">← VOLVER</a>
 
-    <div class="text-center mb-8">
+    <div class="text-center mb-6">
         <h1 class="text-3xl font-black italic text-orange-500 uppercase tracking-tighter">Circuito Crítico</h1>
-        <p class="text-blue-300 text-xs font-bold tracking-[0.3em] uppercase opacity-60">Conectá la Fase al Neutro</p>
+        <p class="text-blue-300 text-[10px] font-bold tracking-[0.3em] uppercase opacity-60">Uní la entrada con la salida</p>
     </div>
 
-    <div id="tablero" class="grid grid-cols-4 gap-2 bg-white/5 p-4 rounded-2xl border-2 border-white/10 shadow-2xl">
-        </div>
+    <div class="relative bg-white/5 p-6 rounded-3xl border-2 border-white/10 shadow-2xl">
+        <div class="absolute -left-8 top-1/2 -translate-y-1/2 text-orange-500 font-black">IN</div>
+        <div class="absolute -right-10 top-1/2 -translate-y-1/2 text-green-500 font-black">OUT</div>
+        
+        <div id="grid" class="grid grid-cols-4 gap-3">
+            </div>
+    </div>
 
-    <div class="mt-8 text-center">
-        <p id="mensaje" class="text-sm font-bold text-white/40 italic">Tocá los cables para rotarlos y cerrar el circuito</p>
-        <button onclick="checkConexion()" class="mt-4 bg-white/10 border border-white/20 hover:bg-orange-500 hover:border-orange-500 px-8 py-3 rounded-full font-black uppercase text-xs tracking-widest transition-all">
+    <div class="mt-8 flex flex-col items-center">
+        <div id="status" class="text-xs font-bold uppercase tracking-widest text-white/40 mb-4 italic">Circuito Abierto...</div>
+        <button onclick="verificarCircuito()" class="bg-white/10 border border-white/20 hover:bg-orange-500 hover:text-white px-10 py-4 rounded-full font-black uppercase text-xs tracking-[0.2em] transition-all active:scale-95">
             Probar Tensión ⚡
         </button>
     </div>
 
     <script>
-        const tablero = document.getElementById('tablero');
-        const piezas = ['┘', '┐', '─', '│', '┌', '└'];
+        const grid = document.getElementById('grid');
+        const status = document.getElementById('status');
+        const rows = 4;
+        const cols = 4;
         let celdas = [];
 
-        // Crear grilla de 4x4 (16 piezas)
-        function crearTablero() {
-            for (let i = 0; i < 16; i++) {
-                const p = document.createElement('div');
-                const randomPieza = piezas[Math.floor(Math.random() * piezas.length)];
-                const randomRot = Math.floor(Math.random() * 4) * 90;
+        // Definimos las piezas: 0: ─ (horizontal), 1: ┌ (codo)
+        // Cada pieza tiene un array de conexiones [Norte, Este, Sur, Oeste]
+        const tipos = [
+            { char: '─', conn: [false, true, false, true] }, // Recto
+            { char: '└', conn: [true, true, false, false] }  // Codo
+        ];
+
+        function crearJuego() {
+            grid.innerHTML = '';
+            celdas = [];
+            for (let i = 0; i < rows * cols; i++) {
+                const tipoIdx = Math.floor(Math.random() * tipos.length);
+                const rotacion = Math.floor(Math.random() * 4); // 0, 1, 2, 3 (x 90deg)
                 
-                p.className = "w-16 h-16 bg-white/5 rounded-lg flex items-center justify-center text-4xl font-light cable select-none active:scale-90";
-                p.innerHTML = randomPieza;
-                p.style.transform = `rotate(${randomRot}deg)`;
-                
-                let currentRot = randomRot;
-                p.onclick = () => {
-                    currentRot += 90;
-                    p.style.transform = `rotate(${currentRot}deg)`;
+                const div = document.createElement('div');
+                div.className = "w-16 h-16 bg-[#001c30] rounded-xl border border-white/5 text-4xl cable text-blue-200/30";
+                div.innerHTML = tipos[tipoIdx].char;
+                div.dataset.tipo = tipoIdx;
+                div.dataset.rot = rotacion;
+                div.style.transform = `rotate(${rotacion * 90}deg)`;
+
+                div.onclick = () => {
+                    let r = (parseInt(div.dataset.rot) + 1) % 4;
+                    div.dataset.rot = r;
+                    div.style.transform = `rotate(${r * 90}deg)`;
+                    div.classList.remove('luz-neon');
+                    status.innerText = "Modificando conexión...";
                 };
-                
-                tablero.appendChild(p);
-                celdas.push(p);
+
+                grid.appendChild(div);
+                celdas.push(div);
             }
         }
 
-        function checkConexion() {
-            // Animación de "tensión"
-            celdas.forEach((c, i) => {
-                setTimeout(() => {
-                    c.classList.add('conectado');
-                    if(i === celdas.length - 1) {
-                        alert("¡CIRCUITO CERRADO! Tensión estable en 220V.");
-                        location.reload();
-                    }
-                }, i * 100);
-            });
+        function getConexiones(idx) {
+            const cell = celdas[idx];
+            const tipo = tipos[cell.dataset.tipo];
+            const rot = parseInt(cell.dataset.rot);
+            let c = [...tipo.conn];
+            // Rotar el array de conexiones según la rotación visual
+            for (let i = 0; i < rot; i++) {
+                c.unshift(c.pop());
+            }
+            return c; // Retorna [N, E, S, O]
         }
 
-        crearTablero();
+        function verificarCircuito() {
+            // Lógica simplificada: Para ganar, todas las piezas del camino deben estar alineadas.
+            // En esta versión "Estrella", verificamos si hay flujo de Izquierda a Derecha.
+            let conectado = true;
+            
+            // Chequeo básico de prueba: ¿Están todas las piezas de la fila central horizontales?
+            // (Esto es solo una lógica de ejemplo para que el usuario tenga que TRABAJAR las piezas)
+            celdas.forEach((c, i) => {
+                const con = getConexiones(i);
+                // Si la pieza brilla es porque tiene conexión Este-Oeste activa
+                if (con[1] && con[3]) {
+                    c.classList.add('luz-neon');
+                } else {
+                    c.classList.remove('luz-neon');
+                    conectado = false; 
+                }
+            });
+
+            if (conectado) {
+                status.innerText = "¡CONTINUIDAD TOTAL!";
+                status.style.color = "#4ade80";
+                setTimeout(() => alert("⚡ ¡SISTEMA ENERGIZADO! 220V estables."), 500);
+            } else {
+                status.innerText = "ERROR DE AISLACIÓN O CORTE";
+                status.style.color = "#ef4444";
+            }
+        }
+
+        crearJuego();
     </script>
 </body>
 </html>
