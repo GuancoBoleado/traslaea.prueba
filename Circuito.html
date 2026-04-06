@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Corte de Fase • TRASLAEA</title>
+    <title>Tensión Crítica • TRASLAEA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: #000c18; margin: 0; overflow: hidden; touch-action: none; font-family: sans-serif; }
-        canvas { display: block; }
-        #ui { position: absolute; top: 20px; width: 100%; pointer-events: none; display: flex; justify-content: space-between; padding: 0 30px; }
-        .stat { color: #f97316; font-weight: 900; font-size: 20px; text-transform: uppercase; font-style: italic; }
+        body { background: #000814; margin: 0; overflow: hidden; touch-action: none; font-family: 'Inter', sans-serif; }
+        canvas { display: block; filter: contrast(1.2); }
+        #ui { position: absolute; top: 20px; width: 100%; pointer-events: none; display: flex; justify-content: space-around; z-index: 50; }
+        .label { color: #f97316; font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px rgba(249, 115, 22, 0.5); }
+        .val { color: #fff; font-size: 24px; }
     </style>
 </head>
 <body>
 
-    <a href="juegos.html" style="position: absolute; top: 20px; left: 20px; z-index: 100; background: #f97316; color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 12px; font-weight: bold;">← VOLVER</a>
+    <a href="juegos.html" style="position: absolute; top: 20px; left: 20px; z-index: 100; background: #f97316; color: white; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-size: 10px; font-weight: 900; border: 2px solid rgba(255,255,255,0.2);">← SALIR</a>
 
     <div id="ui">
-        <div class="stat">Cables: <span id="score">0</span></div>
-        <div class="stat" style="color: #ef4444;">Vidas: <span id="lives">3</span></div>
+        <div class="text-center"><div class="label">Amperaje</div><div class="val" id="score">0</div></div>
+        <div class="text-center"><div class="label">Aislación</div><div class="val" id="lives" style="color: #ef4444;">100%</div></div>
     </div>
 
     <canvas id="gameCanvas"></canvas>
@@ -33,114 +34,141 @@
         canvas.height = window.innerHeight;
 
         let score = 0;
-        let lives = 3;
-        let particles = [];
+        let lives = 100;
         let objects = [];
+        let particles = [];
         let isDrawing = false;
-        let lastMouse = { x: 0, y: 0 };
+        let trail = [];
 
-        const types = [
-            { txt: '🔌', isBomb: false, label: 'Cable' },
-            { txt: '➰', isBomb: false, label: 'Chicote' },
-            { txt: '⚡', isBomb: false, label: 'Fase' },
-            { txt: '📟', isBomb: true, label: 'Multímetro' }, // ¡NO CORTAR!
-            { txt: '⏹️', isBomb: true, label: 'Térmica' }      // ¡NO CORTAR!
+        const techItems = [
+            { txt: '🔌', isDanger: false, pts: 10, msg: 'Cable Pelado' },
+            { txt: '🪫', isDanger: false, pts: 20, msg: 'Batería' },
+            { txt: '💡', isDanger: false, pts: 15, msg: 'Luz' },
+            { txt: '📟', isDanger: true, pts: -30, msg: '¡TESTER!' },
+            { txt: '⚠️', isDanger: true, pts: -20, msg: '¡ALTA TENSIÓN!' }
         ];
 
-        class TechObject {
-            constructor() {
-                this.x = Math.random() * (canvas.width - 50) + 25;
-                this.y = canvas.height + 50;
-                this.speedY = -(Math.random() * 5 + 12);
-                this.speedX = (Math.random() - 0.5) * 4;
-                this.type = types[Math.floor(Math.random() * types.length)];
-                this.radius = 30;
-                this.cut = false;
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x; this.y = y;
+                this.size = Math.random() * 4 + 1;
+                this.speedX = (Math.random() - 0.5) * 8;
+                this.speedY = (Math.random() - 0.5) * 8;
+                this.color = color;
+                this.alpha = 1;
             }
             update() {
-                this.y += this.speedY;
-                this.x += this.speedX;
-                this.speedY += 0.2; // Gravedad
+                this.x += this.speedX; this.y += this.speedY;
+                this.alpha -= 0.02;
             }
             draw() {
-                ctx.font = "40px Arial";
-                ctx.textAlign = "center";
-                ctx.fillText(this.type.txt, this.x, this.y);
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
             }
         }
 
-        function spawn() {
-            if (Math.random() < 0.03) objects.push(new TechObject());
-        }
-
-        function checkCut(x1, y1, x2, y2) {
-            objects.forEach((obj, index) => {
-                if (!obj.cut) {
-                    let d = distToSegment({x: obj.x, y: obj.y}, {x: x1, y: y1}, {x: x2, y: y2});
-                    if (d < obj.radius) {
-                        obj.cut = true;
-                        if (obj.type.isBomb) {
-                            lives--;
-                            livesEl.innerText = lives;
-                            if (lives <= 0) {
-                                alert("¡DESASTRE TÉCNICO! Rompiste las herramientas. Cables cortados: " + score);
-                                location.reload();
-                            }
-                        } else {
-                            score++;
-                            scoreEl.innerText = score;
-                        }
-                        objects.splice(index, 1);
-                    }
+        class Item {
+            constructor() {
+                this.x = Math.random() * (canvas.width - 100) + 50;
+                this.y = canvas.height + 50;
+                this.speedY = -(Math.random() * 6 + 14);
+                this.speedX = (Math.random() - 0.5) * 5;
+                this.data = techItems[Math.floor(Math.random() * techItems.length)];
+                this.angle = 0;
+                this.spin = (Math.random() - 0.5) * 0.1;
+            }
+            update() {
+                this.y += this.speedY; this.x += this.speedX;
+                this.speedY += 0.25; this.angle += this.spin;
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.font = "50px Arial";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                // Brillo si es peligroso
+                if(this.data.isDanger) {
+                    ctx.shadowBlur = 20;
+                    ctx.shadowColor = "red";
                 }
-            });
-        }
-
-        function distToSegment(p, v, w) {
-            let l2 = Math.pow(v.x - w.x, 2) + Math.pow(v.y - w.y, 2);
-            if (l2 == 0) return Math.sqrt(Math.pow(p.x - v.x, 2) + Math.pow(p.y - v.y, 2));
-            let t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
-            t = Math.max(0, Math.min(1, t));
-            return Math.sqrt(Math.pow(p.x - (v.x + t * (w.x - v.x)), 2) + Math.pow(p.y - (v.y + t * (w.y - v.y)), 2));
+                ctx.fillText(this.data.txt, 0, 0);
+                ctx.restore();
+            }
         }
 
         function animate() {
-            ctx.fillStyle = 'rgba(0, 12, 24, 0.3)'; // Efecto estela
+            // Fondo con rastro
+            ctx.fillStyle = 'rgba(0, 8, 20, 0.4)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            spawn();
-            
+
+            // Dibujar rastro del dedo/mouse (El "Corte")
+            if (trail.length > 1) {
+                ctx.beginPath();
+                ctx.strokeStyle = '#f97316';
+                ctx.lineWidth = 5;
+                ctx.lineCap = 'round';
+                ctx.moveTo(trail[0].x, trail[0].y);
+                for(let i=1; i<trail.length; i++) ctx.lineTo(trail[i].x, trail[i].y);
+                ctx.stroke();
+                if(trail.length > 10) trail.shift();
+            }
+
+            if (Math.random() < 0.04) objects.push(new Item());
+
             objects.forEach((obj, i) => {
                 obj.update();
                 obj.draw();
+
+                // Verificar colisión con el rastro
+                if (isDrawing && trail.length > 0) {
+                    let d = Math.hypot(obj.x - trail[trail.length-1].x, obj.y - trail[trail.length-1].y);
+                    if (d < 40) {
+                        // Chispas
+                        for(let p=0; p<15; p++) particles.push(new Particle(obj.x, obj.y, obj.data.isDanger ? '#ff0000' : '#f97316'));
+                        
+                        if (obj.data.isDanger) {
+                            lives -= 20;
+                            livesEl.innerText = lives + "%";
+                        } else {
+                            score += obj.data.pts;
+                            scoreEl.innerText = score;
+                        }
+                        objects.splice(i, 1);
+                        if(lives <= 0) {
+                            alert("¡FALLA DE AISLACIÓN! Cortocircuito total.");
+                            location.reload();
+                        }
+                    }
+                }
                 if (obj.y > canvas.height + 100) objects.splice(i, 1);
+            });
+
+            particles.forEach((p, i) => {
+                p.update(); p.draw();
+                if(p.alpha <= 0) particles.splice(i, 1);
             });
 
             requestAnimationFrame(animate);
         }
 
-        // Eventos Táctiles y Mouse
         const handleMove = (e) => {
-            let x = e.touches ? e.touches[0].clientX : e.clientX;
-            let y = e.touches ? e.touches[0].clientY : e.clientY;
-            
-            if (isDrawing) {
-                ctx.beginPath();
-                ctx.strokeStyle = '#f97316';
-                ctx.lineWidth = 4;
-                ctx.moveTo(lastMouse.x, lastMouse.y);
-                ctx.lineTo(x, y);
-                ctx.stroke();
-                checkCut(lastMouse.x, lastMouse.y, x, y);
-            }
-            lastMouse = { x, y };
+            let x = (e.touches ? e.touches[0].clientX : e.clientX);
+            let y = (e.touches ? e.touches[0].clientY : e.clientY);
+            if(isDrawing) trail.push({x, y});
+            else trail = [];
         };
 
         window.addEventListener('mousedown', () => isDrawing = true);
-        window.addEventListener('mouseup', () => isDrawing = false);
+        window.addEventListener('mouseup', () => { isDrawing = false; trail = []; });
         window.addEventListener('mousemove', handleMove);
-        window.addEventListener('touchstart', () => isDrawing = true);
-        window.addEventListener('touchend', () => isDrawing = false);
+        window.addEventListener('touchstart', (e) => { isDrawing = true; handleMove(e); });
+        window.addEventListener('touchend', () => { isDrawing = false; trail = []; });
         window.addEventListener('touchmove', handleMove);
 
         animate();
