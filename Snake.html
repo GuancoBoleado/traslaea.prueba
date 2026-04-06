@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TRASLAEA - Carga de Batería</title>
     <style>
-        body { background: #001b3a; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0; color: white; font-family: sans-serif; overflow: hidden; }
-        canvas { border: 4px solid #f97316; background: #000; box-shadow: 0 0 30px rgba(0,0,0,0.5); border-radius: 15px; }
-        h1 { color: #f97316; margin-bottom: 5px; font-style: italic; text-transform: uppercase; }
-        .score { font-size: 20px; font-weight: bold; margin-bottom: 10px; color: #4ade80; }
-        .btn-volver { position: absolute; top: 20px; left: 20px; background: #f97316; color: white; padding: 10px 15px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: bold; }
+        body { background: #001220; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0; color: white; font-family: sans-serif; overflow: hidden; }
+        canvas { border: 4px solid #f97316; background: #000; box-shadow: 0 0 30px rgba(249, 115, 22, 0.2); border-radius: 15px; }
+        h1 { color: #f97316; margin-bottom: 5px; font-style: italic; text-transform: uppercase; letter-spacing: 2px; }
+        .score { font-size: 24px; font-weight: 900; margin-bottom: 10px; color: #4ade80; text-shadow: 0 0 10px rgba(74, 222, 128, 0.5); }
+        .btn-volver { position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.1); color: white; padding: 10px 15px; border-radius: 8px; text-decoration: none; font-size: 10px; font-weight: bold; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s; }
+        .btn-volver:hover { background: #f97316; border-color: #f97316; }
     </style>
 </head>
 <body>
-    <a href="index.html" class="btn-volver">← VOLVER</a>
+    <a href="juegos.html" class="btn-volver">← VOLVER AL RECREO</a>
     <h1>CARGA DE BATERÍA</h1>
     <div class="score" id="scoreVal">Voltaje: 0V</div>
     <canvas id="snakeGame"></canvas>
@@ -34,8 +35,9 @@
     let food = { x: Math.floor(Math.random() * 19) * box, y: Math.floor(Math.random() * 19) * box };
     let d = "RIGHT";
     let score = 0;
-    let gameSpeed = 130; // MÁS LENTO (Antes era 100 o menos)
+    let gameSpeed = 130; 
 
+    // Control por teclado
     document.addEventListener("keydown", direction);
     function direction(event) {
         if(event.keyCode == 37 && d != "RIGHT") d = "LEFT";
@@ -46,27 +48,36 @@
 
     function draw() {
         // 1. Fondo Azul TRASLAEA
-        ctx.fillStyle = "#002855";
+        ctx.fillStyle = "#001b3a";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // 2. LOGO CIRCULAR (Marca de agua)
+        // 2. LOGO CIRCULAR (Marca de agua) - MANTENIDO
         ctx.save();
-        ctx.globalAlpha = 0.2;
+        ctx.globalAlpha = 0.15;
         ctx.beginPath();
-        ctx.arc(200, 200, 100, 0, Math.PI * 2);
+        ctx.arc(200, 200, 120, 0, Math.PI * 2);
         ctx.clip();
-        ctx.drawImage(logo, 100, 100, 200, 200);
+        ctx.drawImage(logo, 80, 80, 240, 240);
         ctx.restore();
 
-        // 3. Dibujar Flujo (Culebra)
+        // 3. Dibujar Flujo (Culebra Batería)
         for(let i = 0; i < snake.length; i++) {
-            ctx.fillStyle = (i == 0) ? "#f97316" : "#4ade80"; // Cabeza naranja, cuerpo verde batería
-            ctx.fillRect(snake[i].x, snake[i].y, box-2, box-2);
+            // Cabeza naranja, cuerpo verde con brillo de batería
+            ctx.fillStyle = (i == 0) ? "#f97316" : "#4ade80";
+            ctx.shadowBlur = (i == 0) ? 15 : 0;
+            ctx.shadowColor = "#f97316";
+            
+            // Dibujamos rectángulos redondeados pequeños para que parezcan celdas
+            ctx.fillRect(snake[i].x + 1, snake[i].y + 1, box - 3, box - 3);
+            ctx.shadowBlur = 0; // Reset para el resto
         }
 
-        // 4. Comida (Rayo de carga)
-        ctx.font = "18px Arial";
-        ctx.fillText("⚡", food.x + 2, food.y + 16);
+        // 4. Comida (Rayo de carga ⚡)
+        ctx.font = "20px Arial";
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = "#fff";
+        ctx.fillText("⚡", food.x + 2, food.y + 18);
+        ctx.shadowBlur = 0;
 
         let snakeX = snake[0].x;
         let snakeY = snake[0].y;
@@ -76,13 +87,13 @@
         if( d == "RIGHT") snakeX += box;
         if( d == "DOWN") snakeY += box;
 
-        // --- EFECTO TÚNEL (No morís al chocar la pared) ---
+        // --- EFECTO TÚNEL ---
         if (snakeX < 0) snakeX = canvas.width - box;
         else if (snakeX >= canvas.width) snakeX = 0;
         if (snakeY < 0) snakeY = canvas.height - box;
         else if (snakeY >= canvas.height) snakeY = 0;
 
-        // Comer
+        // Lógica de Alimentación (Carga)
         if(snakeX == food.x && snakeY == food.y) {
             score++;
             scoreElement.innerHTML = "Voltaje: " + (score * 12) + "V";
@@ -93,9 +104,9 @@
 
         let newHead = { x: snakeX, y: snakeY };
 
-        // Game Over solo si chocás contra vos mismo
+        // Game Over solo por colisión interna
         if(collision(newHead, snake)) {
-            alert("¡Cortocircuito interno! Carga finalizada: " + (score * 12) + "V");
+            alert("⚠️ ¡CORTOCIRCUITO! ⚠️\nVoltaje alcanzado: " + (score * 12) + "V");
             location.reload();
         }
 
