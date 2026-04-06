@@ -25,8 +25,13 @@
         .btn-link {
             background: #1e293b;
             border: 1px solid #475569;
+            white-space: nowrap;
         }
         .btn-link:hover { background: #334155; border-color: #f97316; }
+        
+        /* Estilo para el historial desplegable */
+        summary::-webkit-details-marker { display: none; }
+        summary { list-style: none; }
     </style>
 </head>
 <body class="min-h-screen p-6 pb-20">
@@ -42,7 +47,7 @@
     <main class="max-w-5xl mx-auto">
 
         <div class="section-header">
-            <h2 class="text-xl font-black uppercase italic">Leyes Provinciales</h2>
+            <h2 class="text-xl font-black uppercase italic text-white/90">Leyes Provinciales</h2>
             <p class="text-xs text-white/40 uppercase tracking-widest">Legislación base de Seguridad Eléctrica</p>
         </div>
         <div class="grid gap-3">
@@ -53,45 +58,104 @@
                 </div>
                 <a href="#" class="btn-link px-4 py-2 rounded-lg text-[10px] font-black uppercase">Descargar</a>
             </div>
-            <div class="doc-card p-4 rounded-xl flex items-center justify-between">
-                <div>
-                    <h3 class="text-sm font-bold text-white/90">Ley 9.024</h3>
-                    <p class="text-[10px] text-white/50 uppercase">Adhesión a Normas AEA y Seguridad</p>
-                </div>
-                <a href="#" class="btn-link px-4 py-2 rounded-lg text-[10px] font-black uppercase">Descargar</a>
-            </div>
         </div>
 
         <div class="section-header">
-            <h2 class="text-xl font-black uppercase italic">Decretos Reglamentarios</h2>
-            <p class="text-xs text-white/40 uppercase tracking-widest">Reglamentación del Poder Ejecutivo</p>
+            <h2 class="text-xl font-black uppercase italic text-white/90">Resoluciones ERSeP</h2>
+            <p class="text-xs text-white/40 uppercase tracking-widest">Normativas, Registros y Expedientes</p>
         </div>
+
         <div class="grid gap-3">
+            <div class="doc-card p-4 rounded-xl flex items-center justify-between border-l-4 border-l-red-500">
+                <div>
+                    <h3 class="text-sm font-bold text-white/90">Res. Gral. N° 97 - Anexo Único</h3>
+                    <p class="text-[10px] text-red-400 font-black uppercase">Régimen de Infracciones y Sanciones</p>
+                </div>
+                <a href="https://drive.google.com/file/d/18eXcPPuSYmQaoQSb2MgVsDr9tgJ1-L11/view?usp=drive_link" target="_blank" class="btn-link px-4 py-2 rounded-lg text-[10px] font-black uppercase">Abrir PDF</a>
+            </div>
+
             <div class="doc-card p-4 rounded-xl flex items-center justify-between">
                 <div>
-                    <h3 class="text-sm font-bold text-white/90">Decreto 149/2016</h3>
-                    <p class="text-[10px] text-white/50 uppercase">Reglamentación de la Ley de Seguridad Eléctrica</p>
+                    <h3 class="text-sm font-bold text-white/90">Res. Gral. N° 26 - Anexo I</h3>
+                    <p class="text-[10px] text-white/50 uppercase">Registro de Instaladores Electricistas Habilitados</p>
                 </div>
-                <a href="#" class="btn-link px-4 py-2 rounded-lg text-[10px] font-black uppercase">Descargar</a>
+                <a href="https://drive.google.com/file/d/1YylFRngJwuqJgtH7VmlVo6Np87XD6oKO/view?usp=drive_link" target="_blank" class="btn-link px-4 py-2 rounded-lg text-[10px] font-black uppercase">Abrir PDF</a>
             </div>
+
+            <div class="doc-card p-4 rounded-xl flex items-center justify-between">
+                <div>
+                    <h3 class="text-sm font-bold text-white/90">Expte N° 0521-085783/2025</h3>
+                    <p class="text-[10px] text-blue-400 font-bold uppercase">Actualización Vigente Abril 2025</p>
+                </div>
+                <a href="https://drive.google.com/file/d/1ELRA3nbHmWJWHitBuK7wOrHonwg1iZMZ/view?usp=drive_link" target="_blank" class="btn-link px-4 py-2 rounded-lg text-[10px] font-black uppercase">Abrir PDF</a>
+            </div>
+
+            <div class="doc-card p-4 rounded-xl flex items-center justify-between">
+                <div>
+                    <h3 class="text-sm font-bold text-white/90">Res. Gral. ERSeP N° 05/2016</h3>
+                    <p class="text-[10px] text-white/50 uppercase">Reglamentación Técnica para Ejecución y Verificación</p>
+                </div>
+                <a href="https://drive.google.com/file/d/1jZPWj4LZnElhIXIwFCN7oAoemNlos5Er/view?usp=drive_link" target="_blank" class="btn-link px-4 py-2 rounded-lg text-[10px] font-black uppercase">Abrir PDF</a>
+            </div>
+
+            <details class="group mt-4">
+                <summary class="flex items-center justify-center gap-2 p-4 bg-white/5 rounded-xl cursor-pointer hover:bg-white/10 transition-all">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-white/60">Ver historial completo de resoluciones</span>
+                    <svg class="w-4 h-4 text-orange-500 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                </summary>
+                
+                <div class="grid gap-2 mt-3 pl-2 border-l border-white/10">
+                    
+                    <div class="doc-card p-3 rounded-lg flex items-center justify-between opacity-80">
+                        <span class="text-xs">EXPTE. No 0521-071769/2023</span>
+                        <a href="https://drive.google.com/file/d/1VFb5s7CIvP2Onm2wlAB0A6RN-Hzn45O-/view?usp=drive_link" target="_blank" class="text-orange-500 font-bold text-[10px] uppercase">Ver</a>
+                    </div>
+
+                    <div class="doc-card p-3 rounded-lg flex items-center justify-between opacity-80">
+                        <span class="text-xs">Seguridad Eléctrica - 15 de abril 2025</span>
+                        <a href="https://drive.google.com/file/d/15arfOuGabGKKBeqndDFKWwG8ZC8BN72L/view?usp=drive_link" target="_blank" class="text-orange-500 font-bold text-[10px] uppercase">Ver</a>
+                    </div>
+
+                    <div class="doc-card p-3 rounded-lg flex items-center justify-between opacity-80">
+                        <span class="text-xs">Res. Gral. ERSeP No 41 - Anexo II</span>
+                        <a href="https://drive.google.com/file/d/14xv79hGZbN8z3Mxv_OQ0tzKENKV8MblP/view?usp=drive_link" target="_blank" class="text-orange-500 font-bold text-[10px] uppercase">Ver</a>
+                    </div>
+
+                    <div class="doc-card p-3 rounded-lg flex items-center justify-between opacity-80">
+                        <span class="text-xs">Seguridad Eléctrica - 16 de febrero 2023</span>
+                        <a href="https://drive.google.com/file/d/1eaorR1gKE8dUnJXXcFWOF6bE2CtIYeYm/view?usp=drive_link" target="_blank" class="text-orange-500 font-bold text-[10px] uppercase">Ver</a>
+                    </div>
+
+                    <div class="doc-card p-3 rounded-lg flex items-center justify-between opacity-80">
+                        <span class="text-xs">Seguridad Eléctrica - 16 de marzo 2022</span>
+                        <a href="https://drive.google.com/file/d/1m1lrhyapDD4HjwIukpedWrzNo0Cm0-Ng/view?usp=drive_link" target="_blank" class="text-orange-500 font-bold text-[10px] uppercase">Ver</a>
+                    </div>
+
+                    <div class="doc-card p-3 rounded-lg flex items-center justify-between opacity-80">
+                        <span class="text-xs">Seguridad Eléctrica - 25 de marzo 2021</span>
+                        <a href="https://drive.google.com/file/d/1fMxH0y7PZDuwUv3NbEg1-qGbOwbUD_po/view?usp=drive_link" target="_blank" class="text-orange-500 font-bold text-[10px] uppercase">Ver</a>
+                    </div>
+
+                    <div class="doc-card p-3 rounded-lg flex items-center justify-between opacity-80">
+                        <span class="text-xs">ERSeP No 17 Anexo II - Habilitación Cat III</span>
+                        <a href="https://drive.google.com/file/d/198BOTpQMZEHhoW5jI60CPROnMscCB6AM/view?usp=drive_link" target="_blank" class="text-orange-500 font-bold text-[10px] uppercase">Ver</a>
+                    </div>
+
+                    <div class="doc-card p-3 rounded-lg flex items-center justify-between opacity-80">
+                        <span class="text-xs">Historial Seguridad Eléctrica 2015 - 2018</span>
+                        <div class="flex gap-2">
+                             <a href="https://drive.google.com/file/d/1VjOu-WMwkC80KHZYM8NQfLh4B-kjZe46/view?usp=drive_link" target="_blank" class="text-blue-400 font-bold text-[9px]">2018</a>
+                             <a href="https://drive.google.com/file/d/1UNa8zRk6hMZ3YBbdfJV8e4fiK6nj5wgU/view?usp=drive_link" target="_blank" class="text-blue-400 font-bold text-[9px]">2017</a>
+                             <a href="https://drive.google.com/file/d/1v8pzAllh07Iu5LyZWkvqPAuDHBAbKOuK/view?usp=drive_link" target="_blank" class="text-blue-400 font-bold text-[9px]">2016</a>
+                             <a href="https://drive.google.com/file/d/1FwegdeA-j3MTYHzgGRumgCWIITdYqnmk/view?usp=drive_link" target="_blank" class="text-blue-400 font-bold text-[9px]">2015</a>
+                        </div>
+                    </div>
+                </div>
+            </details>
         </div>
 
         <div class="section-header">
-            <h2 class="text-xl font-black uppercase italic">Resoluciones ERSeP</h2>
-            <p class="text-xs text-white/40 uppercase tracking-widest">Normas del Ente Regulador</p>
-        </div>
-        <div class="grid gap-3">
-            <div class="doc-card p-4 rounded-xl flex items-center justify-between">
-                <div>
-                    <h3 class="text-sm font-bold text-white/90">Resolución General 10/2022</h3>
-                    <p class="text-[10px] text-white/50 uppercase">Anexo Único - Reglamento General</p>
-                </div>
-                <a href="#" class="btn-link px-4 py-2 rounded-lg text-[10px] font-black uppercase">Descargar</a>
-            </div>
-        </div>
-
-        <div class="section-header">
-            <h2 class="text-xl font-black uppercase italic">Especificaciones Técnicas</h2>
+            <h2 class="text-xl font-black uppercase italic text-white/90">Especificaciones Técnicas</h2>
             <p class="text-xs text-white/40 uppercase tracking-widest">Guías de Montaje y Materiales</p>
         </div>
         <div class="grid gap-3">
