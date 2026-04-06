@@ -3,71 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Zapatilla al Límite ELITE • TRASLAEA</title>
+    <title>Simulador de Riesgo Eléctrico • TRASLAEA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background: #000c1a; touch-action: none; user-select: none; font-family: sans-serif; overflow: hidden; }
         .zapatilla-body {
-            background: #ffffff; border-radius: 60px; height: 100px; width: 100%; max-width: 450px;
+            background: #ffffff; border-radius: 60px; height: 90px; width: 100%; max-width: 450px;
             display: flex; align-items: center; justify-content: space-around; padding: 0 30px;
             box-shadow: 0 10px 0 #cbd5e1, 0 20px 40px rgba(0,0,0,0.5); border: 1px solid #e2e8f0;
             position: relative; z-index: 20;
         }
         .toma-real {
-            width: 55px; height: 55px; background: #f8fafc; border-radius: 50%;
+            width: 50px; height: 50px; background: #f8fafc; border-radius: 50%;
             border: 2px solid #e2e8f0; position: relative; display: flex; align-items: center; justify-content: center;
         }
-        .patitas { width: 25px; height: 25px; position: relative; transform: rotate(180deg); opacity: 0.3; }
-        .patitas::before, .patitas::after { content: ''; position: absolute; width: 3px; height: 10px; background: #334155; border-radius: 2px; }
+        .patitas { width: 22px; height: 22px; position: relative; transform: rotate(180deg); opacity: 0.3; }
+        .patitas::before, .patitas::after { content: ''; position: absolute; width: 3px; height: 9px; background: #334155; border-radius: 2px; }
         .patitas::before { left: 3px; top: 2px; transform: rotate(30deg); }
         .patitas::after { right: 3px; top: 2px; transform: rotate(-30deg); }
-        .tierra { position: absolute; width: 3px; height: 10px; background: #334155; bottom: 1px; left: 11px; border-radius: 2px; }
+        .tierra { position: absolute; width: 3px; height: 9px; background: #334155; bottom: 1px; left: 9.5px; border-radius: 2px; }
 
         #gameCanvas { position: absolute; top: 0; left: 0; pointer-events: none; z-index: 15; }
 
         .sobrecarga-critica { animation: vibrar 0.05s infinite; background: #fca5a5 !important; }
         @keyframes vibrar { 0% { transform: translate(2px, 2px); } 50% { transform: translate(-2px, -2px); } 100% { transform: translate(2px, -2px); } }
 
-        .aparato-card { transition: all 0.3s; cursor: pointer; z-index: 30; background: rgba(255,255,255,0.05); border-radius: 1rem; }
-        .activo { border-color: #f97316 !important; background: rgba(249, 115, 22, 0.1); }
+        .aparato-card { transition: all 0.3s; cursor: pointer; z-index: 30; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; }
+        .activo { border-color: #f97316 !important; background: rgba(249, 115, 22, 0.2); transform: scale(1.05); }
         
-        /* Animación de parpadeo para el porcentaje alto */
-        .blink { animation: blinker 0.5s linear infinite; color: #ff0000; }
+        .blink { animation: blinker 0.4s linear infinite; color: #ff0000; }
         @keyframes blinker { 50% { opacity: 0; } }
+
+        /* Contenedor con scroll para los equipos */
+        #scroll-container { max-height: 40vh; overflow-y: auto; width: 100%; max-width: 400px; padding: 10px; z-index: 30; }
+        #scroll-container::-webkit-scrollbar { width: 5px; }
+        #scroll-container::-webkit-scrollbar-thumb { background: #f97316; border-radius: 10px; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-6 text-white">
+<body class="min-h-screen flex flex-col items-center p-4 text-white">
 
     <canvas id="gameCanvas"></canvas>
 
-    <a href="juegos.html" class="self-start mb-4 bg-orange-600 text-white px-5 py-2 rounded-full font-black text-xs shadow-lg uppercase z-50">← VOLVER</a>
+    <a href="juegos.html" class="self-start mb-2 bg-orange-600 text-white px-4 py-1.5 rounded-full font-black text-[10px] shadow-lg uppercase z-50">← SALIR</a>
 
     <div class="text-center mb-4 z-20">
-        <h1 class="text-2xl font-black italic text-orange-500 uppercase leading-none">Zapatilla al Límite</h1>
-        <p class="text-blue-300 text-[9px] font-bold tracking-[0.4em] mt-1 opacity-70">SISTEMA DE RIESGO TÉRMICO</p>
+        <h1 class="text-xl font-black italic text-orange-500 uppercase leading-none">Riesgo Eléctrico PRO</h1>
+        <p class="text-blue-300 text-[8px] font-bold tracking-[0.3em] mt-1 opacity-70">CONTROL DE CARGA TRASLAEA</p>
     </div>
 
-    <div class="w-full max-w-xs bg-black/60 p-4 rounded-3xl mb-6 border border-white/10 text-center z-20 relative overflow-hidden">
-        <div class="flex justify-between items-center px-2">
+    <div class="w-full max-w-xs bg-black/70 p-4 rounded-3xl mb-4 border border-white/10 text-center z-20">
+        <div class="flex justify-between items-center px-1">
             <span id="porcentaje-display" class="text-5xl font-black text-green-400">0<small class="text-xl">%</small></span>
             <div class="text-right">
-                <div id="label-estado" class="text-[8px] font-black uppercase text-blue-400">Carga Segura</div>
-                <div class="text-[10px] font-bold text-white/40" id="amperaje-real">0.0A</div>
+                <div id="label-estado" class="text-[9px] font-black uppercase text-blue-400">Sistema OK</div>
+                <div class="text-[12px] font-bold text-white/50" id="amperaje-real">0.0A</div>
             </div>
         </div>
-        <div class="w-full bg-gray-800 h-4 rounded-full mt-2 overflow-hidden border border-white/5 relative">
-            <div id="amp-bar" class="bg-green-500 h-full transition-all duration-500" style="width: 0%"></div>
+        <div class="w-full bg-gray-900 h-4 rounded-full mt-2 overflow-hidden border border-white/5">
+            <div id="amp-bar" class="bg-green-500 h-full transition-all duration-300" style="width: 0%"></div>
         </div>
     </div>
 
-    <div id="zapatilla-ui" class="zapatilla-body">
+    <div id="zapatilla-ui" class="zapatilla-body mb-4">
         <div class="toma-real" id="toma-0"><div class="patitas"><div class="tierra"></div></div></div>
         <div class="toma-real" id="toma-1"><div class="patitas"><div class="tierra"></div></div></div>
         <div class="toma-real" id="toma-2"><div class="patitas"><div class="tierra"></div></div></div>
         <div class="toma-real" id="toma-3"><div class="patitas"><div class="tierra"></div></div></div>
     </div>
 
-    <div class="grid grid-cols-3 gap-3 w-full max-w-sm mt-24" id="items-container"></div>
+    <div id="scroll-container">
+        <div class="grid grid-cols-3 gap-3" id="items-container"></div>
+    </div>
 
     <script>
         const canvas = document.getElementById('gameCanvas');
@@ -87,13 +93,19 @@
         let sobrecargaTimer = null;
         let porcentajeExtra = 0;
 
+        // TU LISTA ACTUALIZADA
         const equipos = [
             { id: 0, nom: 'Pava', amp: 7.0, icon: '☕' },
             { id: 1, nom: 'Estufa', amp: 9.0, icon: '🔥' },
-            { id: 2, nom: 'Venti', amp: 4.0, icon: '🌬️' },
-            { id: 3, nom: 'Tele', amp: 1.0, icon: '📺' },
-            { id: 4, nom: 'Router', amp: 0.5, icon: '📡' },
-            { id: 5, nom: 'Celu', amp: 0.2, icon: '📱' }
+            { id: 2, nom: 'Ducha E.', amp: 18.0, icon: '🚿' },
+            { id: 3, nom: 'Horno E.', amp: 12.2, icon: '🍞' },
+            { id: 4, nom: 'Plancha', amp: 4.4, icon: '💨' },
+            { id: 5, nom: 'Compu', amp: 3.5, icon: '💻' },
+            { id: 6, nom: 'Venti', amp: 4.0, icon: '🌬️' },
+            { id: 7, nom: 'Licuadora', amp: 1.3, icon: '🍹' },
+            { id: 8, nom: 'Tele', amp: 1.0, icon: '📺' },
+            { id: 9, nom: 'Router', amp: 0.5, icon: '📡' },
+            { id: 10, nom: 'Celu', amp: 0.2, icon: '📱' }
         ];
 
         function crearMenu() {
@@ -101,8 +113,8 @@
             equipos.forEach(eq => {
                 const card = document.createElement('div');
                 card.id = `eq-${eq.id}`;
-                card.className = "aparato-card p-3 flex flex-col items-center border border-white/5";
-                card.innerHTML = `<span class="text-3xl">${eq.icon}</span><span class="text-[10px] font-black text-orange-500">${eq.amp}A</span>`;
+                card.className = "aparato-card p-2.5 flex flex-col items-center";
+                card.innerHTML = `<span class="text-2xl">${eq.icon}</span><span class="text-[8px] font-black uppercase opacity-60 text-center">${eq.nom}</span><span class="text-[10px] font-black text-orange-500">${eq.amp}A</span>`;
                 card.onclick = () => toggleConexion(eq, card);
                 container.appendChild(card);
             });
@@ -128,7 +140,7 @@
                 card.classList.add('activo');
                 crearEfecto(conexiones[conexiones.length-1].endX, conexiones[conexiones.length-1].endY, '#60a5fa', 15);
             }
-            porcentajeExtra = 0; // Resetear calentamiento si cambia la carga
+            porcentajeExtra = 0;
             actualizarUI();
         }
 
@@ -138,28 +150,29 @@
             let pFinal = pBase + porcentajeExtra;
             
             percDisplay.innerHTML = Math.floor(pFinal) + "<small class='text-xl'>%</small>";
-            ampReal.innerText = totalAmp.toFixed(1) + "A";
+            ampReal.innerText = totalAmp.toFixed(1) + "A / 10A";
             ampBar.style.width = Math.min(pFinal, 100) + "%";
 
             if (pFinal >= 120) {
                 explotar();
             } else if (pFinal >= 100) {
-                labelEstado.innerText = "¡PELIGRO TÉRMICO!";
+                labelEstado.innerText = "¡INCENDIO EN PROGRESO!";
                 percDisplay.className = "text-5xl font-black blink";
-                ampBar.className = "bg-red-600 h-full transition-all";
+                ampBar.className = "bg-red-600 h-full shadow-[0_0_20px_red]";
                 zapatilla.classList.add('sobrecarga-critica');
-                // Iniciar calentamiento progresivo
+                // Calentamiento rápido si el amperaje es muy alto
+                let speed = totalAmp > 15 ? 800 : 1500;
                 sobrecargaTimer = setInterval(() => {
-                    porcentajeExtra += 2;
+                    porcentajeExtra += 2.5;
                     actualizarUI();
-                }, 1500);
+                }, speed);
             } else if (pFinal >= 80) {
-                labelEstado.innerText = "CARGA CRÍTICA";
+                labelEstado.innerText = "PELIGRO: SOBRECARGA";
                 percDisplay.className = "text-5xl font-black text-red-500";
                 ampBar.className = "bg-red-500 h-full transition-all";
                 zapatilla.classList.remove('sobrecarga-critica');
             } else {
-                labelEstado.innerText = "CARGA SEGURA";
+                labelEstado.innerText = "SISTEMA SEGURO";
                 percDisplay.className = "text-5xl font-black text-green-400";
                 ampBar.className = "bg-green-500 h-full transition-all";
                 zapatilla.classList.remove('sobrecarga-critica');
@@ -168,7 +181,7 @@
 
         function crearEfecto(x, y, color, cant) {
             for(let i=0; i<cant; i++) {
-                particulas.push({ x, y, vx: (Math.random()-0.5)*8, vy: (Math.random()-0.5)*8, life: 1, color });
+                particulas.push({ x, y, vx: (Math.random()-0.5)*10, vy: (Math.random()-0.5)*10, life: 1, color });
             }
         }
 
@@ -176,25 +189,25 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             let pActual = (totalAmp / 10) * 100 + porcentajeExtra;
 
-            // Dibujar Cables
             conexiones.forEach(c => {
                 ctx.beginPath(); ctx.moveTo(c.startX, c.startY);
-                const cpY = (c.startY + c.endY) / 2 + 60;
+                const cpY = (c.startY + c.endY) / 2 + 50;
                 ctx.quadraticCurveTo((c.startX + c.endX)/2, cpY, c.endX, c.endY);
-                ctx.strokeStyle = pActual >= 100 ? '#ff4444' : '#ffffff';
+                ctx.strokeStyle = pActual >= 100 ? '#ff0000' : '#ffffff';
                 ctx.lineWidth = 6; ctx.lineCap = 'round'; ctx.stroke();
+                ctx.strokeStyle = pActual >= 100 ? '#ffaa00' : '#cbd5e1';
+                ctx.lineWidth = 2; ctx.stroke();
             });
 
-            // Humo y Fuego si supera 105%
             if (pActual > 105) {
                 const rect = zapatilla.getBoundingClientRect();
-                crearEfecto(rect.left + Math.random()*rect.width, rect.top, pActual > 115 ? '#ff4400' : '#555555', 2);
+                crearEfecto(rect.left + Math.random()*rect.width, rect.top + Math.random()*rect.height, pActual > 115 ? '#ff4400' : '#555555', 2);
             }
 
             particulas.forEach((p, i) => {
                 ctx.globalAlpha = p.life; ctx.fillStyle = p.color;
-                ctx.beginPath(); ctx.arc(p.x, p.y, p.color === '#555555' ? 4 : 2, 0, Math.PI*2); ctx.fill();
-                p.x += p.vx; p.y += p.vy; p.life -= 0.02;
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.color === '#555555' ? 5 : 2.5, 0, Math.PI*2); ctx.fill();
+                p.x += p.vx; p.y += p.vy; p.life -= 0.03;
                 if(p.life <= 0) particulas.splice(i, 1);
             });
             requestAnimationFrame(draw);
@@ -204,7 +217,7 @@
             clearInterval(sobrecargaTimer);
             document.body.style.background = "#ff0000";
             setTimeout(() => {
-                alert("🔥 ¡INCENDIO ELÉCTRICO! 🔥\n\nEl conductor alcanzó el 120% de su capacidad térmica y se produjo un cortocircuito.\n\nAmperaje final: " + (totalAmp + (porcentajeExtra/10)).toFixed(1) + "A.");
+                alert("💥 ¡COLAPSO TOTAL! 💥\n\nEl exceso de amperaje destruyó la zapatilla.\n\nConsumo final: " + (totalAmp + (porcentajeExtra/10)).toFixed(1) + "A.");
                 location.reload();
             }, 200);
         }
