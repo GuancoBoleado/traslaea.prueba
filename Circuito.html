@@ -6,42 +6,101 @@
     <title>Zapatilla al Límite • TRASLAEA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: #010c1a; touch-action: none; user-select: none; font-family: sans-serif; overflow: hidden; }
-        .aparato { cursor: grab; transition: transform 0.2s; }
-        .aparato:active { cursor: grabbing; scale: 1.1; }
-        .zapatilla { background: #e2e8f0; border-radius: 20px; box-shadow: 0 10px 0 #cbd5e1; }
-        .toma { background: #94a3b8; border-radius: 50%; width: 40px; height: 40px; margin: 10px; border: 3px inset rgba(0,0,0,0.2); }
-        .sobrecarga { animation: shake 0.2s infinite, glow 0.5s infinite alternate; }
-        @keyframes shake { 0% { transform: translate(1px, 1px); } 50% { transform: translate(-1px, -1px); } 100% { transform: translate(1px, -1px); } }
-        @keyframes glow { from { background: #e2e8f0; } to { background: #ef4444; } }
+        body { background: #000c1a; touch-action: none; user-select: none; font-family: sans-serif; overflow: hidden; }
+        
+        /* Estilo de la zapatilla basado en tu foto */
+        .zapatilla-container {
+            position: relative;
+            background: #ffffff;
+            border-radius: 50px;
+            height: 120px;
+            width: 100%;
+            max-width: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 20px;
+            box-shadow: 0 10px 0 #cbd5e1, 0 20px 40px rgba(0,0,0,0.5);
+            border: 2px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .toma-real {
+            width: 60px;
+            height: 60px;
+            background: #f1f5f9;
+            border-radius: 50%;
+            border: 3px inset rgba(0,0,0,0.1);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Los orificios del toma tipo I (Argentina) */
+        .toma-real::before {
+            content: "/ \\";
+            font-size: 14px;
+            color: #94a3b8;
+            font-weight: bold;
+            transform: rotate(180deg);
+        }
+
+        .sobrecarga {
+            animation: vibrar 0.1s infinite;
+            background: #fee2e2 !important;
+            border-color: #ef4444 !important;
+        }
+
+        @keyframes vibrar {
+            0% { transform: translate(2px, 2px); }
+            50% { transform: translate(-2px, -2px); }
+            100% { transform: translate(2px, -2px); }
+        }
+
+        .aparato-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .aparato-card:active { transform: scale(0.9); background: #f97316; }
+        
+        .con-carga { color: #f97316; font-weight: 900; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-4 text-white">
+<body class="min-h-screen flex flex-col items-center p-6 text-white">
 
-    <a href="juegos.html" class="self-start mb-4 bg-orange-500 text-white px-4 py-2 rounded-lg font-bold text-xs shadow-lg">← VOLVER</a>
+    <a href="juegos.html" class="self-start mb-6 bg-orange-600 text-white px-5 py-2 rounded-full font-black text-xs shadow-lg uppercase tracking-widest">← VOLVER</a>
 
-    <div class="text-center mb-6">
+    <div class="text-center mb-8">
         <h1 class="text-3xl font-black italic text-orange-500 uppercase leading-none">Zapatilla al Límite</h1>
-        <p class="text-blue-300 text-[10px] font-bold tracking-widest mt-1">NO PASES LOS 10 AMPERES</p>
+        <p class="text-blue-300 text-[10px] font-bold tracking-[0.4em] mt-2 opacity-70">CARGA MÁXIMA: 10 AMPERES</p>
     </div>
 
-    <div class="w-full max-w-xs bg-white/10 p-4 rounded-2xl mb-6 border border-white/10 text-center">
-        <div class="text-xs uppercase opacity-50 font-bold mb-1">Consumo Actual</div>
-        <div id="amp-display" class="text-5xl font-black text-green-400">0.0<span class="text-xl">A</span></div>
-        <div class="w-full bg-gray-700 h-2 mt-3 rounded-full overflow-hidden">
-            <div id="amp-bar" class="bg-green-500 h-full transition-all duration-300" style="width: 0%"></div>
+    <div class="w-full max-w-sm bg-black/40 p-5 rounded-3xl mb-10 border border-white/10 text-center shadow-2xl">
+        <div class="flex justify-between items-end mb-2 px-2">
+            <span class="text-[10px] font-black text-blue-400 uppercase tracking-widest">Consumo Total</span>
+            <span id="amp-display" class="text-5xl font-black text-green-400">0.0<small class="text-xl ml-1">A</small></span>
+        </div>
+        <div class="w-full bg-gray-800 h-4 rounded-full p-1 border border-white/5">
+            <div id="amp-bar" class="bg-green-500 h-full rounded-full transition-all duration-500 shadow-[0_0_15px_rgba(34,197,94,0.5)]" style="width: 0%"></div>
         </div>
     </div>
 
-    <div id="zapatilla-ui" class="zapatilla w-full max-w-sm p-4 flex justify-around items-center mb-10 border-4 border-white/20">
-        <div class="toma flex items-center justify-center text-[8px] text-black/20 font-bold">I I</div>
-        <div class="toma flex items-center justify-center text-[8px] text-black/20 font-bold">I I</div>
-        <div class="toma flex items-center justify-center text-[8px] text-black/20 font-bold">I I</div>
-        <div class="toma flex items-center justify-center text-[8px] text-black/20 font-bold">I I</div>
-        <div class="toma flex items-center justify-center text-[8px] text-black/20 font-bold">I I</div>
+    <div id="zapatilla-ui" class="zapatilla-container">
+        <div class="toma-real"></div>
+        <div class="toma-real"></div>
+        <div class="toma-real"></div>
+        <div class="toma-real"></div>
+        <div class="absolute right-4 w-2 h-8 bg-red-600 rounded-full shadow-inner border border-red-800"></div>
     </div>
 
-    <div class="grid grid-cols-3 gap-4 w-full max-w-xs" id="items-container">
+    <p class="mt-8 mb-4 text-white/40 text-[10px] font-bold uppercase tracking-widest italic">Toca para conectar equipos:</p>
+
+    <div class="grid grid-cols-3 gap-3 w-full max-w-sm" id="items-container">
         </div>
 
     <script>
@@ -51,69 +110,77 @@
         const container = document.getElementById('items-container');
 
         let totalAmp = 0;
-        const maxAmp = 10;
+        const maxAmp = 10.0;
 
-        const productos = [
-            { id: 1, nombre: 'Pava', amp: 7.0, icon: '☕' },
-            { id: 2, nombre: 'Tele', amp: 1.0, icon: '📺' },
-            { id: 3, nombre: 'Router', amp: 0.5, icon: '📡' },
-            { id: 4, nombre: 'Estufa', amp: 9.0, icon: '🔥' },
-            { id: 5, nombre: 'Celu', amp: 0.2, icon: '📱' },
-            { id: 6, nombre: 'Venti', amp: 4.0, icon: '🌬️' }
+        const equipos = [
+            { id: 1, nom: 'Pava Eléc.', amp: 7.0, icon: '☕' },
+            { id: 2, nom: 'Estufa', amp: 9.0, icon: '🔥' },
+            { id: 3, nom: 'Ventilador', amp: 4.0, icon: '🌬️' },
+            { id: 4, nom: 'TV Led', amp: 1.0, icon: '📺' },
+            { id: 5, nom: 'Router Wifi', amp: 0.5, icon: '📡' },
+            { id: 6, nom: 'Celular', amp: 0.2, icon: '📱' }
         ];
 
-        function init() {
-            productos.forEach(p => {
-                const btn = document.createElement('button');
-                btn.className = "aparato bg-white/5 border border-white/10 p-3 rounded-xl flex flex-col items-center active:bg-orange-500/20";
-                btn.innerHTML = `
-                    <span class="text-3xl mb-1">${p.icon}</span>
-                    <span class="text-[10px] font-bold">${p.nombre}</span>
-                    <span class="text-[12px] text-orange-400 font-black">${p.amp}A</span>
+        function crearMenu() {
+            equipos.forEach(eq => {
+                const card = document.createElement('div');
+                card.className = "aparato-card p-4 rounded-2xl flex flex-col items-center justify-center text-center";
+                card.innerHTML = `
+                    <span class="text-3xl mb-2">${eq.icon}</span>
+                    <span class="text-[9px] font-bold opacity-70 uppercase mb-1">${eq.nom}</span>
+                    <span class="text-sm font-black text-orange-500">${eq.amp}A</span>
                 `;
-                btn.onclick = () => enchufar(p, btn);
-                container.appendChild(btn);
+                card.onclick = () => conectar(eq, card);
+                container.appendChild(card);
             });
         }
 
-        function enchufar(p, elemento) {
-            if (elemento.classList.contains('opacity-20')) return; // Ya está enchufado
+        function conectar(eq, card) {
+            if(card.style.opacity === "0.2") return;
 
-            totalAmp += p.amp;
-            elemento.classList.add('opacity-20'); // Marcar como usado
-            actualizarUI();
+            totalAmp += eq.amp;
+            card.style.opacity = "0.2";
+            card.style.pointerEvents = "none";
+            
+            actualizarGraficos();
 
-            if (totalAmp > maxAmp) {
-                explotar();
+            if(totalAmp > maxAmp) {
+                setTimeout(explotar, 200);
             }
         }
 
-        function actualizarUI() {
+        function actualizarGraficos() {
             ampDisplay.innerText = totalAmp.toFixed(1) + "A";
-            const porc = (totalAmp / maxAmp) * 100;
-            ampBar.style.width = Math.min(porc, 100) + "%";
+            const porcentaje = (totalAmp / maxAmp) * 100;
+            ampBar.style.width = Math.min(porcentaje, 100) + "%";
 
-            if (totalAmp > 8) {
+            if(totalAmp > 8) {
                 ampDisplay.className = "text-5xl font-black text-red-500";
-                ampBar.className = "bg-red-500 h-full transition-all";
+                ampBar.className = "bg-red-600 h-full rounded-full transition-all shadow-[0_0_20px_rgba(239,68,68,0.8)]";
                 zapatilla.classList.add('sobrecarga');
+            } else if(totalAmp > 5) {
+                ampDisplay.className = "text-5xl font-black text-yellow-400";
+                ampBar.className = "bg-yellow-400 h-full rounded-full transition-all";
+                zapatilla.classList.remove('sobrecarga');
             } else {
                 ampDisplay.className = "text-5xl font-black text-green-400";
-                ampBar.className = "bg-green-500 h-full transition-all";
+                ampBar.className = "bg-green-500 h-full rounded-full transition-all";
                 zapatilla.classList.remove('sobrecarga');
             }
         }
 
         function explotar() {
             zapatilla.style.background = "#000";
-            document.body.style.background = "#f00";
+            zapatilla.innerHTML = "<span class='text-red-600 font-black text-2xl'>CORTOCIRCUITO</span>";
+            document.body.style.background = "#400";
+            
             setTimeout(() => {
-                alert("💥 ¡BOOM! SOBRECARGA ELÉCTRICA.\nConectaste " + totalAmp.toFixed(1) + "A y la zapatilla aguantaba 10A.\n\nEvitá conectar estufas o pavas en prolongadores.");
+                alert("💥 ¡BOOM! SOBRECARGA EN LA ZAPATILLA.\n\nTotal: " + totalAmp.toFixed(1) + " Amperes.\nLímite: 10 Amperes.\n\nMoraleja: Nunca conectes equipos de alto consumo (Pava, Estufa) en una misma zapatilla.");
                 location.reload();
-            }, 100);
+            }, 300);
         }
 
-        init();
+        crearMenu();
     </script>
 </body>
 </html>
