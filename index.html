@@ -655,26 +655,34 @@
             const o = obrasGuardadas.find(ob => ob.id === id);
             if(o) { fotosGaleria = o.fotos; indiceActual = fotosGaleria.findIndex(f => url.includes(f)); actualizarImagenModal(); document.getElementById('modal-fotos').classList.remove('hidden'); }
         };
-        // --- PEGÁ ESTO AQUÍ (LÓGICA DEL ACCESO SECRETO) ---
-        let clicksSecretos = 0;
-        let timerSecreto;
-        window.accesoSecreto = function() {
-            clicksSecretos++;
-            const logo = document.getElementById('logo-secreto');
-            if(logo) {
-                logo.style.opacity = (clicksSecretos * 0.25);
-                logo.style.transform = 'scale(1.1)';
-            }
-            if (clicksSecretos === 4) {
-                window.location.href = 'juegos.html';
-            }
-            clearTimeout(timerSecreto);
-            timerSecreto = setTimeout(() => { 
-                clicksSecretos = 0; 
-                if(logo) { logo.style.opacity = ''; logo.style.transform = ''; }
-            }, 2000);
-        };
-        // --- FIN DEL ACCESO SECRETO ---
+        // --- ACCESO SECRETO GLOBAL (Fuera de cualquier llave) ---
+let clicksSecretos = 0;
+let timerSecreto;
+
+window.accesoSecreto = function() {
+    clicksSecretos++;
+    const logo = document.getElementById('logo-secreto');
+    
+    // Feedback visual inmediato: se aclara con cada toque
+    if(logo) {
+        logo.style.opacity = (0.05 + (clicksSecretos * 0.25));
+        logo.style.transform = 'scale(1.1)';
+    }
+
+    if (clicksSecretos === 4) {
+        window.location.href = 'juegos.html';
+    }
+
+    // Si pasan 2 segundos sin clics, se apaga el secreto
+    clearTimeout(timerSecreto);
+    timerSecreto = setTimeout(() => { 
+        clicksSecretos = 0; 
+        if(logo) {
+            logo.style.opacity = ''; 
+            logo.style.transform = '';
+        }
+    }, 2000);
+};  // <--- Fin del acceso Secreto
 
     }); // <--- Esta es la llave que cierra el DOMContentLoaded
 </script>
