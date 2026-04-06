@@ -670,7 +670,13 @@ window.accesoSecreto = function() {
     }
 
     if (clicksSecretos === 4) {
-        window.location.href = 'juegos.html';
+            logo.style.filter = 'brightness(2) saturate(2)'; // Brillo máximo
+            logo.style.boxShadow = '0 0 30px #f97316'; // Resplandor naranja
+            
+            setTimeout(() => {
+                window.location.href = './juegos.html';
+            }, 300); // Espera 300ms para que veas el efecto y luego viaja
+        }
     }
 
     // Si pasan 2 segundos sin clics, se apaga el secreto
