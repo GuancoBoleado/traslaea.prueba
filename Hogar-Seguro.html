@@ -3,108 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hogar Seguro | TRASLAEA</title>
+    <title>Seguridad Eléctrica | TRASLAEA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
-        .hero-gradient { background: linear-gradient(135deg, #002855 0%, #001529 100%); }
+        body { font-family: 'Inter', sans-serif; background-color: #f4f7f9; }
+        .glass { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); }
+        .hero-dark { background: radial-gradient(circle at top, #002855 0%, #000a1a 100%); }
+        .text-gradient { background: linear-gradient(to right, #f97316, #fb923c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
 </head>
-<body class="text-slate-900">
+<body class="text-slate-900 leading-tight">
 
-    <nav class="fixed w-full z-50 glass border-b border-gray-100 py-4">
+    <nav class="fixed w-full z-50 glass border-b border-gray-200 py-4">
         <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="font-black text-[#002855] uppercase italic tracking-tighter hover:text-orange-500 transition">← Volver al Inicio</a>
-            <span class="bg-orange-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Ley 10.281</span>
+            <a href="index.html" class="font-black text-[#002855] uppercase italic tracking-tighter hover:text-orange-500 transition">← TRASLAEA Digital</a>
+            <div class="flex items-center gap-4">
+                <span class="hidden md:block text-[9px] font-black text-gray-400 uppercase tracking-[0.2em]">Normativa AEA 90364</span>
+                <span class="bg-[#002855] text-orange-400 text-[10px] font-black px-4 py-1.5 rounded-full uppercase italic shadow-lg border border-orange-500/30">Ley Provincial 10.281</span>
+            </div>
         </div>
     </nav>
 
-    <header class="hero-gradient pt-32 pb-20 px-6 text-white overflow-hidden relative">
-        <div class="max-w-4xl mx-auto text-center relative z-10">
-            <div class="inline-block relative mb-6">
-                <span class="text-8xl">🏠</span>
-                <span class="absolute -top-4 -right-6 text-6xl drop-shadow-[0_0_20px_rgba(249,115,22,1)] animate-pulse">⚡</span>
+    <header class="hero-dark pt-40 pb-24 px-6 text-white text-center relative overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="mb-8 inline-flex items-center justify-center relative">
+                <span class="text-9xl opacity-20 absolute animate-ping">🛡️</span>
+                <span class="text-8xl relative drop-shadow-[0_0_30px_rgba(249,115,22,0.5)]">🏠</span>
             </div>
-            <h1 class="text-5xl md:text-7xl font-black uppercase italic leading-none tracking-tighter mb-6">
-                Tu Hogar merece ser <span class="text-orange-500 underline decoration-white/20">Seguro</span>
+            <h1 class="text-5xl md:text-8xl font-black uppercase italic leading-none mb-6 tracking-tighter">
+                Tu vida <span class="text-gradient">A Tierra</span>
             </h1>
-            <p class="text-xl md:text-2xl font-bold opacity-80 uppercase italic tracking-wide max-w-2xl mx-auto">
-                La seguridad eléctrica no es opcional. Es el escudo invisible que protege a tu familia.
+            <p class="text-lg md:text-xl font-bold opacity-70 uppercase tracking-widest max-w-2xl mx-auto border-y border-white/10 py-4">
+                ¿Sabías que tu casa tiene un escudo invisible? <br>La Puesta a Tierra (PAT) es el pilar de la Seguridad Eléctrica.
             </p>
         </div>
-        <div class="absolute top-0 right-0 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl -mr-48 -mt-48"></div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-6 -mt-10 relative z-20">
+    <main class="max-w-6xl mx-auto px-6 -mt-12 relative z-20 pb-24">
         
-        <div class="bg-white rounded-[3rem] p-8 md:p-16 shadow-2xl border border-gray-100 mb-16">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h2 class="text-3xl font-black text-[#002855] uppercase italic mb-6 border-l-8 border-orange-500 pl-6">
-                        ¿Qué es la Puesta a Tierra (PAT)?
-                    </h2>
-                    <p class="text-lg text-gray-600 font-medium leading-relaxed mb-6">
-                        Imagina que la electricidad es como el agua a mucha presión. Si hay una fuga en un electrodoméstico (como el lavarropas o la heladera), esa presión busca salir por donde sea. 
-                    </p>
-                    <div class="bg-orange-50 p-6 rounded-2xl border-l-4 border-orange-500 italic">
-                        <p class="font-bold text-[#002855]">
-                            "Sin una descarga a tierra adecuada, ese 'donde sea' podrías ser VOS o alguien de tu familia."
-                        </p>
+        <div class="grid md:grid-cols-3 gap-8 mb-16">
+            <div class="md:col-span-2 bg-white rounded-[3rem] p-10 md:p-16 shadow-2xl border border-gray-100">
+                <h2 class="text-4xl font-black text-[#002855] uppercase italic mb-8 border-l-8 border-orange-500 pl-6">
+                    El Sistema de Puesta a Tierra (PAT)
+                </h2>
+                <p class="text-xl text-gray-600 font-medium leading-relaxed mb-8">
+                    Es el conjunto de conductores y electrodos (jabalinas) destinados a vincular tu instalación con el terreno. Su función es <strong>derivar corrientes de falla</strong> y tensiones peligrosas hacia la tierra, evitando que pasen por tu cuerpo[cite: 9, 14].
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 p-6 rounded-2xl border-l-4 border-blue-900">
+                        <h4 class="font-black text-[#002855] uppercase text-xs mb-2 italic">Protección Humana</h4>
+                        <p class="text-sm text-gray-500 font-bold leading-snug">Evita contactos indirectos cuando un equipo falla y pone en tensión su carcasa metálica[cite: 14].</p>
+                    </div>
+                    <div class="bg-orange-50 p-6 rounded-2xl border-l-4 border-orange-500">
+                        <h4 class="font-black text-[#002855] uppercase text-xs mb-2 italic">Seguridad Técnica</h4>
+                        <p class="text-sm text-gray-500 font-bold leading-snug">Permite que el interruptor diferencial detecte la fuga y actúe instantáneamente[cite: 15].</p>
                     </div>
                 </div>
-                <div class="bg-slate-50 rounded-[2rem] p-8 border border-gray-100 text-center">
-                    <span class="text-7xl block mb-4 text-orange-500">🛡️</span>
-                    <h3 class="font-black text-xl text-[#002855] uppercase italic mb-4">El Escudo Invisible</h3>
-                    <p class="text-sm text-gray-500 font-bold uppercase tracking-wider">
-                        Una instalación certificada garantiza que cualquier falla se desvíe de forma segura hacia la tierra, activando las protecciones antes de que ocurra un accidente.
+            </div>
+
+            <div class="bg-[#002855] rounded-[3rem] p-10 text-white shadow-2xl flex flex-col justify-center border-t-8 border-orange-500">
+                <h3 class="text-2xl font-black uppercase italic mb-6 text-orange-400">Datos Clave</h3>
+                <ul class="space-y-6">
+                    <li class="flex items-start gap-4">
+                        <span class="text-2xl">📐</span>
+                        <div>
+                            <p class="text-[10px] font-black uppercase opacity-50">Resistencia Máxima</p>
+                            <p class="text-lg font-black italic">40 Ohmios (Recomendado) </p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="text-2xl">⚡</span>
+                        <div>
+                            <p class="text-[10px] font-black uppercase opacity-50">Esquema de Conexión</p>
+                            <p class="text-lg font-black italic">Sistema TT </p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="text-2xl">⚠️</span>
+                        <div>
+                            <p class="text-[10px] font-black uppercase opacity-50">Independencia</p>
+                            <p class="text-lg font-black italic">No unir con Tierra de Servicio [cite: 44]</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="bg-slate-900 rounded-[3rem] p-12 md:p-20 text-white mb-16 relative overflow-hidden shadow-2xl">
+            <div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <span class="inline-block bg-orange-500 text-white text-[10px] font-black px-4 py-1 rounded-full uppercase tracking-widest mb-6">Marco Legal Córdoba</span>
+                    <h2 class="text-4xl md:text-5xl font-black uppercase italic leading-none mb-6">
+                        Es <span class="text-orange-500">Obligatorio</span> por Ley
+                    </h2>
+                    <p class="text-lg opacity-70 font-bold italic leading-relaxed uppercase tracking-tighter">
+                        La Ley Provincial 10.281 establece que toda instalación (nueva o modificada) DEBE cumplir con las normas AEA para obtener el suministro[cite: 19]. La PAT es el requisito esencial para prevenir accidentes e incendios[cite: 17, 20].
                     </p>
                 </div>
+                <div class="bg-white/5 backdrop-blur-xl p-8 rounded-3xl border border-white/10">
+                    <p class="text-xs font-black uppercase tracking-[0.2em] mb-4 text-orange-400">Certificación Profesional</p>
+                    <p class="text-sm font-bold leading-loose italic mb-6">
+                        "La instalación debe ser proyectada, ejecutada y certificada por un Instalador Electricista Habilitado con matrícula vigente"[cite: 21, 37].
+                    </p>
+                    <div class="h-px w-full bg-white/20 mb-6"></div>
+                    <p class="text-[9px] font-black uppercase opacity-40">Responsable Técnico: Esteban Adrián Colombo</p>
+                </div>
+            </div>
+            <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/20 rounded-full blur-[100px]"></div>
+        </div>
+
+        <h3 class="text-center text-3xl font-black text-[#002855] uppercase italic mb-12 tracking-tighter">Componentes del Sistema Normalizado</h3>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-24">
+            <div class="bg-white p-8 rounded-[2.5rem] shadow-xl border border-gray-100 text-center">
+                <span class="text-4xl block mb-4">📍</span>
+                <h4 class="font-black uppercase italic text-xs mb-2">Electrodo</h4>
+                <p class="text-[10px] font-bold text-gray-400 uppercase leading-relaxed">Jabalina certificada IRAM 2309 enterrada a profundidad normativa[cite: 26, 38].</p>
+            </div>
+            <div class="bg-white p-8 rounded-[2.5rem] shadow-xl border border-gray-100 text-center">
+                <span class="text-4xl block mb-4">➰</span>
+                <h4 class="font-black uppercase italic text-xs mb-2">Conductor PE</h4>
+                <p class="text-[10px] font-bold text-gray-400 uppercase leading-relaxed">Cable de protección continuo que une todas las masas metálicas de la vivienda[cite: 30, 40].</p>
+            </div>
+            <div class="bg-white p-8 rounded-[2.5rem] shadow-xl border border-gray-100 text-center">
+                <span class="text-4xl block mb-4">📟</span>
+                <h4 class="font-black uppercase italic text-xs mb-2">Diferencial</h4>
+                <p class="text-[10px] font-bold text-gray-400 uppercase leading-relaxed">Dispositivo de alta sensibilidad (30mA) que complementa la PAT[cite: 41].</p>
+            </div>
+            <div class="bg-white p-8 rounded-[2.5rem] shadow-xl border border-gray-100 text-center">
+                <span class="text-4xl block mb-4">📋</span>
+                <h4 class="font-black uppercase italic text-xs mb-2">Medición</h4>
+                <p class="text-[10px] font-bold text-gray-400 uppercase leading-relaxed">Verificación con telurímetro calibrado para asegurar valores de seguridad[cite: 39].</p>
             </div>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-8 mb-20">
-            <div class="bg-[#002855] text-white p-8 rounded-[2.5rem] shadow-xl transform hover:-translate-y-2 transition">
-                <div class="text-4xl mb-4">🔌</div>
-                <h4 class="font-black uppercase italic text-orange-400 mb-3">Instalación</h4>
-                <p class="text-xs font-bold opacity-80 leading-loose uppercase tracking-tighter">Cableado reglamentario, llaves térmicas y disyuntor diferencial de calidad.</p>
-            </div>
-            <div class="bg-white p-8 rounded-[2.5rem] shadow-xl border border-gray-100 transform hover:-translate-y-2 transition">
-                <div class="text-4xl mb-4">📐</div>
-                <h4 class="font-black uppercase italic text-[#002855] mb-3">Medición</h4>
-                <p class="text-xs font-bold text-gray-500 leading-loose uppercase tracking-tighter text-orange-600">Protocolo de medición de jabalina realizado por un profesional habilitado.</p>
-            </div>
-            <div class="bg-orange-500 text-white p-8 rounded-[2.5rem] shadow-xl transform hover:-translate-y-2 transition">
-                <div class="text-4xl mb-4">📜</div>
-                <h4 class="font-black uppercase italic text-[#002855] mb-3">Certificación</h4>
-                <p class="text-xs font-bold opacity-90 leading-loose uppercase tracking-tighter">Cumplimiento total con la Ley 10.281 de Seguridad Eléctrica de Córdoba.</p>
-            </div>
-        </div>
-
-        <section class="bg-slate-900 rounded-[3rem] p-12 text-center text-white mb-24 relative overflow-hidden">
+        <section class="text-center bg-orange-500 rounded-[4rem] p-16 md:p-24 shadow-2xl relative overflow-hidden transform hover:scale-[1.01] transition-transform duration-500">
             <div class="relative z-10">
-                <h3 class="text-3xl md:text-4xl font-black uppercase italic mb-6">¿Tu casa está realmente protegida?</h3>
-                <p class="text-lg opacity-70 mb-10 max-w-xl mx-auto font-bold uppercase tracking-tighter">
-                    No esperes a que ocurra un siniestro. Consulta con un electricista idóneo matriculado en TRASLAEA.
+                <h2 class="text-5xl md:text-7xl font-black text-[#002855] uppercase italic leading-none mb-8 tracking-tighter">
+                    ¿Tu tierra está <br><span class="text-white">Certificada?</span>
+                </h2>
+                <p class="text-lg md:text-xl font-bold text-[#002855] uppercase italic mb-12 max-w-2xl mx-auto opacity-80">
+                    No arriesgues a tu familia con instalaciones precarias o tierras unidas incorrectamente.
                 </p>
-                <div class="flex flex-col md:flex-row justify-center gap-6">
-                    <a href="https://wa.me/5493544314637?text=Hola+Esteban+necesito+revisar+la+seguridad+electrica+de+mi+hogar" class="bg-[#25D366] px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-[#128C7E] transition shadow-2xl">
-                        Consultar por WhatsApp
-                    </a>
-                    <a href="index.html#eventos" class="bg-white/10 backdrop-blur-md px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-white/20 transition border border-white/20 text-orange-400">
-                        Ver Más Actividades
+                <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+                    <a href="https://wa.me/5493544314637?text=Hola+Esteban+necesito+revisar+mi+sistema+de+puesta+a+tierra+y+obtener+la+certificacion" class="bg-[#002855] text-white px-12 py-6 rounded-3xl font-black text-sm uppercase tracking-widest hover:bg-slate-900 transition-all shadow-2xl flex items-center gap-3">
+                        Solicitar Verificación Técnica
                     </a>
                 </div>
             </div>
-            <div class="absolute bottom-0 left-0 w-64 h-64 bg-orange-500/20 rounded-full blur-3xl -ml-32 -mb-32"></div>
+            <div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(#002855 2px, transparent 2px); background-size: 30px 30px;"></div>
         </section>
 
     </main>
 
-    <footer class="py-12 border-t border-gray-200 text-center">
-        <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.5em]">
-            TRASLAEA • Asociación Civil Traslasierra Electricistas • 2026
+    <footer class="py-20 border-t border-gray-200 text-center">
+        <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.6em]">
+            TRASLAEA • Seguridad Eléctrica según Resoluciones ERSEP 
         </p>
     </footer>
 
