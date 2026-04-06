@@ -334,7 +334,8 @@
         <section id="eventos" class="mb-24 glass p-8 md:p-12 rounded-[3rem] border border-gray-100 shadow-2xl relative z-10">
             <h2 class="text-4xl font-black text-[#002855] mb-12 uppercase italic border-l-8 border-orange-500 pl-6 tracking-tighter">
                 Cartelera de Actividades
-</h2>
+Cartelera de Actividades
+    </h2>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         
@@ -350,7 +351,7 @@
             </div>
             <div class="p-6 flex-1 flex flex-col">
                 <p class="text-sm text-gray-600 font-bold leading-snug mb-6 uppercase tracking-tighter italic">Intervención técnica integral en vivienda siniestrada (Patricia Garay).</p>
-                <a href="patricia-garay.html" class="mt-auto w-full bg-[#002855] text-white py-4 rounded-xl font-black text-[11px] uppercase tracking-widest hover:bg-orange-500 transition-all duration-300 shadow-lg text-center">Ver Reporte de Obra Completo →</a>
+                <button onclick="document.getElementById('panel-solidario').classList.toggle('hidden')" class="mt-auto w-full bg-[#002855] text-white py-4 rounded-xl font-black text-[11px] uppercase tracking-widest hover:bg-orange-500 transition-all duration-300 shadow-lg text-center">Ver Reporte de Obra →</button>
             </div>
         </div>
 
@@ -364,133 +365,74 @@
                 </div>
             </div>
             <div class="p-8 flex-1 flex flex-col items-center justify-center text-center">
-        
-        <div class="relative mb-6 transform group-hover:scale-110 transition-transform duration-500">
-            <span class="text-6xl">🏠</span>
-            <span class="absolute -top-2 -right-4 text-4xl drop-shadow-[0_0_10px_rgba(249,115,22,0.8)] animate-pulse">⚡</span>
-        </div>
-
-        <p class="text-sm text-gray-600 font-bold leading-snug mb-8 uppercase tracking-tighter italic">
-            ¿Sabías que tu casa tiene un escudo invisible? Aprendé por qué la Puesta a Tierra (PAT) es vital para tu familia.
-        </p>
-        
-        <a href="Hogar-Seguro.html" class="w-full bg-orange-600 text-white py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-[#002855] transition-all duration-300 shadow-xl text-center">
-            Hogar Seguro →
-        </a>
-    </div>
-</div>
-
-        <div class="bg-[#002855] rounded-[2rem] overflow-hidden shadow-2xl border border-blue-900 flex flex-col">
-            <div class="h-60 flex flex-col items-center justify-center p-10 text-center bg-gradient-to-br from-blue-900 to-[#002855]">
-                <span class="text-6xl mb-4">⚖️</span>
-                <h4 class="text-2xl font-black text-orange-400 uppercase italic leading-tight">Asamblea Anual Ordinaria</h4>
-                <p class="text-white text-[10px] font-black uppercase tracking-[0.3em] mt-2 opacity-70">Enero 2027</p>
-            </div>
-            <div class="p-8 flex flex-col space-y-4">
-                <p class="text-white/80 text-[10px] font-bold uppercase italic text-center">Sede Traslasierra - Orden del día: Renovación de Autoridades.</p>
-                <a href="PAT_Capacitación_TRASLAEA.pdf" target="_blank" class="w-full bg-orange-500 text-white py-4 rounded-xl font-black text-[11px] uppercase tracking-widest hover:bg-white hover:text-[#002855] transition-all duration-300 shadow-xl text-center">
-                    Descargar Capacitación PAT →
-                </a>
-            </div>
-        </div>
-</div>
-
-<div id="panel-solidario" class="hidden bg-gray-50 p-6 border-t border-orange-100 italic">
-    
-    <div class="mb-4">
-        <p class="text-[9px] font-black text-red-500 uppercase mb-2 tracking-widest flex items-center">🔴 Fase 1: Relevamiento</p>
-        <div class="grid grid-cols-3 gap-2">
-            <img src="quemado1.jpg" onclick="verFoto(this.src)" class="cursor-pointer rounded-xl h-16 w-full object-cover border shadow-sm hover:scale-105 transition">
-            <img src="quemado2.jpg" onclick="verFoto(this.src)" class="cursor-pointer rounded-xl h-16 w-full object-cover border shadow-sm hover:scale-105 transition">
-            <img src="quemado3.jpg" onclick="verFoto(this.src)" class="cursor-pointer rounded-xl h-16 w-full object-cover border shadow-sm hover:scale-105 transition">
-        </div>
-    </div>
-
-    <div class="mb-6">
-        <p class="text-[9px] font-black text-orange-500 uppercase mb-2 tracking-widest flex items-center">🟠 Fase 2: Avance</p>
-        <div class="grid grid-cols-3 gap-2">
-            <img src="avance1.jpg" onclick="verFoto(this.src)" class="cursor-pointer rounded-xl h-16 w-full object-cover border shadow-sm hover:scale-105 transition">
-            <img src="avance2.jpg" onclick="verFoto(this.src)" class="cursor-pointer rounded-xl h-16 w-full object-cover border shadow-sm hover:scale-105 transition">
-            <img src="avance3.gif" onclick="verFoto(this.src)" class="cursor-pointer rounded-xl h-16 w-full object-cover border shadow-sm hover:scale-105 transition">
-        </div>
-    </div>
-
-    <div class="mb-6">
-        <p class="text-[9px] font-black text-green-600 uppercase mb-2 tracking-widest flex items-center">🟢 Fase 3: Terminación</p>
-        <div class="grid grid-cols-3 gap-2">
-            <img src="final1.jpg" onclick="verFoto(this.src)" class="cursor-pointer rounded-xl h-16 w-full object-cover border shadow-sm hover:scale-105 transition">
-            <img src="final2.jpg" onclick="verFoto(this.src)" class="cursor-pointer rounded-xl h-16 w-full object-cover border shadow-sm hover:scale-105 transition">
-            <img src="final3.jpg" onclick="verFoto(this.src)" class="cursor-pointer rounded-xl h-16 w-full object-cover border shadow-sm hover:scale-105 transition">
-        </div>
-    </div>
-
-    <div class="bg-[#002855] text-white p-5 rounded-2xl shadow-2xl">
-        <h4 class="text-xs font-black uppercase text-orange-400 mb-2 italic">📢 Convocatoria Colegas</h4>
-        <p class="text-[10px] leading-tight mb-4 opacity-80 font-bold">Buscamos 2 voluntarios para armado de tablero y circuitos de iluminación.</p>
-        <a href="https://wa.me/5493544314637?text=Hola+Esteban+quiero+sumarme+a+la+obra+solidaria" target="_blank" 
-           class="block w-full bg-orange-500 text-center py-3 rounded-xl font-black text-[10px] uppercase shadow-lg hover:bg-orange-600 transition transform hover:scale-105">
-            Inscribirme Ahora
-        </a>
-    </div>
-</div>
+                <div class="relative mb-6 transform group-hover:scale-110 transition-transform duration-500">
+                    <span class="text-6xl">🏠</span>
+                    <span class="absolute -top-2 -right-4 text-4xl drop-shadow-[0_0_10px_rgba(249,115,22,0.8)] animate-pulse">⚡</span>
                 </div>
+                <p class="text-sm text-gray-600 font-bold leading-snug mb-8 uppercase tracking-tighter italic">¿Sabías que tu casa tiene un escudo invisible? Aprendé por qué la Puesta a Tierra (PAT) es vital.</p>
+                <a href="Hogar-Seguro.html" class="w-full bg-orange-600 text-white py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-[#002855] transition-all duration-300 shadow-xl text-center">Hogar Seguro →</a>
+            </div>
+        </div>
 
-               <div class="bg-white rounded-[2rem] overflow-hidden shadow-xl border border-gray-100 group flex flex-col transition-all duration-500 hover:shadow-2xl">
-    <div class="h-64 flex relative overflow-hidden">
-        <div class="w-1/2 h-full border-r-2 border-white relative group/foto">
-            <img src="Electricita.idoneo1.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
-            <div class="absolute bottom-2 left-2 bg-black/50 backdrop-blur-sm text-[8px] text-white px-2 py-1 rounded font-black uppercase italic">Idóneo</div>
+        <div class="bg-white rounded-[2rem] overflow-hidden shadow-xl border border-gray-100 group flex flex-col transition-all duration-500 hover:shadow-2xl">
+            <div class="h-60 flex relative overflow-hidden">
+                <div class="w-1/2 h-full border-r-2 border-white relative group/foto">
+                    <img src="Electricita.idoneo1.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                </div>
+                <div class="w-1/2 h-full relative group/foto">
+                    <img src="Electricita.idoneo2.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+                </div>
+                <div class="absolute top-4 left-1/2 -translate-x-1/2 bg-orange-500 text-white text-[9px] font-black px-4 py-1 rounded-full shadow-xl uppercase z-10">Activo</div>
+            </div>
+            <div class="p-8 flex-1 flex flex-col text-center">
+                <h4 class="text-2xl font-black text-[#002855] italic uppercase leading-none">Curso Electricista Idóneo</h4>
+                <p class="text-[10px] font-black text-gray-400 uppercase mt-2 mb-6 tracking-widest">& Instalaciones Domiciliarias</p>
+                <a href="https://wa.me/5493544314637" class="mt-auto w-full bg-[#25D366] text-white py-4 rounded-2xl font-black text-xs uppercase shadow-lg flex items-center justify-center gap-2">WhatsApp</a>
+            </div>
         </div>
-        <div class="w-1/2 h-full relative group/foto">
-            <img src="Electricita.idoneo2.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
-            <div class="absolute bottom-2 right-2 bg-black/50 backdrop-blur-sm text-[8px] text-white px-2 py-1 rounded font-black uppercase italic">Domiciliarias</div>
-        </div>
-        
-        <div class="absolute top-4 left-1/2 -translate-x-1/2 bg-orange-500 text-white text-[9px] font-black px-4 py-1 rounded-full shadow-xl uppercase tracking-widest z-10">Activo</div>
     </div>
 
-    <div class="p-8 flex-1 flex flex-col">
-        <div class="text-center mb-6">
-            <h4 class="text-2xl font-black text-[#002855] italic uppercase leading-none tracking-tighter">
-                Curso de Electricista Idóneo
-            </h4>
-            <div class="h-1 w-12 bg-orange-500 mx-auto my-3 rounded-full"></div>
-            <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] italic">
-                & Instalaciones Domiciliarias
-            </p>
-        </div>
-
-        <div class="space-y-3 mb-8">
-            <div class="flex items-center gap-3 text-gray-600 font-bold text-[11px] uppercase italic">
-                <span class="text-orange-500">📅</span> Inicio:
+    <div id="panel-solidario" class="hidden mt-12 bg-gray-50 p-8 rounded-[2rem] border border-orange-100 italic shadow-inner">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div>
+                <p class="text-[9px] font-black text-red-500 uppercase mb-4 tracking-widest">🔴 Fase 1: Relevamiento</p>
+                <div class="grid grid-cols-3 gap-2">
+                    <img src="quemado1.jpg" class="rounded-xl h-16 w-full object-cover border">
+                    <img src="quemado2.jpg" class="rounded-xl h-16 w-full object-cover border">
+                    <img src="quemado3.jpg" class="rounded-xl h-16 w-full object-cover border">
+                </div>
             </div>
-            <div class="flex items-center gap-3 text-gray-600 font-bold text-[11px] uppercase italic">
-                <span class="text-orange-500">📍</span> Modalidad Presencial
+            <div>
+                <p class="text-[9px] font-black text-orange-500 uppercase mb-4 tracking-widest">🟠 Fase 2: Avance</p>
+                <div class="grid grid-cols-3 gap-2">
+                    <img src="avance1.jpg" class="rounded-xl h-16 w-full object-cover border">
+                    <img src="avance2.jpg" class="rounded-xl h-16 w-full object-cover border">
+                    <img src="avance3.gif" class="rounded-xl h-16 w-full object-cover border">
+                </div>
+            </div>
+            <div>
+                <p class="text-[9px] font-black text-green-600 uppercase mb-4 tracking-widest">🟢 Fase 3: Terminación</p>
+                <div class="grid grid-cols-3 gap-2">
+                    <img src="final1.jpg" class="rounded-xl h-16 w-full object-cover border">
+                    <img src="final2.jpg" class="rounded-xl h-16 w-full object-cover border">
+                    <img src="final3.jpg" class="rounded-xl h-16 w-full object-cover border">
+                </div>
             </div>
         </div>
-
-        <a href="https://wa.me/5493544314637?text=Hola+Esteban+me+interesa+el+curso+de+electricista+idoneo" 
-           target="_blank"
-           class="mt-auto w-full bg-[#25D366] text-white py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-[#128C7E] transition-all shadow-lg hover:-translate-y-1 flex items-center justify-center gap-2">
-            <span>Consultar por WhatsApp</span>
-            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.588-5.946 0-6.556 5.332-11.891 11.893-11.891 3.181 0 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.481 8.403 0 6.556-5.332 11.89-11.893 11.89-2.015 0-3.991-.51-5.757-1.477l-6.236 1.636zm6.765-4.52c1.56.933 3.105 1.423 4.634 1.423 5.403 0 9.792-4.39 9.792-9.792 0-2.618-1.02-5.08-2.871-6.932-1.852-1.853-4.314-2.873-6.921-2.873-5.405 0-9.794 4.391-9.794 9.794 0 1.83.51 3.612 1.477 5.158l-.934 3.415 3.517-.923z"/></svg>
-        </a>
+        <div class="bg-[#002855] text-white p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4">
+            <h4 class="text-sm font-black uppercase text-orange-400 italic">📢 Convocatoria Colegas Voluntarios</h4>
+            <a href="https://wa.me/5493544314637" class="bg-orange-500 px-8 py-3 rounded-xl font-black text-[10px] uppercase shadow-lg">Inscribirme Ahora</a>
+        </div>
     </div>
-                </div>
 
-                <div class="bg-[#002855] rounded-[2rem] overflow-hidden shadow-2xl border border-blue-900 flex flex-col transform hover:scale-105 transition-transform duration-500">
-                    <div class="h-60 flex flex-col items-center justify-center p-10 text-center bg-gradient-to-br from-blue-900 to-[#002855]">
-                        <span class="text-6xl mb-4 drop-shadow-lg">⚖️</span>
-                        <h4 class="text-2xl font-black text-orange-400 italic uppercase leading-none">Asamblea Anual Ordinaria</h4>
-                    </div>
-                    <div class="p-8 text-center text-white">
-                        <p class="text-[10px] font-black opacity-50 uppercase tracking-[0.4em] mb-3">Próximo Encuentro</p>
-                        <p class="text-2xl font-black italic text-white border-y border-white/10 py-2 uppercase">Enero 2027</p>
-                        <p class="mt-4 text-[10px] font-bold opacity-75 italic">Sede Traslasierra - Orden del día: Renovación de Autoridades.</p>
-                    </div>
-                </div>
-
-            </div>
+    <div class="mt-12 bg-[#002855] rounded-[2rem] overflow-hidden shadow-2xl border border-blue-900 flex flex-col md:flex-row items-center p-8 gap-8">
+        <div class="text-6xl">⚖️</div>
+        <div class="flex-1 text-center md:text-left">
+            <h4 class="text-2xl font-black text-orange-400 uppercase italic">Asamblea Anual Ordinaria - Enero 2027</h4>
+            <p class="text-white/70 text-[10px] font-bold uppercase tracking-widest italic mt-1">Sede Traslasierra - Renovación de Autoridades</p>
+        </div>
+        <a href="PAT_Capacitación_TRASLAEA.pdf" target="_blank" class="bg-orange-500 text-white px-8 py-4 rounded-xl font-black text-[11px] uppercase tracking-widest hover:bg-white hover:text-[#002855] transition-all shadow-xl">Descargar PAT →</a>
+    </div>
         </section>
 
         <section id="contacto" class="max-w-4xl mx-auto glass p-10 md:p-14 rounded-[3rem] shadow-2xl border-l-[15px] border-orange-500 relative z-20 mb-20 transform hover:-translate-y-1 transition-all duration-500">
