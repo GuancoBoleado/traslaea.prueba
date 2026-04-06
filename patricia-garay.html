@@ -8,7 +8,9 @@
     <style>
         body { background: #000c1a; color: white; font-family: 'Inter', sans-serif; }
         .fase-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); transition: all 0.3s ease; }
-        .fase-card:hover { border-color: rgba(249, 115, 22, 0.3); }
+        /* Estilo para las flechas del modal */
+        .btn-nav { background: rgba(0,0,0,0.5); backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1); }
+        .btn-nav:hover { background: #f97316; border-color: white; }
     </style>
 </head>
 <body class="min-h-screen p-6 pb-20">
@@ -22,7 +24,6 @@
     </header>
 
     <main class="max-w-4xl mx-auto">
-        
         <section class="mb-12 border-l-4 border-red-600 pl-6">
             <span class="bg-red-600/20 text-red-500 text-[10px] font-black px-3 py-1 rounded-full uppercase italic border border-red-600/30">Vivienda Siniestrada</span>
             <h2 class="text-4xl font-black mt-4 mb-2 uppercase italic tracking-tighter">Patricia Garay</h2>
@@ -30,61 +31,89 @@
         </section>
 
         <div class="space-y-6">
-            
             <div class="fase-card p-6 rounded-[2.5rem]">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="bg-red-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black">1</span>
-                    <h3 class="text-xs font-black uppercase tracking-widest text-white/90">Fase: Relevamiento Inicial</h3>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    <img src="quemado1.jpg" class="rounded-2xl h-40 w-full object-cover border border-white/5 hover:scale-[1.02] transition">
-                    <img src="quemado2.jpg" class="rounded-2xl h-40 w-full object-cover border border-white/5 hover:scale-[1.02] transition">
-                    <img src="quemado3.jpg" class="rounded-2xl h-40 w-full object-cover border border-white/5 hover:scale-[1.02] transition">
+                <h3 class="text-[10px] font-black uppercase tracking-widest text-white/40 mb-4 italic">Fase 1: Relevamiento</h3>
+                <div class="grid grid-cols-3 gap-3">
+                    <img src="quemado1.jpg" onclick="verFoto(this.src)" class="cursor-pointer rounded-2xl h-32 w-full object-cover border border-white/5 hover:border-orange-500 transition">
+                    <img src="quemado2.jpg" onclick="verFoto(this.src)" class="cursor-pointer rounded-2xl h-32 w-full object-cover border border-white/5 hover:border-orange-500 transition">
+                    <img src="quemado3.jpg" onclick="verFoto(this.src)" class="cursor-pointer rounded-2xl h-32 w-full object-cover border border-white/5 hover:border-orange-500 transition">
                 </div>
             </div>
 
             <div class="fase-card p-6 rounded-[2.5rem] border-l-4 border-l-orange-500">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="bg-orange-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black">2</span>
-                    <h3 class="text-xs font-black uppercase tracking-widest text-white/90">Fase: Avance de Tareas</h3>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    <img src="avance1.jpg" class="rounded-2xl h-40 w-full object-cover border border-white/5 hover:scale-[1.02] transition">
-                    <img src="avance2.jpg" class="rounded-2xl h-40 w-full object-cover border border-white/5 hover:scale-[1.02] transition">
-                    <img src="avance3.gif" class="rounded-2xl h-40 w-full object-cover border border-white/5 hover:scale-[1.02] transition shadow-lg shadow-orange-500/10">
+                <h3 class="text-[10px] font-black uppercase tracking-widest text-orange-500 mb-4 italic">Fase 2: Avance Actual</h3>
+                <div class="grid grid-cols-3 gap-3">
+                    <img src="avance1.jpg" onclick="verFoto(this.src)" class="cursor-pointer rounded-2xl h-32 w-full object-cover border border-white/5 hover:border-orange-500 transition">
+                    <img src="avance2.jpg" onclick="verFoto(this.src)" class="cursor-pointer rounded-2xl h-32 w-full object-cover border border-white/5 hover:border-orange-500 transition">
+                    <img src="avance3.gif" onclick="verFoto(this.src)" class="cursor-pointer rounded-2xl h-32 w-full object-cover border border-white/5 hover:border-orange-500 transition shadow-lg shadow-orange-500/20">
                 </div>
             </div>
-
-            <div class="fase-card p-6 rounded-[2.5rem] opacity-50 border-dashed">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="bg-gray-600 text-white w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black">3</span>
-                    <h3 class="text-xs font-black uppercase tracking-widest text-white/40">Fase: Finalización y Entrega</h3>
-                </div>
-                <div class="py-10 text-center">
-                    <p class="text-[10px] font-black uppercase tracking-[0.3em] text-gray-500 italic">Pendiente de ejecución / Próximamente fotos</p>
-                </div>
-            </div>
-
         </div>
 
-        <section class="mt-12 bg-gradient-to-br from-orange-600 to-orange-700 p-8 rounded-[3rem] shadow-2xl relative overflow-hidden group">
-            <div class="relative z-10 text-center">
-                <h4 class="text-2xl font-black uppercase italic text-white mb-4 tracking-tighter">¿Querés comunicarte con TRASLAEA?</h4>
-                <p class="text-white/80 font-bold text-xs uppercase mb-8 tracking-widest">Para donaciones o colaboración técnica:</p>
-                
-                <a href="https://wa.me/5493544314637" class="inline-flex items-center gap-4 bg-[#002855] text-white px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:scale-105 transition-transform shadow-xl">
-                    <span>Llamar / WhatsApp</span>
-                    <span class="bg-orange-500 text-white px-3 py-1 rounded-lg text-[11px] font-black tracking-normal">3544 314637</span>
-                </a>
-            </div>
-            <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-3xl group-hover:bg-white/20 transition-all"></div>
+        <section class="mt-12 bg-gradient-to-br from-[#002855] to-black p-8 rounded-[3rem] border border-white/10 text-center">
+            <h4 class="text-xl font-black uppercase italic text-white mb-6">Contacto TRASLAEA</h4>
+            <a href="https://wa.me/5493544314637" class="inline-flex items-center gap-4 bg-orange-600 text-white px-8 py-4 rounded-2xl font-black text-xs uppercase shadow-xl hover:bg-orange-500 transition">
+                <span>WhatsApp: 3544 314637</span>
+            </a>
         </section>
-
     </main>
 
-    <footer class="max-w-4xl mx-auto mt-20 text-center">
-        <p class="text-[9px] font-black tracking-[0.4em] text-white/20 uppercase italic">Registro Digital • Electrosith 2026</p>
-    </footer>
+    <div id="modal-fotos" class="hidden fixed inset-0 z-[100] bg-black/95 flex flex-col items-center justify-center p-4 backdrop-blur-xl" onclick="cerrarModal()">
+        <div class="relative w-full max-w-4xl flex items-center justify-center">
+            <button class="absolute -top-12 right-0 text-white text-4xl font-light hover:text-orange-500 transition">&times;</button>
+            
+            <button onclick="fotoAnterior(event)" class="btn-nav absolute left-4 w-12 h-12 rounded-full text-white flex items-center justify-center text-2xl z-10">‹</button>
+            
+            <img id="foto-grande" src="" class="max-h-[80vh] max-w-full rounded-2xl shadow-2xl border border-white/10 object-contain">
+            
+            <button onclick="fotoSiguiente(event)" class="btn-nav absolute right-4 w-12 h-12 rounded-full text-white flex items-center justify-center text-2xl z-10">›</button>
+        </div>
+        
+        <div id="modal-contador" class="mt-8 bg-orange-600 text-white px-6 py-2 rounded-full font-black text-xs tracking-widest uppercase shadow-lg">1 / 6</div>
+    </div>
 
+    <script>
+        let fotosGaleria = [], indiceActual = 0;
+
+        function verFoto(url) {
+            // Captura todas las imágenes de la página para la galería
+            fotosGaleria = Array.from(document.querySelectorAll('main img')).map(img => img.src);
+            indiceActual = fotosGaleria.indexOf(url);
+            actualizarImagenModal();
+            document.getElementById('modal-fotos').classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Bloquea scroll
+        }
+
+        function actualizarImagenModal() {
+            const img = document.getElementById('foto-grande');
+            const cont = document.getElementById('modal-contador');
+            img.src = fotosGaleria[indiceActual];
+            cont.innerText = `${indiceActual + 1} / ${fotosGaleria.length}`;
+        }
+
+        function fotoSiguiente(e) {
+            e.stopPropagation();
+            indiceActual = (indiceActual + 1) % fotosGaleria.length;
+            actualizarImagenModal();
+        }
+
+        function fotoAnterior(e) {
+            e.stopPropagation();
+            indiceActual = (indiceActual - 1 + fotosGaleria.length) % fotosGaleria.length;
+            actualizarImagenModal();
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal-fotos').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Cerrar con Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") cerrarModal();
+            if (e.key === "ArrowRight") fotoSiguiente(new Event('click'));
+            if (e.key === "ArrowLeft") fotoAnterior(new Event('click'));
+        });
+    </script>
 </body>
 </html>
