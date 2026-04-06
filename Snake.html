@@ -5,27 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TRASLAEA - Carga de Batería</title>
     <style>
+        /* Desactivamos el scroll y los gestos del navegador para que no molesten al jugar */
+        * { touch-action: none; user-select: none; -webkit-tap-highlight-color: transparent; }
+        
         body { background: #001b3a; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0; color: white; font-family: sans-serif; overflow: hidden; }
-        canvas { border: 4px solid #f97316; background: #000; box-shadow: 0 0 30px rgba(0,0,0,0.5); border-radius: 15px; }
-        h1 { color: #f97316; margin-bottom: 5px; font-style: italic; text-transform: uppercase; }
+        
+        canvas { 
+            border: 4px solid #f97316; 
+            background: #000; 
+            box-shadow: 0 0 30px rgba(0,0,0,0.5); 
+            border-radius: 15px;
+            max-width: 90vw; /* Se ajusta al ancho del celu */
+            max-height: 70vh;
+        }
+        
+        h1 { color: #f97316; margin-bottom: 5px; font-style: italic; text-transform: uppercase; font-size: 1.5rem; }
         .score { font-size: 20px; font-weight: bold; margin-bottom: 10px; color: #4ade80; }
         
-        /* RECUPERADO: El botón naranja original que te gustaba */
         .btn-volver { 
-            position: absolute; 
-            top: 20px; 
-            left: 20px; 
-            background: #f97316; 
-            color: white; 
-            padding: 10px 15px; 
-            border-radius: 8px; 
-            text-decoration: none; 
-            font-size: 12px; 
-            font-weight: bold; 
-            box-shadow: 0 4px 0 #c2410c;
-            transition: all 0.1s;
+            position: absolute; top: 20px; left: 20px; background: #f97316; color: white; 
+            padding: 10px 15px; border-radius: 8px; text-decoration: none; 
+            font-size: 12px; font-weight: bold; box-shadow: 0 4px 0 #c2410c; z-index: 100;
         }
-        .btn-volver:active { transform: translateY(2px); box-shadow: 0 2px 0 #c2410c; }
     </style>
 </head>
 <body>
@@ -52,6 +53,29 @@
     let score = 0;
     let gameSpeed = 130; 
 
+    // --- CONTROLES TÁCTILES (Toda la pantalla) ---
+    document.addEventListener("touchstart", function(e) {
+        const touchX = e.touches[0].clientX;
+        const touchY = e.touches[0].clientY;
+        const screenW = window.innerWidth;
+        const screenH = window.innerHeight;
+
+        // Calculamos si el toque fue más horizontal o vertical
+        const centerX = screenW / 2;
+        const centerY = screenH / 2;
+
+        if (Math.abs(touchX - centerX) > Math.abs(touchY - centerY)) {
+            // Movimiento Horizontal
+            if (touchX > centerX && d != "LEFT") d = "RIGHT";
+            else if (touchX < centerX && d != "RIGHT") d = "LEFT";
+        } else {
+            // Movimiento Vertical
+            if (touchY > centerY && d != "UP") d = "DOWN";
+            else if (touchY < centerY && d != "DOWN") d = "UP";
+        }
+    }, false);
+
+    // Mantenemos teclado por si entras desde PC
     document.addEventListener("keydown", direction);
     function direction(event) {
         if(event.keyCode == 37 && d != "RIGHT") d = "LEFT";
@@ -61,11 +85,10 @@
     }
 
     function draw() {
-        // 1. Fondo Azul TRASLAEA
         ctx.fillStyle = "#002855";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // 2. LOGO CIRCULAR (Mantenido exactamente igual)
+        // LOGO CIRCULAR FONDO
         ctx.save();
         ctx.globalAlpha = 0.2;
         ctx.beginPath();
@@ -74,14 +97,11 @@
         ctx.drawImage(logo, 100, 100, 200, 200);
         ctx.restore();
 
-        // 3. Dibujar Celdas de Batería (Culebra)
         for(let i = 0; i < snake.length; i++) {
-            // Cabeza naranja (Borna positivo), cuerpo verde (Celdas cargadas)
             ctx.fillStyle = (i == 0) ? "#f97316" : "#4ade80"; 
             ctx.fillRect(snake[i].x, snake[i].y, box-2, box-2);
         }
 
-        // 4. Comida (Rayo de carga ⚡)
         ctx.font = "18px Arial";
         ctx.fillText("⚡", food.x + 2, food.y + 16);
 
@@ -93,16 +113,13 @@
         if( d == "RIGHT") snakeX += box;
         if( d == "DOWN") snakeY += box;
 
-        // --- EFECTO TÚNEL ---
         if (snakeX < 0) snakeX = canvas.width - box;
         else if (snakeX >= canvas.width) snakeX = 0;
         if (snakeY < 0) snakeY = canvas.height - box;
         else if (snakeY >= canvas.height) snakeY = 0;
 
-        // Lógica de Voltaje
         if(snakeX == food.x && snakeY == food.y) {
             score++;
-            // Cada celda suma 12V (como un banco de baterías en serie)
             scoreElement.innerHTML = "Voltaje: " + (score * 12) + "V";
             food = { x: Math.floor(Math.random() * 19) * box, y: Math.floor(Math.random() * 19) * box };
         } else {
@@ -111,7 +128,6 @@
 
         let newHead = { x: snakeX, y: snakeY };
 
-        // Game Over por choque interno
         if(collision(newHead, snake)) {
             alert("¡Cortocircuito interno! Voltaje final: " + (score * 12) + "V");
             location.reload();
