@@ -3,121 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Circuito Crítico • TRASLAEA</title>
+    <title>Corte de Fase • TRASLAEA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background: #001220; touch-action: none; user-select: none; }
-        .cable { transition: transform 0.2s; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .cable:active { scale: 0.9; }
-        .luz-neon { filter: drop-shadow(0 0 10px #f97316); color: #f97316 !important; }
+        body { background: #000c18; margin: 0; overflow: hidden; touch-action: none; font-family: sans-serif; }
+        canvas { display: block; }
+        #ui { position: absolute; top: 20px; width: 100%; pointer-events: none; display: flex; justify-content: space-between; padding: 0 30px; }
+        .stat { color: #f97316; font-weight: 900; font-size: 20px; text-transform: uppercase; font-style: italic; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4 text-white font-sans">
+<body>
 
-    <a href="juegos.html" class="absolute top-6 left-6 bg-orange-500 text-white px-4 py-2 rounded-lg font-bold text-xs shadow-lg">← VOLVER</a>
+    <a href="juegos.html" style="position: absolute; top: 20px; left: 20px; z-index: 100; background: #f97316; color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 12px; font-weight: bold;">← VOLVER</a>
 
-    <div class="text-center mb-6">
-        <h1 class="text-3xl font-black italic text-orange-500 uppercase tracking-tighter">Circuito Crítico</h1>
-        <p class="text-blue-300 text-[10px] font-bold tracking-[0.3em] uppercase opacity-60">Uní la entrada con la salida</p>
+    <div id="ui">
+        <div class="stat">Cables: <span id="score">0</span></div>
+        <div class="stat" style="color: #ef4444;">Vidas: <span id="lives">3</span></div>
     </div>
 
-    <div class="relative bg-white/5 p-6 rounded-3xl border-2 border-white/10 shadow-2xl">
-        <div class="absolute -left-8 top-1/2 -translate-y-1/2 text-orange-500 font-black">IN</div>
-        <div class="absolute -right-10 top-1/2 -translate-y-1/2 text-green-500 font-black">OUT</div>
-        
-        <div id="grid" class="grid grid-cols-4 gap-3">
-            </div>
-    </div>
-
-    <div class="mt-8 flex flex-col items-center">
-        <div id="status" class="text-xs font-bold uppercase tracking-widest text-white/40 mb-4 italic">Circuito Abierto...</div>
-        <button onclick="verificarCircuito()" class="bg-white/10 border border-white/20 hover:bg-orange-500 hover:text-white px-10 py-4 rounded-full font-black uppercase text-xs tracking-[0.2em] transition-all active:scale-95">
-            Probar Tensión ⚡
-        </button>
-    </div>
+    <canvas id="gameCanvas"></canvas>
 
     <script>
-        const grid = document.getElementById('grid');
-        const status = document.getElementById('status');
-        const rows = 4;
-        const cols = 4;
-        let celdas = [];
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('score');
+        const livesEl = document.getElementById('lives');
 
-        // Definimos las piezas: 0: ─ (horizontal), 1: ┌ (codo)
-        // Cada pieza tiene un array de conexiones [Norte, Este, Sur, Oeste]
-        const tipos = [
-            { char: '─', conn: [false, true, false, true] }, // Recto
-            { char: '└', conn: [true, true, false, false] }  // Codo
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let score = 0;
+        let lives = 3;
+        let particles = [];
+        let objects = [];
+        let isDrawing = false;
+        let lastMouse = { x: 0, y: 0 };
+
+        const types = [
+            { txt: '🔌', isBomb: false, label: 'Cable' },
+            { txt: '➰', isBomb: false, label: 'Chicote' },
+            { txt: '⚡', isBomb: false, label: 'Fase' },
+            { txt: '📟', isBomb: true, label: 'Multímetro' }, // ¡NO CORTAR!
+            { txt: '⏹️', isBomb: true, label: 'Térmica' }      // ¡NO CORTAR!
         ];
 
-        function crearJuego() {
-            grid.innerHTML = '';
-            celdas = [];
-            for (let i = 0; i < rows * cols; i++) {
-                const tipoIdx = Math.floor(Math.random() * tipos.length);
-                const rotacion = Math.floor(Math.random() * 4); // 0, 1, 2, 3 (x 90deg)
-                
-                const div = document.createElement('div');
-                div.className = "w-16 h-16 bg-[#001c30] rounded-xl border border-white/5 text-4xl cable text-blue-200/30";
-                div.innerHTML = tipos[tipoIdx].char;
-                div.dataset.tipo = tipoIdx;
-                div.dataset.rot = rotacion;
-                div.style.transform = `rotate(${rotacion * 90}deg)`;
-
-                div.onclick = () => {
-                    let r = (parseInt(div.dataset.rot) + 1) % 4;
-                    div.dataset.rot = r;
-                    div.style.transform = `rotate(${r * 90}deg)`;
-                    div.classList.remove('luz-neon');
-                    status.innerText = "Modificando conexión...";
-                };
-
-                grid.appendChild(div);
-                celdas.push(div);
+        class TechObject {
+            constructor() {
+                this.x = Math.random() * (canvas.width - 50) + 25;
+                this.y = canvas.height + 50;
+                this.speedY = -(Math.random() * 5 + 12);
+                this.speedX = (Math.random() - 0.5) * 4;
+                this.type = types[Math.floor(Math.random() * types.length)];
+                this.radius = 30;
+                this.cut = false;
+            }
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.speedY += 0.2; // Gravedad
+            }
+            draw() {
+                ctx.font = "40px Arial";
+                ctx.textAlign = "center";
+                ctx.fillText(this.type.txt, this.x, this.y);
             }
         }
 
-        function getConexiones(idx) {
-            const cell = celdas[idx];
-            const tipo = tipos[cell.dataset.tipo];
-            const rot = parseInt(cell.dataset.rot);
-            let c = [...tipo.conn];
-            // Rotar el array de conexiones según la rotación visual
-            for (let i = 0; i < rot; i++) {
-                c.unshift(c.pop());
-            }
-            return c; // Retorna [N, E, S, O]
+        function spawn() {
+            if (Math.random() < 0.03) objects.push(new TechObject());
         }
 
-        function verificarCircuito() {
-            // Lógica simplificada: Para ganar, todas las piezas del camino deben estar alineadas.
-            // En esta versión "Estrella", verificamos si hay flujo de Izquierda a Derecha.
-            let conectado = true;
-            
-            // Chequeo básico de prueba: ¿Están todas las piezas de la fila central horizontales?
-            // (Esto es solo una lógica de ejemplo para que el usuario tenga que TRABAJAR las piezas)
-            celdas.forEach((c, i) => {
-                const con = getConexiones(i);
-                // Si la pieza brilla es porque tiene conexión Este-Oeste activa
-                if (con[1] && con[3]) {
-                    c.classList.add('luz-neon');
-                } else {
-                    c.classList.remove('luz-neon');
-                    conectado = false; 
+        function checkCut(x1, y1, x2, y2) {
+            objects.forEach((obj, index) => {
+                if (!obj.cut) {
+                    let d = distToSegment({x: obj.x, y: obj.y}, {x: x1, y: y1}, {x: x2, y: y2});
+                    if (d < obj.radius) {
+                        obj.cut = true;
+                        if (obj.type.isBomb) {
+                            lives--;
+                            livesEl.innerText = lives;
+                            if (lives <= 0) {
+                                alert("¡DESASTRE TÉCNICO! Rompiste las herramientas. Cables cortados: " + score);
+                                location.reload();
+                            }
+                        } else {
+                            score++;
+                            scoreEl.innerText = score;
+                        }
+                        objects.splice(index, 1);
+                    }
                 }
             });
-
-            if (conectado) {
-                status.innerText = "¡CONTINUIDAD TOTAL!";
-                status.style.color = "#4ade80";
-                setTimeout(() => alert("⚡ ¡SISTEMA ENERGIZADO! 220V estables."), 500);
-            } else {
-                status.innerText = "ERROR DE AISLACIÓN O CORTE";
-                status.style.color = "#ef4444";
-            }
         }
 
-        crearJuego();
+        function distToSegment(p, v, w) {
+            let l2 = Math.pow(v.x - w.x, 2) + Math.pow(v.y - w.y, 2);
+            if (l2 == 0) return Math.sqrt(Math.pow(p.x - v.x, 2) + Math.pow(p.y - v.y, 2));
+            let t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
+            t = Math.max(0, Math.min(1, t));
+            return Math.sqrt(Math.pow(p.x - (v.x + t * (w.x - v.x)), 2) + Math.pow(p.y - (v.y + t * (w.y - v.y)), 2));
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(0, 12, 24, 0.3)'; // Efecto estela
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            spawn();
+            
+            objects.forEach((obj, i) => {
+                obj.update();
+                obj.draw();
+                if (obj.y > canvas.height + 100) objects.splice(i, 1);
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        // Eventos Táctiles y Mouse
+        const handleMove = (e) => {
+            let x = e.touches ? e.touches[0].clientX : e.clientX;
+            let y = e.touches ? e.touches[0].clientY : e.clientY;
+            
+            if (isDrawing) {
+                ctx.beginPath();
+                ctx.strokeStyle = '#f97316';
+                ctx.lineWidth = 4;
+                ctx.moveTo(lastMouse.x, lastMouse.y);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                checkCut(lastMouse.x, lastMouse.y, x, y);
+            }
+            lastMouse = { x, y };
+        };
+
+        window.addEventListener('mousedown', () => isDrawing = true);
+        window.addEventListener('mouseup', () => isDrawing = false);
+        window.addEventListener('mousemove', handleMove);
+        window.addEventListener('touchstart', () => isDrawing = true);
+        window.addEventListener('touchend', () => isDrawing = false);
+        window.addEventListener('touchmove', handleMove);
+
+        animate();
     </script>
 </body>
 </html>
