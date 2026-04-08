@@ -11,80 +11,163 @@
             flex-direction: column;
             justify-content: center; 
             align-items: center; 
-            height: 100vh; 
+            min-height: 100vh; 
             margin: 0; 
             color: white; 
             font-family: 'Arial', sans-serif;
             overflow: hidden;
+            touch-action: none;
         }
         canvas { 
             border: 4px solid #f97316; 
             background: #000; 
             box-shadow: 0 0 50px rgba(0,0,0,0.8); 
             border-radius: 15px;
+            max-width: 90vw;
+            max-height: 60vh;
         }
         h1 { 
-            margin-bottom: 15px; 
+            margin: 10px 0; 
             color: #f97316; 
             font-style: italic; 
             font-weight: 900; 
             text-transform: uppercase;
             text-shadow: 2px 2px 0px #000;
+            font-size: 1.2rem;
+            text-align: center;
         }
         .btn-volver {
             position: absolute;
             top: 20px; left: 20px;
             background: #f97316;
             color: white;
-            padding: 10px 20px;
-            border-radius: 12px;
+            padding: 10px 15px;
+            border-radius: 10px;
             text-decoration: none;
             font-weight: 900;
-            font-size: 12px;
+            font-size: 10px;
             text-transform: uppercase;
             box-shadow: 0 4px 0px #c2410c;
+            z-index: 10;
+        }
+        /* Control de Volumen */
+        .volume-container {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.3);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+        input[type=range] { cursor: pointer; accent-color: #f97316; }
+
+        /* Controles Táctiles */
+        .controls {
+            display: none;
+            width: 100%;
+            justify-content: space-around;
+            padding: 20px 0;
+            margin-top: 10px;
+        }
+        .arrow-btn {
+            width: 70px;
+            height: 70px;
+            background: rgba(249, 115, 22, 0.2);
+            border: 3px solid #f97316;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            color: white;
+            user-select: none;
+        }
+        .arrow-btn:active { background: #f97316; transform: scale(0.9); }
+
+        @media (max-width: 800px) {
+            .controls { display: flex; }
+            h1 { font-size: 1rem; }
         }
     </style>
 </head>
 <body>
 
     <a href="index.html" class="btn-volver">← VOLVER</a>
+    
     <h1>PING PONG TRASLAEA</h1>
+
+    <div class="volume-container">
+        <span>🔈</span>
+        <input type="range" id="volumeControl" min="0" max="1" step="0.1" value="0.5">
+        <span>🔊</span>
+    </div>
+
     <canvas id="pong"></canvas>
+
+    <div class="controls">
+        <div class="arrow-btn" id="btnUp">▲</div>
+        <div class="arrow-btn" id="btnDown">▼</div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="Ping-Pong.mp3" type="audio/mpeg">
+    </audio>
 
 <script>
     const canvas = document.getElementById("pong");
     const ctx = canvas.getContext('2d');
+    const music = document.getElementById("bgMusic");
+    const volumeControl = document.getElementById("volumeControl");
 
-    // CARGA DE LOGO
+    // Logo
     const logoAsoc = new Image();
-    logoAsoc.src = "logo.png"; // Asegurate que el archivo se llame así en tu carpeta
+    logoAsoc.src = "logo.png";
 
     canvas.width = 800;
     canvas.height = 500;
-
-    // Redimensionar para móviles
-    if(window.innerWidth < 800) {
-        canvas.style.width = (window.innerWidth - 20) + "px";
-        canvas.style.height = "auto";
-    }
 
     const user = { x: 20, y: canvas.height/2 - 50, width: 15, height: 100, score: 0, color: "#FFFFFF" };
     const com = { x: canvas.width - 35, y: canvas.height/2 - 50, width: 15, height: 100, score: 0, color: "#f97316" };
     const ball = { x: canvas.width/2, y: canvas.height/2, radius: 10, speed: 7, velocityX: 7, velocityY: 7, color: "#FFFFFF" };
 
-    // CONTROLES (Mouse, Teclado y Táctil)
-    canvas.addEventListener("mousemove", (e) => {
-        let rect = canvas.getBoundingClientRect();
-        let scaleY = canvas.height / rect.height; 
-        user.y = (e.clientY - rect.top) * scaleY - user.height/2;
+    // Música y Volumen
+    volumeControl.addEventListener("input", (e) => {
+        music.volume = e.target.value;
     });
 
+    function iniciarMusica() {
+        music.play();
+        window.removeEventListener('touchstart', iniciarMusica);
+        window.removeEventListener('click', iniciarMusica);
+    }
+    window.addEventListener('touchstart', iniciarMusica);
+    window.addEventListener('click', iniciarMusica);
+
+    // Controles
+    let upPressed = false;
+    let downPressed = false;
+
+    // Teclado
     window.addEventListener("keydown", (e) => {
-        if(e.key === "ArrowUp") user.y -= 50;
-        if(e.key === "ArrowDown") user.y += 50;
+        if(e.key === "ArrowUp") upPressed = true;
+        if(e.key === "ArrowDown") downPressed = true;
+    });
+    window.addEventListener("keyup", (e) => {
+        if(e.key === "ArrowUp") upPressed = false;
+        if(e.key === "ArrowDown") downPressed = false;
     });
 
+    // Flechas Celular
+    const btnUp = document.getElementById("btnUp");
+    const btnDown = document.getElementById("btnDown");
+
+    btnUp.addEventListener("touchstart", (e) => { e.preventDefault(); upPressed = true; });
+    btnUp.addEventListener("touchend", () => { upPressed = false; });
+    btnDown.addEventListener("touchstart", (e) => { e.preventDefault(); downPressed = true; });
+    btnDown.addEventListener("touchend", () => { downPressed = false; });
+
+    // Mouse y Touch directo en canvas
     canvas.addEventListener("touchmove", (e) => {
         e.preventDefault();
         let touch = e.touches[0];
@@ -93,6 +176,17 @@
         user.y = (touch.clientY - rect.top) * scaleY - user.height/2;
     }, { passive: false });
 
+    canvas.addEventListener("mousemove", (e) => {
+        let rect = canvas.getBoundingClientRect();
+        let scaleY = canvas.height / rect.height; 
+        user.y = (e.clientY - rect.top) * scaleY - user.height/2;
+    });
+
+    function collision(b, p) {
+        return b.x + b.radius > p.x && b.x - b.radius < p.x + p.width &&
+               b.y + b.radius > p.y && b.y - b.radius < p.y + p.height;
+    }
+
     function resetBall() {
         ball.x = canvas.width/2;
         ball.y = canvas.height/2;
@@ -100,16 +194,13 @@
         ball.velocityX = -ball.velocityX;
     }
 
-    function collision(b, p) {
-        return b.x + b.radius > p.x && b.x - b.radius < p.x + p.width &&
-               b.y + b.radius > p.y && b.y - b.radius < p.y + p.height;
-    }
-
     function update() {
+        if(upPressed) user.y -= 8;
+        if(downPressed) user.y += 8;
+
         ball.x += ball.velocityX;
         ball.y += ball.velocityY;
 
-        // IA Computadora
         com.y += (ball.y - (com.y + com.height/2)) * 0.1;
 
         if(ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
@@ -135,60 +226,51 @@
     }
 
     function render() {
-        // 1. Fondo Azul
         ctx.fillStyle = "#002855";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // 2. CÍRCULO CENTRAL CON LOGO (Debajo de todo)
-        let centerX = canvas.width / 2;
-        let centerY = canvas.height / 2;
-        let radio = 90;
-
+        // Marca de agua central
         ctx.save();
-        ctx.globalAlpha = 0.3; // Opacidad marca de agua
-        
-        // Círculo Naranja
+        ctx.globalAlpha = 0.2;
         ctx.fillStyle = "#f97316";
         ctx.beginPath();
-        ctx.arc(centerX, centerY, radio, 0, Math.PI * 2);
+        ctx.arc(canvas.width/2, canvas.height/2, 90, 0, Math.PI * 2);
         ctx.fill();
-
-        // Recorte para el logo
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radio, 0, Math.PI * 2);
-        ctx.clip();
-        ctx.drawImage(logoAsoc, centerX - radio, centerY - radio, radio * 2, radio * 2);
         ctx.restore();
 
-        // 3. Línea central
+        // Línea central
         ctx.strokeStyle = "rgba(255,255,255,0.2)";
         ctx.setLineDash([10, 10]);
         ctx.beginPath();
-        ctx.moveTo(canvas.width/2, 0);
-        ctx.lineTo(canvas.width/2, canvas.height);
+        ctx.moveTo(canvas.width/2, 0); ctx.lineTo(canvas.width/2, canvas.height);
         ctx.stroke();
         ctx.setLineDash([]);
 
-        // 4. Marcadores (Números grandes)
+        // Marcadores
         ctx.fillStyle = "rgba(255,255,255,0.3)";
         ctx.font = "bold 80px Arial";
         ctx.fillText(user.score, canvas.width/4 - 20, 100);
         ctx.fillText(com.score, 3*canvas.width/4 - 20, 100);
 
-        // 5. Jugadores y Pelota (Encima de todo)
-        ctx.fillStyle = "white"; // Pelota
+        // Pelota
+        ctx.fillStyle = "white";
         ctx.beginPath();
         ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2);
         ctx.fill();
 
-        ctx.fillStyle = user.color; // Paleta Humano
+        // Paletas
+        ctx.fillStyle = user.color;
         ctx.fillRect(user.x, user.y, user.width, user.height);
-
-        ctx.fillStyle = com.color; // Paleta PC
+        ctx.fillStyle = com.color;
         ctx.fillRect(com.x, com.y, com.width, com.height);
     }
 
-    setInterval(() => { update(); render(); }, 1000/60);
+    function loop() {
+        update();
+        render();
+        requestAnimationFrame(loop);
+    }
+    loop();
 </script>
 </body>
 </html>
