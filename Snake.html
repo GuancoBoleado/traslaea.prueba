@@ -5,40 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TRASLAEA - Carga de Batería</title>
     <style>
-        /* Desactivamos el scroll y los gestos del navegador para que no molesten al jugar */
         * { touch-action: none; user-select: none; -webkit-tap-highlight-color: transparent; }
         
-        body { background: #001b3a; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0; color: white; font-family: sans-serif; overflow: hidden; }
+        body { 
+            background: #001b3a; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            color: white; 
+            font-family: sans-serif; 
+            overflow: hidden; 
+        }
         
         canvas { 
             border: 4px solid #f97316; 
             background: #000; 
             box-shadow: 0 0 30px rgba(0,0,0,0.5); 
             border-radius: 15px;
-            max-width: 90vw; /* Se ajusta al ancho del celu */
-            max-height: 70vh;
+            max-width: 90vw;
+            max-height: 50vh;
         }
         
-        h1 { color: #f97316; margin-bottom: 5px; font-style: italic; text-transform: uppercase; font-size: 1.5rem; }
-        .score { font-size: 20px; font-weight: bold; margin-bottom: 10px; color: #4ade80; }
+        h1 { color: #f97316; margin: 5px 0; font-style: italic; text-transform: uppercase; font-size: 1.2rem; }
+        .score { font-size: 18px; font-weight: bold; margin-bottom: 5px; color: #4ade80; }
         
         .btn-volver { 
             position: absolute; top: 20px; left: 20px; background: #f97316; color: white; 
-            padding: 10px 15px; border-radius: 8px; text-decoration: none; 
-            font-size: 12px; font-weight: bold; box-shadow: 0 4px 0 #c2410c; z-index: 100;
+            padding: 8px 12px; border-radius: 8px; text-decoration: none; 
+            font-size: 10px; font-weight: bold; box-shadow: 0 4px 0 #c2410c; z-index: 100;
         }
+
+        /* Control de Volumen */
+        .vol-cont { margin-bottom: 10px; display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.3); padding: 5px 15px; border-radius: 20px; }
+        input[type=range] { accent-color: #f97316; cursor: pointer; }
+
+        /* Joystick */
+        .controls {
+            display: grid;
+            grid-template-areas: 
+                ". up ."
+                "left . right"
+                ". down .";
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .joy-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(249, 115, 22, 0.2);
+            border: 2px solid #f97316;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: white;
+        }
+        .joy-btn:active { background: #f97316; }
+        .up { grid-area: up; }
+        .down { grid-area: down; }
+        .left { grid-area: left; }
+        .right { grid-area: right; }
     </style>
 </head>
 <body>
     <a href="juegos.html" class="btn-volver">← VOLVER</a>
     <h1>CARGA DE BATERÍA</h1>
+    
+    <div class="vol-cont">
+        <span>🔈</span>
+        <input type="range" id="volSlider" min="0" max="1" step="0.1" value="0.5">
+        <span>🔊</span>
+    </div>
+
     <div class="score" id="scoreVal">Voltaje: 0V</div>
     <canvas id="snakeGame"></canvas>
+
+    <div class="controls">
+        <div class="joy-btn up" id="btnUp">▲</div>
+        <div class="joy-btn left" id="btnLeft">◀</div>
+        <div class="joy-btn right" id="btnRight">▶</div>
+        <div class="joy-btn down" id="btnDown">▼</div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="Snake.mp3" type="audio/mpeg">
+    </audio>
 
 <script>
     const canvas = document.getElementById("snakeGame");
     const ctx = canvas.getContext("2d");
     const scoreElement = document.getElementById("scoreVal");
+    const music = document.getElementById("bgMusic");
+    const volSlider = document.getElementById("volSlider");
 
     const logo = new Image();
     logo.src = "logo.png";
@@ -51,44 +113,38 @@
     let food = { x: Math.floor(Math.random() * 19) * box, y: Math.floor(Math.random() * 19) * box };
     let d = "RIGHT";
     let score = 0;
-    let gameSpeed = 130; 
+    let gameSpeed = 130;
 
-    // --- CONTROLES TÁCTILES (Toda la pantalla) ---
-    document.addEventListener("touchstart", function(e) {
-        const touchX = e.touches[0].clientX;
-        const touchY = e.touches[0].clientY;
-        const screenW = window.innerWidth;
-        const screenH = window.innerHeight;
-
-        // Calculamos si el toque fue más horizontal o vertical
-        const centerX = screenW / 2;
-        const centerY = screenH / 2;
-
-        if (Math.abs(touchX - centerX) > Math.abs(touchY - centerY)) {
-            // Movimiento Horizontal
-            if (touchX > centerX && d != "LEFT") d = "RIGHT";
-            else if (touchX < centerX && d != "RIGHT") d = "LEFT";
-        } else {
-            // Movimiento Vertical
-            if (touchY > centerY && d != "UP") d = "DOWN";
-            else if (touchY < centerY && d != "DOWN") d = "UP";
-        }
-    }, false);
-
-    // Mantenemos teclado por si entras desde PC
-    document.addEventListener("keydown", direction);
-    function direction(event) {
-        if(event.keyCode == 37 && d != "RIGHT") d = "LEFT";
-        else if(event.keyCode == 38 && d != "DOWN") d = "UP";
-        else if(event.keyCode == 39 && d != "LEFT") d = "RIGHT";
-        else if(event.keyCode == 40 && d != "UP") d = "DOWN";
+    // --- AUDIO ---
+    volSlider.addEventListener("input", (e) => { music.volume = e.target.value; });
+    
+    function startAudio() {
+        music.play().catch(() => {});
+        window.removeEventListener('click', startAudio);
+        window.removeEventListener('touchstart', startAudio);
     }
+    window.addEventListener('click', startAudio);
+    window.addEventListener('touchstart', startAudio);
+
+    // --- CONTROLES JOYSTICK ---
+    document.getElementById("btnUp").addEventListener("touchstart", (e) => { e.preventDefault(); if(d != "DOWN") d = "UP"; });
+    document.getElementById("btnDown").addEventListener("touchstart", (e) => { e.preventDefault(); if(d != "UP") d = "DOWN"; });
+    document.getElementById("btnLeft").addEventListener("touchstart", (e) => { e.preventDefault(); if(d != "RIGHT") d = "LEFT"; });
+    document.getElementById("btnRight").addEventListener("touchstart", (e) => { e.preventDefault(); if(d != "LEFT") d = "RIGHT"; });
+
+    // Teclado PC
+    document.addEventListener("keydown", (e) => {
+        if(e.keyCode == 37 && d != "RIGHT") d = "LEFT";
+        else if(e.keyCode == 38 && d != "DOWN") d = "UP";
+        else if(e.keyCode == 39 && d != "LEFT") d = "RIGHT";
+        else if(e.keyCode == 40 && d != "UP") d = "DOWN";
+    });
 
     function draw() {
         ctx.fillStyle = "#002855";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // LOGO CIRCULAR FONDO
+        // LOGO FONDO
         ctx.save();
         ctx.globalAlpha = 0.2;
         ctx.beginPath();
@@ -97,11 +153,13 @@
         ctx.drawImage(logo, 100, 100, 200, 200);
         ctx.restore();
 
+        // SERPIENTE
         for(let i = 0; i < snake.length; i++) {
             ctx.fillStyle = (i == 0) ? "#f97316" : "#4ade80"; 
             ctx.fillRect(snake[i].x, snake[i].y, box-2, box-2);
         }
 
+        // COMIDA (RAYO)
         ctx.font = "18px Arial";
         ctx.fillText("⚡", food.x + 2, food.y + 16);
 
@@ -113,6 +171,7 @@
         if( d == "RIGHT") snakeX += box;
         if( d == "DOWN") snakeY += box;
 
+        // Atravesar paredes
         if (snakeX < 0) snakeX = canvas.width - box;
         else if (snakeX >= canvas.width) snakeX = 0;
         if (snakeY < 0) snakeY = canvas.height - box;
@@ -129,6 +188,7 @@
         let newHead = { x: snakeX, y: snakeY };
 
         if(collision(newHead, snake)) {
+            music.pause();
             alert("¡Cortocircuito interno! Voltaje final: " + (score * 12) + "V");
             location.reload();
         }
