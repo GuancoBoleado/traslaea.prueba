@@ -120,9 +120,12 @@
     const music = document.getElementById("bgMusic");
     const volumeControl = document.getElementById("volumeControl");
 
-    // Logo
+    // --- CARGA DE LOGO (RESTAURADO) ---
     const logoAsoc = new Image();
-    logoAsoc.src = "logo.png";
+    logoAsoc.src = "logo.png"; // Asegúrate de que el archivo existe
+    // Bandera para saber si la imagen cargó correctamente
+    let logoCargado = false;
+    logoAsoc.onload = () => { logoCargado = true; };
 
     canvas.width = 800;
     canvas.height = 500;
@@ -137,7 +140,7 @@
     });
 
     function iniciarMusica() {
-        music.play();
+        music.play().catch(e => console.log("Audio bloqueado inicialmente"));
         window.removeEventListener('touchstart', iniciarMusica);
         window.removeEventListener('click', iniciarMusica);
     }
@@ -226,19 +229,39 @@
     }
 
     function render() {
+        // Fondo
         ctx.fillStyle = "#002855";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        // Marca de agua central
+        // --- DIBUJO DEL LOGO CENTRAL (RESTAURADO) ---
+        let centerX = canvas.width / 2;
+        let centerY = canvas.height / 2;
+        let radioCírculo = 90;
+
         ctx.save();
+        // Establecer transparencia para la marca de agua (20%)
         ctx.globalAlpha = 0.2;
+
+        // 1. Dibujar el círculo naranja de fondo
         ctx.fillStyle = "#f97316";
         ctx.beginPath();
-        ctx.arc(canvas.width/2, canvas.height/2, 90, 0, Math.PI * 2);
+        ctx.arc(centerX, centerY, radioCírculo, 0, Math.PI * 2);
         ctx.fill();
-        ctx.restore();
 
-        // Línea central
+        // 2. Dibujar la imagen del logo encima del círculo (si cargó)
+        if (logoCargado) {
+            // Creamos un recorte circular para que la imagen no se salga del borde naranja
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radioCírculo, 0, Math.PI * 2);
+            ctx.clip();
+
+            // Dibujar la imagen centrada. Ajustamos el tamaño para que llene el círculo (radio * 2)
+            let tamañoLogo = radioCírculo * 2;
+            ctx.drawImage(logoAsoc, centerX - radioCírculo, centerY - radioCírculo, tamañoLogo, tamañoLogo);
+        }
+        ctx.restore(); // Restaurar transparencia normal para el resto del juego
+
+        // Línea central dashes
         ctx.strokeStyle = "rgba(255,255,255,0.2)";
         ctx.setLineDash([10, 10]);
         ctx.beginPath();
