@@ -73,6 +73,63 @@
             </table>
         </div>
     </div>
+<script type="module">
+    import { supabase } from './config.js';
 
+    const buscador = document.getElementById('buscador');
+    const lista = document.getElementById('lista-asociados');
+
+    // Función para obtener los datos y renderizar
+    async function cargarAsociados(filtro = "") {
+        // Traemos asociados y sus pagos (un "join" de SQL automático)
+        let { data: asociados, error } = await supabase
+            .from('asociados')
+            .select('*, pagos(mes_abonado, anio_abonado)');
+
+        if (error) return console.error(error);
+
+        // Filtrar si el contador escribe algo
+        const filtrados = asociados.filter(s => 
+            s.nombre.toLowerCase().includes(filtro.toLowerCase()) || 
+            s.apellido.toLowerCase().includes(filtro.toLowerCase()) ||
+            s.dni.includes(filtro)
+        );
+
+        lista.innerHTML = "";
+
+        filtrados.forEach(socio => {
+            // Lógica de color: Si tiene 3 o más pagos registrados
+            const cantPagos = socio.pagos ? socio.pagos.length : 0;
+            const esVerde = cantPagos >= 3;
+            
+            const tr = document.createElement('tr');
+            tr.className = `border-b border-white/5 ${esVerde ? 'row-al-dia' : 'row-morosa'}`;
+            
+            tr.innerHTML = `
+                <td class="p-5">
+                    <p class="font-bold">${socio.nombre} ${socio.apellido}</p>
+                    <p class="text-[10px] opacity-50">${socio.correo}</p>
+                </td>
+                <td class="p-5 font-mono text-sm">${socio.dni}</td>
+                <td class="p-5">
+                    <span class="px-2 py-1 rounded text-[9px] font-black uppercase ${esVerde ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}">
+                        ${esVerde ? 'AL DÍA (3+)' : 'DEUDA / PENDIENTE'}
+                    </span>
+                </td>
+                <td class="p-5 text-right">
+                    ${!esVerde ? `<button onclick="alert('Enviando mail a ${socio.correo}...') " class="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded text-[9px] font-bold uppercase">📩 Mail</button>` : ''}
+                    <button class="text-xs bg-white/10 px-3 py-1 rounded hover:bg-white/20 ml-2">Detalles</button>
+                </td>
+            `;
+            lista.appendChild(tr);
+        });
+    }
+
+    // Escuchar el buscador
+    buscador.addEventListener('input', (e) => cargarAsociados(e.target.value));
+
+    // Carga inicial
+    cargarAsociados();
+</script>
 </body>
 </html>
