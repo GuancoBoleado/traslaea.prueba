@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>Panel Contable • TRASLAEA</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .modal-hidden { display: none; }
+        .mes-card { transition: all 0.3s; cursor: pointer; }
+        .mes-pagado { background: #22c55e33; border-color: #22c55e; color: #22c55e; }
+        .mes-deuda { background: #ef444433; border-color: #ef4444; color: #ef4444; }
+    </style>
 </head>
 <body class="bg-[#001220] text-white min-h-screen p-8">
     <div class="max-w-6xl mx-auto">
@@ -19,21 +25,24 @@
             </div>
         </div>
 
-        <div class="bg-white/5 rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl">
-            <div class="p-8 border-b border-white/10 flex justify-between items-center bg-white/5">
-                <h2 class="text-xl font-bold">Listado de Técnicos</h2>
-                <button onclick="window.location.href='nuevo_socio.html'" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-xl font-bold text-sm transition">
-                    + Cargar Nuevo
-                </button>
+        <div class="flex flex-col md:flex-row gap-4 mb-6">
+            <div class="flex-1 relative">
+                <input type="text" id="inputBusqueda" placeholder="Buscar por DNI o Apellido..." 
+                    class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:border-orange-500 transition">
             </div>
-            
+            <button onclick="window.location.href='nuevo_socio.html'" class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-2xl font-bold transition flex items-center justify-center gap-2">
+                <span>+</span> Cargar Nuevo Socio
+            </button>
+        </div>
+
+        <div class="bg-white/5 rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl">
             <div class="overflow-x-auto">
                 <table class="w-full text-left">
-                    <thead class="bg-white/5 text-blue-300 text-xs uppercase tracking-tighter">
+                    <thead class="bg-white/5 text-blue-300 text-xs uppercase tracking-widest">
                         <tr>
-                            <th class="p-6">Técnico</th>
+                            <th class="p-6">Técnico / Socio</th>
                             <th class="p-6">DNI</th>
-                            <th class="p-6">Estado</th>
+                            <th class="p-6">Estado Cuota</th>
                             <th class="p-6 text-right">Acciones</th>
                         </tr>
                     </thead>
@@ -45,9 +54,32 @@
         </div>
     </div>
 
+    <div id="modalPagos" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 modal-hidden">
+        <div class="bg-[#001220] border border-white/10 w-full max-w-4xl rounded-[2.5rem] overflow-hidden shadow-2xl">
+            <div class="p-8 border-b border-white/10 flex justify-between items-center">
+                <div>
+                    <h2 id="modalNombreSocio" class="text-2xl font-bold text-white">Nombre del Socio</h2>
+                    <p id="modalDniSocio" class="text-blue-300 text-sm opacity-60">DNI: 00.000.000</p>
+                </div>
+                <button id="cerrarModal" class="text-white/40 hover:text-white text-2xl">&times;</button>
+            </div>
+            
+            <div class="p-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="grillaMeses">
+                    </div>
+            </div>
+
+            <div class="p-8 bg-white/5 flex justify-end">
+                <p class="text-xs text-white/40 italic">Hacé clic en un mes para registrar o anular un pago</p>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import { verificarSesion, salir } from './auth-service.js';
         import { obtenerSocios } from './socios-service.js';
+
+        let todosLosSocios = [];
 
         // 1. Proteger la página
         const user = await verificarSesion();
@@ -55,31 +87,82 @@
         // 2. Botón salir
         document.getElementById('btnSalir').addEventListener('click', salir);
 
-        // 3. Cargar datos de la tabla
-        async function cargarTabla() {
-            const lista = document.getElementById('tablaSocios');
+        // 3. Cargar datos
+        async function inicializar() {
             try {
-                const socios = await obtenerSocios();
-                lista.innerHTML = socios.map(s => `
-                    <tr class="hover:bg-white/5 transition">
-                        <td class="p-6 font-medium">${s.apellido}, ${s.nombre}</td>
-                        <td class="p-6 opacity-60">${s.dni}</td>
-                        <td class="p-6">
-                            <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase ${s.estado_pago === 'Al día' ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'}">
-                                ${s.estado_pago}
-                            </span>
-                        </td>
-                        <td class="p-6 text-right">
-                            <button class="text-orange-500 hover:underline text-sm font-bold">Ver Pagos</button>
-                        </td>
-                    </tr>
-                `).join('');
+                todosLosSocios = await obtenerSocios();
+                renderizarTabla(todosLosSocios);
             } catch (error) {
-                lista.innerHTML = `<tr><td colspan="4" class="p-10 text-center text-red-400">Error al cargar datos.</td></tr>`;
+                document.getElementById('tablaSocios').innerHTML = `<tr><td colspan="4" class="p-10 text-center text-red-400">Error al cargar datos.</td></tr>`;
             }
         }
 
-        cargarTabla();
+        function renderizarTabla(lista) {
+            const tbody = document.getElementById('tablaSocios');
+            if (lista.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-10 text-center opacity-40">No se encontraron socios.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = lista.map(s => `
+                <tr class="hover:bg-white/5 transition border-b border-white/5 last:border-0">
+                    <td class="p-6 font-medium">
+                        <div class="text-white">${s.apellido}, ${s.nombre}</div>
+                        <div class="text-xs text-white/40">${s.localidad || 'Traslasierra'}</div>
+                    </td>
+                    <td class="p-6 opacity-60 text-sm">${s.dni}</td>
+                    <td class="p-6">
+                        <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase ${s.estado_pago === 'Al día' ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'}">
+                            ${s.estado_pago || 'Pendiente'}
+                        </span>
+                    </td>
+                    <td class="p-6 text-right">
+                        <button onclick="abrirAlmanaque('${s.id}', '${s.nombre} ${s.apellido}', '${s.dni}')" 
+                            class="bg-blue-500/10 hover:bg-blue-500 text-blue-500 hover:text-white px-4 py-2 rounded-xl text-xs font-bold transition border border-blue-500/20">
+                            Ver Pagos / Almanaque
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // 4. Buscador
+        document.getElementById('inputBusqueda').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtrados = todosLosSocios.filter(s => 
+                s.apellido.toLowerCase().includes(term) || 
+                s.nombre.toLowerCase().includes(term) || 
+                s.dni.toString().includes(term)
+            );
+            renderizarTabla(filtrados);
+        });
+
+        // 5. Lógica del Modal (Almanaque)
+        window.abrirAlmanaque = (id, nombre, dni) => {
+            const modal = document.getElementById('modalPagos');
+            document.getElementById('modalNombreSocio').innerText = nombre;
+            document.getElementById('modalDniSocio').innerText = `DNI: ${dni}`;
+            
+            const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            const grilla = document.getElementById('grillaMeses');
+            
+            // Aquí simulo los meses, luego lo conectaremos a tu tabla de "pagos" en Supabase
+            grilla.innerHTML = meses.map((mes, index) => `
+                <div class="mes-card border border-white/10 p-4 rounded-2xl text-center hover:scale-105 transition ${index < 3 ? 'mes-pagado' : 'mes-deuda'}">
+                    <span class="block text-[10px] uppercase opacity-60 mb-1">2026</span>
+                    <span class="font-bold">${mes}</span>
+                    <span class="block text-[9px] mt-2 font-black">${index < 3 ? 'PAGADO' : 'DEBE'}</span>
+                </div>
+            `).join('');
+
+            modal.classList.remove('modal-hidden');
+        };
+
+        document.getElementById('cerrarModal').onclick = () => {
+            document.getElementById('modalPagos').classList.add('modal-hidden');
+        };
+
+        inicializar();
     </script>
 </body>
 </html>
