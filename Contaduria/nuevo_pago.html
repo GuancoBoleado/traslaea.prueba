@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Pago • TRASLAEA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#001220] text-white min-h-screen p-8">
+    <div class="max-w-2xl mx-auto">
+        <button onclick="window.location.href='panel_contador.html'" class="mb-6 text-blue-300 hover:text-white transition text-sm flex items-center gap-2">
+            ← Volver al Panel
+        </button>
+
+        <div class="bg-white/5 border border-white/10 p-10 rounded-[2.5rem] shadow-2xl backdrop-blur-md">
+            <h1 class="text-2xl font-black text-orange-500 italic uppercase mb-2">Registrar Pago</h1>
+            <p class="text-blue-300 text-xs tracking-widest uppercase opacity-60 mb-8">Cuota Social</p>
+
+            <form id="formPago" class="grid grid-cols-1 gap-6">
+                <div class="flex flex-col gap-2">
+                    <label class="text-[10px] uppercase tracking-widest opacity-50 ml-2">Seleccionar Técnico</label>
+                    <select id="socioId" required class="bg-[#001220] border border-white/10 p-4 rounded-xl focus:border-orange-500 outline-none transition text-white">
+                        <option value="">Cargando técnicos...</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[10px] uppercase tracking-widest opacity-50 ml-2">Monto ($)</label>
+                        <input type="number" id="monto" placeholder="Ej: 5000" required class="bg-[#001220] border border-white/10 p-4 rounded-xl focus:border-orange-500 outline-none transition">
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[10px] uppercase tracking-widest opacity-50 ml-2">Mes a abonar</label>
+                        <select id="mes" required class="bg-[#001220] border border-white/10 p-4 rounded-xl focus:border-orange-500 outline-none transition text-white">
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="bg-green-600 hover:bg-green-700 font-black py-4 rounded-xl uppercase tracking-widest transition mt-4">
+                    Confirmar Pago
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { verificarSesion } from './auth-service.js';
+        import { obtenerSocios, registrarPago } from './socios-service.js';
+
+        await verificarSesion();
+
+        // Cargar los socios en el select apenas abre la página
+        async function poblarSocios() {
+            const select = document.getElementById('socioId');
+            try {
+                const socios = await obtenerSocios();
+                select.innerHTML = '<option value="">Seleccione un técnico...</option>' + 
+                    socios.map(s => `<option value="${s.id}">${s.apellido}, ${s.nombre}</option>`).join('');
+            } catch (error) {
+                select.innerHTML = '<option>Error al cargar</option>';
+            }
+        }
+        poblarSocios();
+
+        document.getElementById('formPago').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const pago = {
+                asociado_id: document.getElementById('socioId').value,
+                monto_pagado: parseFloat(document.getElementById('monto').value),
+                mes_abonado: parseInt(document.getElementById('mes').value),
+                anio_abonado: new Date().getFullYear(),
+                fecha_pago: new Date().toISOString()
+            };
+
+            try {
+                await registrarPago(pago);
+                alert("Pago registrado correctamente");
+                window.location.href = 'panel_contador.html';
+            } catch (error) {
+                alert("Error al registrar el pago");
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>
