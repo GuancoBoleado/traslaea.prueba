@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Acceso Contaduría • TRASLAEA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#001220] text-white flex items-center justify-center h-screen p-6">
+    <div class="max-w-md w-full bg-white/5 border border-white/10 p-10 rounded-[2.5rem] shadow-2xl backdrop-blur-md">
+        <h1 class="text-2xl font-black text-orange-500 italic uppercase mb-2">TRASLAEA</h1>
+        <p class="text-blue-300 text-[10px] tracking-[0.3em] uppercase opacity-60 mb-8">Área Contable</p>
+        
+        <form id="loginForm" class="flex flex-col gap-4">
+            <input type="email" id="email" placeholder="Usuario (email)" required 
+                   class="bg-[#001220] border border-white/10 p-4 rounded-xl focus:border-orange-500 outline-none transition text-white">
+            <input type="password" id="password" placeholder="Contraseña" required 
+                   class="bg-[#001220] border border-white/10 p-4 rounded-xl focus:border-orange-500 outline-none transition text-white">
+            <button type="submit" class="bg-orange-500 hover:bg-orange-600 font-black py-4 rounded-xl uppercase tracking-widest transition">
+                Entrar
+            </button>
+        </form>
+    </div>
+
+    <script type="module">
+        import { supabase } from './base-de-datos.js';
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+            if (error) {
+                alert("Error de acceso: " + error.message);
+            } else {
+                window.location.href = 'panel_contador.html';
+            }
+        });
+    </script>
+</body>
+</html>
