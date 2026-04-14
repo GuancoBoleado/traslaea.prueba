@@ -13,7 +13,7 @@
     <div class="max-w-6xl mx-auto">
         <div class="flex justify-between items-center mb-10 bg-white/5 p-6 rounded-3xl border border-white/10">
             <div>
-                <h1 class="text-2xl font-black text-orange-500 italic uppercase">TRASLAEA</h1>
+                <h1 class="text-2xl font-black text-orange-500 italic uppercase text-white">TRASLAEA</h1>
                 <p class="text-blue-300 text-xs tracking-widest uppercase opacity-60">Gestión de Asociados y Pagos</p>
             </div>
             <div class="flex gap-4">
@@ -25,7 +25,7 @@
 
         <div class="flex flex-col md:flex-row gap-4 mb-6">
             <div class="flex-1 relative">
-                <input type="text" id="inputBusqueda" placeholder="Buscar por DNI o Apellido..." 
+                <input type="text" id="inputBusqueda" placeholder="Buscar por DNI, Apellido, Email..." 
                     class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:border-orange-500 transition text-white">
             </div>
             <button onclick="window.location.href='nuevo_socio.html'" class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-2xl font-bold transition flex items-center justify-center gap-2 text-sm uppercase">
@@ -38,39 +38,37 @@
                 <table class="w-full text-left">
                     <thead class="bg-white/5 text-blue-300 text-[10px] uppercase tracking-[0.2em]">
                         <tr>
-                            <th class="p-6">Técnico / Socio</th>
-                            <th class="p-6">DNI</th>
-                            <th class="p-6 text-center">Estado</th>
-                            <th class="p-6 text-right">Acciones</th>
+                            <th class="p-6 text-white">Técnico / Socio</th>
+                            <th class="p-6 text-white text-center">DNI</th>
+                            <th class="p-6 text-white text-center">Estado</th>
+                            <th class="p-6 text-white text-right">Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="tablaSocios" class="divide-y divide-white/5">
-                        <tr><td colspan="4" class="p-10 text-center opacity-40 text-white">Cargando asociados...</td></tr>
+                        <tr><td colspan="4" class="p-10 text-center opacity-40 text-white font-bold">Cargando asociados...</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <div id="modalPagos" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 z-50 modal-hidden">
-        <div class="bg-[#001220] border border-white/20 w-full max-w-4xl rounded-[2.5rem] overflow-hidden shadow-2xl" onclick="event.stopPropagation()">
+    <div id="modalPagos" class="fixed inset-0 bg-black/95 backdrop-blur-md flex items-center justify-center p-4 z-50 modal-hidden">
+        <div class="bg-[#001220] border border-white/20 w-full max-w-4xl rounded-[2.5rem] overflow-hidden shadow-2xl">
             <div class="p-8 border-b border-white/10 flex justify-between items-center">
                 <div>
-                    <h2 id="modalNombreSocio" class="text-3xl font-black text-white uppercase italic">Cargando...</h2>
-                    <p id="modalDniSocio" class="text-orange-500 font-bold text-sm tracking-widest">DNI: --</p>
+                    <h2 id="modalNombreSocio" class="text-3xl font-black text-white uppercase italic">Nombre</h2>
+                    <p id="modalDniSocio" class="text-orange-500 font-bold text-sm tracking-widest uppercase">DNI: 00</p>
                 </div>
-                <button id="btnCerrarModal" class="bg-white/5 hover:bg-red-500 text-white w-12 h-12 rounded-full text-2xl transition flex items-center justify-center border border-white/10">
-                    &times;
-                </button>
+                <button id="cerrarModal" class="bg-white/5 hover:bg-red-500 text-white w-12 h-12 rounded-full text-2xl transition flex items-center justify-center border border-white/10">&times;</button>
             </div>
             
             <div class="p-8">
-                <div id="grillaMeses" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4" id="grillaMeses">
+                </div>
             </div>
 
             <div class="p-6 bg-white/5 flex justify-center">
-                <p class="text-[10px] text-white/40 uppercase tracking-widest font-bold text-center">Panel Administrativo • TRASLAEA 2026</p>
+                <p class="text-[10px] text-white/40 uppercase tracking-widest font-black">Panel de Control Administrativo • TRASLAEA 2026</p>
             </div>
         </div>
     </div>
@@ -81,31 +79,24 @@
 
         let todosLosSocios = [];
 
-        // 1. Verificar sesión
-        try {
-            await verificarSesion();
-        } catch (e) {
-            console.error("No hay sesión activa");
-        }
-
-        // 2. Salir
+        // 1. Proteger página
+        await verificarSesion();
         document.getElementById('btnSalir').addEventListener('click', salir);
 
-        // 3. Inicializar tabla
+        // 2. Cargar datos
         async function inicializar() {
-            const tbody = document.getElementById('tablaSocios');
             try {
                 todosLosSocios = await obtenerSocios();
                 renderizarTabla(todosLosSocios);
             } catch (error) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-10 text-center text-red-400 font-bold">Error al conectar con la base de datos.</td></tr>`;
+                document.getElementById('tablaSocios').innerHTML = `<tr><td colspan="4" class="p-10 text-center text-red-400 font-bold">Error al conectar con la base de datos.</td></tr>`;
             }
         }
 
         function renderizarTabla(lista) {
             const tbody = document.getElementById('tablaSocios');
             if (lista.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-10 text-center opacity-40">No hay registros aún.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" class="p-10 text-center opacity-40 text-white">No se encontraron socios con esos datos.</td></tr>`;
                 return;
             }
 
@@ -113,11 +104,11 @@
                 <tr class="hover:bg-white/5 transition border-b border-white/5 last:border-0">
                     <td class="p-6">
                         <div class="font-bold text-white uppercase text-sm italic">${s.apellido || ''}, ${s.nombre || ''}</div>
-                        <div class="text-[10px] text-blue-300/50 uppercase tracking-widest">${s.localidad || 'Traslasierra'}</div>
+                        <div class="text-[10px] text-blue-300/50 uppercase tracking-widest">${s.email || s.localidad || 'Traslasierra'}</div>
                     </td>
-                    <td class="p-6 opacity-60 text-xs font-mono font-bold">${s.dni || '-'}</td>
-                    <td class="p-6 text-center text-white">
-                        <span class="px-3 py-1 rounded-lg text-[9px] font-black uppercase border ${s.estado_pago === 'Al día' ? 'bg-green-500/20 text-green-500 border-green-500/50' : 'bg-red-500/20 text-red-500 border-red-500/50'}">
+                    <td class="p-6 text-center opacity-80 text-xs font-mono font-bold text-white">${s.dni || '-'}</td>
+                    <td class="p-6 text-center">
+                        <span class="px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-tighter ${s.estado_pago === 'Al día' ? 'bg-green-500/20 text-green-500 border border-green-500/50' : 'bg-red-500/20 text-red-500 border border-red-500/50'}">
                             ${s.estado_pago || 'PENDIENTE'}
                         </span>
                     </td>
@@ -131,36 +122,43 @@
             `).join('');
         }
 
-        // 4. Buscador
+        // 3. BUSCADOR MEJORADO (Busca por todo)
         document.getElementById('inputBusqueda').addEventListener('input', (e) => {
-            const term = e.target.value.toLowerCase();
-            const filtrados = todosLosSocios.filter(s => 
-                (s.apellido || "").toLowerCase().includes(term) || 
-                (s.nombre || "").toLowerCase().includes(term) || 
-                (s.dni || "").toString().includes(term)
-            );
+            const term = e.target.value.toLowerCase().trim();
+            
+            const filtrados = todosLosSocios.filter(s => {
+                const nombre = (s.nombre || "").toLowerCase();
+                const apellido = (s.apellido || "").toLowerCase();
+                const dni = (s.dni || "").toString();
+                const email = (s.email || "").toLowerCase();
+                const localidad = (s.localidad || "").toLowerCase();
+
+                return nombre.includes(term) || 
+                       apellido.includes(term) || 
+                       dni.includes(term) || 
+                       email.includes(term) || 
+                       localidad.includes(term);
+            });
+            
             renderizarTabla(filtrados);
         });
 
-        // 5. Función Global del Modal
+        // 4. Modal (Global)
         window.abrirAlmanaque = (id, nombre, dni) => {
             const modal = document.getElementById('modalPagos');
-            const grilla = document.getElementById('grillaMeses');
-            
             document.getElementById('modalNombreSocio').innerText = nombre;
             document.getElementById('modalDniSocio').innerText = `DNI: ${dni}`;
             
             const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            const grilla = document.getElementById('grillaMeses');
             
             grilla.innerHTML = meses.map((mes, index) => {
-                const pagado = index < 3; // Simulación (luego vendrá de base de datos)
-                const estilo = pagado 
-                    ? 'bg-green-500/10 border-green-500 text-green-400' 
-                    : 'bg-red-500/10 border-red-500 text-red-400';
+                const pagado = index < 3; // Simulación
+                const colorClase = pagado ? 'bg-green-500/10 border-green-500/50 text-green-500' : 'bg-red-500/10 border-red-500/50 text-red-400';
                 
                 return `
-                    <div class="border-2 ${estilo} p-4 rounded-2xl text-center transition hover:scale-105">
-                        <span class="block text-[8px] uppercase opacity-60 mb-1 tracking-tighter text-white">Cuota 2026</span>
+                    <div class="border ${colorClase} p-4 rounded-2xl text-center transition hover:scale-105 border-2">
+                        <span class="block text-[8px] uppercase opacity-60 mb-1 text-white">Cuota 2026</span>
                         <span class="font-black block text-sm uppercase text-white">${mes}</span>
                         <span class="block text-[10px] mt-2 font-black italic tracking-widest">${pagado ? 'PAGADO' : 'PENDIENTE'}</span>
                     </div>
@@ -170,13 +168,17 @@
             modal.classList.remove('modal-hidden');
         };
 
-        // 6. Cerrar Modal (Inmune a fallos)
-        const cerrarModal = () => {
+        // 5. Función Cerrar
+        const cerrar = () => {
             document.getElementById('modalPagos').classList.add('modal-hidden');
         };
 
-        document.getElementById('btnCerrarModal').onclick = cerrarModal;
-        document.getElementById('modalPagos').onclick = cerrarModal;
+        document.getElementById('cerrarModal').onclick = cerrar;
+        
+        // Cerrar al hacer clic fuera del contenido
+        document.getElementById('modalPagos').onclick = (e) => {
+            if (e.target.id === 'modalPagos') cerrar();
+        };
 
         inicializar();
     </script>
