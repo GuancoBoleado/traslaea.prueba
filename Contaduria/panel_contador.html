@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Contable • TRASLAEA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#001220] text-white min-h-screen p-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="flex justify-between items-center mb-10 bg-white/5 p-6 rounded-3xl border border-white/10">
+            <div>
+                <h1 class="text-2xl font-black text-orange-500 italic uppercase">TRASLAEA</h1>
+                <p class="text-blue-300 text-xs tracking-widest uppercase opacity-60">Gestión de Asociados y Pagos</p>
+            </div>
+            <div class="flex gap-4">
+                <button id="btnSalir" class="px-6 py-2 border border-red-500/50 text-red-500 rounded-xl hover:bg-red-500 hover:text-white transition text-sm font-bold uppercase">
+                    Cerrar Sesión
+                </button>
+            </div>
+        </div>
+
+        <div class="bg-white/5 rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl">
+            <div class="p-8 border-b border-white/10 flex justify-between items-center bg-white/5">
+                <h2 class="text-xl font-bold">Listado de Técnicos</h2>
+                <button onclick="window.location.href='nuevo_socio.html'" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-xl font-bold text-sm transition">
+                    + Cargar Nuevo
+                </button>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-white/5 text-blue-300 text-xs uppercase tracking-tighter">
+                        <tr>
+                            <th class="p-6">Técnico</th>
+                            <th class="p-6">DNI</th>
+                            <th class="p-6">Estado</th>
+                            <th class="p-6 text-right">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaSocios" class="divide-y divide-white/5">
+                        <tr><td colspan="4" class="p-10 text-center opacity-40">Cargando asociados...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { verificarSesion, salir } from './auth-service.js';
+        import { obtenerSocios } from './socios-service.js';
+
+        // 1. Proteger la página
+        const user = await verificarSesion();
+
+        // 2. Botón salir
+        document.getElementById('btnSalir').addEventListener('click', salir);
+
+        // 3. Cargar datos de la tabla
+        async function cargarTabla() {
+            const lista = document.getElementById('tablaSocios');
+            try {
+                const socios = await obtenerSocios();
+                lista.innerHTML = socios.map(s => `
+                    <tr class="hover:bg-white/5 transition">
+                        <td class="p-6 font-medium">${s.apellido}, ${s.nombre}</td>
+                        <td class="p-6 opacity-60">${s.dni}</td>
+                        <td class="p-6">
+                            <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase ${s.estado_pago === 'Al día' ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'}">
+                                ${s.estado_pago}
+                            </span>
+                        </td>
+                        <td class="p-6 text-right">
+                            <button class="text-orange-500 hover:underline text-sm font-bold">Ver Pagos</button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                lista.innerHTML = `<tr><td colspan="4" class="p-10 text-center text-red-400">Error al cargar datos.</td></tr>`;
+            }
+        }
+
+        cargarTabla();
+    </script>
+</body>
+</html>
