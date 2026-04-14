@@ -18,3 +18,12 @@ export async function registrarSocio(socio) {
     if (error) throw error;
     return data;
 }
+
+export async function registrarPago(pago) {
+    const { data, error } = await supabase
+        .from('pagos')
+        .insert([pago]);
+    
+    if (error) throw error;
+    return data;
+}
