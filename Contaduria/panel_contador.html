@@ -137,7 +137,7 @@
             renderizarTabla(filtrados);
         });
 
-        // 5. Lógica del Modal (Almanaque)
+       // 5. Lógica del Modal (Almanaque) CORREGIDA
         window.abrirAlmanaque = (id, nombre, dni) => {
             const modal = document.getElementById('modalPagos');
             document.getElementById('modalNombreSocio').innerText = nombre;
@@ -146,16 +146,24 @@
             const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
             const grilla = document.getElementById('grillaMeses');
             
-            // Aquí simulo los meses, luego lo conectaremos a tu tabla de "pagos" en Supabase
-            grilla.innerHTML = meses.map((mes, index) => `
-                <div class="mes-card border border-white/10 p-4 rounded-2xl text-center hover:scale-105 transition ${index < 3 ? 'mes-pagado' : 'mes-deuda'}">
-                    <span class="block text-[10px] uppercase opacity-60 mb-1">2026</span>
-                    <span class="font-bold">${mes}</span>
-                    <span class="block text-[9px] mt-2 font-black">${index < 3 ? 'PAGADO' : 'DEBE'}</span>
-                </div>
-            `).join('');
+            // Limpiamos y generamos de nuevo
+            grilla.innerHTML = meses.map((mes, index) => {
+                // Simulación: los primeros 3 meses pagados, el resto deuda
+                const pagado = index < 3; 
+                const colorClase = pagado ? 'bg-green-500/20 border-green-500 text-green-400' : 'bg-red-500/20 border-red-500 text-red-400';
+                const estadoTexto = pagado ? 'PAGADO' : 'PENDIENTE';
+
+                return `
+                    <div class="border p-4 rounded-2xl text-center transition hover:scale-105 ${colorClase}">
+                        <span class="block text-[10px] uppercase opacity-70 mb-1">2026</span>
+                        <span class="font-bold block">${mes}</span>
+                        <span class="block text-[9px] mt-2 font-black tracking-tighter">${estadoTexto}</span>
+                    </div>
+                `;
+            }).join('');
 
             modal.classList.remove('modal-hidden');
+    
         };
 
         document.getElementById('cerrarModal').onclick = () => {
