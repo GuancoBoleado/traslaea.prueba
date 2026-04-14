@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Asociado • TRASLAEA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#001220] text-white min-h-screen p-8">
+    <div class="max-w-2xl mx-auto">
+        <button onclick="window.location.href='panel_contador.html'" class="mb-6 text-blue-300 hover:text-white transition text-sm flex items-center gap-2">
+            ← Volver al Panel
+        </button>
+
+        <div class="bg-white/5 border border-white/10 p-10 rounded-[2.5rem] shadow-2xl backdrop-blur-md">
+            <h1 class="text-2xl font-black text-orange-500 italic uppercase mb-2">Nuevo Técnico</h1>
+            <p class="text-blue-300 text-xs tracking-widest uppercase opacity-60 mb-8">Registro de Asociado</p>
+
+            <form id="formSocio" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="flex flex-col gap-2">
+                    <label class="text-[10px] uppercase tracking-widest opacity-50 ml-2">Nombre</label>
+                    <input type="text" id="nombre" required class="bg-[#001220] border border-white/10 p-4 rounded-xl focus:border-orange-500 outline-none transition">
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="text-[10px] uppercase tracking-widest opacity-50 ml-2">Apellido</label>
+                    <input type="text" id="apellido" required class="bg-[#001220] border border-white/10 p-4 rounded-xl focus:border-orange-500 outline-none transition">
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="text-[10px] uppercase tracking-widest opacity-50 ml-2">DNI</label>
+                    <input type="text" id="dni" required class="bg-[#001220] border border-white/10 p-4 rounded-xl focus:border-orange-500 outline-none transition">
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="text-[10px] uppercase tracking-widest opacity-50 ml-2">Teléfono</label>
+                    <input type="text" id="telefono" class="bg-[#001220] border border-white/10 p-4 rounded-xl focus:border-orange-500 outline-none transition">
+                </div>
+                <div class="md:col-span-2 flex flex-col gap-2">
+                    <label class="text-[10px] uppercase tracking-widest opacity-50 ml-2">Email</label>
+                    <input type="email" id="email" required class="bg-[#001220] border border-white/10 p-4 rounded-xl focus:border-orange-500 outline-none transition">
+                </div>
+
+                <button type="submit" class="md:col-span-2 bg-orange-500 hover:bg-orange-600 font-black py-4 rounded-xl uppercase tracking-widest transition mt-4">
+                    Guardar Asociado
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { verificarSesion } from './auth-service.js';
+        import { registrarSocio } from './socios-service.js';
+
+        // Proteger la página
+        await verificarSesion();
+
+        document.getElementById('formSocio').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const nuevoSocio = {
+                nombre: document.getElementById('nombre').value,
+                apellido: document.getElementById('apellido').value,
+                dni: document.getElementById('dni').value,
+                email: document.getElementById('email').value,
+                telefono: document.getElementById('telefono').value,
+                estado_pago: 'Al día' // Por defecto al cargar
+            };
+
+            try {
+                await registrarSocio(nuevoSocio);
+                alert("Asociado guardado con éxito");
+                window.location.href = 'panel_contador.html';
+            } catch (error) {
+                alert("Error: El DNI ya existe o hubo un problema de conexión.");
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>
