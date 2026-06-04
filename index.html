@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cubo 3D Traslaea</title>
+  <!-- Tailwind CSS para el diseño de la interfaz -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style>
     /* Estilos 3D puros en CSS */
@@ -54,31 +55,40 @@
     <h1 class="text-2xl font-bold text-slate-800 mb-2">Simulador Cubo 3D</h1>
     <p class="text-sm text-slate-500 mb-8">Traslasierra Electricistas Asociados</p>
 
+    <!-- Contenedor del Cubo Animado -->
     <div class="cube-container h-64 w-full flex items-center justify-center mb-6">
       <div id="logoCube" class="cube">
+        <!-- Cara Frontal -->
         <div class="face front">
-          <img src="https://images.squarespace-cdn.com/content/v1/64010da9558a361b2fa1f759/da081a2f-7be3-488b-a48a-6691c28c89a7/TRASLAEA.png" alt="Logo Traslaea">
+          <img src="logoooo.png" alt="Logo Traslaea">
         </div>
+        <!-- Cara Trasera -->
         <div class="face back">
-          <img src="https://images.squarespace-cdn.com/content/v1/64010da9558a361b2fa1f759/da081a2f-7be3-488b-a48a-6691c28c89a7/TRASLAEA.png" alt="Logo Traslaea">
+          <img src="logoooo.png" alt="Logo Traslaea">
         </div>
+        <!-- Cara Izquierda -->
         <div class="face left">
-          <img src="https://images.squarespace-cdn.com/content/v1/64010da9558a361b2fa1f759/da081a2f-7be3-488b-a48a-6691c28c89a7/TRASLAEA.png" alt="Logo Traslaea">
+          <img src="logoooo.png" alt="Logo Traslaea">
         </div>
+        <!-- Cara Derecha -->
         <div class="face right">
-          <img src="https://images.squarespace-cdn.com/content/v1/64010da9558a361b2fa1f759/da081a2f-7be3-488b-a48a-6691c28c89a7/TRASLAEA.png" alt="Logo Traslaea">
+          <img src="logoooo.png" alt="Logo Traslaea">
         </div>
+        <!-- Cara Superior -->
         <div class="face top">
-          <img src="https://images.squarespace-cdn.com/content/v1/64010da9558a361b2fa1f759/da081a2f-7be3-488b-a48a-6691c28c89a7/TRASLAEA.png" alt="Logo Traslaea">
+          <img src="logoooo.png" alt="Logo Traslaea">
         </div>
+        <!-- Cara Inferior -->
         <div class="face bottom">
-          <img src="https://images.squarespace-cdn.com/content/v1/64010da9558a361b2fa1f759/da081a2f-7be3-488b-a48a-6691c28c89a7/TRASLAEA.png" alt="Logo Traslaea">
+          <img src="logoooo.png" alt="Logo Traslaea">
         </div>
       </div>
     </div>
 
+    <!-- Panel de Controles -->
     <div class="w-full space-y-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
       
+      <!-- Control de Velocidad -->
       <div>
         <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
           <span>Velocidad de Giro</span>
@@ -88,6 +98,7 @@
                class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
       </div>
 
+      <!-- Control de Dirección -->
       <div>
         <span class="block text-xs font-semibold text-slate-600 text-left mb-2">Eje de Rotación</span>
         <div class="grid grid-cols-3 gap-2">
@@ -106,6 +117,7 @@
     </div>
   </div>
 
+  <!-- Lógica de Animación Interactiva -->
   <script>
     const cube = document.getElementById('logoCube');
     const speedControl = document.getElementById('speedControl');
