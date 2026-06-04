@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Proximamente novedades</title>
+  <title>Próximamente novedades</title>
   <!-- Tailwind CSS para el diseño de la interfaz -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <style>
@@ -47,13 +47,44 @@
       height: 85%;
       object-fit: contain;
     }
+
+    /* Fondo de cuadrícula técnica (falsa escuadra / wireframe) */
+    .tech-grid {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(0, 82, 204, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 82, 204, 0.04) 1px, transparent 1px);
+    }
+
+    /* Animación suave para el gradiente del fondo */
+    @keyframes pulseBg {
+      0%, 100% { opacity: 0.8; }
+      50% { opacity: 1; }
+    }
+    .animated-bg {
+      animation: pulseBg 8s ease-in-out infinite;
+    }
   </style>
 </head>
-<body class="bg-slate-100 font-sans min-h-screen flex flex-col items-center justify-center p-4">
+<body class="bg-slate-950 font-sans min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden tech-grid">
 
-  <div class="bg-white p-8 rounded-2xl shadow-xl max-w-md w-full text-center flex flex-col items-center">
-    <h1 class="text-2xl font-bold text-slate-800 mb-2">Proximamente novedades</h1>
-    <p class="text-sm text-slate-500 mb-8">Traslasierra Electricistas Asociados</p>
+  <!-- Capa de gradiente dinámico de fondo -->
+  <div class="absolute inset-0 bg-gradient-to-tr from-slate-900 via-blue-950 to-slate-900 animated-bg -z-10"></div>
+
+  <!-- Detalle estético: Barra de precaución de obra en el borde superior -->
+  <div class="absolute top-0 left-0 w-full h-1.5 bg-[length:20px_20px] bg-[linear-gradient(45deg,rgba(245,158,11,0.85)_25%,rgba(30,41,59,0.85)_25%,rgba(30,41,59,0.85)_50%,rgba(245,158,11,0.85)_50%,rgba(245,158,11,0.85)_75%,rgba(30,41,59,0.85)_75%,rgba(30,41,59,0.85))]"></div>
+
+  <!-- Tarjeta Principal -->
+  <div class="bg-white/95 backdrop-blur-md p-8 rounded-2xl shadow-2xl max-w-md w-full text-center flex flex-col items-center border border-slate-200/50 relative z-10">
+    
+    <!-- Badge de "Sitio en construcción" -->
+    <span class="mb-3 inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 animate-pulse">
+      <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+      Sitio en construcción
+    </span>
+
+    <h1 class="text-2xl font-bold text-slate-800 mb-1">Próximamente novedades</h1>
+    <p class="text-sm font-medium text-blue-600 mb-6">Traslasierra Electricistas Asociados</p>
 
     <!-- Contenedor del Cubo Animado -->
     <div class="cube-container h-64 w-full flex items-center justify-center mb-6">
