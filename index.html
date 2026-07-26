@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finca & Hostería - El Legado</title>
+  <style>
+    /* RESET & ESTILOS BASE */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Georgia', 'Times New Roman', serif;
+    }
+
+    body {
+      /* Fondo rústico oscuro con textura o tono cálido de madera/noche */
+      background: #120c08 url('https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat fixed;
+      color: #3d2b1f;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* CAPA DE OSCURECIMIENTO SOBRE EL FONDO */
+    .overlay {
+      background: rgba(15, 10, 5, 0.82);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ENCABEZADO TIPO ESTANDARTE */
+    header {
+      background: linear-gradient(180deg, #2d1e18 0%, #1a100b 100%);
+      border-bottom: 4px solid #8b6d31;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+    }
+
+    header h1 {
+      color: #e6c875;
+      font-size: 2.2rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-shadow: 2px 2px 4px #000;
+    }
+
+    header p {
+      color: #d4c39c;
+      font-size: 0.95rem;
+      margin-top: 5px;
+      font-style: italic;
+    }
+
+    /* LAYOUT PRINCIPAL (MENÚ LATERAL + PANEL DE PERGAMINO) */
+    .main-container {
+      display: flex;
+      flex: 1;
+      max-width: 1200px;
+      width: 95%;
+      margin: 30px auto;
+      gap: 25px;
+    }
+
+    /* MENÚ LATERAL ESTILO "BOTONES DEL JUEGO" */
+    nav.sidebar {
+      width: 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .nav-btn {
+      background: linear-gradient(180deg, #5c4028 0%, #3a2616 100%);
+      border: 2px solid #a88442;
+      border-radius: 6px;
+      color: #f1e4c3;
+      padding: 14px 18px;
+      font-size: 1.05rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s ease;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 4px 8px rgba(0,0,0,0.5);
+      text-align: left;
+    }
+
+    .nav-btn:hover, .nav-btn.active {
+      background: linear-gradient(180deg, #8b6d31 0%, #5c4028 100%);
+      border-color: #ffd700;
+      color: #ffffff;
+      transform: translateX(5px);
+      box-shadow: 0 0 10px rgba(230, 200, 117, 0.4);
+    }
+
+    .nav-btn .icon {
+      font-size: 1.4rem;
+      width: 30px;
+      text-align: center;
+    }
+
+    /* CONTENEDOR TIPO PERGAMINO */
+    main.content-scroll {
+      flex: 1;
+      background: #e8d9b5 url('https://www.transparenttextures.com/patterns/paper.png');
+      border: 8px solid #3a2616;
+      outline: 2px solid #a88442;
+      border-radius: 4px;
+      padding: 35px;
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.3), 0 10px 25px rgba(0,0,0,0.7);
+      min-height: 500px;
+    }
+
+    /* SECCIONES Y CONTENIDOS */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2.section-title {
+      border-bottom: 2px solid #8b6d31;
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      color: #4a2e18;
+      font-size: 1.8rem;
+    }
+
+    /* SECCIÓN HOSPEDAJE */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: #f4ebd0;
+      border: 2px solid #8b6d31;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-bottom: 2px solid #8b6d31;
+    }
+
+    .card-body {
+      padding: 15px;
+    }
+
+    .card-body h3 {
+      color: #3a2616;
+      margin-bottom: 8px;
+    }
+
+    .btn-action {
+      margin-top: 12px;
+      width: 100%;
+      background: #8b6d31;
+      color: #fff;
+      border: 1px solid #5c4028;
+      padding: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+
+    .btn-action:hover {
+      background: #5c4028;
+    }
+
+    /* SIMULADOR DE ALMANAQUE Y RESERVAS */
+    .booking-box {
+      background: #f4ebd0;
+      border: 2px dashed #8b6d31;
+      padding: 20px;
+      border-radius: 6px;
+      margin-top: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-group label {
+      font-weight: bold;
+      color: #3a2616;
+    }
+
+    .form-group input, .form-group select {
+      padding: 10px;
+      border: 1px solid #a88442;
+      border-radius: 4px;
+      background: #fff;
+      font-size: 1rem;
+    }
+
+    /* BÚSQUEDA / PORTAL DE HUÉSPED */
+    .search-portal {
+      background: #dfd0ab;
+      padding: 20px;
+      border: 1px solid #8b6d31;
+      border-radius: 6px;
+      margin-bottom: 25px;
+    }
+
+    .search-portal-inputs {
+      display: flex;
+      gap: 10px;
+    }
+
+    .search-portal-inputs input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #a88442;
+      border-radius: 4px;
+    }
+
+    /* FOOTER / PIE DE PÁGINA */
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #120c08;
+      color: #8b6d31;
+      border-top: 2px solid #3a2616;
+      font-size: 0.85rem;
+    }
+
+    /* RESPONSIVE MÓVIL */
+    @media (max-width: 768px) {
+      .main-container {
+        flex-direction: column;
+      }
+      nav.sidebar {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="overlay">
+    <!-- ENCABEZADO -->
+    <header>
+      <h1>Finca & Hostería "El Legado"</h1>
+      <p>Alojamiento, Viñedos & Sabores Artesanales</p>
+    </header>
+
+    <!-- INTERFAZ PRINCIPAL -->
+    <div class="main-container">
+      
+      <!-- MENÚ LATERAL (ESTILO BOTONES AGE OF EMPIRES) -->
+      <nav class="sidebar">
+        <button class="nav-btn active" onclick="switchTab('hospedaje', this)">
+          <span class="icon">🛡️</span> Hospedaje & Suites
+        </button>
+        <button class="nav-btn" onclick="switchTab('reservas', this)">
+          <span class="icon">📖</span> Almanaque & Reserva
+        </button>
+        <button class="nav-btn" onclick="switchTab('tienda', this)">
+          <span class="icon">⚒️</span> Tienda de Vinos
+        </button>
+        <button class="nav-btn" onclick="switchTab('tours', this)">
+          <span class="icon">⚔️</span> Tours & Catas
+        </button>
+        <button class="nav-btn" onclick="switchTab('portal', this)">
+          <span class="icon">🔑</span> Mi Portal / Huésped
+        </button>
+      </nav>
+
+      <!-- ÁREA DE CONTENIDO (PERGAMINO CENTRAL) -->
+      <main class="content-scroll">
+
+        <!-- PESTAÑA 1: HOSPEDAJE -->
+        <section id="hospedaje" class="tab-content active">
+          <h2 class="section-title">Nuestras Habitaciones</h2>
+          <p>Disfruta del descanso en un entorno natural único rodeado de viñedos y arquitectura rústica.</p>
+          
+          <div class="cards-grid">
+            <div class="card">
+              <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=500&q=80" alt="Suite Cava">
+              <div class="card-body">
+                <h3>Suite "La Cava"</h3>
+                <p>Cama King, vista al viñedo y hogar a leña.</p>
+                <button class="btn-action" onclick="switchTab('reservas')">Reservar Disponibilidad</button>
+              </div>
+            </div>
+            <div class="card">
+              <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=500&q=80" alt="Habitación Antigua">
+              <div class="card-body">
+                <h3>Habitación "El Molino"</h3>
+                <p>Espaciosa, detalles en madera y piedra rústica.</p>
+                <button class="btn-action" onclick="switchTab('reservas')">Reservar Disponibilidad</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PESTAÑA 2: RESERVAS & ALMANAQUE -->
+        <section id="reservas" class="tab-content">
+          <h2 class="section-title">Almanaque de Disponibilidad</h2>
+          <p>Selecciona tus fechas de estadía y calcula el total de tu reserva en tiempo real.</p>
+
+          <div class="booking-box">
+            <div class="form-group">
+              <label for="room-select">Selecciona la Habitación:</label>
+              <select id="room-select">
+                <option value="120">Suite "La Cava" - $120 / noche</option>
+                <option value="90">Habitación "El Molino" - $90 / noche</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="checkin">Fecha de Entrada (Check-in):</label>
+              <input type="date" id="checkin">
+            </div>
+            <div class="form-group">
+              <label for="checkout">Fecha de Salida (Check-out):</label>
+              <input type="date" id="checkout">
+            </div>
+            <button class="btn-action" onclick="calcularTotal()">Calcular y Pasar al Pago (Libro)</button>
+            <div id="booking-summary" style="margin-top: 15px; font-weight: bold; color: #3a2616;"></div>
+          </div>
+        </section>
+
+        <!-- PESTAÑA 3: TIENDA DE VINOS (EL YUNQUE) -->
+        <section id="tienda" class="tab-content">
+          <h2 class="section-title">Bodega & Vinos de la Finca</h2>
+          <p>Llévate a casa los aromas y la tradición artesanal de nuestros viñedos.</p>
+
+          <div class="cards-grid">
+            <div class="card">
+              <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=500&q=80" alt="Vino tinto">
+              <div class="card-body">
+                <h3>Vino Reserva Gran Roble</h3>
+                <p>Malbec con 12 meses de añejamiento en barrica.</p>
+                <p><strong>$25.00</strong></p>
+                <button class="btn-action" onclick="alert('¡Añadido al carrito de compras!')">Añadir al Carrito</button>
+              </div>
+            </div>
+            <div class="card">
+              <img src="https://images.unsplash.com/photo-1558001373-7b93ee48ffa0?auto=format&fit=crop&w=500&q=80" alt="Tabla de quesos y vinos">
+              <div class="card-body">
+                <h3>Tabla Artesanal & Maridaje</h3>
+                <p>Quesos de campo y embutidos de la región.</p>
+                <p><strong>$18.00</strong></p>
+                <button class="btn-action" onclick="alert('¡Añadido al carrito de compras!')">Añadir al Carrito</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PESTAÑA 4: TOURS Y VISITAS -->
+        <section id="tours" class="tab-content">
+          <h2 class="section-title">Experiencias & Tours en la Finca</h2>
+          <p>Programa visitas guiadas por el viñedo y catas dirigidas por nuestros enólogos.</p>
+          <div class="cards-grid">
+            <div class="card">
+              <div class="card-body">
+                <h3>Cata Guiada & Recorrido por el Viñedo</h3>
+                <p>Duración: 2 horas. Incluye degustación de 4 varietales.</p>
+                <button class="btn-action" onclick="alert('Redirigiendo al calendario de agendamiento de tours...')">Contratar Tour</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PESTAÑA 5: PORTAL DEL HUÉSPED (BUSCADOR DE CLIENTE) -->
+        <section id="portal" class="tab-content">
+          <h2 class="section-title">Mi Portal / Portal de Huésped</h2>
+          <p>Ingresa tu número de reserva o documento para consultar el detalle de tu estadía, saldo y actividades contratadas.</p>
+
+          <div class="search-portal">
+            <div class="search-portal-inputs">
+              <input type="text" id="guest-id" placeholder="Ingresa tu DNI o Código de Reserva (ej: RES-102)">
+              <button class="btn-action" style="margin: 0; width: auto;" onclick="buscarReserva()">Buscar</button>
+            </div>
+          </div>
+
+          <div id="guest-result" style="display: none; background: #f4ebd0; border: 1px solid #8b6d31; padding: 20px; border-radius: 6px;">
+            <h3 style="color: #3a2616; margin-bottom: 10px;">¡Bienvenido, Juan Pérez!</h3>
+            <p><strong>Habitación:</strong> Suite "La Cava"</p>
+            <p><strong>Fechas:</strong> 15 de Noviembre al 18 de Noviembre</p>
+            <p><strong>Estado del Pago:</strong> <span style="color: green; font-weight: bold;">Pagado (100%)</span></p>
+            <p><strong>Actividades Contratadas:</strong> Cata Guiada (16 de Nov - 17:00 hs)</p>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- PIE DE PÁGINA / LEGISLACIÓN Y CONTACTO -->
+    <footer>
+      <p>© Finca & Hostería El Legado - Todos los derechos reservados. Diseñado con temática artesanal.</p>
+    </footer>
+  </div>
+
+  <!-- LÓGICA JAVASCRIPT -->
+  <script>
+    // CAMBIO DE PESTAÑAS (TABS)
+    function switchTab(tabId, btnElement) {
+      // Ocultar todas las pestañas
+      const tabs = document.querySelectorAll('.tab-content');
+      tabs.forEach(tab => tab.classList.remove('active'));
+
+      // Desactivar estado activo en todos los botones del menú
+      const buttons = document.querySelectorAll('.nav-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      // Mostrar la pestaña seleccionada
+      document.getElementById(tabId).classList.add('active');
+
+      // Marcar botón activo
+      if(btnElement) {
+        btnElement.classList.add('active');
+      } else {
+        // Si el cambio viene de un botón interno, activar el de la barra lateral
+        const btnIndex = ['hospedaje', 'reservas', 'tienda', 'tours', 'portal'].indexOf(tabId);
+        if(btnIndex !== -1) buttons[btnIndex].classList.add('active');
+      }
+    }
+
+    // CÁLCULO DE RESERVA EN EL ALMANAQUE
+    function calcularTotal() {
+      const pricePerNight = parseFloat(document.getElementById('room-select').value);
+      const checkinVal = document.getElementById('checkin').value;
+      const checkoutVal = document.getElementById('checkout').value;
+      const summaryDiv = document.getElementById('booking-summary');
+
+      if (!checkinVal || !checkoutVal) {
+        summaryDiv.innerHTML = "<span style='color: red;'>Por favor selecciona fecha de entrada y salida.</span>";
+        return;
+      }
+
+      const date1 = new Date(checkinVal);
+      const date2 = new Date(checkoutVal);
+      const diffTime = date2 - date1;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      if (diffDays <= 0) {
+        summaryDiv.innerHTML = "<span style='color: red;'>La fecha de salida debe ser posterior a la de entrada.</span>";
+        return;
+      }
+
+      const total = diffDays * pricePerNight;
+      summaryDiv.innerHTML = `
+        <p>Noches: ${diffDays}</p>
+        <p>Total a pagar: $${total} USD</p>
+        <button class="btn-action" style="margin-top: 10px;" onclick="alert('¡Reserva registrada con éxito! Pasando a la pasarela de pago.')">Confirmar y Pagar</button>
+      `;
+    }
+
+    // SIMULADOR DE BÚSQUEDA DE HUÉSPED
+    function buscarReserva() {
+      const inputVal = document.getElementById('guest-id').value.trim();
+      const resultDiv = document.getElementById('guest-result');
+
+      if (inputVal === '') {
+        alert('Por favor ingresa un código de reserva o DNI.');
+        return;
+      }
+
+      // Muestra resultado simulado
+      resultDiv.style.display = 'block';
+    }
+  </script>
+</body>
+</html>
