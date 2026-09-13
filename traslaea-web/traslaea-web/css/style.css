@@ -1,0 +1,256 @@
+/* traslaea-web/css/style.css */
+
+:root {
+    --azul-oscuro: #0a2540;
+    --azul-secundario: #003366;
+    --naranja-accent: #ff6600;
+    --gris-fondo: #f4f7f9;
+    --blanco: #ffffff;
+    --texto-oscuro: #2c3e50;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--gris-fondo);
+    color: var(--texto-oscuro);
+}
+
+/* NAVBAR */
+.navbar {
+    background-color: var(--azul-oscuro);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    height: 45px;
+}
+
+.brand-text h1 {
+    color: var(--blanco);
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.brand-text span {
+    color: var(--naranja-accent);
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.navbar nav ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.navbar nav a {
+    color: var(--blanco);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.navbar nav a:hover, .navbar nav a.active {
+    color: var(--naranja-accent);
+}
+
+.btn-suscripcion {
+    background-color: var(--blanco);
+    color: var(--azul-oscuro);
+    padding: 8px 18px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 13px;
+    transition: all 0.3s;
+}
+
+.btn-suscripcion:hover {
+    background-color: var(--naranja-accent);
+    color: var(--blanco);
+}
+
+/* HERO SECTION */
+.hero {
+    background: linear-gradient(135deg, var(--azul-oscuro), var(--azul-secundario));
+    color: var(--blanco);
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.hero h2 {
+    font-size: 38px;
+    letter-spacing: 2px;
+}
+
+.hero .subtitle {
+    color: var(--naranja-accent);
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+/* CONTADORES / TARJETAS */
+.stats-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: var(--blanco);
+    color: var(--texto-oscuro);
+    padding: 20px 30px;
+    border-radius: 12px;
+    min-width: 200px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-bottom: 4px solid var(--naranja-accent);
+}
+
+.stat-number {
+    display: block;
+    font-size: 32px;
+    font-weight: bold;
+    color: var(--azul-oscuro);
+}
+
+.stat-label {
+    font-size: 11px;
+    font-weight: bold;
+    color: #666;
+}
+
+/* DASHBOARD GRID */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.card {
+    background: var(--blanco);
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* MAPA */
+#map {
+    height: 320px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.badge {
+    background: #e1f0ff;
+    color: #0066cc;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 10px;
+}
+
+.card-footer-text {
+    font-size: 11px;
+    color: #777;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* RECURSOS */
+.resource-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #f8f9fa;
+    padding: 12px 18px;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+.icon-pdf, .icon-drive {
+    background: #e74c3c;
+    color: white;
+    font-weight: bold;
+    font-size: 11px;
+    padding: 8px 10px;
+    border-radius: 6px;
+}
+
+.icon-drive {
+    background: #27ae60;
+}
+
+.resource-info h4 {
+    font-size: 14px;
+    color: var(--azul-oscuro);
+}
+
+.resource-info p {
+    font-size: 11px;
+    color: #666;
+}
+
+.btn-download, .btn-link {
+    margin-left: auto;
+    background: var(--azul-secundario);
+    color: white;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+.notice-box {
+    background: var(--azul-oscuro);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    font-size: 12px;
+}
+
+.notice-box strong {
+    color: var(--naranja-accent);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
