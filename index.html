@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TRASLAEA - Traslasierra Electricistas Asociados</title>
 
-    <!-- CSS Global y Componentes -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/components.css">
+    <!-- CSS apuntando a traslaea-web -->
+    <link rel="stylesheet" href="traslaea-web/css/style.css">
+    <link rel="stylesheet" href="traslaea-web/css/components.css">
 
     <!-- Leaflet CSS para el Mapa -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -18,7 +17,7 @@
     <!-- NAVBAR / ENCABEZADO -->
     <header class="navbar">
         <div class="logo-container">
-            <img src="assets/img/logo-traslaea.png" alt="Logo TRASLAEA" class="logo">
+            <img src="traslaea-web/assets/img/logo-traslaea.png" alt="Logo TRASLAEA" class="logo">
             <div class="brand-text">
                 <h1>TRASLAEA</h1>
                 <span>ELECTRICISTAS ASOCIADOS</span>
@@ -27,13 +26,13 @@
         <nav>
             <ul>
                 <li><a href="index.html" class="active">Inicio</a></li>
-                <li><a href="paginas/nosotros.html">Nosotros</a></li>
-                <li><a href="paginas/recursos.html">Recursos</a></li>
-                <li><a href="paginas/eventos.html">Eventos</a></li>
-                <li><a href="paginas/contacto.html">Contacto</a></li>
+                <li><a href="traslaea-web/paginas/nosotros.html">Nosotros</a></li>
+                <li><a href="traslaea-web/paginas/recursos.html">Recursos</a></li>
+                <li><a href="traslaea-web/paginas/eventos.html">Eventos</a></li>
+                <li><a href="traslaea-web/paginas/contacto.html">Contacto</a></li>
             </ul>
         </nav>
-        <a href="paginas/contacto.html#registro" class="btn-suscripcion">SUSCRIPCIÓN</a>
+        <a href="traslaea-web/paginas/contacto.html#registro" class="btn-suscripcion">SUSCRIPCIÓN</a>
     </header>
 
     <!-- HERO SECTION / CONTADORES -->
@@ -57,10 +56,10 @@
         </div>
     </section>
 
-    <!-- DASHBOARD PRINCIPAL: MAPA Y RECURSOS -->
+    <!-- DASHBOARD PRINCIPAL -->
     <main class="dashboard-grid">
 
-        <!-- MÓDULO MAPA DE COBERTURA -->
+        <!-- MAPA -->
         <article class="card map-card">
             <div class="card-header">
                 <h3>📍 MAPA DE COBERTURA</h3>
@@ -70,7 +69,7 @@
             <p class="card-footer-text">HAZ CLIC EN LOS PUNTOS PARA VER INFORMACIÓN DE LOS SOCIOS</p>
         </article>
 
-        <!-- MÓDULO RECURSOS TÉCNICOS -->
+        <!-- RECURSOS TÉCNICOS -->
         <article class="card resources-card">
             <h3>📚 RECURSOS TÉCNICOS</h3>
             
@@ -80,7 +79,7 @@
                     <h4>MANUAL SOLAR</h4>
                     <p>INSTALACIONES FOTOVOLTAICAS</p>
                 </div>
-                <a href="assets/docs/manual-solar.pdf" download class="btn-download">BAJAR ↓</a>
+                <a href="traslaea-web/assets/docs/manual-solar.pdf" download class="btn-download">BAJAR ↓</a>
             </div>
 
             <div class="resource-item">
@@ -100,9 +99,8 @@
 
     </main>
 
-    <!-- Leaflet JS y Script del Mapa -->
+    <!-- JS apuntando a traslaea-web -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="js/map.js"></script>
-    <script src="js/main.js"></script>
+    <script src="traslaea-web/js/map.js"></script>
 </body>
 </html>
