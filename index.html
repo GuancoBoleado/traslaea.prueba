@@ -1,1 +1,108 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRASLAEA - Traslasierra Electricistas Asociados</title>
+
+    <!-- CSS Global y Componentes -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+
+    <!-- Leaflet CSS para el Mapa -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+
+    <!-- NAVBAR / ENCABEZADO -->
+    <header class="navbar">
+        <div class="logo-container">
+            <img src="assets/img/logo-traslaea.png" alt="Logo TRASLAEA" class="logo">
+            <div class="brand-text">
+                <h1>TRASLAEA</h1>
+                <span>ELECTRICISTAS ASOCIADOS</span>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Inicio</a></li>
+                <li><a href="paginas/nosotros.html">Nosotros</a></li>
+                <li><a href="paginas/recursos.html">Recursos</a></li>
+                <li><a href="paginas/eventos.html">Eventos</a></li>
+                <li><a href="paginas/contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+        <a href="paginas/contacto.html#registro" class="btn-suscripcion">SUSCRIPCIÓN</a>
+    </header>
+
+    <!-- HERO SECTION / CONTADORES -->
+    <section class="hero">
+        <h2>TRASLAEA</h2>
+        <p class="subtitle">TRASLASIERRA ELECTRICISTAS ASOCIADOS</p>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <span class="stat-number">18</span>
+                <span class="stat-label">SOCIOS ACTIVOS</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">1</span>
+                <span class="stat-label">OBRAS SEGURAS</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">25</span>
+                <span class="stat-label">LOCALIDADES</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- DASHBOARD PRINCIPAL: MAPA Y RECURSOS -->
+    <main class="dashboard-grid">
+
+        <!-- MÓDULO MAPA DE COBERTURA -->
+        <article class="card map-card">
+            <div class="card-header">
+                <h3>📍 MAPA DE COBERTURA</h3>
+                <span class="badge">TRASLASIERRA EN RED</span>
+            </div>
+            <div id="map"></div>
+            <p class="card-footer-text">HAZ CLIC EN LOS PUNTOS PARA VER INFORMACIÓN DE LOS SOCIOS</p>
+        </article>
+
+        <!-- MÓDULO RECURSOS TÉCNICOS -->
+        <article class="card resources-card">
+            <h3>📚 RECURSOS TÉCNICOS</h3>
+            
+            <div class="resource-item">
+                <span class="icon-pdf">PDF</span>
+                <div class="resource-info">
+                    <h4>MANUAL SOLAR</h4>
+                    <p>INSTALACIONES FOTOVOLTAICAS</p>
+                </div>
+                <a href="assets/docs/manual-solar.pdf" download class="btn-download">BAJAR ↓</a>
+            </div>
+
+            <div class="resource-item">
+                <span class="icon-drive">DRIVE</span>
+                <div class="resource-info">
+                    <h4>NORMATIVAS 2026</h4>
+                    <p>REGLAMENTACIÓN AEA / ERSeP</p>
+                </div>
+                <a href="#" class="btn-link">VER CARPETA →</a>
+            </div>
+
+            <div class="notice-box">
+                <strong>AVISO TÉCNICO</strong>
+                <p>Recordá que para certificar instalaciones en Córdoba debes estar registrado en la Categoría 3 (Idóneos) o superior.</p>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- Leaflet JS y Script del Mapa -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
