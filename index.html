@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TRASLAEA - Traslasierra Electricistas Asociados</title>
 
-    <!-- CSS apuntando a la nueva ubicación -->
+    <!-- CSS -->
     <link rel="stylesheet" href="traslaea-web/style.css">
 
     <!-- Leaflet CSS para el Mapa -->
@@ -41,15 +41,11 @@
 
         <div class="stats-container">
             <div class="stat-card">
-                <span class="stat-number">18</span>
-                <span class="stat-label">SOCIOS ACTIVOS</span>
+                <span class="stat-number">50</span>
+                <span class="stat-label">SOCIOS</span>
             </div>
             <div class="stat-card">
-                <span class="stat-number">1</span>
-                <span class="stat-label">OBRAS SEGURAS</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">25</span>
+                <span class="stat-number">12</span>
                 <span class="stat-label">LOCALIDADES</span>
             </div>
         </div>
@@ -92,11 +88,63 @@
 
             <div class="notice-box">
                 <strong>AVISO TÉCNICO</strong>
-                <p>Recordá que para certificar instalaciones en Córdoba debes estar registrado en la Categoría III (Idóneos) o superior.</p>
+                <p>Recordá que para certificar instalaciones en Córdoba debes estar registrado en la Categoría 3 (Idóneos) o superior.</p>
             </div>
         </article>
 
     </main>
+
+    <!-- SECCIÓN DE NOTICIAS (ESTILO PERIÓDICO) -->
+    <section class="news-section">
+        <div class="news-header">
+            <h3>📰 NOTICIAS DESTACADAS</h3>
+            <a href="traslaea-web/paginas/eventos.html" class="btn-all-news">Ver todas las noticias →</a>
+        </div>
+
+        <div class="news-grid">
+            <!-- Noticia 1 -->
+            <article class="news-card">
+                <div class="news-img-wrapper">
+                    <img src="traslaea-web/assets/img/noticia1.jpg" alt="Capacitación Fotovoltaica" class="news-img">
+                    <span class="news-badge">CAPACITACIÓN</span>
+                </div>
+                <div class="news-content">
+                    <span class="news-date">10 de Septiembre, 2026</span>
+                    <h4>Nuevo Curso de Instalaciones Solar Fotovoltaicas</h4>
+                    <p>Se abren las inscripciones para la capacitación presencial sobre cálculo y dimensionado de sistemas solares aislados y grid-tie.</p>
+                    <a href="#" class="news-read-more">Leer noticia completa →</a>
+                </div>
+            </article>
+
+            <!-- Noticia 2 -->
+            <article class="news-card">
+                <div class="news-img-wrapper">
+                    <img src="traslaea-web/assets/img/noticia2.jpg" alt="Reunión TRASLAEA" class="news-img">
+                    <span class="news-badge">INSTITUCIONAL</span>
+                </div>
+                <div class="news-content">
+                    <span class="news-date">28 de Agosto, 2026</span>
+                    <h4>Asamblea General y Actualización Normativa ERSeP</h4>
+                    <p>Reunión de la comisión directiva y socios para abordar la seguridad eléctrica en obras rurales de Traslasierra.</p>
+                    <a href="#" class="news-read-more">Leer noticia completa →</a>
+                </div>
+            </article>
+
+            <!-- Noticia 3 -->
+            <article class="news-card">
+                <div class="news-img-wrapper">
+                    <img src="traslaea-web/assets/img/noticia3.jpg" alt="Insumos Eléctricos" class="news-img">
+                    <span class="news-badge">NOVEDADES</span>
+                </div>
+                <div class="news-content">
+                    <span class="news-date">15 de Agosto, 2026</span>
+                    <h4>Convenio de Descuentos en Materiales Eléctricos</h4>
+                    <p>Nuevos acuerdos comerciales brindan beneficios exclusivos a los electricistas asociados a TRASLAEA.</p>
+                    <a href="#" class="news-read-more">Leer noticia completa →</a>
+                </div>
+            </article>
+        </div>
+    </section>
 
     <!-- JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
