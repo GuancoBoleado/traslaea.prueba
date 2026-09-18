@@ -19,25 +19,84 @@
             padding: 0;
         }
         .contact-container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 40px auto;
             padding: 20px;
         }
-        .contact-card {
-            background: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #0077b6;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
         }
-        .contact-header h2 {
-            color: #0b2545;
-            margin-bottom: 10px;
-            font-size: 1.8rem;
+        .back-link:hover {
+            color: #03045e;
+            text-decoration: underline;
         }
-        .contact-header p {
-            color: #666;
+
+        /* Estructura en Grid para hacerlo atractivo y moderno */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        @media(min-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr 1.2fr;
+                align-items: start;
+            }
+        }
+
+        /* Columna de información / llamada a la acción */
+        .contact-info-side {
+            background: linear-gradient(135deg, #0b2545 0%, #134074 100%);
+            color: white;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(11, 37, 69, 0.15);
+        }
+        .contact-info-side h2 {
+            font-size: 2rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+        .contact-info-side p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #e2e8f0;
             margin-bottom: 25px;
-            font-size: 1rem;
+        }
+        .perks-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 30px 0;
+        }
+        .perks-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            color: #f8fafc;
+        }
+        .perks-list li i {
+            color: #38bdf8;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 10px;
+            border-radius: 50%;
+            margin-right: 15px;
+            font-size: 1.1rem;
+        }
+
+        /* Columna del Formulario */
+        .contact-card {
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+            border: 1px solid #e2e8f0;
         }
         .form-group {
             margin-bottom: 20px;
@@ -46,41 +105,48 @@
             display: block;
             font-weight: bold;
             margin-bottom: 8px;
-            color: #134074;
+            color: #0b2545;
+            font-size: 0.95rem;
         }
         .form-control {
             width: 100%;
-            padding: 12px;
+            padding: 12px 15px;
             border: 1px solid #cbd5e1;
             border-radius: 8px;
             font-size: 1rem;
             box-sizing: border-box;
+            transition: all 0.3s ease;
         }
         .form-control:focus {
             border-color: #0077b6;
             outline: none;
-            box-shadow: 0 0 5px rgba(0,119,182,0.3);
+            box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.15);
         }
         textarea.form-control {
             resize: vertical;
-            height: 140px;
+            height: 120px;
         }
         .btn-submit {
             background-color: #0077b6;
             color: white;
             border: none;
-            padding: 14px 25px;
-            font-size: 1rem;
+            padding: 15px 25px;
+            font-size: 1.05rem;
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
             width: 100%;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.1s;
+            box-shadow: 0 4px 12px rgba(0, 119, 182, 0.3);
         }
         .btn-submit:hover {
             background-color: #03045e;
         }
-        /* Estilo para el aviso de éxito oculto por defecto */
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        /* Estilo para avisos */
         #form-status {
             display: none;
             margin-top: 20px;
@@ -88,7 +154,7 @@
             border-radius: 8px;
             text-align: center;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         .success-msg {
             background-color: #d1fae5;
@@ -100,109 +166,134 @@
             color: #991b1b;
             border: 1px solid #f87171;
         }
+
+        /* Canales secundarios abajo */
         .info-channels {
-            margin-top: 40px;
+            margin-top: 30px;
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 15px;
         }
-        @media(min-width: 768px) {
+        @media(min-width: 600px) {
             .info-channels {
                 grid-template-columns: 1fr 1fr;
             }
         }
         .channel-box {
             background: #f8fafc;
+            border: 1px solid #e2e8f0;
             border-left: 4px solid #0077b6;
-            padding: 15px 20px;
-            border-radius: 6px;
+            padding: 15px;
+            border-radius: 8px;
         }
         .channel-box h4 {
-            margin: 0 0 8px 0;
+            margin: 0 0 5px 0;
             color: #0b2545;
+            font-size: 0.95rem;
         }
         .channel-box p {
             margin: 0;
-            color: #555;
-            font-size: 0.95rem;
-        }
-        .back-link {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #0077b6;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .back-link:hover {
-            text-decoration: underline;
+            color: #64748b;
+            font-size: 0.85rem;
         }
     </style>
 </head>
 <body>
 
     <div class="contact-container">
-        <a href="../../index.html" class="back-link">← Volver al Inicio</a>
+        <a href="../../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver al Inicio</a>
 
-        <div class="contact-card">
-            <div class="contact-header">
-                <h2>📬 Contacto y Trámites - TRASLAEA</h2>
-                <p>Dejanos tu consulta, trámite de inscripción o duda técnica. El mensaje será enviado de forma directa a la administración de la asociación.</p>
+        <div class="contact-grid">
+            
+            <!-- Columna Izquierda: Llamada a la Acción Atractiva -->
+            <div class="contact-info-side">
+                <h2>📬 Estamos para escucharte y asesorarte</h2>
+                <p>¿Tenés dudas sobre normativas, querés asociarte a TRASLAEA o sumarte a nuestras capacitaciones técnicas en Traslasierra? Escribinos y nos ponemos en contacto con vos en menos de 24 horas.</p>
+                
+                <ul class="perks-list">
+                    <li>
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Asesoramiento exclusivo para electricistas habilitados.</span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Gestiones y consultas directas con la comisión directiva.</span>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span>Información sobre próximos cursos de energía solar y CCTV.</span>
+                    </li>
+                </ul>
+
+                <div style="background: rgba(255,255,255,0.07); padding: 15px; border-radius: 8px; font-size: 0.9rem;">
+                    <i class="fa-solid fa-circle-info" style="color: #38bdf8;"></i> <strong>Dato:</strong> Tus datos de contacto solo se utilizan para responder a tu gestión institucional.
+                </div>
             </div>
 
-            <!-- Formulario con ID para controlarlo por JavaScript -->
-            <form id="contacto-form" action="https://formspree.io/f/xykbekdd" method="POST">
-                
-                <div class="form-group">
-                    <label for="nombre">Nombre y Apellido / Matrícula:</label>
-                    <input type="text" id="nombre" name="nombre" class="form-control" required placeholder="Ej: Juan Pérez (Mat: 1234)">
+            <!-- Columna Derecha: Formulario Atractivo -->
+            <div class="contact-card">
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: #0b2545; margin: 0 0 5px 0; font-size: 1.5rem;">Formulario de Trámites</h3>
+                    <p style="color: #64748b; margin: 0; font-size: 0.9rem;">Completá los campos y te respondemos de inmediato.</p>
                 </div>
 
-                <div class="form-group">
-                    <label for="email">Correo Electrónico de contacto:</label>
-                    <input type="email" id="email" name="email" class="form-control" required placeholder="tucorreo@ejemplo.com">
-                </div>
+                <!-- Formulario conectado a tu cuenta de Formspree -->
+                <form id="contacto-form" action="https://formspree.io/f/xykbekdd" method="POST">
+                    
+                    <div class="form-group">
+                        <label for="nombre">Nombre y Apellido / Matrícula:</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" required placeholder="Ej: Juan Pérez (Mat: 1234)">
+                    </div>
 
-                <div class="form-group">
-                    <label for="telefono">Teléfono / WhatsApp:</label>
-                    <input type="tel" id="telefono" name="telefono" class="form-control" placeholder="Ej: 3544-123456">
-                </div>
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico:</label>
+                        <input type="email" id="email" name="email" class="form-control" required placeholder="tucorreo@ejemplo.com">
+                    </div>
 
-                <div class="form-group">
-                    <label for="asunto">Tipo de Trámite o Motivo:</label>
-                    <select id="asunto" name="asunto" class="form-control">
-                        <option value="Inscripcion Asociacion">Inscripción / Alta como Socio</option>
-                        <option value="Consulta Tecnica">Consulta Técnica / Normativa ERSeP</option>
-                        <option value="Cursos y Capacitaciones">Cursos y Capacitaciones</option>
-                        <option value="Soporte Web / Tecnico">Soporte Web / Sistemas (Electrosith)</option>
-                        <option value="Otro">Otro Motivo</option>
-                    </select>
-                </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono / WhatsApp:</label>
+                        <input type="tel" id="telefono" name="telefono" class="form-control" placeholder="Ej: 3544-123456">
+                    </div>
 
-                <div class="form-group">
-                    <label for="mensaje">Mensaje o Detalle de la Consulta:</label>
-                    <textarea id="mensaje" name="mensaje" class="form-control" required placeholder="Escribí detalladamente tu consulta aquí..."></textarea>
-                </div>
+                    <div class="form-group">
+                        <label for="asunto">Motivo de la Consulta:</label>
+                        <select id="asunto" name="asunto" class="form-control">
+                            <option value="Inscripcion Asociacion">Inscripción / Alta como Socio</option>
+                            <option value="Consulta Tecnica">Consulta Técnica / Normativa ERSeP</option>
+                            <option value="Cursos y Capacitaciones">Cursos y Capacitaciones</option>
+                            <option value="Soporte Web / Tecnico">Soporte Web / Sistemas (Electrosith)</option>
+                            <option value="Otro">Otro Motivo</option>
+                        </select>
+                    </div>
 
-                <button type="submit" id="btn-enviar" class="btn-submit">Enviar Consulta →</button>
-            </form>
+                    <div class="form-group">
+                        <label for="mensaje">Detalle de tu Consulta:</label>
+                        <textarea id="mensaje" name="mensaje" class="form-control" required placeholder="Contanos brevemente qué necesitás..."></textarea>
+                    </div>
 
-            <!-- Contenedor donde aparecerá el mensaje de éxito o error -->
-            <div id="form-status"></div>
+                    <button type="submit" id="btn-enviar" class="btn-submit">Enviar Consulta <i class="fa-solid fa-paper-plane" style="margin-left: 5px;"></i></button>
+                </form>
 
-            <div class="info-channels">
-                <div class="channel-box">
-                    <h4>📱 Atención por WhatsApp</h4>
-                    <p>Canal rápido de soporte y gestiones de la asociación en Traslasierra.</p>
-                </div>
-                <div class="channel-box">
-                    <h4>💻 Soporte Digital</h4>
-                    <p>Administración de infraestructura y ecosistema web a cargo de <strong>Electrosith</strong>.</p>
-                </div>
+                <!-- Contenedor de Estado -->
+                <div id="form-status"></div>
+            </div>
+
+        </div>
+
+        <!-- Canales secundarios abajo -->
+        <div class="info-channels">
+            <div class="channel-box">
+                <h4><i class="fa-brands fa-whatsapp" style="color: #25d366;"></i> Atención Rápida por WhatsApp</h4>
+                <p>Canal ágil para urgencias, dudas de obra o gestiones institucionales directas.</p>
+            </div>
+            <div class="channel-box">
+                <h4><i class="fa-solid fa-laptop-code" style="color: #0077b6;"></i> Soporte de Infraestructura</h4>
+                <p>Mantenimiento y soporte técnico del ecosistema digital a cargo de Electrosith.</p>
             </div>
         </div>
     </div>
 
-    <!-- Script para procesar el envío sin recargar la página y mostrar el cartel -->
+    <!-- Script JavaScript para envío dinámico sin recargar la página -->
     <script>
         var form = document.getElementById("contacto-form");
         
@@ -212,7 +303,7 @@
             var btn = document.getElementById("btn-enviar");
             var data = new FormData(event.target);
             
-            btn.textContent = "Enviando mensaje...";
+            btn.innerHTML = 'Enviando mensaje... <i class="fa-solid fa-spinner fa-spin"></i>';
             btn.disabled = true;
 
             fetch(event.target.action, {
@@ -227,7 +318,7 @@
                     status.className = "success-msg";
                     status.style.display = "block";
                     form.reset();
-                    btn.textContent = "Enviar Consulta →";
+                    btn.innerHTML = 'Enviar Consulta <i class="fa-solid fa-paper-plane" style="margin-left: 5px;"></i>';
                     btn.disabled = false;
                 } else {
                     response.json().then(data => {
@@ -238,7 +329,7 @@
                         }
                         status.className = "error-msg";
                         status.style.display = "block";
-                        btn.textContent = "Enviar Consulta →";
+                        btn.innerHTML = 'Enviar Consulta <i class="fa-solid fa-paper-plane" style="margin-left: 5px;"></i>';
                         btn.disabled = false;
                     })
                 }
@@ -246,7 +337,7 @@
                 status.innerHTML = "❌ Error de conexión. Verificá tu red e intentá nuevamente.";
                 status.className = "error-msg";
                 status.style.display = "block";
-                btn.textContent = "Enviar Consulta →";
+                btn.innerHTML = 'Enviar Consulta <i class="fa-solid fa-paper-plane" style="margin-left: 5px;"></i>';
                 btn.disabled = false;
             });
         }
