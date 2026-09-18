@@ -495,3 +495,33 @@ body {
         gap: 8px;
     }
 }
+/* FOOTER / PIE DE PÁGINA */
+.footer {
+    background-color: #060911;
+    color: #94a3b8;
+    text-align: center;
+    padding: 25px 20px;
+    font-size: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    line-height: 1.6;
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.footer strong {
+    color: var(--blanco);
+}
+
+.footer-credits {
+    margin-top: 5px;
+    color: var(--texto-mutado);
+}
+
+.brand-electrosith {
+    color: var(--celeste-accent);
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
