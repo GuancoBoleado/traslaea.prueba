@@ -11,156 +11,7 @@
     <!-- Estilos generales y FontAwesome -->
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-<!-- Tailwind CSS CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
 
-<!-- Estilos generales y FontAwesome -->
-<link rel="stylesheet" href="../style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-<style>
-    body { background: #060911; color: white; font-family: 'Inter', sans-serif; }
-    
-    .section-header { 
-        border-left: 4px solid #00d2ff; 
-        padding-left: 15px; 
-        margin-top: 40px; 
-        margin-bottom: 20px;
-    }
-
-    /* Tarjeta de Documento Tecnológica */
-    .doc-card-tech { 
-        background: #0d1322; 
-        border: 1px solid rgba(0, 210, 255, 0.18);
-        border-radius: 12px;
-        padding: 18px 20px;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-
-    .doc-card-tech:hover { 
-        border-color: #00d2ff; 
-        background: #111a2f;
-        box-shadow: 0 8px 25px rgba(0, 210, 255, 0.2);
-    }
-
-    /* Badge de extensión */
-    .file-icon-badge {
-        background: rgba(0, 210, 255, 0.1);
-        border: 1px solid rgba(0, 210, 255, 0.3);
-        color: #00d2ff;
-        font-size: 11px;
-        font-weight: 900;
-        padding: 8px 12px;
-        border-radius: 8px;
-        letter-spacing: 1px;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    /* Botón de Previsualización en Vivo */
-    .btn-preview-doc {
-        background: linear-gradient(135deg, #00d2ff, #0055ff);
-        color: #060911;
-        font-weight: 800;
-        font-size: 11px;
-        padding: 10px 18px;
-        border-radius: 8px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        transition: all 0.2s ease;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        cursor: pointer;
-        border: none;
-        white-space: nowrap;
-    }
-
-    .btn-preview-doc:hover {
-        filter: brightness(1.25);
-        box-shadow: 0 0 15px rgba(0, 210, 255, 0.6);
-    }
-
-    /* Estilos del Visor Modal de PDF */
-    .pdf-modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(4, 8, 18, 0.92);
-        backdrop-filter: blur(8px);
-        z-index: 9999;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    }
-
-    .pdf-modal.active {
-        display: flex;
-    }
-
-    .pdf-modal-container {
-        background: #0d1322;
-        border: 1px solid #00d2ff;
-        border-radius: 16px;
-        width: 100%;
-        max-width: 1000px;
-        height: 88vh;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        box-shadow: 0 0 40px rgba(0, 210, 255, 0.3);
-    }
-
-    .pdf-modal-header {
-        padding: 15px 20px;
-        background: #111a2f;
-        border-bottom: 1px solid rgba(0, 210, 255, 0.2);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .pdf-modal-title {
-        color: #00d2ff;
-        font-weight: 800;
-        font-size: 15px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .btn-close-modal {
-        background: rgba(255, 255, 255, 0.1);
-        color: #fff;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        padding: 6px 14px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 12px;
-        transition: all 0.2s ease;
-    }
-
-    .btn-close-modal:hover {
-        background: #ef4444;
-        border-color: #ef4444;
-    }
-
-    .pdf-iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-        background: #060911;
-    }
-
-    summary::-webkit-details-marker { display: none; }
-    summary { list-style: none; }
-</style>
     <style>
         body { background: #060911; color: white; font-family: 'Inter', sans-serif; }
         
@@ -202,13 +53,13 @@
             padding: 8px 12px;
             border-radius: 8px;
             letter-spacing: 1px;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 6px;
         }
 
-        /* Botón de Descarga / Visor */
-        .btn-view-doc {
+        /* Botón de Previsualización en Vivo */
+        .btn-preview-doc {
             background: linear-gradient(135deg, #00d2ff, #0055ff);
             color: #060911;
             font-weight: 800;
@@ -221,12 +72,89 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            cursor: pointer;
+            border: none;
             white-space: nowrap;
         }
 
-        .btn-view-doc:hover {
-            filter: brightness(1.2);
-            box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
+        .btn-preview-doc:hover {
+            filter: brightness(1.25);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.6);
+        }
+
+        /* Estilos del Visor Modal de PDF */
+        .pdf-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(4, 8, 18, 0.92);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .pdf-modal.active {
+            display: flex;
+        }
+
+        .pdf-modal-container {
+            background: #0d1322;
+            border: 1px solid #00d2ff;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 1000px;
+            height: 88vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0, 210, 255, 0.3);
+        }
+
+        .pdf-modal-header {
+            padding: 15px 20px;
+            background: #111a2f;
+            border-bottom: 1px solid rgba(0, 210, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pdf-modal-title {
+            color: #00d2ff;
+            font-weight: 800;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-close-modal {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-close-modal:hover {
+            background: #ef4444;
+            border-color: #ef4444;
+        }
+
+        .pdf-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #060911;
         }
 
         summary::-webkit-details-marker { display: none; }
@@ -312,9 +240,9 @@
                         <p class="text-[11px] text-slate-400 uppercase font-bold italic mt-0.5">Seguridad Eléctrica para la Provincia de Córdoba</p>
                     </div>
                 </div>
-                <a href="https://drive.google.com/file/d/1lRr5Y8_hM7htYsJNvUsW4HVbngYwe8hQ/view?usp=drive_link" target="_blank" class="btn-view-doc">
-                    <i class="fas fa-arrow-down-long"></i> Abrir Documento
-                </a>
+                <button onclick="openPdfModal('https://drive.google.com/file/d/1lRr5Y8_hM7htYsJNvUsW4HVbngYwe8hQ/preview', 'Ley Provincial 10.281 - Seguridad Eléctrica')" class="btn-preview-doc">
+                    <i class="fas fa-eye"></i> Previsualizar
+                </button>
             </div>
         </div>
 
@@ -336,9 +264,9 @@
                         <p class="text-[10px] text-red-400 font-black uppercase">Régimen Oficial de Infracciones y Sanciones</p>
                     </div>
                 </div>
-                <a href="https://drive.google.com/file/d/18eXcPPuSYmQaoQSb2MgVsDr9tgJ1-L11/view?usp=drive_link" target="_blank" class="btn-view-doc">
-                    <i class="fas fa-file-pdf"></i> Ver PDF
-                </a>
+                <button onclick="openPdfModal('https://drive.google.com/file/d/18eXcPPuSYmQaoQSb2MgVsDr9tgJ1-L11/preview', 'Res. Gral. N° 97 - Infracciones y Sanciones')" class="btn-preview-doc">
+                    <i class="fas fa-eye"></i> Previsualizar
+                </button>
             </div>
 
             <div class="doc-card-tech">
@@ -351,9 +279,9 @@
                         <p class="text-[10px] text-slate-400 uppercase">Registro de Instaladores Electricistas Habilitados</p>
                     </div>
                 </div>
-                <a href="https://drive.google.com/file/d/1YylFRngJwuqJgtH7VmlVo6Np87XD6oKO/view?usp=drive_link" target="_blank" class="btn-view-doc">
-                    <i class="fas fa-file-pdf"></i> Ver PDF
-                </a>
+                <button onclick="openPdfModal('https://drive.google.com/file/d/1YylFRngJwuqJgtH7VmlVo6Np87XD6oKO/preview', 'Res. Gral. N° 26 - Registro de Instaladores')" class="btn-preview-doc">
+                    <i class="fas fa-eye"></i> Previsualizar
+                </button>
             </div>
 
             <div class="doc-card-tech">
@@ -366,9 +294,9 @@
                         <p class="text-[10px] text-cyan-400 font-bold uppercase">Actualización Vigente Abril 2025</p>
                     </div>
                 </div>
-                <a href="https://drive.google.com/file/d/1ELRA3nbHmWJWHitBuK7wOrHonwg1iZMZ/view?usp=drive_link" target="_blank" class="btn-view-doc">
-                    <i class="fas fa-file-pdf"></i> Ver PDF
-                </a>
+                <button onclick="openPdfModal('https://drive.google.com/file/d/1ELRA3nbHmWJWHitBuK7wOrHonwg1iZMZ/preview', 'Expte N° 0521-085783/2025')" class="btn-preview-doc">
+                    <i class="fas fa-eye"></i> Previsualizar
+                </button>
             </div>
 
             <div class="doc-card-tech">
@@ -381,9 +309,9 @@
                         <p class="text-[10px] text-slate-400 uppercase">Reglamentación Técnica para Ejecución y Verificación</p>
                     </div>
                 </div>
-                <a href="https://drive.google.com/file/d/1jZPWj4LZnElhIXIwFCN7oAoemNlos5Er/view?usp=drive_link" target="_blank" class="btn-view-doc">
-                    <i class="fas fa-file-pdf"></i> Ver PDF
-                </a>
+                <button onclick="openPdfModal('https://drive.google.com/file/d/1jZPWj4LZnElhIXIwFCN7oAoemNlos5Er/preview', 'Res. Gral. ERSeP N° 05/2016')" class="btn-preview-doc">
+                    <i class="fas fa-eye"></i> Previsualizar
+                </button>
             </div>
 
             <!-- DESPLEGABLE HISTORIAL -->
@@ -396,46 +324,46 @@
                 <div class="grid gap-2 mt-3 pl-2 border-l-2 border-cyan-500/30">
                     <div class="doc-card-tech p-3 opacity-90">
                         <span class="text-xs font-semibold">EXPTE. N° 0521-071769/2023</span>
-                        <a href="https://drive.google.com/file/d/1VFb5s7CIvP2Onm2wlAB0A6RN-Hzn45O-/view?usp=drive_link" target="_blank" class="text-cyan-400 font-black text-[11px] uppercase hover:underline">Descargar →</a>
+                        <button onclick="openPdfModal('https://drive.google.com/file/d/1VFb5s7CIvP2Onm2wlAB0A6RN-Hzn45O-/preview', 'Expte. N° 0521-071769/2023')" class="text-cyan-400 font-black text-[11px] uppercase hover:underline border-none bg-transparent cursor-pointer">Ver Documento →</button>
                     </div>
 
                     <div class="doc-card-tech p-3 opacity-90">
                         <span class="text-xs font-semibold">Seguridad Eléctrica - 15 de abril 2025</span>
-                        <a href="https://drive.google.com/file/d/15arfOuGabGKKBeqndDFKWwG8ZC8BN72L/view?usp=drive_link" target="_blank" class="text-cyan-400 font-black text-[11px] uppercase hover:underline">Descargar →</a>
+                        <button onclick="openPdfModal('https://drive.google.com/file/d/15arfOuGabGKKBeqndDFKWwG8ZC8BN72L/preview', 'Seguridad Eléctrica - 15 de abril 2025')" class="text-cyan-400 font-black text-[11px] uppercase hover:underline border-none bg-transparent cursor-pointer">Ver Documento →</button>
                     </div>
 
                     <div class="doc-card-tech p-3 opacity-90">
                         <span class="text-xs font-semibold">Res. Gral. ERSeP N° 41 - Anexo II</span>
-                        <a href="https://drive.google.com/file/d/14xv79hGZbN8z3Mxv_OQ0tzKENKV8MblP/view?usp=drive_link" target="_blank" class="text-cyan-400 font-black text-[11px] uppercase hover:underline">Descargar →</a>
+                        <button onclick="openPdfModal('https://drive.google.com/file/d/14xv79hGZbN8z3Mxv_OQ0tzKENKV8MblP/preview', 'Res. Gral. ERSeP N° 41 - Anexo II')" class="text-cyan-400 font-black text-[11px] uppercase hover:underline border-none bg-transparent cursor-pointer">Ver Documento →</button>
                     </div>
 
                     <div class="doc-card-tech p-3 opacity-90">
                         <span class="text-xs font-semibold">Seguridad Eléctrica - 16 de febrero 2023</span>
-                        <a href="https://drive.google.com/file/d/1eaorR1gKE8dUnJXXcFWOF6bE2CtIYeYm/view?usp=drive_link" target="_blank" class="text-cyan-400 font-black text-[11px] uppercase hover:underline">Descargar →</a>
+                        <button onclick="openPdfModal('https://drive.google.com/file/d/1eaorR1gKE8dUnJXXcFWOF6bE2CtIYeYm/preview', 'Seguridad Eléctrica - 16 de febrero 2023')" class="text-cyan-400 font-black text-[11px] uppercase hover:underline border-none bg-transparent cursor-pointer">Ver Documento →</button>
                     </div>
 
                     <div class="doc-card-tech p-3 opacity-90">
                         <span class="text-xs font-semibold">Seguridad Eléctrica - 16 de marzo 2022</span>
-                        <a href="https://drive.google.com/file/d/1m1lrhyapDD4HjwIukpedWrzNo0Cm0-Ng/view?usp=drive_link" target="_blank" class="text-cyan-400 font-black text-[11px] uppercase hover:underline">Descargar →</a>
+                        <button onclick="openPdfModal('https://drive.google.com/file/d/1m1lrhyapDD4HjwIukpedWrzNo0Cm0-Ng/preview', 'Seguridad Eléctrica - 16 de marzo 2022')" class="text-cyan-400 font-black text-[11px] uppercase hover:underline border-none bg-transparent cursor-pointer">Ver Documento →</button>
                     </div>
 
                     <div class="doc-card-tech p-3 opacity-90">
                         <span class="text-xs font-semibold">Seguridad Eléctrica - 25 de marzo 2021</span>
-                        <a href="https://drive.google.com/file/d/1fMxH0y7PZDuwUv3NbEg1-qGbOwbUD_po/view?usp=drive_link" target="_blank" class="text-cyan-400 font-black text-[11px] uppercase hover:underline">Descargar →</a>
+                        <button onclick="openPdfModal('https://drive.google.com/file/d/1fMxH0y7PZDuwUv3NbEg1-qGbOwbUD_po/preview', 'Seguridad Eléctrica - 25 de marzo 2021')" class="text-cyan-400 font-black text-[11px] uppercase hover:underline border-none bg-transparent cursor-pointer">Ver Documento →</button>
                     </div>
 
                     <div class="doc-card-tech p-3 opacity-90">
                         <span class="text-xs font-semibold">ERSeP N° 17 Anexo II - Habilitación Cat III</span>
-                        <a href="https://drive.google.com/file/d/198BOTpQMZEHhoW5jI60CPROnMscCB6AM/view?usp=drive_link" target="_blank" class="text-cyan-400 font-black text-[11px] uppercase hover:underline">Descargar →</a>
+                        <button onclick="openPdfModal('https://drive.google.com/file/d/198BOTpQMZEHhoW5jI60CPROnMscCB6AM/preview', 'ERSeP N° 17 Anexo II')" class="text-cyan-400 font-black text-[11px] uppercase hover:underline border-none bg-transparent cursor-pointer">Ver Documento →</button>
                     </div>
 
                     <div class="doc-card-tech p-3 opacity-90">
                         <span class="text-xs font-semibold">Historial Seguridad Eléctrica (2015 - 2018)</span>
                         <div class="flex gap-2">
-                             <a href="https://drive.google.com/file/d/1VjOu-WMwkC80KHZYM8NQfLh4B-kjZe46/view?usp=drive_link" target="_blank" class="text-cyan-400 font-bold text-[10px] hover:underline">2018</a>
-                             <a href="https://drive.google.com/file/d/1UNa8zRk6hMZ3YBbdfJV8e4fiK6nj5wgU/view?usp=drive_link" target="_blank" class="text-cyan-400 font-bold text-[10px] hover:underline">2017</a>
-                             <a href="https://drive.google.com/file/d/1v8pzAllh07Iu5LyZWkvqPAuDHBAbKOuK/view?usp=drive_link" target="_blank" class="text-cyan-400 font-bold text-[10px] hover:underline">2016</a>
-                             <a href="https://drive.google.com/file/d/1FwegdeA-j3MTYHzgGRumgCWIITdYqnmk/view?usp=drive_link" target="_blank" class="text-cyan-400 font-bold text-[10px] hover:underline">2015</a>
+                             <button onclick="openPdfModal('https://drive.google.com/file/d/1VjOu-WMwkC80KHZYM8NQfLh4B-kjZe46/preview', 'Historial 2018')" class="text-cyan-400 font-bold text-[10px] hover:underline bg-transparent border-none cursor-pointer">2018</button>
+                             <button onclick="openPdfModal('https://drive.google.com/file/d/1UNa8zRk6hMZ3YBbdfJV8e4fiK6nj5wgU/preview', 'Historial 2017')" class="text-cyan-400 font-bold text-[10px] hover:underline bg-transparent border-none cursor-pointer">2017</button>
+                             <button onclick="openPdfModal('https://drive.google.com/file/d/1v8pzAllh07Iu5LyZWkvqPAuDHBAbKOuK/preview', 'Historial 2016')" class="text-cyan-400 font-bold text-[10px] hover:underline bg-transparent border-none cursor-pointer">2016</button>
+                             <button onclick="openPdfModal('https://drive.google.com/file/d/1FwegdeA-j3MTYHzgGRumgCWIITdYqnmk/preview', 'Historial 2015')" class="text-cyan-400 font-bold text-[10px] hover:underline bg-transparent border-none cursor-pointer">2015</button>
                         </div>
                     </div>
                 </div>
@@ -459,13 +387,27 @@
                         <p class="text-[10px] text-slate-400 uppercase tracking-widest">Montaje de pilares monofásicos y trifásicos</p>
                     </div>
                 </div>
-                <a href="https://drive.google.com/file/d/1PobFWE7pHefuGrf_-QZBCNBAxEhXa06V/view?usp=drive_link" target="_blank" class="btn-view-doc">
-                    <i class="fas fa-file-pdf"></i> Descargar
-                </a>
+                <button onclick="openPdfModal('https://drive.google.com/file/d/1PobFWE7pHefuGrf_-QZBCNBAxEhXa06V/preview', 'ET-21 - Pilares de Acometida')" class="btn-preview-doc">
+                    <i class="fas fa-eye"></i> Previsualizar
+                </button>
             </div>
         </div>
 
     </main>
+
+    <!-- VENTANA MODAL PARA PREVISUALIZACIÓN DE PDF EN VIVO -->
+    <div id="pdfModal" class="pdf-modal">
+        <div class="pdf-modal-container">
+            <div class="pdf-modal-header">
+                <div class="pdf-modal-title">
+                    <i class="fas fa-file-pdf"></i>
+                    <span id="modalDocTitle">Documento</span>
+                </div>
+                <button onclick="closePdfModal()" class="btn-close-modal">✕ Cerrar Vista Previa</button>
+            </div>
+            <iframe id="pdfIframe" class="pdf-iframe" src="" allow="autoplay"></iframe>
+        </div>
+    </div>
 
     <!-- FOOTER / PIE DE PÁGINA -->
     <footer class="footer">
@@ -474,6 +416,29 @@
             <p class="footer-credits">Sitio desarrollado y administrado por <span class="brand-electrosith">Electrosith</span>.</p>
         </div>
     </footer>
+
+    <!-- SCRIPT INTERACTIVO DEL VISOR -->
+    <script>
+        function openPdfModal(pdfUrl, docTitle) {
+            document.getElementById('modalDocTitle').innerText = docTitle;
+            document.getElementById('pdfIframe').src = pdfUrl;
+            document.getElementById('pdfModal').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Evita scroll de fondo
+        }
+
+        function closePdfModal() {
+            document.getElementById('pdfModal').classList.remove('active');
+            document.getElementById('pdfIframe').src = ''; // Limpia el visor
+            document.body.style.overflow = 'auto'; // Restaura scroll
+        }
+
+        // Cerrar al presionar la tecla Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === "Escape") {
+                closePdfModal();
+            }
+        });
+    </script>
 
 </body>
 </html>
