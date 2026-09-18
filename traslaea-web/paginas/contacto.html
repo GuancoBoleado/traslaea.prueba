@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
     <style>
-        /* Estilos específicos adaptados para móviles y escritorio */
         body {
             background-color: #f4f6f9;
             font-family: Arial, sans-serif;
@@ -81,6 +80,26 @@
         .btn-submit:hover {
             background-color: #03045e;
         }
+        /* Estilo para el aviso de éxito oculto por defecto */
+        #form-status {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .success-msg {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #34d399;
+        }
+        .error-msg {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #f87171;
+        }
         .info-channels {
             margin-top: 40px;
             display: grid;
@@ -130,14 +149,8 @@
                 <p>Dejanos tu consulta, trámite de inscripción o duda técnica. El mensaje será enviado de forma directa a la administración de la asociación.</p>
             </div>
 
-            <!-- 
-                CONFIGURACIÓN DEL FORMULARIO CON FORMSPREE:
-                Para que funcione y llegue a traslaea@gmail.com y electrosith00@gmail.com:
-                1. Entrás a https://formspree.io (es gratis).
-                2. Creás un formulario nuevo y ponés ambos correos como destinatarios.
-                3. Reemplazás la URL de abajo donde dice "TU_CODIGO_DE_FORMSPREE" por el endpoint que te da Formspree.
-            -->
-            <form action="https://formspree.io/f/TU_CODIGO_DE_FORMSPREE" method="POST">
+            <!-- Formulario con ID para controlarlo por JavaScript -->
+            <form id="contacto-form" action="https://formspree.io/f/TU_CODIGO_DE_FORMSPREE" method="POST">
                 
                 <div class="form-group">
                     <label for="nombre">Nombre y Apellido / Matrícula:</label>
@@ -170,8 +183,11 @@
                     <textarea id="mensaje" name="mensaje" class="form-control" required placeholder="Escribí detalladamente tu consulta aquí..."></textarea>
                 </div>
 
-                <button type="submit" class="btn-submit">Enviar Consulta →</button>
+                <button type="submit" id="btn-enviar" class="btn-submit">Enviar Consulta →</button>
             </form>
+
+            <!-- Contenedor donde aparecerá el mensaje de éxito o error -->
+            <div id="form-status"></div>
 
             <div class="info-channels">
                 <div class="channel-box">
@@ -185,6 +201,58 @@
             </div>
         </div>
     </div>
+
+    <!-- Script para procesar el envío sin recargar la página y mostrar el cartel -->
+    <script>
+        var form = document.getElementById("contacto-form");
+        
+        async function handleSubmit(event) {
+            event.preventDefault();
+            var status = document.getElementById("form-status");
+            var btn = document.getElementById("btn-enviar");
+            var data = new FormData(event.target);
+            
+            btn.textContent = "Enviando mensaje...";
+            btn.disabled = true;
+
+            fetch(event.target.action, {
+                method: form.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    status.innerHTML = "✅ ¡Mensaje enviado con éxito! Nos pondremos en contacto a la brevedad.";
+                    status.className = "success-msg";
+                    status.style.display = "block";
+                    form.reset();
+                    btn.textContent = "Enviar Consulta →";
+                    btn.disabled = false;
+                } else {
+                    response.json().then(data => {
+                        if (Object.hasOwn(data, 'errors')) {
+                            status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
+                        } else {
+                            status.innerHTML = "❌ Hubo un error al enviar el formulario. Intentalo de nuevo.";
+                        }
+                        status.className = "error-msg";
+                        status.style.display = "block";
+                        btn.textContent = "Enviar Consulta →";
+                        btn.disabled = false;
+                    })
+                }
+            }).catch(error => {
+                status.innerHTML = "❌ Error de conexión. Verificá tu red e intentá nuevamente.";
+                status.className = "error-msg";
+                status.style.display = "block";
+                btn.textContent = "Enviar Consulta →";
+                btn.disabled = false;
+            });
+        }
+        
+        form.addEventListener("submit", handleSubmit);
+    </script>
 
 </body>
 </html>
