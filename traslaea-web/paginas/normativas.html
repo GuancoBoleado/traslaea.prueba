@@ -419,26 +419,35 @@
 
     <!-- SCRIPT INTERACTIVO DEL VISOR -->
     <script>
-        function openPdfModal(pdfUrl, docTitle) {
-            document.getElementById('modalDocTitle').innerText = docTitle;
-            document.getElementById('pdfIframe').src = pdfUrl;
-            document.getElementById('pdfModal').classList.add('active');
-            document.body.style.overflow = 'hidden'; // Evita scroll de fondo
+    function openPdfModal(driveUrl, docTitle) {
+        // Extrae el ID único del archivo PDF
+        var match = driveUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+        var fileId = match ? match[1] : null;
+
+        var embedUrl = '';
+        if (fileId) {
+            // Usa el visor oficial de Google Docs para incrustar el PDF sin abrir la app de Drive
+            embedUrl = 'https://docs.google.com/viewer?srcid=' + fileId + '&pid=explorer&efh=false&a=v&chrome=false&embedded=true';
+        } else {
+            embedUrl = driveUrl;
         }
 
-        function closePdfModal() {
-            document.getElementById('pdfModal').classList.remove('active');
-            document.getElementById('pdfIframe').src = ''; // Limpia el visor
-            document.body.style.overflow = 'auto'; // Restaura scroll
+        document.getElementById('modalDocTitle').innerText = docTitle;
+        document.getElementById('pdfIframe').src = embedUrl;
+        document.getElementById('pdfModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closePdfModal() {
+        document.getElementById('pdfModal').classList.remove('active');
+        document.getElementById('pdfIframe').src = '';
+        document.body.style.overflow = 'auto';
+    }
+
+    // Cerrar ventana con la tecla ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === "Escape") {
+            closePdfModal();
         }
-
-        // Cerrar al presionar la tecla Escape
-        document.addEventListener('keydown', function(e) {
-            if (e.key === "Escape") {
-                closePdfModal();
-            }
-        });
-    </script>
-
-</body>
-</html>
+    });
+</script>
