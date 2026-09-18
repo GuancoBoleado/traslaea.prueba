@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto y Trámites - TRASLAEA</title>
+
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="../style.css">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        /* Estilos específicos adaptados para móviles y escritorio */
+        body {
+            background-color: #f4f6f9;
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .contact-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .contact-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .contact-header h2 {
+            color: #0b2545;
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+        .contact-header p {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #134074;
+        }
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        .form-control:focus {
+            border-color: #0077b6;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0,119,182,0.3);
+        }
+        textarea.form-control {
+            resize: vertical;
+            height: 140px;
+        }
+        .btn-submit {
+            background-color: #0077b6;
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+        .btn-submit:hover {
+            background-color: #03045e;
+        }
+        .info-channels {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        @media(min-width: 768px) {
+            .info-channels {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        .channel-box {
+            background: #f8fafc;
+            border-left: 4px solid #0077b6;
+            padding: 15px 20px;
+            border-radius: 6px;
+        }
+        .channel-box h4 {
+            margin: 0 0 8px 0;
+            color: #0b2545;
+        }
+        .channel-box p {
+            margin: 0;
+            color: #555;
+            font-size: 0.95rem;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #0077b6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contact-container">
+        <a href="../../index.html" class="back-link">← Volver al Inicio</a>
+
+        <div class="contact-card">
+            <div class="contact-header">
+                <h2>📬 Contacto y Trámites - TRASLAEA</h2>
+                <p>Dejanos tu consulta, trámite de inscripción o duda técnica. El mensaje será enviado de forma directa a la administración de la asociación.</p>
+            </div>
+
+            <!-- 
+                CONFIGURACIÓN DEL FORMULARIO CON FORMSPREE:
+                Para que funcione y llegue a traslaea@gmail.com y electrosith00@gmail.com:
+                1. Entrás a https://formspree.io (es gratis).
+                2. Creás un formulario nuevo y ponés ambos correos como destinatarios.
+                3. Reemplazás la URL de abajo donde dice "TU_CODIGO_DE_FORMSPREE" por el endpoint que te da Formspree.
+            -->
+            <form action="https://formspree.io/f/TU_CODIGO_DE_FORMSPREE" method="POST">
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre y Apellido / Matrícula:</label>
+                    <input type="text" id="nombre" name="nombre" class="form-control" required placeholder="Ej: Juan Pérez (Mat: 1234)">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico de contacto:</label>
+                    <input type="email" id="email" name="email" class="form-control" required placeholder="tucorreo@ejemplo.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="telefono">Teléfono / WhatsApp:</label>
+                    <input type="tel" id="telefono" name="telefono" class="form-control" placeholder="Ej: 3544-123456">
+                </div>
+
+                <div class="form-group">
+                    <label for="asunto">Tipo de Trámite o Motivo:</label>
+                    <select id="asunto" name="asunto" class="form-control">
+                        <option value="Inscripcion Asociacion">Inscripción / Alta como Socio</option>
+                        <option value="Consulta Tecnica">Consulta Técnica / Normativa ERSeP</option>
+                        <option value="Cursos y Capacitaciones">Cursos y Capacitaciones</option>
+                        <option value="Soporte Web / Tecnico">Soporte Web / Sistemas (Electrosith)</option>
+                        <option value="Otro">Otro Motivo</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="mensaje">Mensaje o Detalle de la Consulta:</label>
+                    <textarea id="mensaje" name="mensaje" class="form-control" required placeholder="Escribí detalladamente tu consulta aquí..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Enviar Consulta →</button>
+            </form>
+
+            <div class="info-channels">
+                <div class="channel-box">
+                    <h4>📱 Atención por WhatsApp</h4>
+                    <p>Canal rápido de soporte y gestiones de la asociación en Traslasierra.</p>
+                </div>
+                <div class="channel-box">
+                    <h4>💻 Soporte Digital</h4>
+                    <p>Administración de infraestructura y ecosistema web a cargo de <strong>Electrosith</strong>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
