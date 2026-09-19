@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRASLAEA - Traslasierra </title>
+    <title>TRASLAEA - Traslasierra</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="traslaea-web/style.css">
@@ -13,7 +13,7 @@
     <!-- Font Awesome para los íconos de redes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-    <!-- Estilo rápido de refuerzo para igualar altura de columnas -->
+    <!-- Estilo rápido de refuerzo para columnas y globos de empresas -->
     <style>
         .dashboard-grid {
             display: grid;
@@ -33,6 +33,93 @@
             .dashboard-grid {
                 grid-template-columns: 1fr;
             }
+        }
+
+        /* EFECTO MOVIMIENTO / HOVER PARA BIBLIOTECA Y MARCO NORMATIVO */
+        .resource-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            cursor: pointer;
+        }
+        .resource-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 15px rgba(0, 168, 232, 0.2);
+            background-color: #e2e8f0;
+        }
+
+        /* DISEÑO DE GLOBOS / CÍRCULOS PARA INSTALADORES Y EMPRESAS */
+        .bubbles-section {
+            margin-top: 40px;
+            padding: 20px 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .bubbles-title {
+            color: #00a8e8;
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .bubbles-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .bubble-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: 110px;
+        }
+        .bubble-card:hover {
+            transform: translateY(-8px);
+        }
+        .bubble-circle {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            border: 3px solid #00a8e8;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 168, 232, 0.3);
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .bubble-card:hover .bubble-circle {
+            box-shadow: 0 0 20px #ffffff, 0 0 25px #00a8e8;
+            border-color: #ffffff;
+        }
+        .bubble-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .bubble-circle.empty {
+            border: 2px dashed rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 20px;
+        }
+        .bubble-name {
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 8px;
+            line-height: 1.2;
+        }
+        .bubble-desc {
+            color: #cbd5e1;
+            font-size: 10px;
+            margin-top: 2px;
         }
     </style>
 </head>
@@ -88,10 +175,10 @@
         <div class="stripe s-light"></div>
     </div>
 
-    <!-- HERO SECTION / CONTADORES -->
+    <!-- HERO SECTION / CONTADORES Y GLOBOS DE EMPRESAS -->
     <section class="hero">
         <h2>TRASLAEA</h2>
-        <p class="subtitle">TRASLASIERRA </p>
+        <p class="subtitle">TRASLASIERRA</p>
 
         <div class="stats-container">
             <div class="stat-card">
@@ -104,29 +191,13 @@
             </div>
         </div>
 
-        <!-- HERO SECTION / CONTADORES -->
-    <section class="hero">
-        <h2>TRASLAEA</h2>
-        <p class="subtitle">TRASLASIERRA </p>
-
-        <div class="stats-container">
-            <div class="stat-card">
-                <span class="stat-number">50</span>
-                <span class="stat-label">SOCIOS</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">12</span>
-                <span class="stat-label">LOCALIDADES</span>
-            </div>
-        </div>
-
-        <!-- 👇 AQUí AGREGAS LOS GLOBOS NUEVOS (SIN BORRAR NADA DE LO ANTERIOR) -->
+        <!-- SECCIÓN DE GLOBOS / EMPRESAS AMIGAS -->
         <div class="bubbles-section">
             <h3 class="bubbles-title">Red de Instaladores y Empresas Amigas</h3>
             
             <div class="bubbles-container">
                 
-                <!-- GLOBO 1: Free Energy -->
+                <!-- GLOBO 1: Free Energy con WhatsApp configurado -->
                 <div class="bubble-card" onclick="window.open('https://wa.me/5492224548582?text=Hola,%20me%20comunico%20desde%20la%20red%20Traslaea', '_blank')">
                     <div class="bubble-circle">
                         <img src="Free Energi.JPG" alt="Free Energy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -147,7 +218,6 @@
 
             </div>
         </div>
-        <!-- FIN DE LOS GLOBOS -->
     </section>
 
     <!-- DASHBOARD PRINCIPAL -->
@@ -163,7 +233,7 @@
             <p class="card-footer-text">HAZ CLIC EN LOS PUNTOS PARA VER INFORMACIÓN DE LOS SOCIOS</p>
         </article>
 
-<!-- RECURSOS TÉCNICOS -->
+        <!-- RECURSOS TÉCNICOS -->
         <article class="card resources-card">
             <div>
                 <h3>📚 RECURSOS TÉCNICOS</h3>
@@ -195,21 +265,18 @@
             <!-- TARJETA RELEVANDO PELIGROS -->
             <div class="peligros-card">
                 <div class="peligros-content">
-  <!-- Círculo contenedor con la imagen exacta y efecto tiki -->
-<div class="peligros-img-container">
-    <img src="relevando.peligro.jpg" alt="Relevando Peligros" style="object-fit: cover; object-position: 0% 50%; width: 100%; height: 100%;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-    <div class="peligros-icon-fallback" style="display: none;">
-        <i class="fas fa-triangle-exclamation"></i>
-    </div>
-</div>
+                    <div class="peligros-img-container">
+                        <img src="relevando.peligro.jpg" alt="Relevando Peligros" style="object-fit: cover; object-position: 0% 50%; width: 100%; height: 100%;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="peligros-icon-fallback" style="display: none;">
+                            <i class="fas fa-triangle-exclamation"></i>
+                        </div>
+                    </div>
 
-                    <!-- Textos -->
                     <div class="peligros-textos">
                         <span class="peligros-badge">🚨 Seguridad Pública • Relevando Peligros</span>
                         <h4>¿Viste un peligro eléctrico en la calle?</h4>
                         <p>Si detectás postes caídos o cables sueltos, reportalo gratis. La seguridad la hacemos entre todos.</p>
 
-                        <!-- Botones -->
                         <div class="peligros-buttons">
                             <a href="https://relevandopeligros.org/" target="_blank" class="btn-web">
                                 🌐 Web Oficial
@@ -221,7 +288,6 @@
                     </div>
                 </div>
             </div>
-        </article>
         </article>
 
     </main>
