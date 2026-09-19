@@ -521,7 +521,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 0% 50%; /* Enfoca la mano a la izquierda */
+    object-position: -20% 50%; /* Enfoca la mano a la izquierda */
 }
 
 .peligros-icon-fallback {
