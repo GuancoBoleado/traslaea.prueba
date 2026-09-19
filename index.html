@@ -12,6 +12,29 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <!-- Font Awesome para los íconos de redes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- Estilo rápido de refuerzo para igualar altura de columnas -->
+    <style>
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: stretch;
+        }
+        .dashboard-grid .card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .resources-card {
+            justify-content: space-between;
+        }
+        @media (max-width: 900px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -97,62 +120,61 @@
 
         <!-- RECURSOS TÉCNICOS -->
         <article class="card resources-card">
-            <h3>📚 RECURSOS TÉCNICOS</h3>
-            
-            <div class="resource-item">
-                <span class="icon-pdf">HUB</span>
-                <div class="resource-info">
-                    <h4>MANUALES & SOFTWARE</h4>
-                    <p>BIBLIOTECA Y PROGRAMAS TÉCNICOS</p>
-                </div>
-                <a href="traslaea-web/paginas/recursos.html" class="btn-download">VER TODO →</a>
-            </div>
-
-            <div class="resource-item">
-                <span class="icon-drive">NORMA</span>
-                <div class="resource-info">
-                    <h4>NORMATIVAS 2026</h4>
-                    <p>REGLAMENTACIÓN AEA / ERSeP</p>
-                </div>
-                <a href="traslaea-web/paginas/normativas.html" class="btn-link">VER REPOSITORIO →</a>
-            </div>
-
-            <div class="notice-box">
-                <strong>AVISO TÉCNICO</strong>
-                <p>Recordá que para certificar instalaciones en Córdoba debes estar registrado en la Categoría 3 (Idóneos) o superior.</p>
-            </div>
-
-            <!-- Tarjeta Relevando Peligros (Círculo animado, proporción exacta y efecto "con onda") -->
-            <div class="bg-gradient-to-br from-white to-red-50 border border-red-200 rounded-2xl p-5 shadow-md flex flex-col justify-between text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group">
+            <div>
+                <h3>📚 RECURSOS TÉCNICOS</h3>
                 
-                <!-- Contenido Superior -->
-                <div>
-                    <!-- Círculo con logo centrado y animación al pasar el mouse -->
-                    <div class="w-20 h-20 mx-auto mb-3 border-2 border-dashed border-red-400 rounded-full flex items-center justify-center bg-white shadow-inner overflow-hidden flex-shrink-0 transition-transform duration-500 group-hover:scale-105 group-hover:rotate-3">
-                        <img src="relevando.peligro.jpg" alt="Relevando Peligros" class="w-full h-full object-cover object-left scale-125" style="transform: scale(2.2); transform-origin: 30% center;">
+                <div class="resource-item">
+                    <span class="icon-pdf">HUB</span>
+                    <div class="resource-info">
+                        <h4>MANUALES & SOFTWARE</h4>
+                        <p>BIBLIOTECA Y PROGRAMAS TÉCNICOS</p>
                     </div>
-
-                    <!-- Títulos y Textos -->
-                    <h3 class="text-sm font-black text-[#002855] uppercase tracking-tight mb-1">
-                        ¿Viste un peligro eléctrico en la calle?
-                    </h3>
-                    <span class="text-[10px] font-bold text-orange-600 uppercase tracking-wide block mb-2">
-                        Seguridad Pública
-                    </span>
-                    
-                    <p class="text-slate-700 text-xs leading-relaxed mb-3">
-                        No seas un espectador. Si detectás postes caídos, cajas abiertas o cables al alcance de la mano, podés reportarlo de forma gratuita. <b>La seguridad la hacemos entre todos.</b>
-                    </p>
+                    <a href="traslaea-web/paginas/recursos.html" class="btn-download">VER TODO →</a>
                 </div>
+
+                <div class="resource-item">
+                    <span class="icon-drive">NORMA</span>
+                    <div class="resource-info">
+                        <h4>NORMATIVAS 2026</h4>
+                        <p>REGLAMENTACIÓN AEA / ERSeP</p>
+                    </div>
+                    <a href="traslaea-web/paginas/normativas.html" class="btn-link">VER REPOSITORIO →</a>
+                </div>
+
+                <div class="notice-box">
+                    <strong>AVISO TÉCNICO</strong>
+                    <p>Recordá que para certificar instalaciones en Córdoba debes estar registrado en la Categoría 3 (Idóneos) o superior.</p>
+                </div>
+            </div>
+
+            <!-- Tarjeta Relevando Peligros (Controlada y contenida dentro de la proporción) -->
+            <div class="bg-gradient-to-br from-white to-red-50 border border-red-200 rounded-2xl p-4 mt-4 shadow-md flex flex-col items-center text-center transition-all duration-300 hover:shadow-xl hover:-translate-y-1 group">
+                
+                <!-- Círculo fijo y controlado para que no se deforme -->
+                <div class="w-16 h-16 mx-auto mb-2 border-2 border-dashed border-red-400 rounded-full flex items-center justify-center bg-white shadow-inner overflow-hidden flex-shrink-0 transition-transform duration-500 group-hover:scale-105 group-hover:rotate-3">
+                    <img src="relevando.peligro.jpg" alt="Relevando Peligros" class="w-full h-full object-cover" style="transform: scale(2.2); transform-origin: 30% center;">
+                </div>
+
+                <!-- Títulos y Textos compactos -->
+                <h3 class="text-xs font-black text-[#002855] uppercase tracking-tight mb-0.5">
+                    ¿Viste un peligro eléctrico en la calle?
+                </h3>
+                <span class="text-[9px] font-bold text-orange-600 uppercase tracking-wide block mb-1.5">
+                    Seguridad Pública
+                </span>
+                
+                <p class="text-slate-700 text-[11px] leading-snug mb-3">
+                    No seas un espectador. Si detectás postes caídos o cables sueltos, reportalo gratis. <b>La seguridad la hacemos entre todos.</b>
+                </p>
 
                 <!-- Botones de Acción -->
-                <div class="flex flex-col sm:flex-row justify-center gap-2.5 w-full pt-2">
+                <div class="flex flex-col sm:flex-row justify-center gap-2 w-full">
                     <a href="https://relevandopeligros.org/" target="_blank" 
-                       class="flex items-center justify-center gap-2 bg-[#002855] text-white px-4 py-2.5 rounded-xl font-black text-[10px] uppercase hover:bg-blue-900 transition-all shadow-md hover:-translate-y-0.5">
+                       class="flex items-center justify-center gap-1.5 bg-[#002855] text-white px-3 py-2 rounded-xl font-black text-[10px] uppercase hover:bg-blue-900 transition-all shadow-md">
                         🌐 Web Oficial
                     </a>
                     <a href="https://wa.me/5493518629999" target="_blank" 
-                       class="flex items-center justify-center gap-2 bg-green-500 text-white px-4 py-2.5 rounded-xl font-black text-[10px] uppercase hover:bg-green-600 transition-all shadow-md hover:-translate-y-0.5">
+                       class="flex items-center justify-center gap-1.5 bg-green-500 text-white px-3 py-2 rounded-xl font-black text-[10px] uppercase hover:bg-green-600 transition-all shadow-md">
                         📞 WhatsApp Urgente
                     </a>
                 </div>
