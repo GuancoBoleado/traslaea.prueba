@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Interactivo y Directorio - TRASLAEA</title>
+
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="../style.css">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .map-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #0077b6;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        .back-link:hover {
+            color: #03045e;
+            text-decoration: underline;
+        }
+
+        /* Banner de Llamado a la Acción (CTA) */
+        .cta-banner {
+            background: linear-gradient(135deg, #0b2545 0%, #134074 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(11, 37, 69, 0.15);
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        @media(min-width: 768px) {
+            .cta-banner {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
+        .cta-text h1 {
+            font-size: 2rem;
+            margin: 0 0 10px 0;
+            color: #ffffff;
+        }
+        .cta-text p {
+            font-size: 1.05rem;
+            margin: 0;
+            color: #cbd5e1;
+            line-height: 1.5;
+            max-width: 600px;
+        }
+        .cta-button {
+            background-color: #38bdf8;
+            color: #0b2545;
+            padding: 14px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+            transition: background 0.3s, transform 0.1s;
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+            white-space: nowrap;
+        }
+        .cta-button:hover {
+            background-color: #7dd3fc;
+            transform: translateY(-2px);
+        }
+
+        /* Sección de Filtros por Distrito */
+        .filter-section {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border: 1px solid #e2e8f0;
+        }
+        .filter-section h3 {
+            margin-top: 0;
+            color: #0b2545;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        .districts-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .district-btn {
+            background-color: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            color: #334155;
+            padding: 10px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .district-btn:hover, .district-btn.active {
+            background-color: #0077b6;
+            color: white;
+            border-color: #0077b6;
+        }
+
+        /* Contenedor de Profesionales / Resultados */
+        .directory-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        @media(min-width: 768px) {
+            .directory-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media(min-width: 1024px) {
+            .directory-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .pro-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-top: 5px solid #0077b6;
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .pro-card:hover {
+            transform: translateY(-4px);
+        }
+        .pro-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        .pro-name {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: #0b2545;
+            margin: 0;
+        }
+        .pro-badge {
+            background-color: #d1fae5;
+            color: #065f46;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        .pro-location {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .pro-services {
+            font-size: 0.9rem;
+            color: #334155;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        .pro-footer {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-contact-pro {
+            flex: 1;
+            background-color: #25d366;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: background 0.2s;
+        }
+        .btn-contact-pro:hover {
+            background-color: #20ba5a;
+        }
+
+        /* Mensaje cuando no hay resultados */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 12px;
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="map-container">
+        <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver al Inicio</a>
+
+        <!-- Banner de Llamado a la Acción -->
+        <div class="cta-banner">
+            <div class="cta-text">
+                <h1>🗺️ Encontrá tu electricista o sumá tu marca</h1>
+                <p>Formá parte del mapa interactivo de TRASLAEA. Facilitá que clientes de todo el valle encuentren tus servicios profesionales de electricidad, energías renovables o seguridad electrónica de forma directa.</p>
+            </div>
+            <div>
+                <a href="contacto.html" class="cta-button"><i class="fa-solid fa-user-plus"></i> ¡Sumate al Mapa!</a>
+            </div>
+        </div>
+
+        <!-- Filtros por Distritos -->
+        <div class="filter-section">
+            <h3><i class="fa-solid fa-filter" style="color: #0077b6;"></i> Filtrar por Distrito en Traslasierra:</h3>
+            <div class="districts-grid" id="district-filters">
+                <button class="district-btn active" data-district="todos">Ver Todos</button>
+                <button class="district-btn" data-district="villa-dolores">Villa Dolores</button>
+                <button class="district-btn" data-district="san-javier">San Javier</button>
+                <button class="district-btn" data-district="luyaba">Luyaba</button>
+                <button class="district-btn" data-district="la-paz">La Paz</button>
+                <button class="district-btn" data-district="las-rabonas">Las Rabonas</button>
+                <button class="district-btn" data-district="las-rosas">Los Hornillos / Las Rosas</button>
+            </div>
+        </div>
+
+        <!-- Listado de Profesionales / Tarjetas del Directorio -->
+        <div class="directory-grid" id="pro-directory">
+            
+            <!-- Tarjeta 1 -->
+            <div class="pro-card" data-district="luyaba">
+                <div>
+                    <div class="pro-header">
+                        <h4 class="pro-name">Esteban Colombo</h4>
+                        <span class="pro-badge">Matriculado</span>
+                    </div>
+                    <div class="pro-location">
+                        <i class="fa-solid fa-location-dot" style="color: #0077b6;"></i> Luyaba (Guanaco Boleado)
+                    </div>
+                    <div class="pro-services">
+                        <strong>Especialidad:</strong> Instalaciones fotovoltaicas, redes, CCTV y tableros inteligentes. Soporte de infraestructura Electrosith.
+                    </div>
+                </div>
+                <div class="pro-footer">
+                    <a href="https://wa.me/5493544000000?text=Hola%20Esteban,%20vi%20tu%20contacto%20en%20el%20mapa%20de%20TRASLAEA" target="_blank" class="btn-contact-pro">
+                        <i class="fa-brands fa-whatsapp"></i> Contactar
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tarjeta 2 -->
+            <div class="pro-card" data-district="villa-dolores">
+                <div>
+                    <div class="pro-header">
+                        <h4 class="pro-name">Ricardo Balmaceda</h4>
+                        <span class="pro-badge">Matriculado Cat. 1</span>
+                    </div>
+                    <div class="pro-location">
+                        <i class="fa-solid fa-location-dot" style="color: #0077b6;"></i> Villa Dolores
+                    </div>
+                    <div class="pro-services">
+                        <strong>Especialidad:</strong> Proyectos eléctricos domiciliarios e industriales, normativas ERSeP y certificaciones.
+                    </div>
+                </div>
+                <div class="pro-footer">
+                    <a href="https://wa.me/5493544000000" target="_blank" class="btn-contact-pro">
+                        <i class="fa-brands fa-whatsapp"></i> Contactar
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tarjeta 3 -->
+            <div class="pro-card" data-district="san-javier">
+                <div>
+                    <div class="pro-header">
+                        <h4 class="pro-name">Marcelo Flores</h4>
+                        <span class="pro-badge">Matriculado</span>
+                    </div>
+                    <div class="pro-location">
+                        <i class="fa-solid fa-location-dot" style="color: #0077b6;"></i> San Javier y Yacanto
+                    </div>
+                    <div class="pro-services">
+                        <strong>Especialidad:</strong> Instalaciones en construcciones sustentables (bioconstrucción), tableros solares y emergencias.
+                    </div>
+                </div>
+                <div class="pro-footer">
+                    <a href="https://wa.me/5493544000000" target="_blank" class="btn-contact-pro">
+                        <i class="fa-brands fa-whatsapp"></i> Contactar
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tarjeta 4 -->
+            <div class="pro-card" data-district="la-paz">
+                <div>
+                    <div class="pro-header">
+                        <h4 class="pro-name">David Lungu</h4>
+                        <span class="pro-badge">Matriculado</span>
+                    </div>
+                    <div class="pro-location">
+                        <i class="fa-solid fa-location-dot" style="color: #0077b6;"></i> La Paz
+                    </div>
+                    <div class="pro-services">
+                        <strong>Especialidad:</strong> Automatizaciones, cableados estructurados, sistemas de bombeo solar y asistencia técnica.
+                    </div>
+                </div>
+                <div class="pro-footer">
+                    <a href="https://wa.me/5493544000000" target="_blank" class="btn-contact-pro">
+                        <i class="fa-brands fa-whatsapp"></i> Contactar
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tarjeta 5 -->
+            <div class="pro-card" data-district="las-rabonas">
+                <div>
+                    <div class="pro-header">
+                        <h4 class="pro-name">Taller Eléctrico Las Rabonas</h4>
+                        <span class="pro-badge">Servicios</span>
+                    </div>
+                    <div class="pro-location">
+                        <i class="fa-solid fa-location-dot" style="color: #0077b6;"></i> Las Rabonas
+                    </div>
+                    <div class="pro-services">
+                        <strong>Especialidad:</strong> Mantenimiento general, iluminación exterior, esquemas eléctricos para complejos turísticos.
+                    </div>
+                </div>
+                <div class="pro-footer">
+                    <a href="https://wa.me/5493544000000" target="_blank" class="btn-contact-pro">
+                        <i class="fa-brands fa-whatsapp"></i> Contactar
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tarjeta 6 -->
+            <div class="pro-card" data-district="las-rosas">
+                <div>
+                    <div class="pro-header">
+                        <h4 class="pro-name">Servicios Eléctricos Traslasierra</h4>
+                        <span class="pro-badge">Oficio / Marca</span>
+                    </div>
+                    <div class="pro-location">
+                        <i class="fa-solid fa-location-dot" style="color: #0077b6;"></i> Los Hornillos / Las Rosas
+                    </div>
+                    <div class="pro-services">
+                        <strong>Especialidad:</strong> Montajes eléctricos comerciales, reformas, planos y asesoramiento técnico normativo.
+                    </div>
+                </div>
+                <div class="pro-footer">
+                    <a href="https://wa.me/5493544000000" target="_blank" class="btn-contact-pro">
+                        <i class="fa-brands fa-whatsapp"></i> Contactar
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Script de Filtrado Dinámico por Distrito -->
+    <script>
+        const buttons = document.querySelectorAll('.district-btn');
+        const cards = document.querySelectorAll('.pro-card');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remover clase active de todos
+                buttons.forEach(btn => btn.classList.remove('active'));
+                // Agregar al presionado
+                button.classList.add('active');
+
+                const selectedDistrict = button.getAttribute('data-district');
+
+                let visibleCount = 0;
+                cards.forEach(card => {
+                    const cardDistrict = card.getAttribute('data-district');
+                    if (selectedDistrict === 'todos' || cardDistrict === selectedDistrict) {
+                        card.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
