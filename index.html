@@ -119,9 +119,9 @@
         </article>
 
 <!-- RECURSOS TÉCNICOS -->
-        <article class="card resources-card flex flex-col justify-between">
-            <div class="flex flex-col gap-4">
-                <h3 class="text-base font-black text-[#002855] tracking-wide border-b-2 border-blue-100 pb-2">📚 RECURSOS TÉCNICOS</h3>
+        <article class="card resources-card">
+            <div>
+                <h3>📚 RECURSOS TÉCNICOS</h3>
                 
                 <div class="resource-item">
                     <span class="icon-pdf">HUB</span>
@@ -147,52 +147,34 @@
                 </div>
             </div>
 
-            <!-- TARJETA RELEVANDO PELIGROS RENOVADA Y CON " ONDA " -->
-            <div class="relative bg-gradient-to-br from-red-900 via-[#002855] to-slate-900 text-white border-2 border-red-500/40 rounded-2xl p-5 mt-6 shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 overflow-hidden group">
-                
-                <!-- Efecto visual de brillo de fondo -->
-                <div class="absolute -right-10 -bottom-10 w-32 h-32 bg-red-500/20 rounded-full blur-2xl group-hover:bg-red-500/40 transition-all"></div>
-
-                <div class="relative z-10 flex flex-col sm:flex-row items-center gap-4">
-                    
-                    <!-- Contenedor circular con borde brillante para la futura imagen -->
-                    <div class="w-20 h-20 min-w-[5rem] rounded-full overflow-hidden border-2 border-red-400 bg-white/10 backdrop-blur-md shadow-inner flex items-center justify-center flex-shrink-0 transition-transform duration-500 group-hover:scale-105">
-                        <!-- Reemplazá el src con la ruta de tu imagen redonda cuando la tengas -->
-                        <img src="traslaea-web/assets/img/peligro-electrico.jpg" alt="Relevando Peligros" class="w-full h-full object-cover" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <!-- Icono de respaldo por si la imagen no carga todavía -->
-                        <div class="absolute inset-0 hidden items-center justify-center text-red-400 text-2xl">
+            <!-- TARJETA RELEVANDO PELIGROS (Estilo CSS Propio) -->
+            <div class="peligros-card">
+                <div class="peligros-content">
+                    <!-- Círculo para la imagen o ícono -->
+                    <div class="peligros-img-container">
+                        <img src="traslaea-web/assets/img/peligro-electrico.jpg" alt="Relevando Peligros" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="peligros-icon-fallback" style="display: none;">
                             <i class="fas fa-triangle-exclamation"></i>
                         </div>
                     </div>
 
-                    <!-- Contenido de la tarjeta -->
-                    <div class="flex-1 text-center sm:text-left">
-                        <span class="inline-block bg-red-600/80 text-white text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full mb-1 border border-red-400/30">
-                            🚨 Seguridad Pública • Relevando Peligros
-                        </span>
-                        
-                        <h4 class="text-sm font-black text-white uppercase tracking-tight mb-1">
-                            ¿Viste un peligro eléctrico en la calle?
-                        </h4>
-                        
-                        <p class="text-slate-200 text-[11px] leading-relaxed mb-3">
-                            Si detectás postes caídos o cables sueltos, reportalo gratis. La seguridad la hacemos entre todos.
-                        </p>
+                    <!-- Textos -->
+                    <div class="peligros-textos">
+                        <span class="peligros-badge">🚨 Seguridad Pública • Relevando Peligros</span>
+                        <h4>¿Viste un peligro eléctrico en la calle?</h4>
+                        <p>Si detectás postes caídos o cables sueltos, reportalo gratis. La seguridad la hacemos entre todos.</p>
 
-                        <!-- Botones de Acción con mejor estilo -->
-                        <div class="flex flex-wrap justify-center sm:justify-start gap-2">
-                            <a href="https://relevandopeligros.org/" target="_blank" 
-                               class="inline-flex items-center justify-center gap-1.5 bg-white text-[#002855] px-3 py-1.5 rounded-xl font-black text-[9px] uppercase hover:bg-red-50 hover:text-red-700 transition-all shadow-md">
+                        <!-- Botones -->
+                        <div class="peligros-buttons">
+                            <a href="https://relevandopeligros.org/" target="_blank" class="btn-web">
                                 🌐 Web Oficial
                             </a>
-                            <a href="https://wa.me/5493518629999" target="_blank" 
-                               class="inline-flex items-center justify-center gap-1.5 bg-green-500 text-white px-3 py-1.5 rounded-xl font-black text-[9px] uppercase hover:bg-green-600 transition-all shadow-md">
+                            <a href="https://wa.me/5493518629999" target="_blank" class="btn-wsp">
                                 📞 WhatsApp Urgente
                             </a>
                         </div>
                     </div>
                 </div>
-
             </div>
         </article>
         </article>
