@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
         map.invalidateSize();
     }, 250);
 
-    // Base de datos de profesionales y socios de TRASLAEA
+    // Base de datos de profesionales y socios de TRASLAEA ampliada con más perfiles y servicios
     var profesionales = [
         {
             nombre: "Esteban Colombo",
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function() {
             localidad: "Luyaba",
             lat: -31.9350,
             lng: -65.0250,
-            detalle: "Instalaciones fotovoltaicas, redes, CCTV y Electrosith.",
+            detalle: "Instalaciones fotovoltaicas, redes, WiFi, cámaras CCTV y electrónica para el hogar.",
             whatsapp: "5493544314637"
         },
         {
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
             localidad: "San Javier",
             lat: -32.0167,
             lng: -65.0167,
-            detalle: "Instalaciones en bioconstrucción y tableros solares.",
+            detalle: "Instalaciones en bioconstrucción, tableros solares y electricidad general.",
             whatsapp: "5493544000000"
         },
         {
@@ -51,16 +51,43 @@ document.addEventListener("DOMContentLoaded", function() {
             localidad: "Las Rabonas",
             lat: -31.8167,
             lng: -65.0167,
-            detalle: "Iluminación exterior y complejos turísticos.",
+            detalle: "Iluminación exterior, cámaras CCTV y complejos turísticos.",
             whatsapp: "5493544000000"
         },
         {
             nombre: "Servicios Eléctricos Traslasierra",
             oficio: "Oficio / Marca Comercial",
-            localidad: "Los Hornillos",
-            lat: -31.8833,
+            localidad: "Villa Dolores",
+            lat: -31.9443,
+            lng: -65.1878,
+            detalle: "Montajes comerciales, planos, electricidad y armado de sitio web.",
+            whatsapp: "5493544000000"
+        },
+        {
+            nombre: "Electromecánica Las Rosas",
+            oficio: "Electricista y Soporte Técnico",
+            localidad: "Las Rosas",
+            lat: -31.9167,
             lng: -65.0167,
-            detalle: "Montajes comerciales, planos y asesoramiento.",
+            detalle: "Electricidad domiciliaria, redes WiFi y cámaras de seguridad CCTV.",
+            whatsapp: "5493544000000"
+        },
+        {
+            nombre: "Conexiones Travesía",
+            oficio: "Técnico en Redes",
+            localidad: "Travesía",
+            lat: -31.9700,
+            lng: -65.0300,
+            detalle: "Conectividad rural, internet, WiFi y cámaras CCTV.",
+            whatsapp: "5493544000000"
+        },
+        {
+            nombre: "Servicios La Población",
+            oficio: "Electricista Matriculado",
+            localidad: "Poblacion",
+            lat: -32.1167,
+            lng: -65.0500,
+            detalle: "Instalaciones eléctricas y electrónica para tu hogar.",
             whatsapp: "5493544000000"
         }
     ];
@@ -68,18 +95,17 @@ document.addEventListener("DOMContentLoaded", function() {
     // Grupo de capas para los marcadores
     var markersLayer = L.layerGroup().addTo(map);
 
-    // Función para renderizar los pines en el mapa con opción de filtro
+    // Función inteligente para renderizar y filtrar pines
     function renderizarPines(filtro = "") {
         markersLayer.clearLayers();
-        var textoFiltro = filtro.toLowerCase().trim();
+        
+        var palabrasFiltro = filtro.toLowerCase().trim().split(/\s+/);
 
         profesionales.forEach(pro => {
-            // Filtrar por nombre, oficio o localidad
-            var coincide = pro.nombre.toLowerCase().includes(textoFiltro) ||
-                           pro.oficio.toLowerCase().includes(textoFiltro) ||
-                           pro.localidad.toLowerCase().includes(textoFiltro);
+            var textoCompleto = `${pro.nombre} ${pro.oficio} ${pro.localidad} ${pro.detalle}`.toLowerCase();
+            var coincideTodas = palabrasFiltro.every(palabra => textoCompleto.includes(palabra));
 
-            if (coincide) {
+            if (coincideTodas || filtro.trim() === "") {
                 var popupContent = `
                     <div style="font-family: Arial; font-size: 0.9rem; line-height: 1.3;">
                         <h4 style="margin: 0 0 4px 0; color: #0b2545;">${pro.nombre}</h4>
@@ -101,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Cargar todos inicialmente
     renderizarPines();
 
-    // Inyectar un encabezado comercial y buscador dinámicamente arriba del mapa
+    // Inyectar el encabezado comercial, buscador y los mini botones interactivos
     var mapCard = document.querySelector('.map-card');
     if (mapCard) {
         var marketingDiv = document.createElement('div');
@@ -109,17 +135,46 @@ document.addEventListener("DOMContentLoaded", function() {
         marketingDiv.innerHTML = `
             <div style="background: linear-gradient(135deg, #0b2545 0%, #134074 100%); color: white; padding: 15px 20px; border-radius: 10px; margin-bottom: 12px; text-align: center;">
                 <h4 style="margin: 0 0 5px 0; font-size: 1.1rem;"><i class="fa-solid fa-bolt" style="color: #38bdf8;"></i> Encontrá instaladores y tiendas de confianza en tu zona</h4>
-                <p style="margin: 0; font-size: 0.85rem; color: #cbd5e1;">Buscá por localidad (ej: Luyaba, San Javier) o servicio eléctrico.</p>
+                <p style="margin: 0; font-size: 0.85rem; color: #cbd5e1;">Buscá por localidad u oficio, o hacé clic en los accesos rápidos:</p>
             </div>
-            <input type="text" id="buscador-mapa" placeholder="🔍 Escribí una localidad o especialidad..." style="width: 100%; padding: 12px 16px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; outline: none; box-sizing: border-box; transition: border-color 0.3s;" onfocus="this.style.borderColor='#0077b6'" onblur="this.style.borderColor='#cbd5e1'">
+            
+            <!-- Barra de búsqueda -->
+            <input type="text" id="buscador-mapa" placeholder="🔍 Escribí localidad, oficio o servicio (ej: Luyaba, cámaras)..." style="width: 100%; padding: 12px 16px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; outline: none; box-sizing: border-box; margin-bottom: 12px; transition: border-color 0.3s;" onfocus="this.style.borderColor='#0077b6'" onblur="this.style.borderColor='#cbd5e1'">
+            
+            <!-- Mini botones / Chips de acceso rápido -->
+            <div id="quick-filters" style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 5px;">
+                <button class="chip-btn" data-filter="" style="background: #0b2545; color: white; border: none; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; font-weight: bold;">Ver Todos</button>
+                <button class="chip-btn" data-filter="villa dolores" style="background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer;">Villa Dolores</button>
+                <button class="chip-btn" data-filter="las rosas" style="background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer;">Las Rosas</button>
+                <button class="chip-btn" data-filter="la paz" style="background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer;">La Paz</button>
+                <button class="chip-btn" data-filter="luyaba" style="background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer;">Luyaba</button>
+                <button class="chip-btn" data-filter="poblacion" style="background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer;">Población</button>
+                <button class="chip-btn" data-filter="travesia" style="background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer;">Travesía</button>
+                <button class="chip-btn" data-filter="san javier" style="background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer;">San Javier</button>
+                <button class="chip-btn" data-filter="electricista" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; font-weight: bold;">Electricistas</button>
+                <button class="chip-btn" data-filter="wifi" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; font-weight: bold;">WiFi & Cámaras CCTV</button>
+                <button class="chip-btn" data-filter="sitio web" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; font-weight: bold;">Sitio Web</button>
+                <button class="chip-btn" data-filter="hogar" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; font-weight: bold;">Electrónica para tu hogar</button>
+            </div>
         `;
         
-        // Insertar antes del contenedor del mapa (#map)
         mapCard.insertBefore(marketingDiv, mapElement);
 
-        // Escuchar eventos de escritura en el buscador
-        document.getElementById('buscador-mapa').addEventListener('input', function(e) {
+        var inputBuscador = document.getElementById('buscador-mapa');
+
+        // Escuchar eventos de escritura en tiempo real en el input
+        inputBuscador.addEventListener('input', function(e) {
             renderizarPines(e.target.value);
+        });
+
+        // Manejar los clics en los mini botones / chips
+        var botonesChip = document.querySelectorAll('.chip-btn');
+        botonesChip.forEach(btn => {
+            btn.addEventListener('click', function() {
+                var valorFiltro = this.getAttribute('data-filter');
+                inputBuscador.value = valorFiltro; // Escribe el filtro en el buscador visualmente
+                renderizarPines(valorFiltro);
+            });
         });
     }
 });
