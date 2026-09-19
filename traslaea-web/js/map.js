@@ -101,16 +101,21 @@ document.addEventListener("DOMContentLoaded", function() {
     // Cargar todos inicialmente
     renderizarPines();
 
-    // Inyectar el HTML del buscador dinámicamente arriba del mapa para no tocar el index.html
+    // Inyectar un encabezado comercial y buscador dinámicamente arriba del mapa
     var mapCard = document.querySelector('.map-card');
     if (mapCard) {
-        var searchDiv = document.createElement('div');
-        searchDiv.style.marginBottom = "15px";
-        searchDiv.innerHTML = `
-            <input type="text" id="buscador-mapa" placeholder="🔍 Buscar por nombre, oficio o localidad (ej: Luyaba)..." style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; outline: none; box-sizing: border-box;">
+        var marketingDiv = document.createElement('div');
+        marketingDiv.style.marginBottom = "15px";
+        marketingDiv.innerHTML = `
+            <div style="background: linear-gradient(135deg, #0b2545 0%, #134074 100%); color: white; padding: 15px 20px; border-radius: 10px; margin-bottom: 12px; text-align: center;">
+                <h4 style="margin: 0 0 5px 0; font-size: 1.1rem;"><i class="fa-solid fa-bolt" style="color: #38bdf8;"></i> Encontrá instaladores y tiendas de confianza en tu zona</h4>
+                <p style="margin: 0; font-size: 0.85rem; color: #cbd5e1;">Buscá por localidad (ej: Luyaba, San Javier) o servicio eléctrico.</p>
+            </div>
+            <input type="text" id="buscador-mapa" placeholder="🔍 Escribí una localidad o especialidad..." style="width: 100%; padding: 12px 16px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; outline: none; box-sizing: border-box; transition: border-color 0.3s;" onfocus="this.style.borderColor='#0077b6'" onblur="this.style.borderColor='#cbd5e1'">
         `;
+        
         // Insertar antes del contenedor del mapa (#map)
-        mapCard.insertBefore(searchDiv, mapElement);
+        mapCard.insertBefore(marketingDiv, mapElement);
 
         // Escuchar eventos de escritura en el buscador
         document.getElementById('buscador-mapa').addEventListener('input', function(e) {
