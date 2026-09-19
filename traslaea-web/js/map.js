@@ -27,14 +27,7 @@ document.addEventListener("DOMContentLoaded", function() {
             detalle: "Instalaciones fotovoltaicas, redes, CCTV y Electrosith.",
             whatsapp: "5493544314637"
         },
-        {
-            nombre: "Ricardo Balmaceda",
-            oficio: "Electricista Matriculado Cat. 1",
-            lat: -31.9443,
-            lng: -65.1878,
-            detalle: "Proyectos eléctricos, normativas ERSeP y certificaciones.",
-            whatsapp: "5493544000000"
-        },
+        
         {
             nombre: "Marcelo Flores",
             oficio: "Electricista Matriculado",
