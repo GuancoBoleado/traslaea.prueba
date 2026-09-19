@@ -1,0 +1,256 @@
+// --- KIRI-BOT: Asistente Virtual TRASLAEA ---
+document.addEventListener("DOMContentLoaded", function() {
+    // Inyectar los estilos CSS del chatbot automáticamente en el documento
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .kiri-chatbot-container {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 9999;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .kiri-chatbot-btn {
+            width: 65px;
+            height: 65px;
+            background: #0b0f19;
+            border: 2px solid #00a8e8;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0, 168, 232, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .kiri-chatbot-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 25px rgba(0, 168, 232, 0.7);
+        }
+        .kiri-chatbot-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .kiri-online-dot {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 14px;
+            height: 14px;
+            background-color: #22c55e;
+            border: 2px solid #0b0f19;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+        .kiri-chatbot-window {
+            display: none;
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 480px;
+            background: #0b0f19;
+            border: 1px solid rgba(0, 168, 232, 0.4);
+            border-radius: 16px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
+            flex-direction: column;
+            overflow: hidden;
+            backdrop-blur: 10px;
+        }
+        .kiri-chatbot-header {
+            background: #134074;
+            color: white;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 168, 232, 0.3);
+        }
+        .kiri-chatbot-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .kiri-chatbot-title img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 1px solid #00a8e8;
+            object-fit: cover;
+        }
+        .kiri-chatbot-title h4 {
+            margin: 0;
+            font-size: 0.95rem;
+            color: #38bdf8;
+            letter-spacing: 0.5px;
+        }
+        .kiri-chatbot-title span {
+            font-size: 0.75rem;
+            color: #4ade80;
+        }
+        .kiri-chatbot-close {
+            background: none;
+            border: none;
+            color: #cbd5e1;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .kiri-chatbot-close:hover {
+            color: white;
+        }
+        .kiri-chatbot-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background: #0b0f19;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 0.85rem;
+        }
+        .kiri-msg {
+            padding: 10px 14px;
+            border-radius: 12px;
+            max-width: 85%;
+            line-height: 1.4;
+        }
+        .kiri-msg.bot {
+            background: #1e293b;
+            color: #e2e8f0;
+            border-top-left-radius: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .kiri-msg.user {
+            background: #0284c7;
+            color: white;
+            align-self: flex-end;
+            border-top-right-radius: 2px;
+        }
+        .kiri-chatbot-input-area {
+            display: flex;
+            padding: 10px;
+            background: #134074;
+            border-top: 1px solid rgba(0, 168, 232, 0.3);
+        }
+        .kiri-chatbot-input-area input {
+            flex: 1;
+            padding: 10px 12px;
+            background: #0b0f19;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: white;
+            outline: none;
+            font-size: 0.85rem;
+        }
+        .kiri-chatbot-input-area input:focus {
+            border-color: #00a8e8;
+        }
+        .kiri-chatbot-input-area button {
+            background: #00a8e8;
+            color: white;
+            border: none;
+            padding: 0 14px;
+            margin-left: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .kiri-chatbot-input-area button:hover {
+            background: #0284c7;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Inyectar el HTML flotante al final del body
+    const chatContainer = document.createElement('div');
+    chatContainer.className = 'kiri-chatbot-container';
+    chatContainer.innerHTML = `
+        <button class="kiri-chatbot-btn" onclick="toggleKiriChat()" title="Abrir Asistente Kiri">
+            <img src="kiri_avatar.png" alt="Kiri Bot" onerror="this.src='traslaea-web/assets/img/noticia1.jpg'">
+            <span class="kiri-online-dot"></span>
+        </button>
+
+        <div class="kiri-chatbot-window" id="kiriChatWindow">
+            <div class="kiri-chatbot-header">
+                <div class="kiri-chatbot-title">
+                    <img src="kiri_avatar.png" alt="Kiri" onerror="this.src='traslaea-web/assets/img/noticia1.jpg'">
+                    <div>
+                        <h4>KIRI-BOT V2.1</h4>
+                        <span>● Chat Activo</span>
+                    </div>
+                </div>
+                <button class="kiri-chatbot-close" onclick="toggleKiriChat()">&times;</button>
+            </div>
+            <div class="kiri-chatbot-messages" id="kiriMessages">
+                <div class="kiri-msg bot">¡Hola, colega! Soy Kiri, el asistente virtual de TRASLAEA. 🤖💨 ¿En qué norma AEA, curso o consulta técnica te puedo dar una mano hoy?</div>
+            </div>
+            <div class="kiri-chatbot-input-area">
+                <input type="text" id="kiriInput" placeholder="Escribe tu consulta..." onkeypress="handleKiriKeypress(event)">
+                <button onclick="sendKiriMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(chatContainer);
+});
+
+// Funciones de control de la interfaz
+function toggleKiriChat() {
+    const chatWindow = document.getElementById('kiriChatWindow');
+    const isVisible = chatWindow.style.display === 'flex';
+    chatWindow.style.display = isVisible ? 'none' : 'flex';
+    if (!isVisible) {
+        document.getElementById('kiriInput').focus();
+    }
+}
+
+function handleKiriKeypress(event) {
+    if (event.key === 'Enter') {
+        sendKiriMessage();
+    }
+}
+
+function sendKiriMessage() {
+    const input = document.getElementById('kiriInput');
+    const text = input.value.trim();
+    if (text === '') return;
+
+    const messagesContainer = document.getElementById('kiriMessages');
+
+    // Agregar mensaje del usuario
+    const userMsg = document.createElement('div');
+    userMsg.className = 'kiri-msg user';
+    userMsg.textContent = text;
+    messagesContainer.appendChild(userMsg);
+
+    input.value = '';
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+    // Simulación de respuesta inteligente de Kiri orientada a TRASLAEA / AEA
+    setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.className = 'kiri-msg bot';
+        
+        const lowerText = text.toLowerCase();
+        if (lowerText.includes('curso') || lowerText.includes('capacitacion') || lowerText.includes('inscripci')) {
+            botMsg.innerHTML = 'Tenemos activas las capacitaciones de Energías Solares y normativas. Podés sumarte desde la sección superior en <a href="https://docs.google.com/forms/d/1RWIEOR222SI9JUQzYv1U4ibDfIlcWqgxsxrJcfGkkKY/alreadyresponded?edit_requested=true" target="_blank" style="color: #38bdf8; text-decoration: underline;">Cursos</a> 🎓.';
+        } else if (lowerText.includes('norma') || lowerText.includes('ersep') || lowerText.includes('aea')) {
+            botMsg.textContent = 'Las normativas vigentes, resoluciones de ERSeP y reglamentaciones de la AEA las podés consultar directamente en la sección "Normativas" del menú principal de la web 📚.';
+        } else if (lowerText.includes('contacto') || lowerText.includes('whatsapp') || lowerText.includes('esteban')) {
+            botMsg.textContent = 'Te podés comunicar de forma directa con la administración o con Esteban Colombo a través del botón de WhatsApp en la barra superior o en el mapa 📞.';
+        } else {
+            botMsg.textContent = 'Analizando los manuales de la asociación... 🧠💨 Para consultas avanzadas sobre instalaciones o soporte técnico específico, recordá que podés contactar a los socios desde el mapa interactivo.';
+        }
+
+        messagesContainer.appendChild(botMsg);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }, 900);
+}
