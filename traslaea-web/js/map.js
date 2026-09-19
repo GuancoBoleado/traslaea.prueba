@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
         map.invalidateSize();
     }, 250);
 
-    // Base de datos de profesionales y socios de TRASLAEA ampliada con más perfiles y servicios
+    // Base de datos de profesionales y socios de TRASLAEA ampliada
     var profesionales = [
         {
             nombre: "Esteban Colombo",
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function() {
         {
             nombre: "Electromecánica Las Rosas",
             oficio: "Electricista y Soporte Técnico",
-            localidad: "Las Rosas",
+            localidad: "Villa de Las Rosas",
             lat: -31.9167,
             lng: -65.0167,
             detalle: "Electricidad domiciliaria, redes WiFi y cámaras de seguridad CCTV.",
@@ -84,10 +84,19 @@ document.addEventListener("DOMContentLoaded", function() {
         {
             nombre: "Servicios La Población",
             oficio: "Electricista Matriculado",
-            localidad: "Poblacion",
+            localidad: "Población",
             lat: -32.1167,
             lng: -65.0500,
             detalle: "Instalaciones eléctricas y electrónica para tu hogar.",
+            whatsapp: "5493544000000"
+        },
+        {
+            nombre: "Gustavo Peralta",
+            oficio: "Instalador Energías Renovables",
+            localidad: "Los Hornillos",
+            lat: -31.8833,
+            lng: -65.0167,
+            detalle: "Sistemas solares fotovoltaicos y mantenimiento integral.",
             whatsapp: "5493544000000"
         }
     ];
@@ -148,8 +157,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 <button class="chip-btn" data-filter="las rosas" style="background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer;">Las Rosas</button>
                 <button class="chip-btn" data-filter="la paz" style="background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer;">La Paz</button>
                 <button class="chip-btn" data-filter="luyaba" style="background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer;">Luyaba</button>
-                <button class="chip-btn" data-filter="poblacion" style="background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer;">Población</button>
-                <button class="chip-btn" data-filter="travesia" style="background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer;">Travesía</button>
+                <button class="chip-btn" data-filter="población" style="background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer;">Población</button>
+                <button class="chip-btn" data-filter="travesía" style="background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer;">Travesía</button>
                 <button class="chip-btn" data-filter="san javier" style="background: #e2e8f0; color: #1e293b; border: 1px solid #cbd5e1; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer;">San Javier</button>
                 <button class="chip-btn" data-filter="electricista" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; font-weight: bold;">Electricistas</button>
                 <button class="chip-btn" data-filter="wifi" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; font-weight: bold;">WiFi & Cámaras CCTV</button>
