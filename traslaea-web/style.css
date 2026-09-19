@@ -666,3 +666,80 @@ body {
         justify-content: center;
     }
 }
+/* ===================================================
+   OPTIMIZACIÓN RESPONSIVO PARA CELULARES
+   =================================================== */
+@media (max-width: 768px) {
+    /* Reducir espacios generales del encabezado */
+    .top-bar {
+        padding: 6px 15px;
+        font-size: 11px;
+    }
+    
+    .top-bar-container {
+        flex-direction: column;
+        gap: 5px;
+        text-align: center;
+    }
+
+    .quick-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .quick-links a {
+        margin-right: 0;
+        font-size: 11px;
+    }
+
+    .social-links {
+        margin-top: 2px;
+    }
+
+    .social-links a {
+        margin: 0 8px;
+    }
+
+    /* Acomodar la barra de navegación principal */
+    .navbar {
+        flex-direction: column;
+        padding: 12px 15px;
+        gap: 12px;
+        text-align: center;
+    }
+
+    .logo-container {
+        justify-content: center;
+    }
+
+    /* Menú de navegación en celular: centrado y en filas prolijas */
+    .navbar nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px 15px;
+    }
+
+    .navbar nav a {
+        font-size: 13px;
+        padding: 4px 8px;
+    }
+
+    /* Asegurar que las tarjetas estadísticas no queden gigantes */
+    .stats-container {
+        padding: 0 10px;
+        gap: 15px;
+    }
+
+    .stat-card {
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+        padding: 15px 20px;
+    }
+    
+    .hero h2 {
+        font-size: 28px;
+    }
+}
