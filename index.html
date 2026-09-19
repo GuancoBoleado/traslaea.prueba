@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRASLAEA - Traslasierra</title>
+
+    <!-- CSS EXTERNO -->
+    <link rel="stylesheet" href="traslaea-web/style.css">
+
+    <!-- Leaflet CSS para el Mapa -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Font Awesome para los íconos de redes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- ESTILOS UNIFICADOS Y OPTIMIZADOS PARA EL INDEX -->
+    <style>
+        /* Ajustes específicos del dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: stretch;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .dashboard-grid .card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .resources-card {
+            justify-content: space-between;
+        }
+        @media (max-width: 900px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Efecto hover para recursos */
+        .resource-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            cursor: pointer;
+        }
+        .resource-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 15px rgba(0, 168, 232, 0.2);
+            background-color: #e2e8f0;
+        }
+
+        /* Sección Hero con animación de rayos de fondo */
+        .hero {
+            background: linear-gradient(135deg, #0b0f19 0%, #0f4c81 50%, #0b2545 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 35px 20px 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Contenedor canvas para los rayos eléctricos */
+        #lightning-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.35;
+        }
+
+        /* Asegurar que el contenido del hero esté por encima de los rayos */
+        .hero > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h2 {
+            font-size: 32px;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(0, 168, 232, 0.5);
+        }
+        .hero .subtitle {
+            color: #00a8e8;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        /* Diseño de globos unificados en la sección azul */
+        .bubbles-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .bubbles-title {
+            color: #cbd5e1;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
+        }
+        .bubbles-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+        }
+        .bubble-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            width: 110px;
+        }
+        .bubble-card:hover {
+            transform: translateY(-6px);
+        }
+        .bubble-circle {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            border: 2.5px solid #00a8e8;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 168, 232, 0.3);
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .bubble-card:hover .bubble-circle {
+            box-shadow: 0 0 20px #ffffff, 0 0 25px #00a8e8;
+            border-color: #ffffff;
+        }
+        .bubble-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .bubble-circle.empty {
+            border: 2px dashed rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 18px;
+        }
+        .bubble-name {
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 6px;
+            line-height: 1.2;
+        }
+        .bubble-desc {
+            color: #94a3b8;
+            font-size: 9.5px;
+            margin-top: 2px;
+            line-height: 1.1;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BAR SUPERIOR -->
+    <div class="top-bar">
+        <div class="top-bar-container">
+            <div class="quick-links">
+                <a href="https://docs.google.com/forms/d/1RWIEOR222SI9JUQzYv1U4ibDfIlcWqgxsxrJcfGkkKY/alreadyresponded?edit_requested=true" target="_blank">🎓 Cursos</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/alreadyresponded" target="_blank">✍️ Suscripción</a>
+                <a href="traslaea-web/paginas/recursos.html">📁 Manuales & Software</a>
+            </div>
+            <div class="social-links">
+                <a href="https://www.facebook.com/Traslaea.OK" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/traslaea.arg" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://api.whatsapp.com/send?phone=543544314637&text=Hola%20Esteban%20Colombo..." target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="logo-container">
+            <div class="brand-text">
+                <h1>TRASLAEA</h1>
+                <span>ORGANIZACIÓN DE ELECTRICISTAS ASOCIADOS</span>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Inicio</a></li>
+                <li><a href="traslaea-web/paginas/nosotros.html">Nosotros</a></li>
+                <li><a href="traslaea-web/paginas/recursos.html">Recursos</a></li>
+                <li><a href="traslaea-web/paginas/normativas.html">Normativas</a></li>
+                <li><a href="traslaea-web/paginas/contacto.html">Contacto & Tramites</a></li>
+            </ul>
+        </nav>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/alreadyresponded" target="_blank" class="btn-suscripcion">SUSCRIPCIÓN</a>
+    </header>
+
+    <!-- BARRA DE COLORES ERSEP -->
+    <div class="color-stripe">
+        <div class="stripe s-blue"></div>
+        <div class="stripe s-cyan"></div>
+        <div class="stripe s-dark"></div>
+        <div class="stripe s-light"></div>
+    </div>
+
+    <!-- HERO SECTION CON RAYOS DINÁMICOS -->
+    <section class="hero">
+        <canvas id="lightning-canvas"></canvas>
+
+        <h2>TRASLAEA</h2>
+        <p class="subtitle">TRASLASIERRA</p>
+
+        <!-- RED DE INSTALADORES Y EMPRESAS AMIGAS -->
+        <div class="bubbles-section">
+            <h3 class="bubbles-title">Red de Instaladores y Empresas Amigas</h3>
+            
+            <div class="bubbles-container">
+                <!-- GLOBO 1: Electrosith -->
+                <div class="bubble-card" onclick="window.open('https://api.whatsapp.com/send?phone=543544314637&text=Hola%20Esteban,%20me%20comunico%20desde%20la%20red%20Traslaea%20por%20servicios%20de%20Electrosith', '_blank')">
+                    <div class="bubble-circle">
+                        <img src="electrosith.jpg" alt="Electrosith" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="bubble-fallback" style="display:none;"><i class="fas fa-microchip"></i></div>
+                    </div>
+                    <span class="bubble-name">Electrosith</span>
+                    <span class="bubble-desc">Solar, Automatización, WiFi & CCTV</span>
+                </div>
+
+                <!-- GLOBO 2: Free Energy -->
+                <div class="bubble-card" onclick="window.open('https://wa.me/5492224548582?text=Hola,%20me%20comunico%20desde%20la%20red%20Traslaea', '_blank')">
+                    <div class="bubble-circle">
+                        <img src="Free Energi.JPG" alt="Free Energy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="bubble-fallback" style="display:none;"><i class="fas fa-solar-panel"></i></div>
+                    </div>
+                    <span class="bubble-name">Free Energy</span>
+                    <span class="bubble-desc">Energía Solar</span>
+                </div>
+
+                <!-- GLOBO 3: Espacio libre -->
+                <div class="bubble-card placeholder-bubble">
+                    <div class="bubble-circle empty">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <span class="bubble-name">Sumá tu Local</span>
+                    <span class="bubble-desc">Disponible</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DASHBOARD PRINCIPAL -->
+    <main class="dashboard-grid">
+        <!-- MAPA -->
+        <article class="card map-card">
+            <div class="card-header">
+                <h3>📍 MAPA DE COBERTURA</h3>
+                <span class="badge">TRASLASIERRA EN RED</span>
+            </div>
+            <div id="map"></div>
+            <p class="card-footer-text">HAZ CLIC EN LOS PUNTOS PARA VER INFORMACIÓN DE LOS SOCIOS</p>
+        </article>
+
+        <!-- RECURSOS TÉCNICOS -->
+        <article class="card resources-card">
+            <div>
+                <h3>📚 RECURSOS TÉCNICOS</h3>
+                
+                <div class="resource-item">
+                    <span class="icon-pdf">Biblioteca</span>
+                    <div class="resource-info">
+                        <h4>MANUALES & SOFTWARE</h4>
+                        <p>BIBLIOTECA Y PROGRAMAS TÉCNICOS</p>
+                    </div>
+                    <a href="traslaea-web/paginas/recursos.html" class="btn-download">VER TODO →</a>
+                </div>
+
+                <div class="resource-item">
+                    <span class="icon-drive">Marco normativo</span>
+                    <div class="resource-info">
+                        <h4>NORMATIVAS 2026</h4>
+                        <p>Leyes, Decretos y Resoluciones ERSeP</p>
+                    </div>
+                    <a href="traslaea-web/paginas/normativas.html" class="btn-link">VER REPOSITORIO →</a>
+                </div>
+
+                <div class="notice-box">
+                    <strong>AVISO TÉCNICO</strong>
+                    <p>Recordá que para certificar instalaciones en Córdoba debes estar registrado en la Categoría 3 (Idóneos) o superior.</p>
+                </div>
+            </div>
+
+            <!-- TARJETA RELEVANDO PELIGROS -->
+            <div class="peligros-card">
+                <div class="peligros-content">
+                    <div class="peligros-img-container">
+                        <img src="relevando.peligro.jpg" alt="Relevando Peligros" style="object-fit: cover; object-position: 0% 50%; width: 100%; height: 100%;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="peligros-icon-fallback" style="display: none;">
+                            <i class="fas fa-triangle-exclamation"></i>
+                        </div>
+                    </div>
+
+                    <div class="peligros-textos">
+                        <span class="peligros-badge">🚨 Seguridad Pública • Relevando Peligros</span>
+                        <h4>¿Viste un peligro eléctrico en la calle?</h4>
+                        <p>Si detectás postes caídos o cables sueltos, reportalo gratis. La seguridad la hacemos entre todos.</p>
+
+                        <div class="peligros-buttons">
+                            <a href="https://relevandopeligros.org/" target="_blank" class="btn-web">🌐 Web Oficial</a>
+                            <a href="https://wa.me/5493518629999" target="_blank" class="btn-wsp">📞 WhatsApp Urgente</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <!-- SECCIÓN DE NOTICIAS -->
+    <section class="news-section">
+        <div class="news-header">
+            <h3>📰 NOTICIAS DESTACADAS</h3>
+            <a href="traslaea-web/paginas/eventos.html" class="btn-all-news">Ver todas las noticias →</a>
+        </div>
+
+        <div class="news-grid">
+            <!-- Noticia 1 -->
+            <article class="news-card">
+                <div class="news-img-wrapper">
+                    <img src="traslaea-web/assets/img/noticia1.jpg" alt="Capacitación" class="news-img">
+                    <span class="news-badge">CAPACITACIÓN</span>
+                </div>
+                <div class="news-content">
+                    <span class="news-date">10 de Septiembre, 2026</span>
+                    <h4>Nuevo Curso de Instalaciones Solar Fotovoltaicas</h4>
+                    <p>Se abren las inscripciones para la capacitación presencial sobre cálculo y dimensionado de sistemas solares aislados y grid-tie.</p>
+                    <a href="https://docs.google.com/forms/d/1RWIEOR222SI9JUQzYv1U4ibDfIlcWqgxsxrJcfGkkKY/alreadyresponded?edit_requested=true" target="_blank" class="news-read-more">Inscribirme ahora →</a>
+                </div>
+            </article>
+
+            <!-- Noticia 2 -->
+            <article class="news-card">
+                <div class="news-img-wrapper">
+                    <img src="traslaea-web/assets/img/noticia2.jpg" alt="Asamblea" class="news-img">
+                    <span class="news-badge">INSTITUCIONAL</span>
+                </div>
+                <div class="news-content">
+                    <span class="news-date">28 de Agosto, 2026</span>
+                    <h4>Asamblea General y Actualización Normativa ERSeP</h4>
+                    <p>Reunión de la comisión directiva y socios para abordar la seguridad eléctrica en obras rurales de Traslasierra.</p>
+                    <a href="traslaea-web/paginas/eventos.html" class="news-read-more">Leer noticia completa →</a>
+                </div>
+            </article>
+
+            <!-- Noticia 3 -->
+            <article class="news-card">
+                <div class="news-img-wrapper">
+                    <img src="traslaea-web/assets/img/noticia3.jpg" alt="Convenio" class="news-img">
+                    <span class="news-badge">NOVEDADES</span>
+                </div>
+                <div class="news-content">
+                    <span class="news-date">15 de Agosto, 2026</span>
+                    <h4>Convenio de Descuentos en Materiales Eléctricos</h4>
+                    <p>Nuevos acuerdos comerciales brindan beneficios exclusivos a los electricistas asociados a TRASLAEA.</p>
+                    <a href="traslaea-web/paginas/eventos.html" class="news-read-more">Leer noticia completa →</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>© 2024–2026 <strong>TRASLAEA</strong> - Organización de Electricistas Asociados. Todos los derechos reservados. Marca registrada.</p>
+            <p class="footer-credits">Sitio desarrollado y administrado por <span class="brand-electrosith">Electrosith</span>.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="traslaea-web/js/map.js"></script>
+
+    <!-- SCRIPT DE RAYOS ELÉCTRICOS DINÁMICOS -->
+    <script>
+        const canvas = document.getElementById('lightning-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = canvas.parentElement.offsetWidth;
+            canvas.height = canvas.parentElement.offsetHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Bolt {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = 0;
+                this.segments = [];
+                let currentX = this.x;
+                let currentY = 0;
+                
+                while (currentY < canvas.height) {
+                    currentX += (Math.random() - 0.5) * 40;
+                    currentY += Math.random() * 20 + 5;
+                    this.segments.push({x: currentX, y: currentY});
+                }
+                this.life = 1.0;
+                this.decay = Math.random() * 0.05 + 0.03;
+            }
+            draw() {
+                if (this.segments.length === 0) return;
+                ctx.beginPath();
+                ctx.moveTo(this.segments[0].x, this.segments[0].y);
+                for (let i = 1; i < this.segments.length; i++) {
+                    ctx.lineTo(this.segments[i].x, this.segments[i].y);
+                }
+                ctx.strokeStyle = `rgba(0, 168, 232, ${this.life})`;
+                ctx.lineWidth = 1.5;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#00a8e8';
+                ctx.stroke();
+            }
+            update() {
+                this.life -= this.decay;
+            }
+        }
+
+        let bolts = [];
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            if (Math.random() < 0.08 && bolts.length < 3) {
+                bolts.push(new Bolt());
+            }
+
+            for (let i = bolts.length - 1; i >= 0; i--) {
+                bolts[i].update();
+                bolts[i].draw();
+                if (bolts[i].life <= 0) {
+                    bolts.splice(i, 1);
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
