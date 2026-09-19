@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TRASLAEA - Traslasierra</title>
 
-    <!-- CSS -->
+    <!-- CSS EXTERNO -->
     <link rel="stylesheet" href="traslaea-web/style.css">
 
     <!-- Leaflet CSS para el Mapa -->
@@ -13,13 +13,17 @@
     <!-- Font Awesome para los íconos de redes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-    <!-- Estilo rápido de refuerzo para columnas y globos de empresas -->
+    <!-- ESTILOS UNIFICADOS Y OPTIMIZADOS PARA EL INDEX -->
     <style>
+        /* Ajustes específicos del dashboard */
         .dashboard-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
             align-items: stretch;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
         .dashboard-grid .card {
             display: flex;
@@ -35,7 +39,7 @@
             }
         }
 
-        /* EFECTO MOVIMIENTO / HOVER PARA BIBLIOTECA Y MARCO NORMATIVO */
+        /* Efecto hover para recursos */
         .resource-item {
             transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
             cursor: pointer;
@@ -46,28 +50,77 @@
             background-color: #e2e8f0;
         }
 
-        /* DISEÑO DE GLOBOS / CÍRCULOS PARA INSTALADORES Y EMPRESAS */
+        /* Sección Hero compacta y unificada */
+        .hero {
+            background: linear-gradient(135deg, #0b0f19 0%, #0f4c81 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 35px 20px 45px 20px;
+        }
+        .hero h2 {
+            font-size: 32px;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+        .hero .subtitle {
+            color: #00a8e8;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            max-width: 700px;
+            margin: 0 auto 25px auto;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            background: #ffffff;
+            color: #1e293b;
+            padding: 15px 30px;
+            border-radius: 12px;
+            min-width: 150px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            border-bottom: 4px solid #00a8e8;
+        }
+        .stat-number {
+            display: block;
+            font-size: 32px;
+            font-weight: bold;
+            color: #0f4c81;
+        }
+        .stat-label {
+            font-size: 11px;
+            font-weight: bold;
+            color: #64748b;
+            letter-spacing: 0.5px;
+        }
+
+        /* Diseño de globos unificados en la sección azul */
         .bubbles-section {
-            margin-top: 40px;
-            padding: 20px 10px;
+            margin-top: 20px;
+            padding-top: 20px;
             border-top: 1px solid rgba(255, 255, 255, 0.15);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .bubbles-title {
-            color: #00a8e8;
-            font-size: 13px;
+            color: #cbd5e1;
+            font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-            text-align: center;
+            letter-spacing: 1.5px;
+            margin-bottom: 15px;
         }
         .bubbles-container {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 25px;
-            max-width: 900px;
-            margin: 0 auto;
         }
         .bubble-card {
             display: flex;
@@ -76,17 +129,17 @@
             text-align: center;
             cursor: pointer;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            width: 110px;
+            width: 100px;
         }
         .bubble-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-6px);
         }
         .bubble-circle {
             width: 75px;
             height: 75px;
             border-radius: 50%;
             background-color: #ffffff;
-            border: 3px solid #00a8e8;
+            border: 2.5px solid #00a8e8;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -104,20 +157,20 @@
             object-fit: cover;
         }
         .bubble-circle.empty {
-            border: 2px dashed rgba(255, 255, 255, 0.5);
+            border: 2px dashed rgba(255, 255, 255, 0.4);
             background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 18px;
         }
         .bubble-name {
             color: #ffffff;
             font-size: 12px;
             font-weight: bold;
-            margin-top: 8px;
+            margin-top: 6px;
             line-height: 1.2;
         }
         .bubble-desc {
-            color: #cbd5e1;
+            color: #94a3b8;
             font-size: 10px;
             margin-top: 2px;
         }
@@ -125,29 +178,23 @@
 </head>
 <body>
 
-    <!-- TOP BAR SUPERIOR CON ENLACES Y REDES SOCIALES -->
+    <!-- TOP BAR SUPERIOR -->
     <div class="top-bar">
         <div class="top-bar-container">
             <div class="quick-links">
-                <a href="https://docs.google.com/forms/d/1RWIEOR222SI9JUQzYv1U4ibDfIlcWqgxsxrJcfGkkKY/alreadyresponded?edit_requested=true" target="_blank">
-                    🎓 Cursos
-                </a>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/alreadyresponded" target="_blank">
-                    ✍️ Suscripción
-                </a>
-                <a href="traslaea-web/paginas/recursos.html">
-                    📁 Manuales & Software
-                </a>
+                <a href="https://docs.google.com/forms/d/1RWIEOR222SI9JUQzYv1U4ibDfIlcWqgxsxrJcfGkkKY/alreadyresponded?edit_requested=true" target="_blank">🎓 Cursos</a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/alreadyresponded" target="_blank">✍️ Suscripción</a>
+                <a href="traslaea-web/paginas/recursos.html">📁 Manuales & Software</a>
             </div>
             <div class="social-links">
                 <a href="https://www.facebook.com/Traslaea.OK" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
                 <a href="https://www.instagram.com/traslaea.arg" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://api.whatsapp.com/send?phone=543544314637&text=Hola%20Esteban%20Colombo%2C%20me%20comunico%20desde%20el%20n%C3%BAmero%20de%20soporte%20de%20TRASLAEA.%20%0Aquer%C3%ADa%20consultar.%3A%20............................................" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://api.whatsapp.com/send?phone=543544314637&text=Hola%20Esteban%20Colombo..." target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
             </div>
         </div>
     </div>
 
-    <!-- NAVBAR / ENCABEZADO -->
+    <!-- NAVBAR -->
     <header class="navbar">
         <div class="logo-container">
             <div class="brand-text">
@@ -175,7 +222,7 @@
         <div class="stripe s-light"></div>
     </div>
 
-    <!-- HERO SECTION / CONTADORES Y GLOBOS DE EMPRESAS -->
+    <!-- HERO SECTION UNIFICADO (CONTADORES + GLOBOS) -->
     <section class="hero">
         <h2>TRASLAEA</h2>
         <p class="subtitle">TRASLASIERRA</p>
@@ -191,13 +238,12 @@
             </div>
         </div>
 
-        <!-- SECCIÓN DE GLOBOS / EMPRESAS AMIGAS -->
+        <!-- RED DE INSTALADORES Y EMPRESAS AMIGAS -->
         <div class="bubbles-section">
             <h3 class="bubbles-title">Red de Instaladores y Empresas Amigas</h3>
             
             <div class="bubbles-container">
-                
-                <!-- GLOBO 1: Free Energy con WhatsApp configurado -->
+                <!-- GLOBO 1: Free Energy -->
                 <div class="bubble-card" onclick="window.open('https://wa.me/5492224548582?text=Hola,%20me%20comunico%20desde%20la%20red%20Traslaea', '_blank')">
                     <div class="bubble-circle">
                         <img src="Free Energi.JPG" alt="Free Energy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -207,7 +253,7 @@
                     <span class="bubble-desc">Energía Solar</span>
                 </div>
 
-                <!-- GLOBO 2: Espacio libre para otro socio -->
+                <!-- GLOBO 2: Espacio libre -->
                 <div class="bubble-card placeholder-bubble">
                     <div class="bubble-circle empty">
                         <i class="fas fa-plus"></i>
@@ -215,14 +261,12 @@
                     <span class="bubble-name">Sumá tu Local</span>
                     <span class="bubble-desc">Disponible</span>
                 </div>
-
             </div>
         </div>
     </section>
 
     <!-- DASHBOARD PRINCIPAL -->
     <main class="dashboard-grid">
-
         <!-- MAPA -->
         <article class="card map-card">
             <div class="card-header">
@@ -278,21 +322,16 @@
                         <p>Si detectás postes caídos o cables sueltos, reportalo gratis. La seguridad la hacemos entre todos.</p>
 
                         <div class="peligros-buttons">
-                            <a href="https://relevandopeligros.org/" target="_blank" class="btn-web">
-                                🌐 Web Oficial
-                            </a>
-                            <a href="https://wa.me/5493518629999" target="_blank" class="btn-wsp">
-                                📞 WhatsApp Urgente
-                            </a>
+                            <a href="https://relevandopeligros.org/" target="_blank" class="btn-web">🌐 Web Oficial</a>
+                            <a href="https://wa.me/5493518629999" target="_blank" class="btn-wsp">📞 WhatsApp Urgente</a>
                         </div>
                     </div>
                 </div>
             </div>
         </article>
-
     </main>
 
-    <!-- SECCIÓN DE NOTICIAS (ESTILO PERIÓDICO) -->
+    <!-- SECCIÓN DE NOTICIAS -->
     <section class="news-section">
         <div class="news-header">
             <h3>📰 NOTICIAS DESTACADAS</h3>
@@ -303,7 +342,7 @@
             <!-- Noticia 1 -->
             <article class="news-card">
                 <div class="news-img-wrapper">
-                    <img src="traslaea-web/assets/img/noticia1.jpg" alt="Capacitación Fotovoltaica" class="news-img">
+                    <img src="traslaea-web/assets/img/noticia1.jpg" alt="Capacitación" class="news-img">
                     <span class="news-badge">CAPACITACIÓN</span>
                 </div>
                 <div class="news-content">
@@ -317,7 +356,7 @@
             <!-- Noticia 2 -->
             <article class="news-card">
                 <div class="news-img-wrapper">
-                    <img src="traslaea-web/assets/img/noticia2.jpg" alt="Reunión TRASLAEA" class="news-img">
+                    <img src="traslaea-web/assets/img/noticia2.jpg" alt="Asamblea" class="news-img">
                     <span class="news-badge">INSTITUCIONAL</span>
                 </div>
                 <div class="news-content">
@@ -331,7 +370,7 @@
             <!-- Noticia 3 -->
             <article class="news-card">
                 <div class="news-img-wrapper">
-                    <img src="traslaea-web/assets/img/noticia3.jpg" alt="Insumos Eléctricos" class="news-img">
+                    <img src="traslaea-web/assets/img/noticia3.jpg" alt="Convenio" class="news-img">
                     <span class="news-badge">NOVEDADES</span>
                 </div>
                 <div class="news-content">
@@ -344,6 +383,7 @@
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-container">
             <p>© 2024–2026 <strong>TRASLAEA</strong> - Organización de Electricistas Asociados. Todos los derechos reservados. Marca registrada.</p>
@@ -351,7 +391,7 @@
         </div>
     </footer>
 
-    <!-- JS -->
+    <!-- SCRIPTS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="traslaea-web/js/map.js"></script>
 </body>
