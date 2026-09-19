@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Verificar que el elemento #map exista en la página actual antes de ejecutar
     var mapElement = document.getElementById('map');
     if (!mapElement) return;
 
@@ -12,44 +11,110 @@ document.addEventListener("DOMContentLoaded", function() {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
 
-    // Forzar el recálculo del tamaño por el diseño en grilla (dashboard-grid)
+    // Forzar el recálculo del tamaño por el diseño en grilla
     setTimeout(function() {
         map.invalidateSize();
     }, 250);
 
-    // Pines de ejemplo de los socios de TRASLAEA
+    // Base de datos de profesionales y socios de TRASLAEA
     var profesionales = [
         {
             nombre: "Esteban Colombo",
             oficio: "Técnico en Electrónica / Matriculado",
+            localidad: "Luyaba",
             lat: -31.9350,
             lng: -65.0250,
             detalle: "Instalaciones fotovoltaicas, redes, CCTV y Electrosith.",
             whatsapp: "5493544314637"
         },
-        
         {
             nombre: "Marcelo Flores",
             oficio: "Electricista Matriculado",
+            localidad: "San Javier",
             lat: -32.0167,
             lng: -65.0167,
             detalle: "Instalaciones en bioconstrucción y tableros solares.",
             whatsapp: "5493544000000"
+        },
+        {
+            nombre: "David Lungu",
+            oficio: "Técnico Matriculado",
+            localidad: "La Paz",
+            lat: -32.0667,
+            lng: -65.0333,
+            detalle: "Automatizaciones, bombeo solar y asistencia técnica.",
+            whatsapp: "5493544000000"
+        },
+        {
+            nombre: "Taller Eléctrico Las Rabonas",
+            oficio: "Servicios y Mantenimiento",
+            localidad: "Las Rabonas",
+            lat: -31.8167,
+            lng: -65.0167,
+            detalle: "Iluminación exterior y complejos turísticos.",
+            whatsapp: "5493544000000"
+        },
+        {
+            nombre: "Servicios Eléctricos Traslasierra",
+            oficio: "Oficio / Marca Comercial",
+            localidad: "Los Hornillos",
+            lat: -31.8833,
+            lng: -65.0167,
+            detalle: "Montajes comerciales, planos y asesoramiento.",
+            whatsapp: "5493544000000"
         }
     ];
 
-    // Agregar los marcadores al mapa
-    profesionales.forEach(pro => {
-        var popupContent = `
-            <div style="font-family: Arial; font-size: 0.9rem; line-height: 1.3;">
-                <h4 style="margin: 0 0 4px 0; color: #0b2545;">${pro.nombre}</h4>
-                <p style="margin: 0 0 4px 0; color: #0077b6; font-weight: bold;">${pro.oficio}</p>
-                <p style="margin: 0 0 8px 0; color: #333;">${pro.detalle}</p>
-                <a href="https://wa.me/${pro.whatsapp}?text=Hola,%20vi%20tu%20contacto%20en%20el%20mapa%20de%20TRASLAEA" target="_blank" style="background: #25d366; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block; font-size: 0.85rem;">
-                    <i class="fa-brands fa-whatsapp"></i> WhatsApp
-                </a>
-            </div>
+    // Grupo de capas para los marcadores
+    var markersLayer = L.layerGroup().addTo(map);
+
+    // Función para renderizar los pines en el mapa con opción de filtro
+    function renderizarPines(filtro = "") {
+        markersLayer.clearLayers();
+        var textoFiltro = filtro.toLowerCase().trim();
+
+        profesionales.forEach(pro => {
+            // Filtrar por nombre, oficio o localidad
+            var coincide = pro.nombre.toLowerCase().includes(textoFiltro) ||
+                           pro.oficio.toLowerCase().includes(textoFiltro) ||
+                           pro.localidad.toLowerCase().includes(textoFiltro);
+
+            if (coincide) {
+                var popupContent = `
+                    <div style="font-family: Arial; font-size: 0.9rem; line-height: 1.3;">
+                        <h4 style="margin: 0 0 4px 0; color: #0b2545;">${pro.nombre}</h4>
+                        <p style="margin: 0 0 2px 0; color: #0077b6; font-weight: bold;">${pro.oficio}</p>
+                        <p style="margin: 0 0 4px 0; color: #555; font-size: 0.85rem;">📍 Localidad: <b>${pro.localidad}</b></p>
+                        <p style="margin: 0 0 8px 0; color: #333;">${pro.detalle}</p>
+                        <a href="https://wa.me/${pro.whatsapp}?text=Hola,%20vi%20tu%20contacto%20en%20el%20mapa%20de%20TRASLAEA" target="_blank" style="background: #25d366; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block; font-size: 0.85rem;">
+                            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                `;
+
+                var marker = L.marker([pro.lat, pro.lng]).bindPopup(popupContent);
+                markersLayer.addLayer(marker);
+            }
+        });
+    }
+
+    // Cargar todos inicialmente
+    renderizarPines();
+
+    // Inyectar el HTML del buscador dinámicamente arriba del mapa para no tocar el index.html
+    var mapCard = document.querySelector('.map-card');
+    if (mapCard) {
+        var searchDiv = document.createElement('div');
+        searchDiv.style.marginBottom = "15px";
+        searchDiv.innerHTML = `
+            <input type="text" id="buscador-mapa" placeholder="🔍 Buscar por nombre, oficio o localidad (ej: Luyaba)..." style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem; outline: none; box-sizing: border-box;">
         `;
-        L.marker([pro.lat, pro.lng]).addTo(map).bindPopup(popupContent);
-    });
+        // Insertar antes del contenedor del mapa (#map)
+        mapCard.insertBefore(searchDiv, mapElement);
+
+        // Escuchar eventos de escritura en el buscador
+        document.getElementById('buscador-mapa').addEventListener('input', function(e) {
+            renderizarPines(e.target.value);
+        });
+    }
 });
