@@ -205,7 +205,7 @@
                 <li><a href="traslaea-web/paginas/contacto.html">Contacto & Tramites</a></li>
             </ul>
         </nav>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/alreadyresponded" target="_blank" class="btn-suscripcion">SUSCRIPCIÓN</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/alreadyresponded" target="_blank" id="btn-suscripcion" class="btn-suscripcion">SUSCRIPCIÓN (0)</a>
     </header>
 
     <!-- BARRA DE COLORES ERSEP -->
@@ -409,6 +409,37 @@
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="traslaea-web/js/map.js"></script>
+
+    <!-- SCRIPT DE CONTADOR ANIMADO CON DESACELERACIÓN (EASE-OUT) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const btnSuscripcion = document.getElementById("btn-suscripcion");
+            const targetNumber = 50;
+            const duration = 1800; // Duración total de la animación en milisegundos (1.8s)
+            let startTime = null;
+
+            function updateCounter(currentTime) {
+                if (!startTime) startTime = currentTime;
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                // Función de aceleración ease-out (arranca rápido y frena suavemente)
+                const easeOutProgress = 1 - Math.pow(1 - progress, 3);
+                
+                const currentVal = Math.floor(easeOutProgress * targetNumber);
+
+                btnSuscripcion.textContent = `SUSCRIPCIÓN (${currentVal})`;
+
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    btnSuscripcion.textContent = `SUSCRIPCIÓN (${targetNumber})`;
+                }
+            }
+
+            requestAnimationFrame(updateCounter);
+        });
+    </script>
 
     <!-- SCRIPT DE RAYOS ELÉCTRICOS DINÁMICOS -->
     <script>
