@@ -553,33 +553,37 @@ body {
     gap: 16px;
 }
 
-/* Círculo contenedor de la imagen con efecto "tiki" y rebote elástico */
+/* Círculo contenedor unificado y corregido */
 .peligros-img-container {
-    width: 70px;
-    height: 70px;
-    min-width: 70px;
+    width: 90px;
+    height: 90px;
+    min-width: 90px;
     border-radius: 50%;
-    overflow: hidden;
+    overflow: hidden; /* Oculta todo lo que sale del círculo */
     border: 2px solid #ef4444;
     background-color: #ffffff;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
+    position: relative;
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     cursor: pointer;
 }
 
-/* Efecto "tiki" al pasar el mouse o tocar en celular */
+/* Efecto "tiki" al pasar el mouse */
 .peligros-card:hover .peligros-img-container,
 .peligros-img-container:active {
     transform: scale(1.12) rotate(-5deg); 
 }
 
+/* Ajuste y enfoque exclusivo en la mano (punta izquierda) */
 .peligros-img-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: 0% 50%; /* Muestra estrictamente el lado izquierdo de la imagen */
 }
 
 .peligros-icon-fallback {
@@ -658,101 +662,4 @@ body {
 
 .btn-wsp:hover {
     background-color: #16a34a;
-}
-
-/* ===================================================
-   FOOTER
-   =================================================== */
-.footer {
-    background-color: #060911;
-    color: #94a3b8;
-    text-align: center;
-    padding: 25px 20px;
-    font-size: 12px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    line-height: 1.6;
-}
-
-.footer-container {
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-.footer strong {
-    color: var(--blanco);
-}
-
-.footer-credits {
-    margin-top: 5px;
-    color: var(--texto-mutado);
-}
-
-.brand-electrosith {
-    color: var(--celeste-accent);
-    font-weight: bold;
-    letter-spacing: 0.5px;
-}
-
-/* ===================================================
-   RESPONSIVE DESIGN (MEDIA QUERIES)
-   =================================================== */
-@media (max-width: 900px) {
-    .news-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .dashboard-grid, .news-grid, .grid-two-col {
-        grid-template-columns: 1fr;
-    }
-    .navbar {
-        flex-direction: column;
-        gap: 15px;
-    }
-    .top-bar-container {
-        flex-direction: column;
-        gap: 8px;
-    }
-    .about-container {
-        margin: 20px auto;
-        padding: 0 15px;
-        gap: 20px;
-    }
-    .about-card {
-        padding: 25px 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .peligros-content {
-        flex-direction: column;
-        text-align: center;
-    }
-    .peligros-textos {
-        text-align: center;
-    }
-    .peligros-buttons {
-        justify-content: center;
-    }
-}
-/* Contenedor circular del logo de Relevando Peligros */
-.peligros-img-container {
-    width: 90px;           /* Ajusta el tamaño según lo tengas definido */
-    height: 90px;          /* Debe ser alto y ancho igual para que sea un círculo perfecto */
-    border-radius: 50%;    /* Redondea completamente el borde */
-    overflow: hidden;      /* 👈 ESTO ES LO CLAVE: Oculta todo lo que sobresalga del círculo */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    position: relative;
-}
-
-/* Asegurar que la imagen dentro respete los límites del contenedor */
-.peligros-img-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;     /* Rellena el círculo sin deformar la proporción */
-    object-position: 0% 50%; /* Enfoca la punta izquierda (la mano) */
 }
