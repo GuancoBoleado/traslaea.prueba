@@ -1,4 +1,6 @@
-/* PALETA DE COLORES: AZUL, CELESTE, NEGRO Y BLANCO */
+/* ===================================================
+   PALETA DE COLORES: AZUL, CELESTE, NEGRO Y BLANCO
+   =================================================== */
 :root {
     --negro-principal: #0b0f19;
     --azul-oscuro: #0f4c81;
@@ -134,7 +136,7 @@ body {
 .color-stripe {
     position: relative;
     display: flex;
-    height: 10px; /* Ancho ensanchado */
+    height: 10px;
     width: 100%;
     overflow: hidden;
     background-color: var(--negro-principal);
@@ -151,7 +153,6 @@ body {
 .s-dark { background-color: var(--negro-principal); }
 .s-light { background-color: #cbd5e1; }
 
-/* EFECTO DE RAYO / ARCO VOLTAICO QUE RECORRE LA BARRA DE PUNTA A PUNTA */
 .color-stripe::after {
     content: '';
     position: absolute;
@@ -173,20 +174,10 @@ body {
 }
 
 @keyframes arcoVoltaico {
-    0% {
-        left: -30%;
-        opacity: 0.2;
-    }
-    20% {
-        opacity: 1;
-    }
-    80% {
-        opacity: 1;
-    }
-    100% {
-        left: 110%;
-        opacity: 0.2;
-    }
+    0% { left: -30%; opacity: 0.2; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { left: 110%; opacity: 0.2; }
 }
 
 /* HERO SECTION */
@@ -356,7 +347,7 @@ body {
     color: var(--celeste-accent);
 }
 
-/* SECCIÓN DE NOTICIAS (TIPO PERIÓDICO) */
+/* SECCIÓN DE NOTICIAS */
 .news-section {
     max-width: 1100px;
     margin: 40px auto 60px auto;
@@ -475,57 +466,6 @@ body {
     color: var(--celeste-accent);
 }
 
-/* RESPONSIVE */
-@media (max-width: 900px) {
-    .news-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
-    .dashboard-grid, .news-grid {
-        grid-template-columns: 1fr;
-    }
-    .navbar {
-        flex-direction: column;
-        gap: 15px;
-    }
-    .top-bar-container {
-        flex-direction: column;
-        gap: 8px;
-    }
-}
-/* FOOTER / PIE DE PÁGINA */
-.footer {
-    background-color: #060911;
-    color: #94a3b8;
-    text-align: center;
-    padding: 25px 20px;
-    font-size: 12px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    line-height: 1.6;
-}
-
-.footer-container {
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-.footer strong {
-    color: var(--blanco);
-}
-
-.footer-credits {
-    margin-top: 5px;
-    color: var(--texto-mutado);
-}
-
-.brand-electrosith {
-    color: var(--celeste-accent);
-    font-weight: bold;
-    letter-spacing: 0.5px;
-}
-
 /* ===================================================
    ESTILOS PARA LA TARJETA RELEVANDO PELIGROS
    =================================================== */
@@ -553,13 +493,13 @@ body {
     gap: 16px;
 }
 
-/* Círculo contenedor unificado y corregido */
+/* Círculo contenedor de 90px con desborde oculto */
 .peligros-img-container {
     width: 90px;
     height: 90px;
     min-width: 90px;
     border-radius: 50%;
-    overflow: hidden; /* Oculta todo lo que sale del círculo */
+    overflow: hidden;
     border: 2px solid #ef4444;
     background-color: #ffffff;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
@@ -572,18 +512,16 @@ body {
     cursor: pointer;
 }
 
-/* Efecto "tiki" al pasar el mouse */
 .peligros-card:hover .peligros-img-container,
 .peligros-img-container:active {
     transform: scale(1.12) rotate(-5deg); 
 }
 
-/* Ajuste y enfoque exclusivo en la mano (punta izquierda) */
 .peligros-img-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 0% 50%; /* Muestra estrictamente el lado izquierdo de la imagen */
+    object-position: 0% 50%; /* Enfoca la mano a la izquierda */
 }
 
 .peligros-icon-fallback {
@@ -662,4 +600,69 @@ body {
 
 .btn-wsp:hover {
     background-color: #16a34a;
+}
+
+/* FOOTER */
+.footer {
+    background-color: #060911;
+    color: #94a3b8;
+    text-align: center;
+    padding: 25px 20px;
+    font-size: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    line-height: 1.6;
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.footer strong {
+    color: var(--blanco);
+}
+
+.footer-credits {
+    margin-top: 5px;
+    color: var(--texto-mutado);
+}
+
+.brand-electrosith {
+    color: var(--celeste-accent);
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 900px) {
+    .news-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-grid, .news-grid, .grid-two-col {
+        grid-template-columns: 1fr;
+    }
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .top-bar-container {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .peligros-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .peligros-textos {
+        text-align: center;
+    }
+    .peligros-buttons {
+        justify-content: center;
+    }
 }
