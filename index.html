@@ -50,12 +50,12 @@
             background-color: #e2e8f0;
         }
 
-        /* Sección Hero compacta y unificada */
+        /* Sección Hero compacta y limpia (sin contadores) */
         .hero {
             background: linear-gradient(135deg, #0b0f19 0%, #0f4c81 100%);
             color: #ffffff;
             text-align: center;
-            padding: 35px 20px 45px 20px;
+            padding: 30px 20px 35px 20px;
         }
         .hero h2 {
             font-size: 32px;
@@ -66,43 +66,14 @@
             color: #00a8e8;
             font-size: 14px;
             font-weight: bold;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
             letter-spacing: 1px;
-        }
-        .stats-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            max-width: 700px;
-            margin: 0 auto 25px auto;
-            flex-wrap: wrap;
-        }
-        .stat-card {
-            background: #ffffff;
-            color: #1e293b;
-            padding: 15px 30px;
-            border-radius: 12px;
-            min-width: 150px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            border-bottom: 4px solid #00a8e8;
-        }
-        .stat-number {
-            display: block;
-            font-size: 32px;
-            font-weight: bold;
-            color: #0f4c81;
-        }
-        .stat-label {
-            font-size: 11px;
-            font-weight: bold;
-            color: #64748b;
-            letter-spacing: 0.5px;
         }
 
         /* Diseño de globos unificados en la sección azul */
         .bubbles-section {
-            margin-top: 20px;
-            padding-top: 20px;
+            margin-top: 15px;
+            padding-top: 15px;
             border-top: 1px solid rgba(255, 255, 255, 0.15);
             max-width: 700px;
             margin-left: auto;
@@ -222,21 +193,10 @@
         <div class="stripe s-light"></div>
     </div>
 
-    <!-- HERO SECTION UNIFICADO (CONTADORES + GLOBOS) -->
+    <!-- HERO SECTION LIMPIO (SIN CONTADORES) -->
     <section class="hero">
         <h2>TRASLAEA</h2>
         <p class="subtitle">TRASLASIERRA</p>
-
-        <div class="stats-container">
-            <div class="stat-card">
-                <span class="stat-number">50</span>
-                <span class="stat-label">SOCIOS</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number">12</span>
-                <span class="stat-label">LOCALIDADES</span>
-            </div>
-        </div>
 
         <!-- RED DE INSTALADORES Y EMPRESAS AMIGAS -->
         <div class="bubbles-section">
