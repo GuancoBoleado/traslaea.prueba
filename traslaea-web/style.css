@@ -670,3 +670,10 @@ body {
         font-size: 19px;
     }
 }
+/* Asegurar que el contenedor del mapa tenga una altura visible */
+#map {
+    width: 100%;
+    height: 400px; /* O la altura que prefieras, ej: 450px */
+    border-radius: 8px;
+    z-index: 1;
+}
