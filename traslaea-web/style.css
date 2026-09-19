@@ -736,3 +736,23 @@ body {
         justify-content: center;
     }
 }
+/* Contenedor circular del logo de Relevando Peligros */
+.peligros-img-container {
+    width: 90px;           /* Ajusta el tamaño según lo tengas definido */
+    height: 90px;          /* Debe ser alto y ancho igual para que sea un círculo perfecto */
+    border-radius: 50%;    /* Redondea completamente el borde */
+    overflow: hidden;      /* 👈 ESTO ES LO CLAVE: Oculta todo lo que sobresalga del círculo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+}
+
+/* Asegurar que la imagen dentro respete los límites del contenedor */
+.peligros-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;     /* Rellena el círculo sin deformar la proporción */
+    object-position: 0% 50%; /* Enfoca la punta izquierda (la mano) */
+}
