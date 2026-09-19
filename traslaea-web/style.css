@@ -743,3 +743,38 @@ body {
         font-size: 28px;
     }
 }
+<!-- Estilo rápido de refuerzo para igualar altura de columnas -->
+    <style>
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: stretch;
+        }
+        .dashboard-grid .card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .resources-card {
+            justify-content: space-between;
+        }
+        @media (max-width: 900px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* EFECTO MOVIMIENTO / HOVER PARA BIBLIOTECA Y MARCO NORMATIVO */
+        .resource-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .resource-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 15px rgba(0, 168, 232, 0.2);
+            background-color: #e2e8f0;
+        }
+    </style>
+</head>
