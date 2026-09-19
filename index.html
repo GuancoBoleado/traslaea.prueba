@@ -97,7 +97,7 @@
             margin-top: 15px;
             padding-top: 15px;
             border-top: 1px solid rgba(255, 255, 255, 0.15);
-            max-width: 700px;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -122,7 +122,7 @@
             text-align: center;
             cursor: pointer;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            width: 110px;
+            width: 120px;
         }
         .bubble-card:hover {
             transform: translateY(-6px);
@@ -225,7 +225,7 @@
 
         <!-- RED DE INSTALADORES Y EMPRESAS AMIGAS -->
         <div class="bubbles-section">
-            <h3 class="bubbles-title">Red de Instaladores y Empresas Amigas</h3>
+            <h3 class="bubbles-title">Red de Instaladores y Espacios Amigos</h3>
             
             <div class="bubbles-container">
                 <!-- GLOBO 1: Electrosith -->
@@ -248,7 +248,17 @@
                     <span class="bubble-desc">Energía Solar</span>
                 </div>
 
-                <!-- GLOBO 3: Espacio libre -->
+                <!-- GLOBO 3: La Escuelita N°1 -->
+                <div class="bubble-card" onclick="window.open('https://api.whatsapp.com/send?phone=543544649941&text=Hola,%20me%20comunico%20desde%20la%20red%20Traslaea%20por%20La%20Escuelita%20N%C2%B01', '_blank')">
+                    <div class="bubble-circle">
+                        <img src="La Escuelita N°1.jpg" alt="La Escuelita N°1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="bubble-fallback" style="display:none;"><i class="fas fa-graduation-cap"></i></div>
+                    </div>
+                    <span class="bubble-name">La Escuelita N°1</span>
+                    <span class="bubble-desc">Colegas profesionales de intercambio</span>
+                </div>
+
+                <!-- GLOBO 4: Espacio libre -->
                 <div class="bubble-card placeholder-bubble">
                     <div class="bubble-circle empty">
                         <i class="fas fa-plus"></i>
@@ -440,6 +450,8 @@
         }
 
         let bolts = [];
+        let animationFrameId;
+
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -454,7 +466,7 @@
                     bolts.splice(i, 1);
                 }
             }
-            requestAnimationFrame(animate);
+            animationFrameId = requestAnimationFrame(animate);
         }
         animate();
     </script>
