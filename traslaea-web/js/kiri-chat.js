@@ -1,6 +1,6 @@
 // --- KIRI: Asistente Virtual Técnico con Google Gemini API ---
 const GEMINI_API_KEY = "AQ.Ab8RN6Kz9ba-w8N1y6CxNO_ThXR4SvQyYDFawuYL4mxe02P5WQ"; 
-const GEMINI_MODEL = "gemini-3.5-flash";
+const GEMINI_MODEL = "gemini-3.5-flash"; // <--- Modifica esta línea con el modelo exacto
 
 document.addEventListener("DOMContentLoaded", function() {
     // Inyectar los estilos CSS del chatbot automáticamente en el documento
