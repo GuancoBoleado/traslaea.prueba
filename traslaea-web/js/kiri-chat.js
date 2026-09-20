@@ -1,5 +1,5 @@
-// --- ELECTROSITH IA: Asistente Virtual Técnico con Google Gemini API ---
-const GEMINI_API_KEY = "AQ.Ab8RN6Kz9ba-w8N1y6CxNO_ThXR4SvQyYDFawuYL4mxe02P5WQ"; // <--- Dejar vacío para evitar bloqueos de seguridad en GitHub
+// --- KIRI: Asistente Virtual Técnico con Google Gemini API ---
+const GEMINI_API_KEY = "AQ.Ab8RN6Kz9ba-w8N1y6CxNO_ThXR4SvQyYDFawuYL4mxe02P5WQ"; 
 const GEMINI_MODEL = "gemini-2.5-flash";
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -177,24 +177,24 @@ document.addEventListener("DOMContentLoaded", function() {
     const chatContainer = document.createElement('div');
     chatContainer.className = 'kiri-chatbot-container';
     chatContainer.innerHTML = `
-        <button class="kiri-chatbot-btn" onclick="toggleKiriChat()" title="Abrir Electrosith IA">
-            <img src="Electrosith.JPG" alt="Electrosith Bot" onerror="this.src='traslaea-web/assets/img/noticia1.jpg'">
+        <button class="kiri-chatbot-btn" onclick="toggleKiriChat()" title="Abrir KIRI Asistente">
+            <img src="Electrosith.JPG" alt="KIRI Bot" onerror="this.src='traslaea-web/assets/img/noticia1.jpg'">
             <span class="kiri-online-dot"></span>
         </button>
 
         <div class="kiri-chatbot-window" id="kiriChatWindow">
             <div class="kiri-chatbot-header">
                 <div class="kiri-chatbot-title">
-                    <img src="Electrosith.JPG" alt="Electrosith" onerror="this.src='traslaea-web/assets/img/noticia1.jpg'">
+                    <img src="Electrosith.JPG" alt="KIRI" onerror="this.src='traslaea-web/assets/img/noticia1.jpg'">
                     <div>
-                        <h4>ELECTROSITH IA</h4>
-                        <span>● Asistente Técnico</span>
+                        <h4>KIRI</h4>
+                        <span>● Tu Asistente Técnico</span>
                     </div>
                 </div>
                 <button class="kiri-chatbot-close" onclick="toggleKiriChat()">&times;</button>
             </div>
             <div class="kiri-chatbot-messages" id="kiriMessages">
-                <div class="kiri-msg bot">⚡ ¡Hola, colega! Soy <strong>Electrosith IA</strong>, tu asistente técnico virtual. Consultame sobre normativas, instalaciones solares, redes o CCTV. ¡Siempre con un enfoque profesional y riguroso!</div>
+                <div class="kiri-msg bot">⚡ ¡Hola, colega! Soy <strong>KIRI</strong>, tu asistente técnico. Consultame sobre normativas AEA/ERSeP, instalaciones solares, redes o CCTV. ¡Siempre con un enfoque profesional y riguroso!</div>
             </div>
             <div class="kiri-chatbot-input-area">
                 <input type="text" id="kiriInput" placeholder="Escribe tu consulta técnica..." onkeypress="handleKiriKeypress(event)">
@@ -256,7 +256,7 @@ async function sendKiriMessage() {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
     try {
-        const systemPrompt = "Eres Electrosith IA, un asistente técnico experto en electricidad, instalaciones solares fotovoltaicas, redes y sistemas de seguridad (CCTV). Respondes con rigor técnico, citando normativas aplicables (como AEA / ERSeP cuando corresponda) y recordando siempre que la ejecución y validación final en obra recae exclusivamente bajo la responsabilidad del técnico matriculado. Mantén un trato cordial, directo y profesional con colegas del rubro.";
+        const systemPrompt = "Eres KIRI, tu Asistente Técnico, un experto en electricidad, instalaciones solares fotovoltaicas, redes y sistemas de seguridad (CCTV). Respondes con rigor técnico, citando normativas aplicables (como AEA / ERSeP cuando corresponda) y recordando siempre que la ejecución y validación final en obra recae exclusivamente bajo la responsabilidad del técnico matriculado. Mantén un trato cordial, directo y profesional con colegas del rubro.";
         
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
         
