@@ -502,7 +502,7 @@
     <!-- SCRIPT DEL ASISTENTE KIRI-BOT -->
     <script src="traslaea-web/js/kiri-chat.js"></script>
 
-    <!-- SCRIPT DE FILTRADO PARA LOS BOTONES -->
+    <!-- SCRIPT DE FILTRADO INTELIGENTE PARA LOS BOTONES -->
     <script>
         function filtrarRed(categoria, btnElement) {
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
@@ -511,7 +511,18 @@
             const cards = document.querySelectorAll('.bubble-card');
             cards.forEach(card => {
                 const tags = card.getAttribute('data-tags') || '';
-                if (categoria === 'todos' || tags.includes(categoria)) {
+                
+                // Mapeo inteligente para sinónimos (ej: 'camaras' reconoce 'cctv')
+                let match = false;
+                if (categoria === 'todos') {
+                    match = true;
+                } else if (categoria === 'camaras') {
+                    match = tags.includes('camaras') || tags.includes('cctv');
+                } else {
+                    match = tags.includes(categoria);
+                }
+
+                if (match) {
                     card.style.display = 'flex';
                 } else {
                     card.style.display = 'none';
