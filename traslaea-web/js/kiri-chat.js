@@ -1,6 +1,7 @@
 // --- KIRI: Asistente Virtual Técnico con Google Gemini API ---
-const GEMINI_API_KEY = "AQ.Ab8RN6LIipje23A9kq3Sdnsu6aLLVuge4BK0feLX-XW6epfGWw";
-const GEMINI_MODEL = "gemini-3-flash-preview";
+// La clave se obtiene de forma segura desde la variable inyectada por Vercel
+const GEMINI_API_KEY = window.KIRI_CONFIG && window.KIRI_CONFIG.API_KEY ? window.KIRI_CONFIG.API_KEY : "";
+const GEMINI_MODEL = "gemini-2.5-flash";
 
 document.addEventListener("DOMContentLoaded", function() {
     // Inyectar los estilos CSS del chatbot automáticamente en el documento
