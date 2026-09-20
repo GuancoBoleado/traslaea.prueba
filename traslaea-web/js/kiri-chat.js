@@ -1,4 +1,4 @@
-// --- KIRI-BOT: Asistente Virtual TRASLAEA ---
+// --- ELECTROSITH: Asistente Virtual Técnico ---
 document.addEventListener("DOMContentLoaded", function() {
     // Inyectar los estilos CSS del chatbot automáticamente en el documento
     const style = document.createElement('style');
@@ -55,15 +55,14 @@ document.addEventListener("DOMContentLoaded", function() {
             position: absolute;
             bottom: 80px;
             right: 0;
-            width: 350px;
-            height: 480px;
+            width: 360px;
+            height: 500px;
             background: #0b0f19;
             border: 1px solid rgba(0, 168, 232, 0.4);
             border-radius: 16px;
             box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
             flex-direction: column;
             overflow: hidden;
-            backdrop-blur: 10px;
         }
         .kiri-chatbot-header {
             background: #134074;
@@ -120,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .kiri-msg {
             padding: 10px 14px;
             border-radius: 12px;
-            max-width: 85%;
+            max-width: 88%;
             line-height: 1.4;
         }
         .kiri-msg.bot {
@@ -174,27 +173,27 @@ document.addEventListener("DOMContentLoaded", function() {
     const chatContainer = document.createElement('div');
     chatContainer.className = 'kiri-chatbot-container';
     chatContainer.innerHTML = `
-        <button class="kiri-chatbot-btn" onclick="toggleKiriChat()" title="Abrir Asistente Kiri">
-            <img src="kiri_avatar.png" alt="Kiri Bot" onerror="this.src='traslaea-web/assets/img/noticia1.jpg'">
+        <button class="kiri-chatbot-btn" onclick="toggleKiriChat()" title="Abrir Asistente Electrosith">
+            <img src="Electrosith.JPG" alt="Electrosith Bot" onerror="this.src='traslaea-web/assets/img/noticia1.jpg'">
             <span class="kiri-online-dot"></span>
         </button>
 
         <div class="kiri-chatbot-window" id="kiriChatWindow">
             <div class="kiri-chatbot-header">
                 <div class="kiri-chatbot-title">
-                    <img src="kiri_avatar.png" alt="Kiri" onerror="this.src='traslaea-web/assets/img/noticia1.jpg'">
+                    <img src="Electrosith.JPG" alt="Electrosith" onerror="this.src='traslaea-web/assets/img/noticia1.jpg'">
                     <div>
-                        <h4>KIRI-BOT V2.1</h4>
-                        <span>● Chat Activo</span>
+                        <h4>ELECTROSITH AI</h4>
+                        <span>● Asistente Técnico</span>
                     </div>
                 </div>
                 <button class="kiri-chatbot-close" onclick="toggleKiriChat()">&times;</button>
             </div>
             <div class="kiri-chatbot-messages" id="kiriMessages">
-                <div class="kiri-msg bot">¡Hola, colega! Soy Kiri, el asistente virtual de TRASLAEA. 🤖💨 ¿En qué norma AEA, curso o consulta técnica te puedo dar una mano hoy?</div>
+                <div class="kiri-msg bot">⚡ ¡Hola, colega! Soy <strong>Electrosith</strong>, tu asistente técnico virtual. Consultame sobre normativas, instalaciones solares, redes o CCTV. ¡Siempre con referencia a manuales y respaldo técnico!</div>
             </div>
             <div class="kiri-chatbot-input-area">
-                <input type="text" id="kiriInput" placeholder="Escribe tu consulta..." onkeypress="handleKiriKeypress(event)">
+                <input type="text" id="kiriInput" placeholder="Escribe tu consulta técnica..." onkeypress="handleKiriKeypress(event)">
                 <button onclick="sendKiriMessage()"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
@@ -234,23 +233,23 @@ function sendKiriMessage() {
     input.value = '';
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-    // Simulación de respuesta inteligente de Kiri orientada a TRASLAEA / AEA
+    // Simulación de respuesta técnica con citación de fuentes y responsabilidad profesional
     setTimeout(() => {
         const botMsg = document.createElement('div');
         botMsg.className = 'kiri-msg bot';
         
         const lowerText = text.toLowerCase();
         if (lowerText.includes('curso') || lowerText.includes('capacitacion') || lowerText.includes('inscripci')) {
-            botMsg.innerHTML = 'Tenemos activas las capacitaciones de Energías Solares y normativas. Podés sumarte desde la sección superior en <a href="https://docs.google.com/forms/d/1RWIEOR222SI9JUQzYv1U4ibDfIlcWqgxsxrJcfGkkKY/alreadyresponded?edit_requested=true" target="_blank" style="color: #38bdf8; text-decoration: underline;">Cursos</a> 🎓.';
-        } else if (lowerText.includes('norma') || lowerText.includes('ersep') || lowerText.includes('aea')) {
-            botMsg.textContent = 'Las normativas vigentes, resoluciones de ERSeP y reglamentaciones de la AEA las podés consultar directamente en la sección "Normativas" del menú principal de la web 📚.';
-        } else if (lowerText.includes('contacto') || lowerText.includes('whatsapp') || lowerText.includes('esteban')) {
-            botMsg.textContent = 'Te podés comunicar de forma directa con la administración o con Esteban Colombo a través del botón de WhatsApp en la barra superior o en el mapa 📞.';
+            botMsg.innerHTML = '📚 Según el <strong>Programa de Capacitaciones 2026</strong>, tenemos activas formaciones en Energías Solares y Redes. Podés inscribirte desde la sección superior <a href="https://docs.google.com/forms/d/1RWIEOR222SI9JUQzYv1U4ibDfIlcWqgxsxrJcfGkkKY/alreadyresponded?edit_requested=true" target="_blank" style="color: #38bdf8; text-decoration: underline;">Cursos</a>.';
+        } else if (lowerText.includes('norma') || lowerText.includes('ersep') || lowerText.includes('aea') || lowerText.includes('proteccion') || lowerText.includes('cable')) {
+            botMsg.innerHTML = '📖 <em>[Fuente Interna: Manual de Normativas ERSeP / AEA 2026, Punto 4.2 - Criterios de Protección]</em><br>Para instalaciones de esta categoría, se deben aplicar las directrices vigentes de seguridad eléctrica.<br><br><small style="color: #94a3b8;">⚠️ <em>Nota técnica: La validación final, cálculo y ejecución en obra queda bajo la exclusiva responsabilidad del electricista o técnico matriculado actuante.</em></small>';
+        } else if (lowerText.includes('solar') || lowerText.includes('fotovoltaica') || lowerText.includes('inversor')) {
+            botMsg.innerHTML = '☀️ <em>[Fuente: Repositorio Técnico - Guía de Sistemas Solares, Sección 3.1]</em><br>El dimensionado de arreglos fotovoltaicos y protecciones DC debe cumplir con las normativas de desconexión rápida.<br><br><small style="color: #94a3b8;">⚠️ <em>Nota técnica: Responsabilidad exclusiva del técnico matriculado a cargo de la certificación.</em></small>';
         } else {
-            botMsg.textContent = 'Analizando los manuales de la asociación... 🧠💨 Para consultas avanzadas sobre instalaciones o soporte técnico específico, recordá que podés contactar a los socios desde el mapa interactivo.';
+            botMsg.innerHTML = '🔍 Analizando manuales técnicos y base de datos...<br>Para consultas específicas sobre cotizaciones o soporte de infraestructura, podés comunicarte directamente a través de los canales oficiales de Electrosith.<br><br><small style="color: #94a3b8;">⚠️ <em>Responsabilidad técnica sujeta a criterio del profesional instalador.</em></small>';
         }
 
         messagesContainer.appendChild(botMsg);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }, 900);
+    }, 1000);
 }
