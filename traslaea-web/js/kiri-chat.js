@@ -1,5 +1,5 @@
 // --- ELECTROSITH IA: Asistente Virtual Técnico con Google Gemini API ---
-const GEMINI_API_KEY = ""; // <--- Dejar vacío para evitar bloqueos de seguridad en GitHub
+const GEMINI_API_KEY = "AQ.Ab8RN6Kz9ba-w8N1y6CxNO_ThXR4SvQyYDFawuYL4mxe02P5WQ"; // <--- Dejar vacío para evitar bloqueos de seguridad en GitHub
 const GEMINI_MODEL = "gemini-2.5-flash";
 
 document.addEventListener("DOMContentLoaded", function() {
