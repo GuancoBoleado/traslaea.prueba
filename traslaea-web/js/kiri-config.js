@@ -1,3 +1,3 @@
 window.KIRI_CONFIG = {
-  API_KEY: window.KIRI_ENV_API_KEY || "CLAVE_DE_RESPALDO_SI_HACE_FALTA"
+API_KEY: window.KIRI_ENV_API_KEY || ""
 };
