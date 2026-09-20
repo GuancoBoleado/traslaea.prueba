@@ -628,10 +628,11 @@
         }
         animate();
     </script>
-   <!-- SCRIPTS DE CONFIGURACIÓN Y ASISTENTE KIRI-BOT -->
+  <!-- INYECTAR LA CLAVE DESDE VERCEL DE FORMA SEGURA -->
+    <script>
+        window.KIRI_ENV_API_KEY = "GEMINI_API_KEY_AQUI"; // En Vercel se puede reemplazar o leer directamente
+    </script>
     <script src="traslaea-web/js/kiri-config.js"></script>
     <script src="traslaea-web/js/kiri-chat.js"></script>
-</body>
-</html>
 </body>
 </html>
