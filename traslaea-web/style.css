@@ -12,7 +12,7 @@ PALETA DE COLORES: AZUL, CELESTE, NEGRO Y BLANCO
 --texto-oscuro: #1e293b;
 --texto-mutado: #64748b;
 }
-{
+* {
 margin: 0;
 padding: 0;
 box-sizing: border-box;
@@ -165,21 +165,39 @@ padding: 50px 20px;
 }
 .hero h2 {
     font-size: 70px !important;
-    letter-spacing: 2px;
-    font-family: 'Times New Roman', Times, serif; /* Tipografía clásica con serifas elegante, similar a la imagen */
+    letter-spacing: 3px;
+    font-family: 'Times New Roman', Times, serif;
     font-weight: bold;
     
-    /* Fondo de textura de mármol claro con vetas */
-    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 30%, #d1d5db 60%, #9ca3af 100%), 
-                radial-gradient(circle at 30% 30%, rgba(180, 160, 140, 0.3) 0%, transparent 60%);
+    /* Fondo con base blanca y un haz de luz azulado en movimiento */
+    background: linear-gradient(
+        90deg, 
+        #ffffff 0%, 
+        #ffffff 35%, 
+        #00a8e8 50%, 
+        #ffffff 65%, 
+        #ffffff 100%
+    );
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     
-    /* Relieve 3D y sombra profunda para que parezca tallado/saliente */
-    filter: drop-shadow(2px 3px 1px rgba(255, 255, 255, 0.4)) 
-            drop-shadow(-1px -1px 0px rgba(0, 0, 0, 0.8))
-            drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.7));
+    /* Animación continua del reflejo de luz cruzando el texto */
+    animation: reflejoLuzTexto 4s linear infinite;
+    
+    /* Sombra elegante y profundidad sobre el fondo oscuro */
+    filter: drop-shadow(0px 4px 12px rgba(0, 168, 232, 0.4));
 }
+
+@keyframes reflejoLuzTexto {
+    0% {
+        background-position: 200% center;
+    }
+    100% {
+        background-position: -200% center;
+    }
+}
+
 .hero .subtitle {
 color: var(--celeste-accent);
 font-size: 14px;
@@ -658,10 +676,8 @@ font-size: 11px;
 }
 
 .hero h2 {
-    font-size: 28px;
+    font-size: 36px !important;
 }
-
-
 }
 /* GRID / REFUERZO DE COLUMNAS */
 .dashboard-grid {
