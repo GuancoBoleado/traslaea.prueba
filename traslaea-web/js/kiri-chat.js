@@ -180,7 +180,7 @@ function crearEstructuraKiri() {
     const chatContainer = document.createElement('div');
     chatContainer.className = 'kiri-chatbot-container';
     chatContainer.innerHTML = `
-        <button class="kiri-chatbot-btn" onclick="toggleKiriChat()" title="Abrir KIRI BOT">
+        <button class="kiri-chatbot-btn" onclick="toggleKiriChat()" title="Abrir KIRI-BOT">
             <img src="Kiri CHAT.jpeg" alt="KIRI Bot" onerror="this.src='traslaea-web/assets/img/noticia1.jpg'">
             <span class="kiri-online-dot"></span>
         </button>
@@ -197,7 +197,7 @@ function crearEstructuraKiri() {
                 <button class="kiri-chatbot-close" onclick="toggleKiriChat()">&times;</button>
             </div>
             <div class="kiri-chatbot-messages" id="kiriMessages">
-                <div class="kiri-msg bot">⚡ ¡Hola, colega! Soy <strong>KIRI BOT</strong>. Actualmente estoy en desarrollo y optimización.</div>
+                <div class="kiri-msg bot">⚡ ¡Hola, colega! Soy <strong>KIRI-BOT</strong>. Actualmente estoy en desarrollo y optimización.</div>
             </div>
             <div class="kiri-chatbot-input-area">
                 <input type="text" id="kiriInput" placeholder="Escribe tu mensaje..." onkeypress="handleKiriKeypress(event)">
