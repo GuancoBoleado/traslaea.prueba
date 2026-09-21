@@ -627,11 +627,14 @@
             animationFrameId = requestAnimationFrame(animate);
         }
         animate();
-    </script>
-  <!-- INYECTAR LA CLAVE DESDE VERCEL DE FORMA SEGURA -->
-    <script>
-        window.KIRI_ENV_API_KEY = "GEMINI_API_KEY_AQUI"; // En Vercel se puede reemplazar o leer directamente
-    </script>
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="traslaea-web/js/map.js"></script>
+
+    <!-- OTROS SCRIPTS DE LA WEB (Contador, rayos, etc.) -->
+    <!-- (tus otros scripts internos van acá si los tenés) -->
+
+    <!-- CONFIGURACIÓN Y ASISTENTE KIRI-BOT (Única vez y en orden) -->
     <script src="traslaea-web/js/kiri-config.js"></script>
     <script src="traslaea-web/js/kiri-chat.js"></script>
 </body>
