@@ -1,6 +1,6 @@
 // --- KIRI: Asistente Virtual Técnico con Google Gemini API ---
-// La clave se obtiene directamente desde la configuración global (kiri-config.js)
-const GEMINI_API_KEY = window.KIRI_CONFIG && window.KIRI_CONFIG.API_KEY ? window.KIRI_CONFIG.API_KEY : "";
+// Clave incrustada directamente para prueba definitiva
+const GEMINI_API_KEY = "AQ.Ab8RN6LRMh_YCkdwlriftJ9w5vF899fkaNpjP7bdgNpo4WCayA";
 const GEMINI_MODEL = "gemini-2.5-flash";
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -232,7 +232,7 @@ async function sendKiriMessage() {
         const messagesContainer = document.getElementById('kiriMessages');
         const errorMsg = document.createElement('div');
         errorMsg.className = 'kiri-msg bot';
-        errorMsg.innerHTML = '⚠️ La clave de API no está configurada en kiri-config.js.';
+        errorMsg.innerHTML = '⚠️ La clave de API no está definida en kiri-chat.js.';
         messagesContainer.appendChild(errorMsg);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
         return;
