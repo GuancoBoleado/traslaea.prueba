@@ -66,21 +66,79 @@
         @media (max-width: 768px) {
             .top-bar {
                 padding: 6px 10px;
-                font-size: 11.5px;
+                font-size: 11px;
             }
             .top-bar-container {
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
-                gap: 6px;
+                gap: 5px;
             }
             .quick-links {
                 justify-content: center;
-                gap: 10px;
+                gap: 8px;
             }
             .social-links {
                 justify-content: center;
                 margin-top: 2px;
+            }
+        }
+
+        /* Estilos del botón de menú hamburguesa (oculto en PC) */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: 1px solid rgba(0, 168, 232, 0.4);
+            color: #00a8e8;
+            font-size: 20px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .menu-toggle:hover {
+            background: rgba(0, 168, 232, 0.1);
+        }
+
+        /* Adaptación del Navbar para móviles */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-wrap: wrap;
+                padding: 12px 15px;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .navbar nav {
+                display: none;
+                width: 100%;
+                order: 4;
+                margin-top: 12px;
+                background: #0b0f19;
+                border: 1px solid rgba(0, 168, 232, 0.2);
+                border-radius: 8px;
+                padding: 10px 0;
+            }
+            .navbar nav.active {
+                display: block;
+            }
+            .navbar nav ul {
+                flex-direction: column;
+                gap: 5px;
+                width: 100%;
+                text-align: center;
+            }
+            .navbar nav ul li {
+                width: 100%;
+            }
+            .navbar nav ul li a {
+                display: block;
+                padding: 10px;
+                width: 100%;
+            }
+            .btn-suscripcion {
+                font-size: 11px;
+                padding: 6px 10px;
             }
         }
 
@@ -333,7 +391,7 @@
         </div>
     </div>
 
-    <!-- NAVBAR -->
+    <!-- NAVBAR CON BOTÓN DE MENÚ MÓVIL (3 RAYITAS) -->
     <header class="navbar">
         <div class="logo-container">
             <div class="brand-text">
@@ -341,7 +399,13 @@
                 <span>ORGANIZACIÓN DE ELECTRICISTAS ASOCIADOS</span>
             </div>
         </div>
-        <nav>
+
+        <!-- Botón Hamburguesa para Celulares -->
+        <button class="menu-toggle" id="menu-toggle" aria-label="Abrir Menú">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <nav id="main-nav">
             <ul>
                 <li><a href="index.html" class="active">Inicio</a></li>
                 <li><a href="traslaea-web/paginas/nosotros.html">Nosotros</a></li>
@@ -593,6 +657,18 @@
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="traslaea-web/js/map.js"></script>
+
+    <!-- SCRIPT PARA EL MENÚ MÓVIL (HAMBURGUESA) -->
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mainNav = document.getElementById('main-nav');
+
+        if (menuToggle && mainNav) {
+            menuToggle.addEventListener('click', () => {
+                mainNav.classList.toggle('active');
+            });
+        }
+    </script>
 
     <!-- SCRIPT DE FILTRADO INTELIGENTE PARA LOS BOTONES -->
     <script>
