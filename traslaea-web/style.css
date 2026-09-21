@@ -773,15 +773,18 @@ body {
 }
 
 /* LOGO DEL KIRI-BOT MÁS GRANDE EN EL ENCABEZADO */
+.chatbot-header img,
+.chatbot-header .avatar img,
 .chatbot-header h4 img {
   width: 55px !important;
   height: 55px !important;
+  max-width: none !important;
+  max-height: none !important;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--celeste-accent);
   background-color: var(--blanco);
 }
-
 .chatbot-close {
   background: none;
   border: none;
