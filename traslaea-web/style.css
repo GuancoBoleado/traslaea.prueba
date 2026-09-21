@@ -965,7 +965,7 @@ body {
     padding: 35px 15px;
   }
   .hero h2 {
-    font-size: 38px !important; /* Forzamos el ajuste para que no rompa la pantalla */
+    font-size: 70px !important; /* Forzamos el ajuste para que no rompa la pantalla */
     letter-spacing: 1px;
   }
 
