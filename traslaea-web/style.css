@@ -953,13 +953,12 @@ body {
     padding: 4px 8px;
   }
 
-  /* Hero Section & Título */
+  /* Hero Section & Título Grande de Traslaea (Oculto en Celulares) */
   .hero {
     padding: 35px 15px;
   }
   .hero h2 {
-    font-size: 38px !important; /* Forzamos el ajuste para que no rompa la pantalla */
-    letter-spacing: 1px;
+    display: none !important; /* Se oculta únicamente en celulares */
   }
 
   /* Estadísticas */
@@ -983,9 +982,6 @@ body {
 }
 
 @media (max-width: 480px) {
-  .hero h2 {
-    font-size: 32px !important;
-  }
   .peligros-content {
     flex-direction: column;
     text-align: center;
