@@ -2,8 +2,15 @@ document.addEventListener("DOMContentLoaded", function() {
     var mapElement = document.getElementById('map');
     if (!mapElement) return;
 
-    // Inicializar el mapa centrado en Traslasierra
+    // Si ya existe una instancia previa del mapa, la removemos limpiamente para evitar el error
+    if (window.traslaeaMapInstance) {
+        window.traslaeaMapInstance.remove();
+        window.traslaeaMapInstance = null;
+    }
+
+    // Inicializar el mapa centrado en Traslasierra y guardarlo globalmente
     var map = L.map('map').setView([-31.9500, -65.0167], 10);
+    window.traslaeaMapInstance = map;
 
     // Cargar las baldosas de OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -181,7 +188,8 @@ document.addEventListener("DOMContentLoaded", function() {
         botonesChip.forEach(btn => {
             btn.addEventListener('click', function() {
                 var valorFiltro = this.getAttribute('data-filter');
-                inputBuscador.value = valorFiltro; // Escribe el filtro en el buscador visualmente
+                inputBuscador.value = valorFils... // (Mantiene el valor en el input)
+                inputBuscador.value = valorFiltro;
                 renderizarPines(valorFiltro);
             });
         });
