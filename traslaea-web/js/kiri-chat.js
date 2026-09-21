@@ -1,9 +1,10 @@
 // --- KIRI: Asistente Virtual Técnico con Google Gemini API ---
-// Clave incrustada directamente para prueba definitiva
-const GEMINI_API_KEY = "AQ.Ab8RN6Ltx3WwSZDSmoXkmFC9G9MevMw2K8zNKZb5SrDiAJW6nQ";
-const GEMINI_MODEL = "gemini-2.5-flash";
 
 document.addEventListener("DOMContentLoaded", function() {
+    // Verificar que la configuración exista
+    const apiKey = typeof KIRI_CONFIG !== 'undefined' ? KIRI_CONFIG.API_KEY : "";
+    const apiModel = typeof KIRI_CONFIG !== 'undefined' ? KIRI_CONFIG.MODEL : "gemini-flash-latest";
+
     // Inyectar los estilos CSS del chatbot automáticamente en el documento
     const style = document.createElement('style');
     style.innerHTML = `
@@ -179,14 +180,14 @@ document.addEventListener("DOMContentLoaded", function() {
     chatContainer.className = 'kiri-chatbot-container';
     chatContainer.innerHTML = `
         <button class="kiri-chatbot-btn" onclick="toggleKiriChat()" title="Abrir KIRI Asistente">
-            <img src="Electrosith.JPG" alt="KIRI Bot" onerror="this.src='traslaea-web/assets/img/noticia1.jpg'">
+            <img src="traslaea-web/assets/img/noticia1.jpg" alt="KIRI Bot" onerror="this.src='Electrosith.JPG'">
             <span class="kiri-online-dot"></span>
         </button>
 
         <div class="kiri-chatbot-window" id="kiriChatWindow">
             <div class="kiri-chatbot-header">
                 <div class="kiri-chatbot-title">
-                    <img src="Electrosith.JPG" alt="KIRI" onerror="this.src='traslaea-web/assets/img/noticia1.jpg'">
+                    <img src="traslaea-web/assets/img/noticia1.jpg" alt="KIRI" onerror="this.src='Electrosith.JPG'">
                     <div>
                         <h4>KIRI</h4>
                         <span>● Tu Asistente Técnico</span>
@@ -224,15 +225,18 @@ function handleKiriKeypress(event) {
 
 // Función principal conectada a la API real de Google Gemini
 async function sendKiriMessage() {
+    const apiKey = typeof KIRI_CONFIG !== 'undefined' ? KIRI_CONFIG.API_KEY : "";
+    const apiModel = typeof KIRI_CONFIG !== 'undefined' ? KIRI_CONFIG.MODEL : "gemini-flash-latest";
+
     const input = document.getElementById('kiriInput');
     const text = input.value.trim();
     if (text === '') return;
 
-    if (!GEMINI_API_KEY) {
+    if (!apiKey) {
         const messagesContainer = document.getElementById('kiriMessages');
         const errorMsg = document.createElement('div');
         errorMsg.className = 'kiri-msg bot';
-        errorMsg.innerHTML = '⚠️ La clave de API no está definida en kiri-chat.js.';
+        errorMsg.innerHTML = '⚠️ La clave de API no está definida en kiri-config.js.';
         messagesContainer.appendChild(errorMsg);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
         return;
@@ -259,7 +263,7 @@ async function sendKiriMessage() {
     try {
         const systemPrompt = "Eres KIRI, tu Asistente Técnico, un experto en electricidad, instalaciones solares fotovoltaicas, redes y sistemas de seguridad (CCTV). Respondes con rigor técnico, citando normativas aplicables (como AEA / ERSeP cuando corresponda) y recordando siempre que la ejecución y validación final en obra recae exclusivamente bajo la responsabilidad del técnico matriculado. Mantén un trato cordial, directo y profesional con colegas del rubro.";
         
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${apiModel}:generateContent?key=${apiKey}`;
         
         const response = await fetch(url, {
             method: 'POST',
