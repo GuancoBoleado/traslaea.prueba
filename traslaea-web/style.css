@@ -774,8 +774,8 @@ body {
 
 /* LOGO DEL KIRI-BOT MÁS GRANDE EN EL ENCABEZADO */
 .chatbot-header h4 img {
-  width: 34px !important;
-  height: 34px !important;
+  width: 55px !important;
+  height: 55px !important;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--celeste-accent);
