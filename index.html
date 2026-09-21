@@ -496,9 +496,9 @@
         </div>
     </footer>
 
-    
-    <!-- SCRIPT DEL ASISTENTE KIRI-BOT -->
-    <script src="traslaea-web/js/kiri-chat.js"></script>
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="traslaea-web/js/map.js"></script>
 
     <!-- SCRIPT DE FILTRADO INTELIGENTE PARA LOS BOTONES -->
     <script>
@@ -544,12 +544,16 @@
                 const easeOutProgress = 1 - Math.pow(1 - progress, 3);
                 const currentVal = Math.floor(easeOutProgress * targetNumber);
 
-                btnSuscripcion.textContent = `SUSCRIPCIÓN (${currentVal})`;
+                if (btnSuscripcion) {
+                    btnSuscripcion.textContent = `SUSCRIPCIÓN (${currentVal})`;
+                }
 
                 if (progress < 1) {
                     requestAnimationFrame(updateCounter);
                 } else {
-                    btnSuscripcion.textContent = `SUSCRIPCIÓN (${targetNumber})`;
+                    if (btnSuscripcion) {
+                        btnSuscripcion.textContent = `SUSCRIPCIÓN (${targetNumber})`;
+                    }
                 }
             }
             requestAnimationFrame(updateCounter);
@@ -559,83 +563,78 @@
     <!-- SCRIPT DE RAYOS ELÉCTRICOS DINÁMICOS -->
     <script>
         const canvas = document.getElementById('lightning-canvas');
-        const ctx = canvas.getContext('2d');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
 
-        function resizeCanvas() {
-            canvas.width = canvas.parentElement.offsetWidth;
-            canvas.height = canvas.parentElement.offsetHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        class Bolt {
-            constructor() {
-                this.reset();
+            function resizeCanvas() {
+                canvas.width = canvas.parentElement.offsetWidth;
+                canvas.height = canvas.parentElement.offsetHeight;
             }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = 0;
-                this.segments = [];
-                let currentX = this.x;
-                let currentY = 0;
-                
-                while (currentY < canvas.height) {
-                    currentX += (Math.random() - 0.5) * 40;
-                    currentY += Math.random() * 20 + 5;
-                    this.segments.push({x: currentX, y: currentY});
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            class Bolt {
+                constructor() {
+                    this.reset();
                 }
-                this.life = 1.0;
-                this.decay = Math.random() * 0.05 + 0.03;
-            }
-            draw() {
-                if (this.segments.length === 0) return;
-                ctx.beginPath();
-                ctx.moveTo(this.segments[0].x, this.segments[0].y);
-                for (let i = 1; i < this.segments.length; i++) {
-                    ctx.lineTo(this.segments[i].x, this.segments[i].y);
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = 0;
+                    this.segments = [];
+                    let currentX = this.x;
+                    let currentY = 0;
+                    
+                    while (currentY < canvas.height) {
+                        currentX += (Math.random() - 0.5) * 40;
+                        currentY += Math.random() * 20 + 5;
+                        this.segments.push({x: currentX, y: currentY});
+                    }
+                    this.life = 1.0;
+                    this.decay = Math.random() * 0.05 + 0.03;
                 }
-                ctx.strokeStyle = `rgba(0, 168, 232, ${this.life})`;
-                ctx.lineWidth = 1.5;
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = '#00a8e8';
-                ctx.stroke();
-            }
-            update() {
-                this.life -= this.decay;
-            }
-        }
-
-        let bolts = [];
-        let animationFrameId;
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            if (Math.random() < 0.08 && bolts.length < 3) {
-                bolts.push(new Bolt());
-            }
-
-            for (let i = bolts.length - 1; i >= 0; i--) {
-                bolts[i].update();
-                bolts[i].draw();
-                if (bolts[i].life <= 0) {
-                    bolts.splice(i, 1);
+                draw() {
+                    if (this.segments.length === 0) return;
+                    ctx.beginPath();
+                    ctx.moveTo(this.segments[0].x, this.segments[0].y);
+                    for (let i = 1; i < this.segments.length; i++) {
+                        ctx.lineTo(this.segments[i].x, this.segments[i].y);
+                    }
+                    ctx.strokeStyle = `rgba(0, 168, 232, ${this.life})`;
+                    ctx.lineWidth = 1.5;
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = '#00a8e8';
+                    ctx.stroke();
+                }
+                update() {
+                    this.life -= this.decay;
                 }
             }
-            animationFrameId = requestAnimationFrame(animate);
-        }
-        animate();
-    
-    <!-- (tus otros scripts internos van acá si los tenés) -->
 
-   <!-- SCRIPTS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="traslaea-web/js/map.js"></script>
+            let bolts = [];
+            let animationFrameId;
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (Math.random() < 0.08 && bolts.length < 3) {
+                    bolts.push(new Bolt());
+                }
+
+                for (let i = bolts.length - 1; i >= 0; i--) {
+                    bolts[i].update();
+                    bolts[i].draw();
+                    if (bolts[i].life <= 0) {
+                        bolts.splice(i, 1);
+                    }
+                }
+                animationFrameId = requestAnimationFrame(animate);
+            }
+            animate();
+        }
+    </script>
 
     <!-- CONFIGURACIÓN Y ASISTENTE KIRI-BOT (Única vez y en orden) -->
     <script src="traslaea-web/js/kiri-config.js"></script>
     <script src="traslaea-web/js/kiri-chat.js"></script>
-</body>
-</html>
 </body>
 </html>
