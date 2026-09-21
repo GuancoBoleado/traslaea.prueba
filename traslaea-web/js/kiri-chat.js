@@ -190,7 +190,7 @@ function crearEstructuraKiri() {
                 <div class="kiri-chatbot-title">
                     <img src="Kiri CHAT.jpeg" alt="KIRI" onerror="this.src='traslaea-web/assets/img/noticia1.jpg'">
                     <div>
-                        <h4>KIRI BOT</h4>
+                        <h4>KIRI-BOT</h4>
                         <span>● Mantenimiento</span>
                     </div>
                 </div>
