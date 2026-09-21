@@ -165,7 +165,12 @@ padding: 50px 20px;
 }
 .hero h2 {
     font-size: 70px !important;
-    letter-spacing: 2px !important;
+    letter-spacing: 2px;
+    /* Efecto Mármol */
+    background: linear-gradient(135deg, #f8fafc 0%, #94a3b8 25%, #cbd5e1 50%, #475569 75%, #f8fafc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 .hero .subtitle {
 color: var(--celeste-accent);
