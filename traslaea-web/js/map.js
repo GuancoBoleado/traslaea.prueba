@@ -188,7 +188,6 @@ document.addEventListener("DOMContentLoaded", function() {
         botonesChip.forEach(btn => {
             btn.addEventListener('click', function() {
                 var valorFiltro = this.getAttribute('data-filter');
-                inputBuscador.value = valorFils... // (Mantiene el valor en el input)
                 inputBuscador.value = valorFiltro;
                 renderizarPines(valorFiltro);
             });
