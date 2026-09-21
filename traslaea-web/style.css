@@ -675,9 +675,16 @@ font-size: 11px;
     padding: 15px 20px;
 }
 
-/* Oculta el primer TRASLAEA en celulares para evitar que se encime */
+/* OCULTA el primer TRASLAEA gigante (el h2 con luces) en celulares */
 .hero h2 {
     display: none !important;
+}
+
+/* MANTIENE visible el subtítulo de abajo en celulares */
+.hero .subtitle {
+    display: block !important;
+    font-size: 14px !important;
+    margin-bottom: 20px !important;
 }
 }
 /* GRID / REFUERZO DE COLUMNAS */
