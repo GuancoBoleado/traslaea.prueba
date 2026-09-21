@@ -164,8 +164,8 @@ text-align: center;
 padding: 50px 20px;
 }
 .hero h2 {
-font-size: 70px;
-letter-spacing: 2px;
+    font-size: 70px !important;
+    letter-spacing: 2px !important;
 }
 .hero .subtitle {
 color: var(--celeste-accent);
