@@ -1,6 +1,6 @@
 // --- KIRI: Asistente Virtual Técnico con Google Gemini API ---
 // Clave incrustada directamente para prueba definitiva
-const GEMINI_API_KEY = "AQ.Ab8RN6LRMh_YCkdwlriftJ9w5vF899fkaNpjP7bdgNpo4WCayA";
+const GEMINI_API_KEY = "AQ.Ab8RN6Ltx3WwSZDSmoXkmFC9G9MevMw2K8zNKZb5SrDiAJW6nQ";
 const GEMINI_MODEL = "gemini-2.5-flash";
 
 document.addEventListener("DOMContentLoaded", function() {
