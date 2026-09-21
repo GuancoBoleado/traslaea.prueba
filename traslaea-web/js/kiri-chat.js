@@ -175,19 +175,19 @@ document.addEventListener("DOMContentLoaded", function() {
     `;
     document.head.appendChild(style);
 
-    // Inyectar el HTML flotante al final del body
+    // Inyectar el HTML flotante al final del body con el logo Kiri CHAT.jpeg
     const chatContainer = document.createElement('div');
     chatContainer.className = 'kiri-chatbot-container';
     chatContainer.innerHTML = `
         <button class="kiri-chatbot-btn" onclick="toggleKiriChat()" title="Abrir KIRI Asistente">
-            <img src="traslaea-web/assets/img/noticia1.jpg" alt="KIRI Bot" onerror="this.src='Electrosith.JPG'">
+            <img src="Kiri CHAT.jpeg" alt="KIRI Bot" onerror="this.src='traslaea-web/assets/img/noticia1.jpg'">
             <span class="kiri-online-dot"></span>
         </button>
 
         <div class="kiri-chatbot-window" id="kiriChatWindow">
             <div class="kiri-chatbot-header">
                 <div class="kiri-chatbot-title">
-                    <img src="traslaea-web/assets/img/noticia1.jpg" alt="KIRI" onerror="this.src='Electrosith.JPG'">
+                    <img src="Kiri CHAT.jpeg" alt="KIRI" onerror="this.src='traslaea-web/assets/img/noticia1.jpg'">
                     <div>
                         <h4>KIRI</h4>
                         <span>● Tu Asistente Técnico</span>
