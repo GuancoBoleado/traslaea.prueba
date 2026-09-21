@@ -90,8 +90,8 @@
             background: none;
             border: 1px solid rgba(0, 168, 232, 0.4);
             color: #00a8e8;
-            font-size: 20px;
-            padding: 6px 10px;
+            font-size: 18px;
+            padding: 5px 8px;
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s;
@@ -104,16 +104,23 @@
         @media (max-width: 768px) {
             .navbar {
                 flex-wrap: wrap;
-                padding: 12px 15px;
+                padding: 10px 15px;
+                justify-content: space-between;
+            }
+            /* Hacemos que el contenedor del logo actúe como fila flex para poner el texto y las rayitas al lado */
+            .logo-container {
+                display: flex;
+                align-items: center;
+                gap: 12px;
             }
             .menu-toggle {
-                display: block;
+                display: block; /* Visible solo en móviles */
             }
             .navbar nav {
                 display: none;
                 width: 100%;
                 order: 4;
-                margin-top: 12px;
+                margin-top: 10px;
                 background: #0b0f19;
                 border: 1px solid rgba(0, 168, 232, 0.2);
                 border-radius: 8px;
@@ -381,7 +388,7 @@
                 <a href="https://docs.google.com/forms/d/1RWIEOR222SI9JUQzYv1U4ibDfIlcWqgxsxrJcfGkkKY/alreadyresponded?edit_requested=true" target="_blank">🎓 Cursos</a>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/alreadyresponded" target="_blank">✍️ Suscripción</a>
                 <a href="traslaea-web/paginas/recursos.html">📁 Manuales & Software</a>
-                
+                <a href="mailto:traslaea@gmail.com" title="Enviar Correo">📧 traslaea@gmail.com</a>
             </div>
             <div class="social-links">
                 <a href="https://www.facebook.com/Traslaea.OK" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -391,19 +398,18 @@
         </div>
     </div>
 
-    <!-- NAVBAR CON BOTÓN DE MENÚ MÓVIL (3 RAYITAS) -->
+    <!-- NAVBAR CON EL BOTÓN DE LAS 3 RAYITAS AL LADO DEL LOGO EN MÓVIL -->
     <header class="navbar">
         <div class="logo-container">
             <div class="brand-text">
                 <h1>TRASLAEA</h1>
                 <span>ORGANIZACIÓN DE ELECTRICISTAS ASOCIADOS</span>
             </div>
+            <!-- Botón Hamburguesa integrado al lado del título en celulares -->
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir Menú">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
-
-        <!-- Botón Hamburguesa para Celulares -->
-        <button class="menu-toggle" id="menu-toggle" aria-label="Abrir Menú">
-            <i class="fas fa-bars"></i>
-        </button>
 
         <nav id="main-nav">
             <ul>
