@@ -166,11 +166,19 @@ padding: 50px 20px;
 .hero h2 {
     font-size: 70px !important;
     letter-spacing: 2px;
-    /* Efecto Mármol */
-    background: linear-gradient(135deg, #f8fafc 0%, #94a3b8 25%, #cbd5e1 50%, #475569 75%, #f8fafc 100%);
+    font-family: 'Times New Roman', Times, serif; /* Tipografía clásica con serifas elegante, similar a la imagen */
+    font-weight: bold;
+    
+    /* Fondo de textura de mármol claro con vetas */
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 30%, #d1d5db 60%, #9ca3af 100%), 
+                radial-gradient(circle at 30% 30%, rgba(180, 160, 140, 0.3) 0%, transparent 60%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    
+    /* Relieve 3D y sombra profunda para que parezca tallado/saliente */
+    filter: drop-shadow(2px 3px 1px rgba(255, 255, 255, 0.4)) 
+            drop-shadow(-1px -1px 0px rgba(0, 0, 0, 0.8))
+            drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.7));
 }
 .hero .subtitle {
 color: var(--celeste-accent);
