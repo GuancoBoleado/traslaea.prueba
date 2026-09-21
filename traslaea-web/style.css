@@ -192,7 +192,7 @@ body {
 }
 
 .hero h2 {
-  font-size: 85px !important; /* <--- TÍTULO TRASLAEA AGRANDADO EN ESCRITORIO */
+  font-size: 85px !important; /* TÍTULO TRASLAEA AGRANDADO */
   letter-spacing: 3px;
   font-family: 'Times New Roman', Times, serif;
   font-weight: bold;
@@ -758,7 +758,7 @@ body {
 .chatbot-header {
   background: #0b2545;
   color: white;
-  padding: 15px;
+  padding: 12px 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -766,10 +766,20 @@ body {
 
 .chatbot-header h4 {
   margin: 0;
-  font-size: 16px;
+  font-size: 15px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+}
+
+/* LOGO DEL KIRI-BOT MÁS GRANDE EN EL ENCABEZADO */
+.chatbot-header h4 img {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--celeste-accent);
+  background-color: var(--blanco);
 }
 
 .chatbot-close {
@@ -962,12 +972,12 @@ body {
     padding: 4px 8px;
   }
 
-  /* Hero Section Móvil - Título TRASLAEA bien grande también en celulares */
+  /* Hero Section Móvil - Título TRASLAEA grande */
   .hero {
     padding: 40px 15px;
   }
   .hero h2 {
-    font-size: 62px !important; /* <--- TÍTULO TRASLAEA GRANDE EN MÓVILES */
+    font-size: 62px !important;
     letter-spacing: 1px;
     line-height: 1.1;
   }
@@ -992,7 +1002,7 @@ body {
 
 @media (max-width: 480px) {
   .hero h2 {
-    font-size: 50px !important; /* <--- Adaptado para pantallas muy pequeñas */
+    font-size: 50px !important;
   }
   .peligros-content {
     flex-direction: column;
