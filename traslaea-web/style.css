@@ -675,8 +675,9 @@ font-size: 11px;
     padding: 15px 20px;
 }
 
+/* Oculta el primer TRASLAEA en celulares para evitar que se encime */
 .hero h2 {
-    font-size: 36px !important;
+    display: none !important;
 }
 }
 /* GRID / REFUERZO DE COLUMNAS */
