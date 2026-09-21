@@ -15,6 +15,75 @@
 
     <!-- ESTILOS UNIFICADOS Y OPTIMIZADOS PARA EL INDEX -->
     <style>
+        /* Ajustes de la Top Bar para celulares y desktop */
+        .top-bar {
+            background-color: #0b0f19;
+            border-bottom: 1px solid rgba(0, 168, 232, 0.2);
+            padding: 8px 15px;
+            font-size: 13px;
+        }
+        .top-bar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .quick-links {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .quick-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .quick-links a:hover {
+            color: #00a8e8;
+        }
+        .social-links {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .social-links a {
+            color: #cbd5e1;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .social-links a:hover {
+            color: #00a8e8;
+        }
+
+        /* Ajuste específico para celulares en la top-bar */
+        @media (max-width: 768px) {
+            .top-bar {
+                padding: 6px 10px;
+                font-size: 11.5px;
+            }
+            .top-bar-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 6px;
+            }
+            .quick-links {
+                justify-content: center;
+                gap: 10px;
+            }
+            .social-links {
+                justify-content: center;
+                margin-top: 2px;
+            }
+        }
+
         /* Ajustes específicos del dashboard */
         .dashboard-grid {
             display: grid;
@@ -254,6 +323,7 @@
                 <a href="https://docs.google.com/forms/d/1RWIEOR222SI9JUQzYv1U4ibDfIlcWqgxsxrJcfGkkKY/alreadyresponded?edit_requested=true" target="_blank">🎓 Cursos</a>
                 <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/alreadyresponded" target="_blank">✍️ Suscripción</a>
                 <a href="traslaea-web/paginas/recursos.html">📁 Manuales & Software</a>
+                <a href="mailto:traslaea@gmail.com" title="Enviar Correo">📧 traslaea@gmail.com</a>
             </div>
             <div class="social-links">
                 <a href="https://www.facebook.com/Traslaea.OK" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
