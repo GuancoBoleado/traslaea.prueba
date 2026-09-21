@@ -510,7 +510,6 @@
             cards.forEach(card => {
                 const tags = card.getAttribute('data-tags') || '';
                 
-                // Mapeo inteligente para sinónimos (ej: 'camaras' reconoce 'cctv')
                 let match = false;
                 if (categoria === 'todos') {
                     match = true;
@@ -633,9 +632,8 @@
         }
     </script>
 
-    <!-- CONFIGURACIÓN Y ASISTENTE KIRI-BOT (Única vez y en orden) -->
+    <!-- CONFIGURACIÓN Y ASISTENTE KIRI-BOT -->
     <script src="traslaea-web/js/kiri-config.js"></script>
     <script src="traslaea-web/js/kiri-chat.js"></script>
-    <div class="kiri-chatbot-container"></div>
 </body>
 </html>
