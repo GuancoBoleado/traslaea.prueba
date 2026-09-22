@@ -4,8 +4,16 @@
 <!-- Font Awesome para los íconos -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-<!-- ESTILOS ESPECÍFICOS PARA LA PÁGINA DE NOSOTROS -->
+<!-- ESTILOS ESPECÍFICOS PARA LA PÁGINA (TEMA OSCURO EXACTO) -->
 <style>
+    body {
+        background-color: #0b0f19;
+        color: #ffffff;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
     .top-bar {
         background-color: #0b0f19;
         border-bottom: 1px solid rgba(0, 168, 232, 0.2);
@@ -13,7 +21,7 @@
         font-size: 13px;
     }
     .top-bar-container {
-        max-width: 1200px;
+        max-width: 1400px;
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
@@ -52,7 +60,236 @@
         color: #00a8e8;
     }
 
-    /* Navbar responsive */
+    /* Navbar estilo de la captura */
+    .navbar {
+        background-color: #0b0f19;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        border-bottom: 1px solid rgba(0, 168, 232, 0.2);
+    }
+    .logo-container .brand-text h1 {
+        color: #ffffff;
+        font-size: 20px;
+        margin: 0;
+        letter-spacing: 1px;
+    }
+    .logo-container .brand-text span {
+        color: #00a8e8;
+        font-size: 10px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+    }
+    .navbar nav ul {
+        list-style: none;
+        display: flex;
+        gap: 25px;
+        margin: 0;
+        padding: 0;
+        align-items: center;
+    }
+    .navbar nav ul li a {
+        color: #cbd5e1;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+    .navbar nav ul li a:hover,
+    .navbar nav ul li a.active {
+        color: #00a8e8;
+    }
+    .btn-suscripcion {
+        background-color: #00a8e8;
+        color: #0b0f19;
+        padding: 8px 18px;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 13px;
+        text-decoration: none;
+        box-shadow: 0 0 10px rgba(0, 168, 232, 0.4);
+        transition: all 0.2s;
+    }
+    .btn-suscripcion:hover {
+        background-color: #ffffff;
+        box-shadow: 0 0 15px rgba(0, 168, 232, 0.8);
+    }
+
+    /* Barra de colores ERSEP */
+    .color-stripe {
+        display: flex;
+        height: 4px;
+        width: 100%;
+    }
+    .stripe { flex: 1; }
+    .s-blue { background-color: #00458e; }
+    .s-cyan { background-color: #00a8e8; }
+    .s-dark { background-color: #111827; }
+    .s-light { background-color: #38bdf8; }
+
+    /* Contenedor tipo "Normativo" */
+    .page-container {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 35px;
+        border-bottom: 1px solid rgba(0, 168, 232, 0.2);
+        padding-bottom: 15px;
+    }
+
+    .header-title h2 {
+        color: #00a8e8;
+        font-size: 26px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        margin: 0 0 5px 0;
+        text-shadow: 0 0 10px rgba(0, 168, 232, 0.3);
+    }
+
+    .header-title span {
+        color: #94a3b8;
+        font-size: 12px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    .back-link {
+        color: #94a3b8;
+        text-decoration: none;
+        font-size: 12px;
+        letter-spacing: 1px;
+        transition: color 0.2s;
+    }
+    .back-link:hover {
+        color: #00a8e8;
+    }
+
+    /* Subtítulos de Secciones */
+    .section-category {
+        margin-bottom: 30px;
+    }
+    .section-category h3 {
+        color: #ffffff;
+        font-size: 15px;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-left: 3px solid #00a8e8;
+        padding-left: 10px;
+    }
+    .section-category p {
+        color: #94a3b8;
+        font-size: 12px;
+        margin-bottom: 15px;
+        padding-left: 13px;
+    }
+
+    /* Tarjetas Estilo Referencia */
+    .doc-card {
+        background: #111827;
+        border: 1px solid rgba(0, 168, 232, 0.3);
+        border-radius: 8px;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+        transition: all 0.2s ease;
+    }
+    .doc-card:hover {
+        border-color: #00a8e8;
+        box-shadow: 0 0 15px rgba(0, 168, 232, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .doc-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .doc-icon {
+        background: rgba(0, 168, 232, 0.1);
+        color: #00a8e8;
+        width: 40px;
+        height: 40px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+    }
+
+    .doc-details h4 {
+        color: #ffffff;
+        font-size: 14px;
+        margin: 0 0 4px 0;
+        font-weight: 600;
+    }
+
+    .doc-details p {
+        color: #94a3b8;
+        font-size: 11px;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .doc-badge {
+        background: #0284c7;
+        color: #ffffff;
+        font-size: 9px;
+        font-weight: bold;
+        padding: 2px 6px;
+        border-radius: 4px;
+        margin-left: 8px;
+    }
+
+    .btn-previsualizar {
+        background: transparent;
+        color: #00a8e8;
+        border: 1px solid #00a8e8;
+        padding: 7px 16px;
+        border-radius: 6px;
+        font-size: 11px;
+        font-weight: bold;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s;
+        text-transform: uppercase;
+    }
+
+    .btn-previsualizar:hover {
+        background: #00a8e8;
+        color: #0b0f19;
+        box-shadow: 0 0 10px rgba(0, 168, 232, 0.5);
+    }
+
+    /* Footer Oscuro */
+    .footer {
+        background: #0b0f19;
+        color: #64748b;
+        padding: 25px 20px;
+        text-align: center;
+        font-size: 12px;
+        border-top: 1px solid rgba(0, 168, 232, 0.2);
+        margin-top: 60px;
+    }
+    .footer strong { color: #ffffff; }
+    .brand-electrosith { color: #00a8e8; font-weight: bold; }
+
+    /* Menú responsive */
     .menu-toggle {
         display: none;
         background: none;
@@ -62,26 +299,11 @@
         padding: 5px 8px;
         border-radius: 6px;
         cursor: pointer;
-        transition: all 0.2s;
-    }
-    .menu-toggle:hover {
-        background: rgba(0, 168, 232, 0.1);
     }
 
     @media (max-width: 768px) {
-        .navbar {
-            flex-wrap: wrap;
-            padding: 10px 15px;
-            justify-content: space-between;
-        }
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .menu-toggle {
-            display: block;
-        }
+        .navbar { flex-wrap: wrap; padding: 10px 15px; }
+        .menu-toggle { display: block; }
         .navbar nav {
             display: none;
             width: 100%;
@@ -89,266 +311,95 @@
             margin-top: 10px;
             background: #0b0f19;
             border: 1px solid rgba(0, 168, 232, 0.2);
-            border-radius: 8px;
             padding: 10px 0;
+            border-radius: 8px;
         }
-        .navbar nav.active {
-            display: block;
-        }
-        .navbar nav ul {
-            flex-direction: column;
-            gap: 5px;
-            width: 100%;
-            text-align: center;
-        }
-        .navbar nav ul li {
-            width: 100%;
-        }
-        .navbar nav ul li a {
-            display: block;
-            padding: 10px;
-            width: 100%;
-        }
-        .btn-suscripcion {
-            font-size: 11px;
-            padding: 6px 10px;
-        }
-    }
-
-    /* Hero Nosotros */
-    .hero-nosotros {
-        background: linear-gradient(135deg, #0b0f19 0%, #0f4c81 50%, #0b2545 100%);
-        color: #ffffff;
-        text-align: center;
-        padding: 45px 20px;
-        position: relative;
-    }
-    .hero-nosotros h2 {
-        font-size: 30px;
-        letter-spacing: 2px;
-        margin-bottom: 8px;
-        color: #ffffff;
-        text-shadow: 0 0 10px rgba(0, 168, 232, 0.5);
-    }
-    .hero-nosotros .subtitle {
-        color: #00a8e8;
-        font-size: 14px;
-        font-weight: bold;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    /* Contenedor Principal Nosotros */
-    .nosotros-container {
-        max-width: 1000px;
-        margin: 40px auto;
-        padding: 0 20px;
-    }
-
-    .nosotros-card {
-        background: #ffffff;
-        border: 1px solid #cbd5e1;
-        border-radius: 12px;
-        padding: 30px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        margin-bottom: 30px;
-    }
-
-    .nosotros-card h3 {
-        color: #0f4c81;
-        font-size: 22px;
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        border-bottom: 2px solid #00a8e8;
-        padding-bottom: 8px;
-    }
-
-    .nosotros-card p {
-        color: #334155;
-        font-size: 15px;
-        line-height: 1.6;
-        margin-bottom: 15px;
-    }
-
-    /* Valores Grid */
-    .valores-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 20px;
-        margin-top: 20px;
-    }
-
-    .valor-item {
-        background: rgba(15, 76, 129, 0.03);
-        border: 1px solid rgba(0, 168, 232, 0.3);
-        border-radius: 8px;
-        padding: 20px;
-        text-align: center;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .valor-item:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 15px rgba(0, 168, 232, 0.15);
-        background: #ffffff;
-    }
-
-    .valor-item i {
-        font-size: 28px;
-        color: #00a8e8;
-        margin-bottom: 12px;
-    }
-
-    .valor-item h4 {
-        color: #0f4c81;
-        font-size: 16px;
-        margin-bottom: 8px;
-    }
-
-    .valor-item p {
-        font-size: 13px;
-        color: #475569;
-        margin-bottom: 0;
-        line-height: 1.4;
-    }
-
-    /* Footer */
-    .footer {
-        background: #0b0f19;
-        color: #94a3b8;
-        padding: 25px 20px;
-        text-align: center;
-        font-size: 13px;
-        border-top: 1px solid rgba(0, 168, 232, 0.2);
-        margin-top: 50px;
-    }
-    .footer-container strong {
-        color: #ffffff;
-    }
-    .brand-electrosith {
-        color: #00a8e8;
-        font-weight: bold;
+        .navbar nav.active { display: block; }
+        .navbar nav ul { flex-direction: column; gap: 10px; text-align: center; }
+        .doc-card { flex-direction: column; align-items: flex-start; gap: 15px; }
+        .btn-previsualizar { width: 100%; justify-content: center; }
     }
 </style>
 
 
+<div class="header-section">
+    <div class="header-title">
+        <h2>QUIÉNES SOMOS</h2>
+        <span>ORGANIZACIÓN DE ELECTRICISTAS ASOCIADOS DE TRASLASIERRA</span>
+    </div>
+    <a href="../../index.html" class="back-link">— VOLVER AL INICIO</a>
+</div>
 
-<!-- TOP BAR SUPERIOR -->
-<div class="top-bar">
-    <div class="top-bar-container">
-        <div class="quick-links">
-            <a href="https://docs.google.com/forms/d/1RWIEOR222SI9JUQzYv1U4ibDfIlcWqgxsxrJcfGkkKY/alreadyresponded?edit_requested=true" target="_blank">🎓 Cursos</a>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/alreadyresponded" target="_blank">✍️ Suscripción</a>
-            <a href="recursos.html">📁 Manuales & Software</a>
-            <a href="mailto:traslaea@gmail.com" title="Enviar Correo">📧 traslaea@gmail.com</a>
+<!-- SECCIÓN: NUESTRA IDENTIDAD -->
+<div class="section-category">
+    <h3><i class="fas fa-users"></i> HISTORIA Y MISIÓN</h3>
+    <p>CONOCIENDO NUESTRAS RAÍCES Y EL PROPÓSITO INSTITUCIONAL</p>
+
+    <div class="doc-card">
+        <div class="doc-info">
+            <div class="doc-icon"><i class="fas fa-shield-alt"></i></div>
+            <div class="doc-details">
+                <h4>Asociación y Respeto Profesional <span class="doc-badge">ORÍGENES</span></h4>
+                <p>Espacio gremial y técnico creado para nuclear y respaldar a los electricistas matriculados.</p>
+            </div>
         </div>
-        <div class="social-links">
-            <a href="https://www.facebook.com/Traslaea.OK" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.instagram.com/traslaea.arg/?hl=es" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="https://api.whatsapp.com/send?phone=543544314637&text=Hola%20Esteban%20Colombo..." target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="contacto.html" class="btn-previsualizar"><i class="fas fa-eye"></i> Conocer más</a>
+    </div>
+
+    <div class="doc-card">
+        <div class="doc-info">
+            <div class="doc-icon"><i class="fas fa-handshake"></i></div>
+            <div class="doc-details">
+                <h4>Defensa de Derechos e Intereses <span class="doc-badge">MISIÓN</span></h4>
+                <p>Representación ante cooperativas eléctricas, distribuidoras y organismos provinciales como el ERSeP.</p>
+            </div>
         </div>
+        <a href="contacto.html" class="btn-previsualizar"><i class="fas fa-eye"></i> Contactar</a>
     </div>
 </div>
 
-<!-- NAVBAR -->
-<header class="navbar">
-    <div class="logo-container">
-        <div class="brand-text">
-           <h1>TRASLAEA</h1>
-           <span>ORGANIZACIÓN DE ELECTRICISTAS ASOCIADOS</span>
+<!-- SECCIÓN: PILARES Y OBJETIVOS -->
+<div class="section-category">
+    <h3><i class="fas fa-bullseye"></i> PILARES FUNDAMENTALES</h3>
+    <p>EJES DE TRABAJO Y COMPROMISO CON LA COMUNIDAD</p>
+
+    <div class="doc-card">
+        <div class="doc-info">
+            <div class="doc-icon"><i class="fas fa-graduation-cap"></i></div>
+            <div class="doc-details">
+                <h4>Capacitación y Actualización Continua <span class="doc-badge">CAPACITACIÓN</span></h4>
+                <p>Talleres, cursos y perfeccionamiento técnico permanente bajo normativas AEA vigentes.</p>
+            </div>
         </div>
-        <button class="menu-toggle" id="menu-toggle" aria-label="Abrir Menú">
-            <i class="fas fa-bars"></i>
-        </button>
+        <a href="https://docs.google.com/forms/d/1RWIEOR222SI9JUQzYv1U4ibDfIlcWqgxsxrJcfGkkKY/alreadyresponded?edit_requested=true" target="_blank" class="btn-previsualizar"><i class="fas fa-external-link-alt"></i> Ver Cursos</a>
     </div>
 
-    <nav id="main-nav">
-        <ul>
-            <li><a href="../../index.html">Inicio</a></li>
-            <li><a href="nosotros.html" class="active">Nosotros</a></li>
-            <li><a href="recursos.html">Recursos</a></li>
-            <li><a href="normativas.html">Normativas</a></li>
-            <li><a href="contacto.html">Contacto & Tramites</a></li>
-        </ul>
-    </nav>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/alreadyresponded" target="_blank" id="btn-suscripcion" class="btn-suscripcion">SUSCRIPCIÓN (50)</a>
-</header>
-
-<!-- BARRA DE COLORES ERSEP -->
-<div class="color-stripe">
-    <div class="stripe s-blue"></div>
-    <div class="stripe s-cyan"></div>
-    <div class="stripe s-dark"></div>
-    <div class="stripe s-light"></div>
+    <div class="doc-card">
+        <div class="doc-info">
+            <div class="doc-icon"><i class="fas fa-bolt"></i></div>
+            <div class="doc-details">
+                <h4>Seguridad Eléctrica Provincial <span class="doc-badge">LEY 10.281</span></h4>
+                <p>Promoción de instalaciones seguras y control normativo en todo el Valle de Traslasierra.</p>
+            </div>
+        </div>
+        <a href="normativas.html" class="btn-previsualizar"><i class="fas fa-book"></i> Ver Normativas</a>
+    </div>
 </div>
 
-<!-- HERO SECTION NOSOTROS -->
-<section class="hero-nosotros">
-    <h2>QUIÉNES SOMOS</h2>
-    <p class="subtitle">Organización de Electricistas Asociados de Traslasierra</p>
-</section>
+<!-- SECCIÓN: LIDERAZGO -->
+<div class="section-category">
+    <h3><i class="fas fa-user-tie"></i> CONDUCCIÓN Y COORDINACIÓN</h3>
+    <p>REFERENTES TÉCNICOS AL SERVICIO DE LOS ASOCIADOS</p>
 
-<!-- CONTENIDO PRINCIPAL -->
-<main class="nosotros-container">
-
-    <!-- HISTORIA Y MISIÓN -->
-    <section class="nosotros-card">
-        <h3><i class="fas fa-history"></i> Nuestra Historia y Misión</h3>
-        <p><strong>TRASLAEA</strong> surge como un espacio de unión, representación y jerarquización para los profesionales electricistas que operan en el Valle de Traslasierra y la Provincia de Córdoba.</p>
-        <p>Nuestra misión principal es nuclear a los electricistas habilitados y asociados, brindando soporte técnico, asesoramiento normativo ante exigencias de cooperativas y del ERSeP, y promoviendo la capacitación continua para garantizar instalaciones eléctricas seguras y de calidad.</p>
-    </section>
-
-    <!-- OBJETIVOS -->
-    <section class="nosotros-card">
-        <h3><i class="fas fa-bullseye"></i> Pilares y Objetivos Fundamentales</h3>
-        <div class="valores-grid">
-            <div class="valor-item">
-                <i class="fas fa-shield-alt"></i>
-                <h4>Seguridad Eléctrica</h4>
-                <p>Promover el cumplimiento riguroso de la Ley Provincial N° 10.281 y la normativa AEA en cada obra.</p>
-            </div>
-            <div class="valor-item">
-                <i class="fas fa-graduation-cap"></i>
-                <h4>Capacitación Continua</h4>
-                <p>Facilitar cursos, talleres y actualización técnica permanente para todos nuestros asociados.</p>
-            </div>
-            <div class="valor-item">
-                <i class="fas fa-hands-helping"></i>
-                <h4>Respaldo Gremial</h4>
-                <p>Defender los derechos e intereses de los electricistas matriculados frente a organismos e instituciones.</p>
+    <div class="doc-card">
+        <div class="doc-info">
+            <div class="doc-icon"><i class="fas fa-id-badge"></i></div>
+            <div class="doc-details">
+                <h4>Coordinación General - Esteban Colombo <span class="doc-badge">LIDERAZGO</span></h4>
+                <p>Impulsor de la organización, asesor técnico y referente de electricistas asociados en la región.</p>
             </div>
         </div>
-    </section>
-
-    <!-- COORDINACIÓN -->
-    <section class="nosotros-card">
-        <h3><i class="fas fa-users"></i> Liderazgo y Organización</h3>
-        <p>Conducido por profesionales con amplia trayectoria en el sector eléctrico regional como Esteban Colombo, TRASLAEA fomenta el trabajo en equipo, la solidaridad gremial y el crecimiento profesional colectivo en todo el Valle de Traslasierra.</p>
-    </section>
-
-</main>
-
-<!-- FOOTER -->
-<footer class="footer">
-    <div class="footer-container">
-        <p>© 2024–2026 <strong>TRASLAEA</strong> - Organización de Electricistas Asociados. Todos los derechos reservados. Marca registrada.</p>
-        <p class="footer-credits">Sitio desarrollado y administrado por <span class="brand-electrosith">Electrosith</span>.</p>
+        <a href="https://api.whatsapp.com/send?phone=543544314637&text=Hola%20Esteban%20Colombo..." target="_blank" class="btn-previsualizar"><i class="fab fa-whatsapp"></i> Hablar por WhatsApp</a>
     </div>
-</footer>
-
-<!-- SCRIPTS -->
-<script>
-    // Menú hamburguesa móvil
-    const menuToggle = document.getElementById('menu-toggle');
-    const mainNav = document.getElementById('main-nav');
-
-    if (menuToggle && mainNav) {
-        menuToggle.addEventListener('click', () => {
-            mainNav.classList.toggle('active');
-        });
-    }
-</script>
-
+</div>
 
