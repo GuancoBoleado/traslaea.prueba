@@ -5,54 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nosotros - TRASLAEA</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,900;1,400;1,900&display=swap" rel="stylesheet">
     <style>
-        .glass {
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            background: rgba(255, 255, 255, 0.9);
-        }
         body {
-            background: #f0f2f5;
-            background-image: linear-gradient(rgba(0,40,85,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,40,85,0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
+            font-family: 'Montserrat', sans-serif;
+            background: #0b1329;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(249, 115, 22, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 40, 85, 0.15) 0%, transparent 40%),
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), 
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
+            color: #1e293b;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
     </style>
 </head>
-<body class="font-sans text-gray-900">
+<body class="antialiased selection:bg-orange-500 selection:text-white">
 
-    <header class="bg-[#002855] text-white p-4 shadow-2xl sticky top-0 z-[1000] border-b border-white/5">
-        <div class="container mx-auto flex justify-between items-center">
+    <!-- HEADER -->
+    <header class="bg-[#001b3a] text-white py-4 shadow-2xl sticky top-0 z-[1000] border-b border-white/10">
+        <div class="container mx-auto px-6 flex justify-between items-center">
             <a href="index.html" class="flex items-center space-x-3 group">
-                <div class="h-12 w-12 rounded-full bg-white overflow-hidden border-2 border-orange-500 flex items-center justify-center transition-transform group-hover:scale-110">
+                <div class="h-12 w-12 rounded-2xl bg-white p-1 shadow-lg border-2 border-orange-500 flex items-center justify-center transition-transform group-hover:scale-105">
                     <img src="logo.png" alt="Logo TRASLAEA" class="h-full w-full object-contain">
                 </div>
                 <div>
-                    <h1 class="text-lg font-black tracking-tighter leading-none uppercase italic">TRASLAEA</h1>
-                    <span class="block text-[9px] font-bold text-orange-400 uppercase tracking-[0.2em]">Nosotros</span>
+                    <h1 class="text-xl font-black tracking-tight leading-none uppercase italic text-white">TRASLAEA</h1>
+                    <span class="block text-[10px] font-bold text-orange-400 uppercase tracking-[0.25em] mt-1">Asociación Civil</span>
                 </div>
             </a>
-            <nav class="hidden lg:flex items-center space-x-8 text-[11px] font-black uppercase tracking-[0.2em]">
+            <nav class="hidden lg:flex items-center space-x-8 text-xs font-black uppercase tracking-[0.2em]">
                 <a href="index.html" class="hover:text-orange-400 transition-colors italic">Inicio</a>
-                <a href="nosotros.html" class="text-orange-400 italic">Nosotros</a>
+                <a href="nosotros.html" class="text-orange-400 italic border-b-2 border-orange-500 pb-1">Nosotros</a>
                 <a href="index.html#contacto" class="hover:text-orange-400 transition-colors italic">Contacto</a>
             </nav>
         </div>
     </header>
 
+    <!-- MAIN CONTENT -->
     <main class="container mx-auto px-4 py-16">
         
-        <section class="max-w-5xl mx-auto mb-20">
-            <div class="glass p-10 md:p-16 rounded-[3rem] shadow-2xl border-l-[12px] border-orange-500 relative overflow-hidden">
-                <div class="absolute top-0 right-0 p-8 opacity-5 text-8xl font-black italic">TRASLAEA</div>
+        <!-- QUIENES SOMOS -->
+        <section class="max-w-5xl mx-auto mb-24">
+            <div class="glass-card p-8 md:p-14 rounded-[2.5rem] shadow-2xl border-l-[10px] border-orange-500 relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 text-[12rem] font-black text-gray-900/[0.03] pointer-events-none italic select-none">T</div>
                 
-                <h2 class="text-4xl md:text-6xl font-black text-[#002855] mb-10 uppercase italic tracking-tighter leading-none">
+                <div class="inline-block px-4 py-1 rounded-full bg-orange-500/10 text-orange-600 font-extrabold text-xs uppercase tracking-widest mb-4 italic">
+                    Nuestra Identidad
+                </div>
+                
+                <h2 class="text-4xl md:text-6xl font-black text-[#001b3a] mb-8 uppercase italic tracking-tighter leading-none">
                     ¿Quiénes <span class="text-orange-500">Somos?</span>
                 </h2>
                 
-                <div class="space-y-8 text-gray-700 font-medium leading-relaxed text-lg">
-                    <p>
-                        <strong class="text-[#002855]">TRASLAEA</strong> es un espacio independiente y colaborativo que reúne a profesionales, técnicos e idóneos del sector eléctrico y afines en la región de Traslasierra, Córdoba.
+                <div class="space-y-6 text-gray-700 font-medium leading-relaxed text-base md:text-lg">
+                    <p class="bg-blue-50/60 p-5 rounded-2xl border-l-4 border-blue-600">
+                        <strong class="text-[#001b3a]">TRASLAEA</strong> es un espacio independiente y colaborativo que reúne a profesionales, técnicos e idóneos del sector eléctrico y afines en la región de Traslasierra, Córdoba.
                     </p>
                     <p>
                         Nacimos de la convicción de que la seguridad eléctrica, la capacitación continua y la unión entre colegas son los pilares fundamentales para jerarquizar nuestro trabajo y brindar un servicio confiable a la comunidad.
@@ -66,81 +80,103 @@
                     <p>
                         Hoy, este espacio opera de forma autónoma y directa, garantizando que el soporte digital, la identidad y las herramientas tecnológicas sigan con el mismo espíritu con el que fueron ideadas, desarrolladas y cuidadas desde el primer día.
                     </p>
-                    <div class="pt-4 border-t border-gray-300">
-                        <p class="text-sm font-black text-[#002855] uppercase italic tracking-wider">
-                            Sitio creado, desarrollado y administrado tecnológicamente por Esteban Colombo.
+                    
+                    <div class="pt-6 border-t border-gray-200 mt-8">
+                        <p class="text-sm font-black text-[#001b3a] uppercase italic tracking-wider bg-orange-50/80 p-4 rounded-xl border border-orange-200/50 inline-block">
+                            📌 Sitio creado, desarrollado y administrado tecnológicamente por Esteban Colombo.
                         </p>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- PILARES -->
         <section id="servicios" class="max-w-6xl mx-auto">
             <div class="text-center mb-16">
-                <h3 class="text-3xl font-black text-[#002855] uppercase italic tracking-widest inline-block border-b-4 border-orange-500 pb-2">
+                <span class="text-orange-400 font-bold text-xs uppercase tracking-[0.3em] block mb-2">Valores y Ejes</span>
+                <h3 class="text-3xl md:text-4xl font-black text-white uppercase italic tracking-widest inline-block border-b-4 border-orange-500 pb-3">
                     Nuestros Pilares
                 </h3>
             </div>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass p-8 rounded-[2.5rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-blue-600">
-                    <div class="text-4xl mb-6">🎓</div>
-                    <h4 class="font-black text-[#002855] uppercase italic mb-4">Capacitación Continua</h4>
-                    <p class="text-sm text-gray-600 font-bold leading-snug uppercase tracking-tighter italic">
-                        Facilitar el acceso a cursos, actualizaciones normativas (ERSeP), seguridad eléctrica y nuevas tecnologías.
-                    </p>
+                <!-- Card 1 -->
+                <div class="glass-card p-8 rounded-[2rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-blue-600 flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-3xl mb-6 shadow-inner">🎓</div>
+                        <h4 class="font-black text-[#001b3a] text-lg uppercase italic mb-3">Capacitación Continua</h4>
+                        <p class="text-sm text-gray-600 font-medium leading-relaxed">
+                            Facilitar el acceso a cursos, actualizaciones normativas (ERSeP), seguridad eléctrica y nuevas tecnologías.
+                        </p>
+                    </div>
                 </div>
 
-                <div class="glass p-8 rounded-[2.5rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-orange-500">
-                    <div class="text-4xl mb-6">📋</div>
-                    <h4 class="font-black text-[#002855] uppercase italic mb-4">Jerarquización del Sector</h4>
-                    <p class="text-sm text-gray-600 font-bold leading-snug uppercase tracking-tighter italic">
-                        Promover la labor del electricista habilitado e idóneo, visibilizando el trabajo profesional en Traslasierra.
-                    </p>
+                <!-- Card 2 -->
+                <div class="glass-card p-8 rounded-[2rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-orange-500 flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center text-3xl mb-6 shadow-inner">📋</div>
+                        <h4 class="font-black text-[#001b3a] text-lg uppercase italic mb-3">Jerarquización del Sector</h4>
+                        <p class="text-sm text-gray-600 font-medium leading-relaxed">
+                            Promover la labor del electricista habilitado e idóneo, visibilizando el trabajo profesional en Traslasierra.
+                        </p>
+                    </div>
                 </div>
 
-                <div class="glass p-8 rounded-[2.5rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-blue-600">
-                    <div class="text-4xl mb-6">🤝</div>
-                    <h4 class="font-black text-[#002855] uppercase italic mb-4">Red y Comunidad</h4>
-                    <p class="text-sm text-gray-600 font-bold leading-snug uppercase tracking-tighter italic">
-                        Crear un punto de encuentro y asistencia técnica entre colegas de la zona.
-                    </p>
+                <!-- Card 3 -->
+                <div class="glass-card p-8 rounded-[2rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-blue-600 flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-3xl mb-6 shadow-inner">🤝</div>
+                        <h4 class="font-black text-[#001b3a] text-lg uppercase italic mb-3">Red y Comunidad</h4>
+                        <p class="text-sm text-gray-600 font-medium leading-relaxed">
+                            Crear un punto de encuentro y asistencia técnica entre colegas de la zona.
+                        </p>
+                    </div>
                 </div>
 
-                <div class="glass p-8 rounded-[2.5rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-orange-500">
-                    <div class="text-4xl mb-6">🛡️</div>
-                    <h4 class="font-black text-[#002855] uppercase italic mb-4">Seguridad y Compromiso</h4>
-                    <p class="text-sm text-gray-600 font-bold leading-snug uppercase tracking-tighter italic">
-                        Respeto estricto por las normas de seguridad eléctrica para proteger a los trabajadores y a los usuarios.
-                    </p>
+                <!-- Card 4 -->
+                <div class="glass-card p-8 rounded-[2rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-orange-500 flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center text-3xl mb-6 shadow-inner">🛡️</div>
+                        <h4 class="font-black text-[#001b3a] text-lg uppercase italic mb-3">Seguridad y Compromiso</h4>
+                        <p class="text-sm text-gray-600 font-medium leading-relaxed">
+                            Respeto estricto por las normas de seguridad eléctrica para proteger a los trabajadores y a los usuarios.
+                        </p>
+                    </div>
                 </div>
 
-                <div class="glass p-8 rounded-[2.5rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-blue-600">
-                    <div class="text-4xl mb-6">💡</div>
-                    <h4 class="font-black text-[#002855] uppercase italic mb-4">Compañerismo</h4>
-                    <p class="text-sm text-gray-600 font-bold leading-snug uppercase tracking-tighter italic">
-                        Apoyo mutuo, intercambio de conocimientos y trabajo colaborativo entre colegas.
-                    </p>
+                <!-- Card 5 -->
+                <div class="glass-card p-8 rounded-[2rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-blue-600 flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-3xl mb-6 shadow-inner">💡</div>
+                        <h4 class="font-black text-[#001b3a] text-lg uppercase italic mb-3">Compañerismo</h4>
+                        <p class="text-sm text-gray-600 font-medium leading-relaxed">
+                            Apoyo mutuo, intercambio de conocimientos y trabajo colaborativo entre colegas.
+                        </p>
+                    </div>
                 </div>
 
-                <div class="glass p-8 rounded-[2.5rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-orange-500">
-                    <div class="text-4xl mb-6">🚀</div>
-                    <h4 class="font-black text-[#002855] uppercase italic mb-4">Innovación Digital</h4>
-                    <p class="text-sm text-gray-600 font-bold leading-snug uppercase tracking-tighter italic">
-                        Herramientas modernas al alcance de todos los instaladores de la región.
-                    </p>
+                <!-- Card 6 -->
+                <div class="glass-card p-8 rounded-[2rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-orange-500 flex flex-col justify-between">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center text-3xl mb-6 shadow-inner">🚀</div>
+                        <h4 class="font-black text-[#001b3a] text-lg uppercase italic mb-3">Innovación Digital</h4>
+                        <p class="text-sm text-gray-600 font-medium leading-relaxed">
+                            Herramientas modernas al alcance de todos los instaladores de la región.
+                        </p>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-[#001b3a] text-white py-12 mt-20 text-center border-t border-orange-500/30">
+    <!-- FOOTER -->
+    <footer class="bg-[#001124] text-white py-14 mt-28 border-t border-orange-500/30 text-center">
         <div class="container mx-auto px-6">
-            <h4 class="text-xl font-black italic uppercase tracking-tighter mb-2">TRASLAEA 2025 - 2026</h4>
-            <p class="text-[9px] font-bold text-orange-400 uppercase tracking-[0.4em] opacity-80 mb-6">Organización de Electricistas Asociados</p>
-            <div class="pt-6 border-t border-white/5 inline-block">
-                <p class="text-[9px] font-black opacity-30 tracking-[0.3em] uppercase mb-1">Desarrollo & Soporte</p>
-                <p class="text-[10px] font-bold italic text-blue-300 tracking-widest uppercase">Esteban Colombo • Adm. de Redes</p>
+            <h4 class="text-2xl font-black italic uppercase tracking-tighter mb-2 text-white">TRASLAEA 2025 - 2026</h4>
+            <p class="text-[10px] font-bold text-orange-400 uppercase tracking-[0.4em] opacity-90 mb-6">Organización de Electricistas Asociados</p>
+            <div class="pt-6 border-t border-white/10 inline-block px-8">
+                <p class="text-[9px] font-black opacity-40 tracking-[0.3em] uppercase mb-1">Desarrollo & Soporte Tecnológico</p>
+                <p class="text-xs font-black italic text-blue-300 tracking-widest uppercase">Esteban Colombo • Adm. de Redes</p>
             </div>
         </div>
     </footer>
