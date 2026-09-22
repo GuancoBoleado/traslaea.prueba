@@ -4,203 +4,137 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nosotros - TRASLAEA</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;0,900;1,400;1,900&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: #0b1329;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(249, 115, 22, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(0, 40, 85, 0.15) 0%, transparent 40%),
-                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), 
-                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 30px 30px, 30px 30px;
-            color: #1e293b;
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .tech-box {
-            background: #070d1d;
-            border: 1px solid rgba(249, 115, 22, 0.3);
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6);
-        }
-    </style>
+    <!-- CSS CENTRALIZADO -->
+    <link rel="stylesheet" href="../style.css">
+    <!-- Font Awesome para los íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
-<body class="antialiased selection:bg-orange-500 selection:text-white">
+<body>
 
-    <!-- HEADER -->
-    <header class="bg-[#001b3a] text-white py-4 shadow-2xl sticky top-0 z-[1000] border-b border-white/10">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <a href="index.html" class="flex items-center space-x-3 group">
-                <div class="h-12 w-12 rounded-2xl bg-white p-1 shadow-lg border-2 border-orange-500 flex items-center justify-center transition-transform group-hover:scale-105">
-                    <img src="logo.png" alt="Logo TRASLAEA" class="h-full w-full object-contain">
-                </div>
-                <div>
-                    <h1 class="text-xl font-black tracking-tight leading-none uppercase italic text-white">TRASLAEA</h1>
-                    <span class="block text-[10px] font-bold text-orange-400 uppercase tracking-[0.25em] mt-1">Asociación Civil</span>
-                </div>
-            </a>
-            <nav class="hidden lg:flex items-center space-x-8 text-xs font-black uppercase tracking-[0.2em]">
-                <a href="index.html" class="hover:text-orange-400 transition-colors italic">Inicio</a>
-                <a href="nosotros.html" class="text-orange-400 italic border-b-2 border-orange-500 pb-1">Nosotros</a>
-                <a href="index.html#contacto" class="hover:text-orange-400 transition-colors italic">Contacto</a>
-            </nav>
+    <!-- BARRA SUPERIOR INSTITUCIONAL -->
+    <header class="top-bar">
+        <div class="top-bar-left">
+            <span class="brand-title">TRASLAEA</span>
+            <span class="brand-subtitle">ORGANIZACIÓN DE ELECTRICISTAS ASOCIADOS</span>
+        </div>
+        <div class="top-bar-right">
+            <div class="top-links">
+                <a href="https://docs.google.com/forms/d/1RWIEOR222SI9JUQzYv1U4ibDfIlcWqgxsxrJcfGkkKY/alreadyresponded?edit_requested=true" target="_blank"><i class="fas fa-graduation-cap"></i> Cursos</a>
+                <a href="#" target="_blank"><i class="fas fa-bell"></i> Suscripción</a>
+                <a href="#" target="_blank"><i class="fas fa-folder-open"></i> Manuales & Software</a>
+            </div>
+            <div class="social-icons">
+                <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://api.whatsapp.com/send?phone=543544314637" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
-    <main class="container mx-auto px-4 py-16">
+    <!-- NAVEGACIÓN PRINCIPAL -->
+    <nav class="main-nav">
+        <ul>
+            <li><a href="../../index.html">Inicio</a></li>
+            <li><a href="nosotros.html" class="active">Nosotros</a></li>
+            <li><a href="recursos.html">Recursos</a></li>
+            <li><a href="normativas.html">Normativas</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+        <div class="nav-cta">
+            <a href="https://docs.google.com/forms/d/1RWIEOR222SI9JUQzYv1U4ibDfIlcWqgxsxrJcfGkkKY/alreadyresponded?edit_requested=true" target="_blank" class="btn-suscripcion">SUSCRIPCIÓN</a>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-container">
         
-        <!-- QUIENES SOMOS -->
-        <section class="max-w-5xl mx-auto mb-24">
-            <div class="glass-card p-8 md:p-14 rounded-[2.5rem] shadow-2xl border-l-[10px] border-orange-500 relative overflow-hidden">
-                <div class="absolute -top-10 -right-10 text-[12rem] font-black text-gray-900/[0.03] pointer-events-none italic select-none">T</div>
-                
-                <div class="inline-block px-4 py-1 rounded-full bg-orange-500/10 text-orange-600 font-extrabold text-xs uppercase tracking-widest mb-4 italic">
-                    Institucional & Raíces
-                </div>
-                
-                <h2 class="text-4xl md:text-6xl font-black text-[#001b3a] mb-8 uppercase italic tracking-tighter leading-none">
-                    ¿Quiénes <span class="text-orange-500">Somos?</span>
-                </h2>
-                
-                <div class="space-y-6 text-gray-700 font-medium leading-relaxed text-base md:text-lg">
-                    <p class="bg-blue-50/60 p-5 rounded-2xl border-l-4 border-blue-600">
-                        <strong class="text-[#001b3a]">TRASLAEA</strong> es un espacio independiente y colaborativo que reúne a profesionales, técnicos e idóneos del sector eléctrico y afines en la región de Traslasierra, Córdoba.
-                    </p>
-                    <p>
-                        Nacimos de la convicción de que la seguridad eléctrica, la capacitación continua y la unión entre colegas son los pilares fundamentales para jerarquizar nuestro trabajo y brindar un servicio confiable a la comunidad.
-                    </p>
-
-                    <!-- BLOQUE DE IDENTIDAD TECNOLÓGICA (CON ONDA) -->
-                    <div class="tech-box p-6 md:p-8 rounded-3xl my-8 text-white relative">
-                        <div class="absolute top-4 right-4 text-orange-400/20 text-4xl">⚡</div>
-                        <h3 class="text-orange-400 font-black uppercase italic tracking-wider text-xl mb-4 flex items-center gap-2">
-                            <span>🌐</span> Nuestra Identidad Tecnológica y Trayectoria
-                        </h3>
-                        <div class="space-y-4 text-gray-300 text-sm md:text-base font-normal leading-relaxed">
-                            <p>
-                                Traslaea nació a mediados de <strong class="text-white">2024 desde las mismas aulas</strong>, gestado como una organización de compañeros que buscaban seguir juntándose después de terminar el ciclo educativo: un espacio propio y genuino donde podíamos expresarnos digitalmente al público y vincularnos como profesionales de la región.
-                            </p>
-                            <p>
-                                A lo largo de su evolución y de las distintas etapas del proyecto, la gestión de la plataforma, los dominios oficiales (<span class="text-orange-300 font-bold">traslaea.org</span>, <span class="text-orange-300 font-bold">traslaea.ar</span>) y la marca legal continuaron bajo su administración tecnológica original.
-                            </p>
-                            <p class="border-l-2 border-orange-500 pl-4 text-white font-medium italic">
-                                Hoy, este espacio opera de forma autónoma y directa, garantizando que el soporte digital, la identidad y las herramientas tecnológicas sigan con el mismo espíritu con el que fueron ideadas, desarrolladas y cuidadas desde el primer día.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- AUTORÍA / FIRMA -->
-                    <div class="pt-2">
-                        <div class="bg-orange-50/80 p-5 rounded-2xl border border-orange-200 flex items-center space-x-4">
-                            <div class="text-3xl">💻</div>
-                            <div>
-                                <p class="text-xs font-bold text-orange-600 uppercase tracking-widest">Soporte & Desarrollo</p>
-                                <p class="text-sm font-black text-[#001b3a] uppercase italic tracking-wide">
-                                    Sitio creado, desarrollado y administrado tecnológicamente por Esteban Colombo.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="header-section">
+            <div class="header-title">
+                <h2>QUIÉNES SOMOS</h2>
+                <span>ORGANIZACIÓN DE ELECTRICISTAS ASOCIADOS DE TRASLASIERRA</span>
             </div>
-        </section>
+            <a href="../../index.html" class="back-link">— VOLVER AL INICIO</a>
+        </div>
 
-        <!-- PILARES -->
-        <section id="servicios" class="max-w-6xl mx-auto">
-            <div class="text-center mb-16">
-                <span class="text-orange-400 font-bold text-xs uppercase tracking-[0.3em] block mb-2">Valores y Ejes</span>
-                <h3 class="text-3xl md:text-4xl font-black text-white uppercase italic tracking-widest inline-block border-b-4 border-orange-500 pb-3">
-                    Nuestros Pilares
-                </h3>
+        <!-- SECCIÓN: NUESTRA IDENTIDAD -->
+        <div class="section-category">
+            <h3><i class="fas fa-users"></i> HISTORIA Y MISIÓN</h3>
+            <p>CONOCIENDO NUESTRAS RAÍCES Y EL PROPÓSITO INSTITUCIONAL</p>
+
+            <div class="doc-card">
+                <div class="doc-info">
+                    <div class="doc-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div class="doc-details">
+                        <h4>Asociación y Respeto Profesional <span class="doc-badge">ORÍGENES</span></h4>
+                        <p>Espacio gremial y técnico creado para nuclear y respaldar a los electricistas matriculados.</p>
+                    </div>
+                </div>
+                <a href="contacto.html" class="btn-previsualizar"><i class="fas fa-eye"></i> Conocer más</a>
             </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Card 1 -->
-                <div class="glass-card p-8 rounded-[2rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-blue-600 flex flex-col justify-between">
-                    <div>
-                        <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-3xl mb-6 shadow-inner">🎓</div>
-                        <h4 class="font-black text-[#001b3a] text-lg uppercase italic mb-3">Capacitación Continua</h4>
-                        <p class="text-sm text-gray-600 font-medium leading-relaxed">
-                            Facilitar el acceso a cursos, actualizaciones normativas (ERSeP), seguridad eléctrica y nuevas tecnologías.
-                        </p>
+
+            <div class="doc-card">
+                <div class="doc-info">
+                    <div class="doc-icon"><i class="fas fa-handshake"></i></div>
+                    <div class="doc-details">
+                        <h4>Defensa de Derechos e Intereses <span class="doc-badge">MISIÓN</span></h4>
+                        <p>Representación ante cooperativas eléctricas, distribuidoras y organismos provinciales como el ERSeP.</p>
                     </div>
                 </div>
-
-                <!-- Card 2 -->
-                <div class="glass-card p-8 rounded-[2rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-orange-500 flex flex-col justify-between">
-                    <div>
-                        <div class="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center text-3xl mb-6 shadow-inner">📋</div>
-                        <h4 class="font-black text-[#001b3a] text-lg uppercase italic mb-3">Jerarquización del Sector</h4>
-                        <p class="text-sm text-gray-600 font-medium leading-relaxed">
-                            Promover la labor del electricista habilitado e idóneo, visibilizando el trabajo profesional en Traslasierra.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Card 3 -->
-                <div class="glass-card p-8 rounded-[2rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-blue-600 flex flex-col justify-between">
-                    <div>
-                        <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-3xl mb-6 shadow-inner">🤝</div>
-                        <h4 class="font-black text-[#001b3a] text-lg uppercase italic mb-3">Red y Comunidad</h4>
-                        <p class="text-sm text-gray-600 font-medium leading-relaxed">
-                            Crear un punto de encuentro y asistencia técnica entre colegas de la zona.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="glass-card p-8 rounded-[2rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-orange-500 flex flex-col justify-between">
-                    <div>
-                        <div class="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center text-3xl mb-6 shadow-inner">🛡️</div>
-                        <h4 class="font-black text-[#001b3a] text-lg uppercase italic mb-3">Seguridad y Compromiso</h4>
-                        <p class="text-sm text-gray-600 font-medium leading-relaxed">
-                            Respeto estricto por las normas de seguridad eléctrica para proteger a los trabajadores y a los usuarios.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Card 5 -->
-                <div class="glass-card p-8 rounded-[2rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-blue-600 flex flex-col justify-between">
-                    <div>
-                        <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-3xl mb-6 shadow-inner">💡</div>
-                        <h4 class="font-black text-[#001b3a] text-lg uppercase italic mb-3">Compañerismo</h4>
-                        <p class="text-sm text-gray-600 font-medium leading-relaxed">
-                            Apoyo mutuo, intercambio de conocimientos y trabajo colaborativo entre colegas.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Card 6 -->
-                <div class="glass-card p-8 rounded-[2rem] shadow-xl hover:-translate-y-2 transition-all duration-300 border-t-4 border-orange-500 flex flex-col justify-between">
-                    <div>
-                        <div class="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center text-3xl mb-6 shadow-inner">🚀</div>
-                        <h4 class="font-black text-[#001b3a] text-lg uppercase italic mb-3">Innovación Digital</h4>
-                        <p class="text-sm text-gray-600 font-medium leading-relaxed">
-                            Herramientas modernas al alcance de todos los instaladores de la región.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="bg-[#001124] text-white py-14 mt-28 border-t border-orange-500/30 text-center">
-        <div class="container mx-auto px-6">
-            <h4 class="text-2xl font-black italic uppercase tracking-tighter mb-2 text-white">TRASLAEA 2025 - 2026</h4>
-            <p class="text-[10px] font-bold text-orange-400 uppercase tracking-[0.4em] opacity-90 mb-6">Organización de Electricistas Asociados</p>
-            <div class="pt-6 border-t border-white/10 inline-block px-8">
-                <p class="text-[9px] font-black opacity-40 tracking-[0.3em] uppercase mb-1">Desarrollo & Soporte Tecnológico</p>
-                <p class="text-xs font-black italic text-blue-300 tracking-widest uppercase">Esteban Colombo • Adm. de Redes</p>
+                <a href="contacto.html" class="btn-previsualizar"><i class="fas fa-eye"></i> Contactar</a>
             </div>
         </div>
+
+        <!-- SECCIÓN: PILARES Y OBJETIVOS -->
+        <div class="section-category">
+            <h3><i class="fas fa-bullseye"></i> PILARES FUNDAMENTALES</h3>
+            <p>EJES DE TRABAJO Y COMPROMISO CON LA COMUNIDAD</p>
+
+            <div class="doc-card">
+                <div class="doc-info">
+                    <div class="doc-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="doc-details">
+                        <h4>Capacitación y Actualización Continua <span class="doc-badge">CAPACITACIÓN</span></h4>
+                        <p>Talleres, cursos y perfeccionamiento técnico permanente bajo normativas AEA vigentes.</p>
+                    </div>
+                </div>
+                <a href="https://docs.google.com/forms/d/1RWIEOR222SI9JUQzYv1U4ibDfIlcWqgxsxrJcfGkkKY/alreadyresponded?edit_requested=true" target="_blank" class="btn-previsualizar"><i class="fas fa-external-link-alt"></i> Ver Cursos</a>
+            </div>
+
+            <div class="doc-card">
+                <div class="doc-info">
+                    <div class="doc-icon"><i class="fas fa-bolt"></i></div>
+                    <div class="doc-details">
+                        <h4>Seguridad Eléctrica Provincial <span class="doc-badge">LEY 10.281</span></h4>
+                        <p>Promoción de instalaciones seguras y control normativo en todo el Valle de Traslasierra.</p>
+                    </div>
+                </div>
+                <a href="normativas.html" class="btn-previsualizar"><i class="fas fa-book"></i> Ver Normativas</a>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: LIDERAZGO -->
+        <div class="section-category">
+            <h3><i class="fas fa-user-tie"></i> CONDUCCIÓN Y COORDINACIÓN</h3>
+            <p>REFERENTES TÉCNICOS AL SERVICIO DE LOS ASOCIADOS</p>
+
+            <div class="doc-card">
+                <div class="doc-info">
+                    <div class="doc-icon"><i class="fas fa-id-badge"></i></div>
+                    <div class="doc-details">
+                        <h4>Coordinación General - Esteban Colombo <span class="doc-badge">LIDERAZGO</span></h4>
+                        <p>Impulsor de la organización, asesor técnico y referente de electricistas asociados en la región.</p>
+                    </div>
+                </div>
+                <a href="https://api.whatsapp.com/send?phone=543544314637&text=Hola%20Esteban%20Colombo..." target="_blank" class="btn-previsualizar"><i class="fab fa-whatsapp"></i> Hablar por WhatsApp</a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer class="site-footer">
+        <p>&copy; 2024–2026 <strong>TRASLAEA</strong> - Organización de Electricistas Asociados. Todos los derechos reservados.</p>
+        <p>Sitio desarrollado y administrado por Electrosith.</p>
     </footer>
 
 </body>
