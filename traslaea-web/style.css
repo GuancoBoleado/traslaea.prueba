@@ -1018,3 +1018,68 @@ body {
     justify-content: center;
   }
 }
+/* Contenedor circular que mantiene la estructura del logo */
+.dual-logo-wrapper {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Estilos base para ambas imágenes dentro del círculo */
+.logo-animado {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Animación para el Logo 1: Gira 3 vueltas (1080deg), se desvanece y desaparece */
+.logo-1 {
+    animation: girarYDesaparecer 4s ease-in-out infinite;
+}
+
+/* Animación para el Logo 2: Está oculto al inicio, luego aparece y se queda fijo */
+.logo-2 {
+    opacity: 0;
+    animation: aparecerFijo 4s ease-in-out infinite;
+}
+
+/* --- KEYFRAMES DE LA ANIMACIÓN (Ciclo de 4 segundos) --- */
+@keyframes girarYDesaparecer {
+    0% {
+        transform: rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    60% {
+        transform: rotate(1080deg) scale(1); /* Da 3 vueltas completas */
+        opacity: 1;
+    }
+    75% {
+        transform: rotate(1080deg) scale(0.8);
+        opacity: 0; /* Se desvanece */
+    }
+    100% {
+        transform: rotate(1080deg) scale(0.8);
+        opacity: 0; /* Permanece oculto el resto del ciclo */
+    }
+}
+
+@keyframes aparecerFijo {
+    0%, 65% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    80% {
+        opacity: 1;
+        transform: scale(1); /* Aparece suavemente y toma el lugar fijo */
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1); /* Se queda fijo hasta reiniciar el ciclo */
+    }
+}
