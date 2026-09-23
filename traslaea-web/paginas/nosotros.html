@@ -5,158 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nosotros - TRASLAEA</title>
 
-    <!-- CSS EXTERNO -->
-    <link rel="stylesheet" href="../style.css">
+    <!-- CSS (está en la misma carpeta) -->
+    <link rel="stylesheet" href="style.css">
 
-    <!-- Font Awesome para los íconos -->
+    <!-- Font Awesome e íconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-    <!-- ESTILOS ESPECÍFICOS PARA LA SECCIÓN NOSOTROS -->
-    <style>
-        .top-bar {
-            background-color: #0b0f19;
-            border-bottom: 1px solid rgba(0, 168, 232, 0.2);
-            padding: 8px 15px;
-            font-size: 13px;
-        }
-        .top-bar-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .quick-links {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .quick-links a {
-            color: #cbd5e1;
-            text-decoration: none;
-            transition: color 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .quick-links a:hover {
-            color: #00a8e8;
-        }
-        .social-links {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-        .social-links a {
-            color: #cbd5e1;
-            font-size: 14px;
-            transition: color 0.2s;
-        }
-        .social-links a:hover {
-            color: #00a8e8;
-        }
-
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: 1px solid rgba(0, 168, 232, 0.4);
-            color: #00a8e8;
-            font-size: 18px;
-            padding: 5px 8px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        @media (max-width: 768px) {
-            .navbar {
-                flex-wrap: wrap;
-                padding: 10px 15px;
-                justify-content: space-between;
-            }
-            .menu-toggle {
-                display: block;
-            }
-            .navbar nav {
-                display: none;
-                width: 100%;
-                order: 4;
-                margin-top: 10px;
-                background: #0b0f19;
-                border: 1px solid rgba(0, 168, 232, 0.2);
-                border-radius: 8px;
-                padding: 10px 0;
-            }
-            .navbar nav.active {
-                display: block;
-            }
-            .navbar nav ul {
-                flex-direction: column;
-                gap: 5px;
-                width: 100%;
-                text-align: center;
-            }
-            .navbar nav ul li a {
-                display: block;
-                padding: 10px;
-            }
-        }
-
-        /* Contenido Principal "Nosotros" */
-        .about-main {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        .about-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        .about-header h2 {
-            font-size: 32px;
-            color: #0f4c81;
-            margin-bottom: 10px;
-        }
-        .about-header p {
-            color: #64748b;
-            font-size: 16px;
-        }
-
-        .about-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-        }
-        .about-card h3 {
-            color: #0f4c81;
-            font-size: 24px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 2px solid #f1f5f9;
-            padding-bottom: 15px;
-        }
-        .about-card h3 i {
-            color: #00a8e8;
-        }
-        .about-card h4 {
-            color: #0f4c81;
-            font-size: 18px;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-        .about-card p {
-            color: #334155;
-            line-height: 1.7;
-            font-size: 15.5px;
-            margin-bottom: 15px;
-        }
-    </style>
 </head>
 <body>
 
@@ -164,38 +17,40 @@
     <div class="top-bar">
         <div class="top-bar-container">
             <div class="quick-links">
-                <a href="https://docs.google.com/forms/d/1RWIEOR222SI9JUQzYv1U4ibDfIlcWqgxsxrJcfGkkKY/alreadyresponded?edit_requested=true" target="_blank">🎓 Cursos</a>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/alreadyresponded" target="_blank">✍️ Suscripción</a>
-                <a href="recursos.html">📁 Manuales & Software</a>
-                <a href="mailto:traslaea@gmail.com">📧 traslaea@gmail.com</a>
+                <a href="https://docs.google.com/forms/d/1RWIEOR222SI9JUQzYv1U4ibDfIlcWqgxsxrJcfGkkKY/alreadyresponded?edit_requested=true" target="_blank">
+                    🎓 Cursos
+                </a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/alreadyresponded" target="_blank">
+                    ✍️ Suscripción
+                </a>
+                <a href="https://drive.google.com/drive/folders/15xTTOf056MB4LgyJc6AKTNaw-ZS0kZo9?usp=drive_link" target="_blank">
+                    📁 Manuales & Software
+                </a>
             </div>
             <div class="social-links">
                 <a href="https://www.facebook.com/Traslaea.OK" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.instagram.com/traslaea.arg/?hl=es" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://api.whatsapp.com/send?phone=543544314637&text=Hola..." target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/traslaea.arg" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://api.whatsapp.com/send?phone=543544314637&text=Hola%20Esteban%20Colombo%2C%20me%20comunico%20desde%20el%20n%C3%BAmero%20de%20soport%C3%A9%20de%20TRASLAEA.%20%0Aquer%C3%ADa%20consultar.%3A%20............................................" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
             </div>
         </div>
     </div>
 
-    <!-- NAVBAR -->
+    <!-- NAVBAR / ENCABEZADO -->
     <header class="navbar">
         <div class="logo-container">
+            <img src="assets/img/logo-traslaea.png" alt="Logo TRASLAEA" class="logo">
             <div class="brand-text">
-               <h1>TRASLAEA</h1>
-               <span>ORGANIZACIÓN DE ELECTRICISTAS ASOCIADOS</span>
+                <h1>TRASLAEA</h1>
+                <span>ORGANIZACIÓN DE ELECTRICISTAS ASOCIADOS</span>
             </div>
-            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir Menú">
-                <i class="fas fa-bars"></i>
-            </button>
         </div>
-
-        <nav id="main-nav">
+        <nav>
             <ul>
-                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../index.html">Inicio</a></li>
                 <li><a href="nosotros.html" class="active">Nosotros</a></li>
-                <li><a href="recursos.html">Recursos</a></li>
-                <li><a href="normativas.html">Normativas</a></li>
-                <li><a href="contacto.html">Contacto & Tramites</a></li>
+                <li><a href="paginas/recursos.html">Recursos</a></li>
+                <li><a href="paginas/eventos.html">Eventos</a></li>
+                <li><a href="paginas/contacto.html">Contacto</a></li>
             </ul>
         </nav>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLScnwecXqJ7BsWqdhW-g0EeD4YkG8QWFwVjPhSTbZ6ZE6jBd6A/alreadyresponded" target="_blank" class="btn-suscripcion">SUSCRIPCIÓN</a>
@@ -209,49 +64,40 @@
         <div class="stripe s-light"></div>
     </div>
 
-    <!-- CONTENIDO DE NOSOTROS -->
-    <main class="about-main">
-        <div class="about-header">
-            <h2>Quiénes Somos</h2>
-            <p>Conociendo los cimientos de nuestra comunidad</p>
-        </div>
+    <!-- CONTENIDO PRINCIPAL NOSOTROS -->
+    <main class="about-container">
+        
+        <section class="about-card">
+            <h2><i class="fas fa-users"></i> Quiénes Somos / Sobre Nosotros</h2>
+            
+            <h3>Nuestra Visión y Compromiso</h3>
+            <p>Somos un espacio de profesionales independientes y técnicos especializados en instalaciones eléctricas, redes e infraestructura tecnológica. Nacimos con el objetivo de elevar los estándares de la seguridad eléctrica y brindar soluciones técnicas confiables, promoviendo la capacitación continua y el trabajo con rigor profesional.</p>
+            
+            <h3>Nuestros Pilares</h3>
+            <ul>
+                <li><strong>Independencia y Autonomía:</strong> Creemos en el desarrollo de proyectos autogestionados, basados en el esfuerzo propio, la innovación y el respeto por los marcos técnicos y legales vigentes.</li>
+                <li><strong>Infraestructura y Tecnología:</strong> Integramos la experiencia tradicional de la electricidad con soluciones modernas de conectividad, redes, sistemas de seguridad y automatización.</li>
+                <li><strong>Seguridad y Transparencia:</strong> Cada proyecto, instalación y asesoramiento se rige estrictamente por las normativas de seguridad, priorizando la protección de las personas y de los bienes.</li>
+            </ul>
 
-        <!-- SECCIÓN: EL ORIGEN DE TRASLAEA -->
-        <section class="about-origin">
-            <div class="about-card" style="border-left: 4px solid #00a8e8;">
-                <h3><i class="fas fa-history"></i> Quiénes Somos – El Origen de Traslaea</h3>
-                
-                <h4>Nuestra Génesis: Del taller a la comunidad digital</h4>
-                <p>Traslaea nació a comienzos de 2024 como una iniciativa orientada a visibilizar, conectar y potenciar la labor de los electricistas y técnicos en la región de Traslasierra. Mientras gran parte del enfoque inicial se concentraba en las aulas y los encuentros presenciales, la construcción de la identidad pública, los canales de comunicación, el dominio web y el ecosistema digital fueron concebidos, diseñados y puestos en marcha desde el primer día detrás de la pantalla.</p>
+            <h3>El Camino Recorrido y la Innovación Digital</h3>
+            <p>Nuestra trayectoria se sustenta en el trabajo diario en la región. Arrancamos públicamente en julio de 2024 impulsando fuertemente el área digital en la zona, innovando y diseñando distintos sistemas tecnológicos para vincularnos de manera directa con el sector profesional.</p>
+            <p>Aquí no improvisamos: estudiamos, planificamos y ejecutamos con responsabilidad.</p>
 
-                <h4>¿Por qué surge la confusión y el nombre Traslaea?</h4>
-                <p>A medida que el proyecto crecía, se estructuraron espacios asociativos locales para canalizar trámites y gestiones presenciales. Sin embargo, la identidad digital, la marca comercial y los canales oficiales siempre respondieron al trabajo técnico y de desarrollo informático impulsado de manera independiente. Tras la consolidación legal de la marca bajo titularidad propia ante el INPI, se establece una distinción clara entre la gestión institucional presencial y este espacio digital oficial.</p>
+            <hr style="margin: 25px 0; border: none; border-top: 1px solid #ddd;">
 
-                <div style="background: #f8fafc; border-left: 3px solid #0f4c81; padding: 15px; margin-top: 25px; border-radius: 0 8px 8px 0;">
-                    <p style="margin: 0; font-size: 14.5px; color: #334155;"><strong>Nota para el lector / visitante:</strong> Si nos conociste a través de la web, las redes sociales o los canales de difusión oficiales, estás en el espacio original donde se gestó la identidad digital de Traslaea desde sus cimientos en 2024.</p>
-                </div>
-            </div>
+            <p style="font-size: 0.95em; color: #555;"><strong>Nota para el lector / visitante:</strong> Si nos conociste a través de la web, las redes sociales o los canales de difusión oficiales, estás en el espacio original donde se gestó la identidad digital de Traslaea desde sus cimientos en 2024.</p>
         </section>
+
     </main>
 
-    <!-- FOOTER -->
+    <!-- FOOTER / PIE DE PÁGINA -->
     <footer class="footer">
         <div class="footer-container">
-            <p>© 2024–2026 <strong>TRASLAEA</strong> - Organización de Electricistas Asociados. Todos los derechos reservados. Marca registrada.</p>
+            <p>© 2024–2026 <strong>TRASLAEA</strong> - Organización de Electricistas Asociados. Todos los derechos reservados.</p>
             <p class="footer-credits">Sitio desarrollado y administrado por <span class="brand-electrosith">Electrosith</span>.</p>
         </div>
     </footer>
 
-    <!-- SCRIPT PARA EL MENÚ MÓVIL -->
-    <script>
-        const menuToggle = document.getElementById('menu-toggle');
-        const mainNav = document.getElementById('main-nav');
-
-        if (menuToggle && mainNav) {
-            menuToggle.addEventListener('click', () => {
-                mainNav.classList.toggle('active');
-            });
-        }
-    </script>
 </body>
 </html>
