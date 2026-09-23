@@ -806,5 +806,56 @@
             });
         }
     </script>
+    <!-- SCRIPT DE INTELIGENCIA / RESPUESTA DEL CHATBOT -->
+    <script>
+        const chatbotInput = document.getElementById('chatbot-input');
+        const chatbotSend = document.getElementById('chatbot-send');
+        const chatbotMessages = document.getElementById('chatbot-messages');
+
+        function enviarMensaje() {
+            const texto = chatbotInput.value.trim();
+            if (texto === "") return;
+
+            // 1. Mostrar mensaje del usuario
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user';
+            userMsg.textContent = texto;
+            chatbotMessages.appendChild(userMsg);
+
+            chatbotInput.value = "";
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+
+            // 2. Simular respuesta de Kir-Bot después de un segundo
+            setTimeout(() => {
+                const botMsg = document.createElement('div');
+                botMsg.className = 'message bot';
+                
+                // Respuestas automáticas según lo que pregunte o por defecto
+                const lower = texto.toLowerCase();
+                if (lower.includes('curso') || lower.includes('inscrip')) {
+                    botMsg.textContent = '📚 Podés ver las inscripciones vigentes a los cursos técnicos desde el enlace "Cursos" en la barra superior.';
+                } else if (lower.includes('normativa') || lower.includes('ersep') || lower.includes('ley')) {
+                    botMsg.textContent = '📜 Las normativas, leyes y decretos del ERSeP los encontrás en la sección "Normativas" de nuestra web.';
+                } else if (lower.includes('hola') || lower.includes('buenos dias') || lower.includes('buenas')) {
+                    botMsg.textContent = '¡Hola! ¿En qué puedo asistirte hoy sobre instalaciones, redes o trámites en Traslasierra?';
+                } else {
+                    botMsg.textContent = 'Recibí tu consulta sobre "' + texto + '". Recordá que también podés contactarnos directamente por WhatsApp desde la red de instaladores.';
+                }
+
+                chatbotMessages.appendChild(botMsg);
+                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            }, 1000);
+        }
+
+        // Eventos para enviar con el botón o con la tecla Enter
+        if (chatbotSend && chatbotInput) {
+            chatbotSend.addEventListener('click', enviarMensaje);
+            chatbotInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    enviarMensaje();
+                }
+            });
+        }
+    </script>
 </body>
 </html>
