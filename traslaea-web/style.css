@@ -1116,3 +1116,67 @@ body {
     70% { box-shadow: 0 0 0 15px rgba(0, 168, 232, 0); }
     100% { box-shadow: 0 0 0 0 rgba(0, 168, 232, 0); }
 }
+/* ===================================================
+   ESTILOS PARA LA SECCIÓN NOSOTROS
+=================================================== */
+
+.about-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.about-card {
+    background: var(--blanco);
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+    border: 1px solid #e2e8f0;
+    border-top: 4px solid var(--celeste-accent);
+}
+
+.about-card h2 {
+    color: var(--negro-principal);
+    font-size: 22px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.about-card h2 i {
+    color: var(--celeste-accent);
+}
+
+.about-card h3 {
+    color: var(--azul-oscuro);
+    font-size: 16px;
+    margin-top: 25px;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+}
+
+.about-card p {
+    font-size: 14px;
+    color: var(--texto-oscuro);
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.about-card ul {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+}
+
+.about-card li {
+    font-size: 14px;
+    color: var(--texto-oscuro);
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.about-card li strong {
+    color: var(--azul-secundario);
+}
