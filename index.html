@@ -686,10 +686,29 @@
             <p>© 2024–2026 <strong>TRASLAEA</strong> - Organización de Electricistas Asociados. Todos los derechos reservados. Marca registrada.</p>
             <p class="footer-credits">Sitio desarrollado y administrado por <span class="brand-electrosith">Electrosith</span>.</p>
         </div>
-    <!-- BOTÓN FLOTANTE KIR-BOT -->
-<a href="traslaea-web/paginas/kir-bot.html" class="kirbot-float-btn" title="Asistente Kir-Bot">
-    <i class="fas fa-robot"></i>
-</a>
+   <!-- CONTENEDOR Y BOTÓN FLOTANTE DEL CHATBOT INTERACTIVO -->
+<div class="chatbot-container">
+    <button class="chatbot-btn kirbot-float-btn" id="chatbot-toggle" title="Abrir Asistente Kir-Bot">
+        <i class="fas fa-robot"></i>
+    </button>
+
+    <!-- Ventana del chat que se abre al hacer clic -->
+    <div class="chatbot-window" id="chatbot-window">
+        <div class="chatbot-header">
+            <h4><i class="fas fa-robot"></i> Kir-Bot - TRASLAEA</h4>
+            <button class="chatbot-close" id="chatbot-close">&times;</button>
+        </div>
+        <div class="chatbot-messages" id="chatbot-messages">
+            <div class="message bot">
+                ¡Hola! Soy Kir-Bot, tu asistente virtual de TRASLAEA. ¿En qué puedo ayudarte hoy sobre instalaciones o normativas?
+            </div>
+        </div>
+        <div class="chatbot-input-area">
+            <input type="text" id="chatbot-input" placeholder="Escribe tu consulta...">
+            <button id="chatbot-send">Enviar</button>
+        </div>
+    </div>
+</div>
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="traslaea-web/js/map.js"></script>
