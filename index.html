@@ -784,5 +784,27 @@
             requestAnimationFrame(updateCounter);
         });
     </script>
+    <!-- SCRIPT PARA ABRIR Y CERRAR EL CHATBOT -->
+    <script>
+        const chatbotToggle = document.getElementById('chatbot-toggle');
+        const chatbotWindow = document.getElementById('chatbot-window');
+        const chatbotClose = document.getElementById('chatbot-close');
+
+        if (chatbotToggle && chatbotWindow) {
+            chatbotToggle.addEventListener('click', () => {
+                if (chatbotWindow.style.display === 'flex') {
+                    chatbotWindow.style.display = 'none';
+                } else {
+                    chatbotWindow.style.display = 'flex';
+                }
+            });
+        }
+
+        if (chatbotClose && chatbotWindow) {
+            chatbotClose.addEventListener('click', () => {
+                chatbotWindow.style.display = 'none';
+            });
+        }
+    </script>
 </body>
 </html>
