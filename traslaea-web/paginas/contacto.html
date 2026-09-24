@@ -32,8 +32,9 @@
             max-width: 600px;
             margin: 40px auto;
             padding: 35px;
-            background: #172033;
-            border: 1px solid #283548;
+            /* Fondo un poco más claro manteniendo la gama de azules institucionales */
+            background: #1e293b;
+            border: 1px solid #334155;
             border-radius: 12px;
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
             flex-grow: 1;
@@ -49,6 +50,7 @@
             text-align: center;
             margin-bottom: 30px;
             font-size: 1.05rem;
+            line-height: 1.5;
         }
         .form-group {
             margin-bottom: 20px;
@@ -63,7 +65,7 @@
             width: 100%;
             padding: 12px;
             background: #0b0f19;
-            border: 1px solid #374151;
+            border: 1px solid #475569;
             border-radius: 8px;
             color: #fff;
             font-size: 1rem;
@@ -110,13 +112,13 @@
 <body>
 
     <header>
-        <!-- Ruta corregida para salir de la carpeta 'paginas' hacia la raíz -->
+        <!-- Sube un nivel desde 'paginas/' para llegar al 'index.html' raíz -->
         <a href="../index.html"><i class="fas fa-arrow-left"></i> Volver al inicio de Traslaea</a>
     </header>
 
     <div class="container">
-        <h1>¡Comunicate con Traslaea!</h1>
-        <p class="subtitle">Dejanos tu consulta y nos ponemos en contacto con vos.</p>
+        <h1>¡Bienvenidos a Traslaea!</h1>
+        <p class="subtitle">Estás a un paso de conectar con nuestra red de electricistas profesionales. Dejanos tu consulta o inquietud y, si querés que te devolvamos la respuesta, no te olvides de dejarnos tu correo electrónico.</p>
 
         <!-- REEMPLAZA "tu-codigo-formspree" CON EL ID QUE TE DA FORMSPREE -->
         <form action="https://formspree.io/f/tu-codigo-formspree" method="POST" id="contactForm">
@@ -127,22 +129,22 @@
             </div>
 
             <div class="form-group">
-                <label for="email">Tu Correo Electrónico (Ingresalo si deseas respuesta):</label>
+                <label for="email">Tu Correo Electrónico (Dejalo acá si querés recibir nuestra respuesta):</label>
                 <input type="text" id="email" name="email" placeholder="tu_correo@ejemplo.com">
             </div>
 
             <div class="form-group">
                 <label for="message">Mensaje:</label>
-                <textarea id="message" name="message" rows="5" required placeholder="Escribinos tu consulta técnica o mensaje institucional..."></textarea>
+                <textarea id="message" name="message" rows="5" required placeholder="Escribinos tu consulta técnica, propuesta o mensaje..."></textarea>
             </div>
 
-            <!-- Mensaje predeterminado oculto o paramétrico que te ayuda a identificar de dónde vino -->
+            <!-- Mensaje predeterminado oculto -->
             <input type="hidden" name="_subject" value="Nuevo mensaje desde la Web de Traslaea">
 
             <button type="submit" id="submitBtn" disabled><i class="fas fa-paper-plane"></i> Enviar Mensaje</button>
         </form>
 
-        <!-- Ruta corregida para salir de la carpeta 'paginas' hacia la raíz -->
+        <!-- Sube un nivel desde 'paginas/' para llegar al 'index.html' raíz -->
         <a href="../index.html" class="back-home">← Ir a la página principal</a>
     </div>
 
