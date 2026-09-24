@@ -31,16 +31,16 @@
         .container {
             max-width: 600px;
             margin: 40px auto;
-            padding: 30px;
-            background: #111827;
-            border: 1px solid #1f2937;
+            padding: 35px;
+            background: #172033;
+            border: 1px solid #283548;
             border-radius: 12px;
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
             flex-grow: 1;
         }
         h1 {
             color: #f8fafc;
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             margin-bottom: 10px;
             text-align: center;
         }
@@ -48,7 +48,7 @@
             color: #94a3b8;
             text-align: center;
             margin-bottom: 30px;
-            font-size: 0.95rem;
+            font-size: 1.05rem;
         }
         .form-group {
             margin-bottom: 20px;
@@ -62,7 +62,7 @@
         input, textarea {
             width: 100%;
             padding: 12px;
-            background: #030712;
+            background: #0b0f19;
             border: 1px solid #374151;
             border-radius: 8px;
             color: #fff;
@@ -110,12 +110,13 @@
 <body>
 
     <header>
-        <a href="index.html"><i class="fas fa-arrow-left"></i> Volver al inicio de Traslaea</a>
+        <!-- Ruta corregida para salir de la carpeta 'paginas' hacia la raíz -->
+        <a href="../index.html"><i class="fas fa-arrow-left"></i> Volver al inicio de Traslaea</a>
     </header>
 
     <div class="container">
-        <h1>Contacto Directo</h1>
-        <p class="subtitle">Completá el formulario para enviarnos tu consulta.</p>
+        <h1>¡Comunicate con Traslaea!</h1>
+        <p class="subtitle">Dejanos tu consulta y nos ponemos en contacto con vos.</p>
 
         <!-- REEMPLAZA "tu-codigo-formspree" CON EL ID QUE TE DA FORMSPREE -->
         <form action="https://formspree.io/f/tu-codigo-formspree" method="POST" id="contactForm">
@@ -126,7 +127,7 @@
             </div>
 
             <div class="form-group">
-                <label for="email">Tu Correo Electrónico (Ingresalo si deseas recibir respuesta):</label>
+                <label for="email">Tu Correo Electrónico (Ingresalo si deseas respuesta):</label>
                 <input type="text" id="email" name="email" placeholder="tu_correo@ejemplo.com">
             </div>
 
@@ -141,7 +142,8 @@
             <button type="submit" id="submitBtn" disabled><i class="fas fa-paper-plane"></i> Enviar Mensaje</button>
         </form>
 
-        <a href="index.html" class="back-home">← Ir a la página principal</a>
+        <!-- Ruta corregida para salir de la carpeta 'paginas' hacia la raíz -->
+        <a href="../index.html" class="back-home">← Ir a la página principal</a>
     </div>
 
     <script>
@@ -155,9 +157,6 @@
             const nameValue = nameInput.value.trim();
             const messageValue = messageInput.value.trim();
 
-            // Verifica si el email tiene al menos algún caracter, una arroba y texto después, 
-            // O si está completamente vacío (permitiendo enviar sin mail si así lo desea).
-            // Pero tu regla pide: "hacer que se le active el enviar cuando al menos en el casillero le ponen un letras y el @"
             const tieneEmailValido = emailValue.length > 0 && emailValue.includes('@');
             const camposObligatoriosListos = nameValue.length > 0 && messageValue.length > 0;
 
