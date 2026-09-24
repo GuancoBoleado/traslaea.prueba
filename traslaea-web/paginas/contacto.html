@@ -7,7 +7,6 @@
     <title>Contacto - Traslaea</title>
     <!-- FontAwesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Tus estilos generales (si usas un main.css, enlázalo acá) -->
     <style>
         body {
             background-color: #0b0f19;
@@ -85,10 +84,15 @@
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: background 0.2s, opacity 0.2s;
         }
-        button:hover {
+        button:hover:not(:disabled) {
             background: #0369a1;
+        }
+        button:disabled {
+            background: #475569;
+            opacity: 0.6;
+            cursor: not-allowed;
         }
         .back-home {
             display: block;
@@ -111,10 +115,10 @@
 
     <div class="container">
         <h1>Contacto Directo</h1>
-        <p class="subtitle">Completá el formulario para enviarnos tu consulta. Es obligatorio indicar tu mail para que podamos responderte.</p>
+        <p class="subtitle">Completá el formulario para enviarnos tu consulta.</p>
 
         <!-- REEMPLAZA "tu-codigo-formspree" CON EL ID QUE TE DA FORMSPREE -->
-        <form action="https://formspree.io/f/tu-codigo-formspree" method="POST">
+        <form action="https://formspree.io/f/tu-codigo-formspree" method="POST" id="contactForm">
             
             <div class="form-group">
                 <label for="name">Tu Nombre / Empresa:</label>
@@ -122,8 +126,8 @@
             </div>
 
             <div class="form-group">
-                <label for="email">Tu Correo Electrónico (Obligatorio para recibir respuesta):</label>
-                <input type="email" id="email" name="email" required placeholder="tu_correo@ejemplo.com">
+                <label for="email">Tu Correo Electrónico (Ingresalo si deseas recibir respuesta):</label>
+                <input type="text" id="email" name="email" placeholder="tu_correo@ejemplo.com">
             </div>
 
             <div class="form-group">
@@ -134,11 +138,40 @@
             <!-- Mensaje predeterminado oculto o paramétrico que te ayuda a identificar de dónde vino -->
             <input type="hidden" name="_subject" value="Nuevo mensaje desde la Web de Traslaea">
 
-            <button type="submit"><i class="fas fa-paper-plane"></i> Enviar Mensaje</button>
+            <button type="submit" id="submitBtn" disabled><i class="fas fa-paper-plane"></i> Enviar Mensaje</button>
         </form>
 
         <a href="index.html" class="back-home">← Ir a la página principal</a>
     </div>
+
+    <script>
+        const emailInput = document.getElementById('email');
+        const submitBtn = document.getElementById('submitBtn');
+        const nameInput = document.getElementById('name');
+        const messageInput = document.getElementById('message');
+
+        function validarFormulario() {
+            const emailValue = emailInput.value.trim();
+            const nameValue = nameInput.value.trim();
+            const messageValue = messageInput.value.trim();
+
+            // Verifica si el email tiene al menos algún caracter, una arroba y texto después, 
+            // O si está completamente vacío (permitiendo enviar sin mail si así lo desea).
+            // Pero tu regla pide: "hacer que se le active el enviar cuando al menos en el casillero le ponen un letras y el @"
+            const tieneEmailValido = emailValue.length > 0 && emailValue.includes('@');
+            const camposObligatoriosListos = nameValue.length > 0 && messageValue.length > 0;
+
+            if (camposObligatoriosListos && tieneEmailValido) {
+                submitBtn.removeAttribute('disabled');
+            } else {
+                submitBtn.setAttribute('disabled', 'true');
+            }
+        }
+
+        emailInput.addEventListener('input', validarFormulario);
+        nameInput.addEventListener('input', validarFormulario);
+        messageInput.addEventListener('input', validarFormulario);
+    </script>
 
 </body>
 </html>
